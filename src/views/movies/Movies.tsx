@@ -53,9 +53,9 @@ function Movies(): React.ReactElement {
           return (
             <View key={item.id} style={styles.item}>
               <Image
-                style={[styles.itemImage]}
                 source={{ uri: item.poster }}
                 resizeMode={'stretch'}
+                style={[styles.itemImage]}
               />
               <Text style={styles.itemRating}>{item?.rating}</Text>
               <Text
@@ -75,7 +75,6 @@ function Movies(): React.ReactElement {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 10,
     minHeight: viewHeight,
     backgroundColor: '#fff'
   },
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingTop: 10,
+    paddingBottom: 15,
     paddingLeft: 7,
     paddingRight: 7
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: 5,
     marginRight: 5,
-    width: 121,
+    width: 105,
     textAlign: 'center'
   },
   itemImage: {
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
   },
   itemRating: {
     position: 'absolute',
+    right: 8,
     bottom: 38,
-    right: 14,
     fontSize: 11,
     color: 'orange'
   },
