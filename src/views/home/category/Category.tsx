@@ -14,9 +14,9 @@ function Category(props): React.ReactElement {
     <TouchableOpacity activeOpacity={1}>
       <View style={styles.item}>
         <Image
-          style={[styles.itemImage]}
           source={{ uri: item.poster }}
           resizeMode={'stretch'}
+          style={[styles.itemImage]}
         />
         {item?.category && item?.category !== '电影' && (
           <Text style={styles.itemTag}>{item?.category}</Text>
@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
   },
   itemRating: {
     position: 'absolute',
-    bottom: 34,
     right: 4,
-    fontSize: 11,
+    bottom: 34,
+    fontSize: 10.5,
     color: 'orange'
   },
   itemText: {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   itemDate: {
     marginTop: 2,
-    fontSize: 10,
+    fontSize: 10.5,
     color: '#888'
   }
 });
