@@ -11,18 +11,31 @@ export type Router = {
 };
 
 const router: Router[] = [
+  // tabbar页面
   {
     name: 'Home', // 跳转路径
     title: '', // 标题
     headerShown: false,
     component: require('./TabNavigator').default
   },
-  // 非tabbar页面路径
+  // 非tabbar页面
   {
     name: 'Login',
     title: '',
     headerShown: false,
     component: require('../views/login/Login').default
+  },
+  {
+    name: 'Search',
+    title: '',
+    headerShown: false,
+    component: require('../views/search/Search').default
+  },
+  {
+    name: 'Theater',
+    title: '正在热映',
+    headerShown: true,
+    component: require('../views/theater/Theater').default
   }
 ];
 
