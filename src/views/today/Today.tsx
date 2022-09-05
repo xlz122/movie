@@ -73,9 +73,12 @@ function Today(): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        <Text style={styles.itemRating}>
-          <Text style={styles.itemRatingWeight}>{item?.rating}</Text>分
-        </Text>
+        {item?.rating.length && (
+          <Text style={styles.itemRating}>
+            <Text style={styles.itemRatingWeight}>{item?.rating}</Text>
+            <Text> 分</Text>
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -108,7 +111,7 @@ function Today(): React.ReactElement {
       </View>
       <FlatList
         initialNumToRender={6}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         data={movie}
         renderItem={renderItem}
       />
@@ -134,6 +137,8 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     flex: 1,
+    height: 44,
+    lineHeight: 44,
     fontSize: 12,
     color: '#303133',
     textAlign: 'center'
