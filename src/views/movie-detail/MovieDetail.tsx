@@ -1,28 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
+import LinearGradinet from 'react-native-linear-gradient';
+import { colorToRgba } from '../../utils/utils';
+import { getScreenViewHeight } from '../../utils/screen';
 import { moviesDetail } from '../../api/movies';
 import type { RouteProp } from '@react-navigation/native';
-import type { ResponseType } from '../../types/index';
+import type { ResponseType, Navigation } from '../../types/index';
+import CustomHeader from '../../components/custom-header/CustomHeader';
+import MovieInfo from './movie-info/MovieInfo';
 import Panel from '../../components/panel/Panel';
-import Cast from './cast/Cast';
-import Photos from './photos/Photos';
-import SimilarMovie from './similar-movie/SimilarMovie';
+import MoviePhoto from './movie-photo/MoviePhoto';
+import MovieSimilar from './movie-similar/MovieSimilar';
+
+// 获取屏幕内容高度
+const viewHeight = getScreenViewHeight();
 
 type Props = {
+  navigation: Navigation;
   route: RouteProp<{ params: { id: number } }>;
+};
+
+type Detail = {
+  bgcolor: string;
+  cast: unknown[];
+  photos: unknown[];
+  like_movies: unknown[];
 };
 
 function MovieDeail(props: Props): React.ReactElement {
   const { id } = props.route.params;
 
-  const [movie, setMovie] = useState<any>([]);
+  const [detail, setDetail] = useState<Partial<Detail>>({});
 
   const getMovieDetail = () => {
     moviesDetail({ id })
-      .then((res: ResponseType<any[]>) => {
+      .then((res: ResponseType<Partial<Detail>>) => {
         if (res.code === 200) {
           console.log(res);
-          setMovie(res.data!);
+          setDetail(res.data!);
         }
       })
       .catch(() => ({}));
@@ -32,34 +47,76 @@ function MovieDeail(props: Props): React.ReactElement {
     getMovieDetail();
   }, []);
 
+  // 渐变背景色
+  const [gradientColor, setGradientColor] = useState<string[]>([
+    '#f5f5f5',
+    '#f5f5f5'
+  ]);
+
+  const handlerGradualChange = (color: string): void => {
+    const result: string[] = [];
+
+    const gradient = [0.9, 0.82, 0.7, 0.68];
+    gradient.forEach((item: number) => {
+      result.push(colorToRgba(color, item));
+    });
+
+    setGradientColor(result);
+  };
+
+  useEffect(() => {
+    if (!detail || Object.keys(detail).length === 0 || !detail.bgcolor) {
+      return;
+    }
+
+    handlerGradualChange(detail.bgcolor);
+  }, [detail]);
+
+  useEffect(() => {
+    if (gradientColor.length === 2) {
+      return;
+    }
+
+    // 设置标头
+    props.navigation.setOptions({
+      header: ({ navigation, options }) => {
+        return (
+          <CustomHeader
+            navigation={navigation}
+            options={options}
+            headerTitleAlign={true}
+            headerStyle={{
+              backgroundColor: gradientColor[0]
+            }}
+          />
+        );
+      }
+    });
+  }, [gradientColor]);
+
   return (
-    <View style={styles.theater}>
-      <View style={styles.warp}>
-        <Panel title="演员" subtitle={`全部${movie?.cast?.length}`} to="/today">
-          <Cast movie={movie?.cast} />
-        </Panel>
-      </View>
-      <Panel title="相册" subtitle={`全部${movie?.photos?.length}`} to="/today">
-        <Photos movie={movie?.photos} />
-      </Panel>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+      <LinearGradinet colors={gradientColor}>
+        <MovieInfo navigation={props.navigation} data={detail} />
+      </LinearGradinet>
       <Panel
-        title="相似影视"
-        subtitle={`${movie?.like_movies?.length}部`}
+        title="相册"
+        subtitle={`全部${detail?.photos?.length}`}
         to="/today"
       >
-        <SimilarMovie movie={movie?.like_movies} />
+        <MoviePhoto movie={detail?.photos} />
       </Panel>
-    </View>
+      <Panel title="相似影视" to="" moreIconStyle={{ display: 'none' }}>
+        <MovieSimilar movie={detail?.like_movies} />
+      </Panel>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  theater: {
-    paddingTop: 8,
-    backgroundColor: '#fff'
-  },
-  warp: {
-    backgroundColor: '#262c38'
+  page: {
+    height: viewHeight,
+    backgroundColor: '#f5f5f5'
   }
 });
 
