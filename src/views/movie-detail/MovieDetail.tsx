@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '../../utils/utils';
@@ -74,6 +74,24 @@ function MovieDeail(props: Props): React.ReactElement {
     handlerGradualChange(detail.bgcolor);
   }, [detail]);
 
+  useLayoutEffect(() => {
+    // 设置加载时标头
+    props.navigation.setOptions({
+      header: ({ navigation, options }) => {
+        return (
+          <CustomHeader
+            navigation={navigation}
+            options={options}
+            headerTitleAlign={true}
+            headerStyle={{
+              backgroundColor: 'transparent'
+            }}
+          />
+        );
+      }
+    });
+  }, []);
+
   useEffect(() => {
     if (gradientColor.length === 2) {
       return;
@@ -101,17 +119,18 @@ function MovieDeail(props: Props): React.ReactElement {
       <LinearGradinet colors={gradientColor}>
         <MovieInfo navigation={props.navigation} data={detail} />
       </LinearGradinet>
-      <Panel
-        navigation={props.navigation}
-        title="相册"
-        subtitle={`全部${detail?.photos?.length}`}
-        to="Photos"
-        params={{ movieId: id }}
-      >
-        <MoviePhoto movie={detail?.photos} />
-      </Panel>
+      {detail?.photos && detail?.photos?.length > 0 && (
+        <Panel
+          title="相册"
+          subtitle={`全部${detail?.photos?.length}`}
+          navigation={props.navigation}
+          to={{ path: 'Photos', params: { movieId: id } }}
+        >
+          <MoviePhoto movie={detail?.photos} />
+        </Panel>
+      )}
       {detail?.like_movies && detail?.like_movies?.length > 0 && (
-        <Panel title="相似影视" to="" moreIconStyle={{ display: 'none' }}>
+        <Panel title="相似影视" moreIconStyle={{ display: 'none' }}>
           <MovieSimilar
             navigation={props.navigation}
             movie={detail?.like_movies}
