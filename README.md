@@ -1,3 +1,5 @@
+Readme | [平台差异对比](docs/difference.md) | [阿里字体图标](docs/iconfont.md) | [项目插件](docs/plugin.md)
+
 ## 环境要求
 
 需要 NodeJS 16.0.0+ 环境
@@ -20,7 +22,7 @@
 ## 项目使用技术栈
 
 * React
-* React Native 0.70.0
+* React Native 0.70.1
 * Redux
 * Typescript
 
@@ -51,10 +53,6 @@ yarn start
 ```
 yarn android
 ```
-
-## 查看项目效果
-
-安卓手机教程: [https://blog.csdn.net/weixin_43233914/article/details/119568245](https://blog.csdn.net/weixin_43233914/article/details/119568245)
 
 ## 项目效果图
 

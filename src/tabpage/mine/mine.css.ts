@@ -1,12 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { getScreenViewHeight } from '../../utils/screen';
-
-// 获取屏幕内容高度
-const viewHeight = getScreenViewHeight();
 
 const styles = StyleSheet.create({
   page: {
-    minHeight: viewHeight,
+    flex: 1,
     backgroundColor: '#f5f5f5'
   },
   userInfo: {

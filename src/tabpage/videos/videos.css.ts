@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { getScreenWidth, getScreenViewHeight } from '../../utils/screen';
+import { getScreenWidth } from '../../utils/screen';
 
 // 获取屏幕宽度
 const deviceWidth = getScreenWidth();
-// 获取屏幕内容高度
-const viewHeight = getScreenViewHeight();
 
 const styles = StyleSheet.create({
   page: {
+    flex: 1,
     paddingTop: 15,
-    height: viewHeight,
     backgroundColor: '#fff'
   },
   item: {

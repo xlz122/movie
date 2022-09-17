@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Platform
+} from 'react-native';
+import { getScreenViewHeight } from '../../utils/screen';
 import { movieTop } from '../../api/home';
 import type { Navigation, ResponseType } from '../../types/index';
 import ScrollRefresh from '../../components/scroll-refresh/ScrollRefresh';
+
+// 获取屏幕内容高度
+const viewHeight = getScreenViewHeight();
 
 type Props = {
   navigation: Navigation;
@@ -25,7 +36,9 @@ function HighScore(props: Props): React.ReactElement {
     isRefresh: false,
     // 加载更多
     isLoadMore: false,
-    loadMoreText: ''
+    loadMoreText: '',
+    // 数据是否加载完成
+    complete: false
   });
 
   const [movie, setMovie] = useState<Movie[]>([]);
@@ -34,17 +47,17 @@ function HighScore(props: Props): React.ReactElement {
     movieTop({ page: state.page, per_page: state.per_page })
       .then((res: ResponseType<Movie[]>) => {
         if (res.code === 200) {
-          if (res.data?.length === 0) {
+          if (state.complete) {
             return false;
           }
 
           // 下拉刷新、初始化
-          if (state.isRefresh || movie.length === 0) {
+          if (state.isRefresh || state.page === 1) {
             setMovie(res.data!);
           }
 
           // 加载更多
-          if (state.isLoadMore || res.data?.length !== 0) {
+          if (state.isLoadMore || state.page !== 1) {
             setMovie(movie.concat(res.data!));
           }
 
@@ -53,7 +66,19 @@ function HighScore(props: Props): React.ReactElement {
               ...state,
               isRefresh: false,
               isLoadMore: false,
+              complete: true,
               loadMoreText: '没有更多数据了'
+            });
+
+            return false;
+          }
+
+          if (state.page === 1) {
+            setState({
+              ...state,
+              isRefresh: false,
+              isLoadMore: false,
+              loadMoreText: ''
             });
           } else {
             setState({
@@ -105,10 +130,26 @@ function HighScore(props: Props): React.ReactElement {
   );
 
   const onRefresh = (): void => {
-    setState({ ...state, isRefresh: true, page: 1 });
+    setMovie([]);
+    setState({
+      ...state,
+      page: 1,
+      isRefresh: true,
+      complete: false,
+      loadMoreText: ''
+    });
+
+    // 只有一页直接刷新
+    if (state.page === 1) {
+      getMovieTop();
+    }
   };
 
-  const onEndReached = (): void => {
+  const onEndReached = (): boolean | undefined => {
+    if (state.complete) {
+      return false;
+    }
+
     setState({
       ...state,
       page: state.page + 1,
@@ -118,20 +159,28 @@ function HighScore(props: Props): React.ReactElement {
   };
 
   return (
-    <ScrollRefresh
-      initialNumToRender={6}
-      showsVerticalScrollIndicator={false}
-      data={movie}
-      renderItem={renderItem}
-      refreshing={state.isRefresh}
-      onRefresh={onRefresh}
-      loadMoreText={state.loadMoreText}
-      onEndReached={onEndReached}
-    />
+    <View style={styles.page}>
+      <ScrollRefresh
+        initialNumToRender={6}
+        showsVerticalScrollIndicator={false}
+        data={movie}
+        renderItem={renderItem}
+        refreshing={state.isRefresh}
+        onRefresh={onRefresh}
+        loadMoreText={state.loadMoreText}
+        onEndReached={onEndReached}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  page: {
+    paddingBottom: Platform.OS !== 'web' ? 10 : 0,
+    // web端需要减去标题高度
+    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
+    backgroundColor: '#fff'
+  },
   item: {
     display: 'flex',
     flexDirection: 'row',

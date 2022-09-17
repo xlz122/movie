@@ -7,14 +7,10 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-import { getScreenViewHeight } from '../../utils/screen';
 import { moviePhotos } from '../../api/movies';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '../../types/index';
 import type { MoviePhotosParams } from '../../api/movies';
-
-// 获取屏幕内容高度
-const viewHeight = getScreenViewHeight();
 
 type Props = {
   navigation: Navigation;
@@ -118,8 +114,7 @@ function Photos(props: Props): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    paddingBottom: 18,
-    height: viewHeight,
+    flex: 1,
     backgroundColor: '#fff'
   },
   tab: {

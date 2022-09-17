@@ -7,14 +7,10 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-import { getScreenViewHeight } from '../../utils/screen';
 import { moviesList } from '../../api/movies';
 import type { Navigation, ResponseType } from '../../types/index';
 import type { MovieParams } from '../../api/movies';
 import Nav from './nav/Nav';
-
-// 获取屏幕内容高度
-const viewHeight = getScreenViewHeight();
 
 type Props = {
   navigation: Navigation;
@@ -57,43 +53,45 @@ function Movies(props: Props): React.ReactElement {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+    <>
       <Nav onChange={navChange} />
-      <View style={styles.list}>
-        {movie.map(item => {
-          return (
-            <TouchableOpacity
-              key={item.id}
-              activeOpacity={1}
-              onPress={() =>
-                props?.navigation.push('MovieDetail', { id: item.id })
-              }
-              style={styles.item}
-            >
-              <Image
-                source={{ uri: item.poster }}
-                resizeMode={'stretch'}
-                style={[styles.itemImage]}
-              />
-              <Text style={styles.itemRating}>{item?.rating}</Text>
-              <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={styles.itemText}
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+        <View style={styles.list}>
+          {movie.map(item => {
+            return (
+              <TouchableOpacity
+                key={item.id}
+                activeOpacity={1}
+                onPress={() =>
+                  props?.navigation.push('MovieDetail', { id: item.id })
+                }
+                style={styles.item}
               >
-                {item.title}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    </ScrollView>
+                <Image
+                  source={{ uri: item.poster }}
+                  resizeMode={'stretch'}
+                  style={[styles.itemImage]}
+                />
+                <Text style={styles.itemRating}>{item?.rating}</Text>
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={styles.itemText}
+                >
+                  {item.title}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   page: {
-    minHeight: viewHeight,
+    flex: 1,
     backgroundColor: '#fff'
   },
   list: {
@@ -102,7 +100,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     paddingTop: 10,
-    paddingBottom: 15,
     paddingLeft: 7,
     paddingRight: 7
   },
