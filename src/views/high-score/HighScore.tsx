@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.OS !== 'web' ? 10 : 0,
     // web端需要减去标题高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    overflow: 'scroll'
+    backgroundColor: '#fff'
   },
   item: {
     display: 'flex',

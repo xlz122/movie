@@ -126,6 +126,7 @@ function MovieDeail(props: Props): React.ReactElement {
             title="相册"
             subtitle={`全部${detail?.photos?.length}`}
             to={{ path: 'Photos', params: { movieId: id } }}
+            panelStyle={{ marginTop: 10 }}
           >
             <MoviePhoto movie={detail?.photos} />
           </Panel>
