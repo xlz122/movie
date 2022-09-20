@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Platform
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { viewHeight } from '../../utils/screen';
 import { movieTheater } from '../../api/home';
 import type { Navigation, ResponseType } from '../../types/index';
 import ScrollRefresh from '../../components/scroll-refresh/ScrollRefresh';
-
-type Props = {
-  navigation: Navigation;
-};
 
 type Movie = {
   id: number;
@@ -17,7 +22,9 @@ type Movie = {
   countries: string;
 };
 
-function Theater(props: Props): React.ReactElement {
+function Theater(): React.ReactElement {
+  const navigation: Navigation = useNavigation();
+
   const [state, setState] = useState({
     page: 1,
     per_page: 10,
@@ -89,7 +96,7 @@ function Theater(props: Props): React.ReactElement {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => props?.navigation.push('MovieDetail', { id: item.id })}
+      onPress={() => navigation.push('MovieDetail', { id: item.id })}
     >
       <View style={styles.item}>
         <Image
@@ -167,7 +174,9 @@ function Theater(props: Props): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
+    paddingBottom: Platform.OS !== 'web' ? 10 : 0,
+    // web端需要减去标题高度
+    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: '#fff'
   },
   item: {

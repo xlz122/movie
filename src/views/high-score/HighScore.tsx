@@ -7,17 +7,11 @@ import {
   TouchableOpacity,
   Platform
 } from 'react-native';
-import { getScreenViewHeight } from '../../utils/screen';
+import { useNavigation } from '@react-navigation/native';
+import { viewHeight } from '../../utils/screen';
 import { movieTop } from '../../api/home';
 import type { Navigation, ResponseType } from '../../types/index';
 import ScrollRefresh from '../../components/scroll-refresh/ScrollRefresh';
-
-// 获取屏幕内容高度
-const viewHeight = getScreenViewHeight();
-
-type Props = {
-  navigation: Navigation;
-};
 
 type Movie = {
   id: number;
@@ -28,7 +22,9 @@ type Movie = {
   countries: string;
 };
 
-function HighScore(props: Props): React.ReactElement {
+function HighScore(): React.ReactElement {
+  const navigation: Navigation = useNavigation();
+
   const [state, setState] = useState({
     page: 1,
     per_page: 10,
@@ -97,17 +93,32 @@ function HighScore(props: Props): React.ReactElement {
     getMovieTop();
   }, [state.page]);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => props?.navigation.push('MovieDetail', { id: item.id })}
+      onPress={() => navigation.push('MovieDetail', { id: item.id })}
     >
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
-        />
+        <View style={styles.itemCover}>
+          <Image
+            source={{ uri: item.poster }}
+            resizeMode={'stretch'}
+            style={[styles.itemImage]}
+          />
+          {index === 0 && (
+            <View style={[styles.itemCoverBg, styles.coverBgColor1]} />
+          )}
+          {index === 1 && (
+            <View style={[styles.itemCoverBg, styles.coverBgColor2]} />
+          )}
+          {index === 2 && (
+            <View style={[styles.itemCoverBg, styles.coverBgColor3]} />
+          )}
+          {index > 2 && (
+            <View style={[styles.itemCoverBg, styles.coverBgColor4]} />
+          )}
+          <Text style={styles.itemCoverText}>{index + 1}</Text>
+        </View>
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.title}
@@ -188,10 +199,44 @@ const styles = StyleSheet.create({
     marginRight: -20,
     marginLeft: 16
   },
-  itemImage: {
+  itemCover: {
+    position: 'relative',
     width: 93,
     height: 124,
-    borderRadius: 3
+    borderRadius: 3,
+    overflow: 'hidden'
+  },
+  itemImage: {
+    width: 93,
+    height: 124
+  },
+  itemCoverBg: {
+    position: 'absolute',
+    top: -18,
+    left: -14,
+    width: 30,
+    height: 48,
+    transform: [{ rotate: '-135deg' }]
+  },
+  coverBgColor1: {
+    backgroundColor: 'red'
+  },
+  coverBgColor2: {
+    backgroundColor: '#ff4500'
+  },
+  coverBgColor3: {
+    backgroundColor: '#f4a460'
+  },
+  coverBgColor4: {
+    backgroundColor: '#adadad'
+  },
+  itemCoverText: {
+    position: 'absolute',
+    top: 1.6,
+    left: 5,
+    zIndex: 1,
+    fontSize: 10,
+    color: '#fff'
   },
   itemInfo: {
     flex: 1,
