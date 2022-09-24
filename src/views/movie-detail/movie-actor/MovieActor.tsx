@@ -11,41 +11,26 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '../../../types/index';
 
-type Props = {
-  movie?: Movie[];
-};
-
-export type Movie = {
-  id: number;
-  title: string;
-  poster: string;
-  category: string;
-  rating: number;
-  release_date: number;
-};
-
-function MovieSimilar(props: Props): React.ReactElement {
+function MovieActor(props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
+      onPress={() => navigation.push('ActorDetail', { id: item.id })}
     >
       <View style={styles.item}>
         <Image
-          source={{ uri: item.poster }}
+          source={{ uri: item.avatar }}
           resizeMode={'stretch'}
           style={[styles.itemImage]}
         />
-        {item?.category && item?.category !== '电影' && (
-          <Text style={styles.itemTag}>{item?.category}</Text>
-        )}
-        {item?.rating?.length && (
-          <Text style={styles.itemRating}>{item?.rating}分</Text>
-        )}
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
-          {item.title}
+          {item.name}
+        </Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.labelText}>
+          {item?.profession === '导演' ? item?.profession : ''}
+          {item?.act ? `饰: ${item?.act}` : ''}
         </Text>
       </View>
     </TouchableOpacity>
@@ -59,6 +44,7 @@ function MovieSimilar(props: Props): React.ReactElement {
         showsHorizontalScrollIndicator={false}
         data={props.movie}
         renderItem={renderItem}
+        keyExtractor={item => item.union_id}
       />
     </SafeAreaView>
   );
@@ -70,8 +56,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingLeft: 11,
-    backgroundColor: '#fff',
     borderRadius: 4
   },
   item: {
@@ -79,38 +63,22 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     paddingBottom: 7,
-    marginRight: 8
+    marginRight: 8,
+    width: 94
   },
   itemImage: {
-    width: 94,
     height: 130,
     borderRadius: 3
   },
-  itemTag: {
-    position: 'absolute',
-    top: 6,
-    right: 6,
-    width: 22,
-    height: 13,
-    backgroundColor: 'rgba(255, 165, 0, 0.7)',
-    fontSize: 9,
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 2
-  },
-  itemRating: {
-    position: 'absolute',
-    right: 4,
-    bottom: 34,
-    fontSize: 10.5,
-    color: 'orange'
-  },
   itemText: {
     marginTop: 5,
-    width: 94,
-    color: '#333',
+    color: '#fff',
     fontSize: 12
+  },
+  labelText: {
+    color: 'hsla(0,0%,96.1%,.75)',
+    fontSize: 10
   }
 });
 
-export default MovieSimilar;
+export default MovieActor;
