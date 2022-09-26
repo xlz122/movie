@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/index';
 import type { Navigation } from '@/types/index';
 import styles from './mine.css';
@@ -15,16 +15,9 @@ type UserInfo = {
 };
 
 function Mine(props: Props): React.ReactElement {
-  const store = useStore<RootState>().getState();
-
-  const [userinfo, setUserInfo] = useState<UserInfo>({});
-
-  useEffect(() => {
-    (async () => {
-      const result = (await store.routine.userinfo) || {};
-      setUserInfo(JSON.parse(result as string));
-    })();
-  }, []);
+  const userinfo = useSelector(
+    (state: RootState) => state.routine.userinfo
+  ) as UserInfo;
 
   return (
     <View style={styles.page}>

@@ -1,20 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import storage from '@/utils/storage';
-
-async function faultTolerant<T>(name: string) {
-  return await storage.getObjectItem<T>(name);
-}
+import storeStorage from '@/utils/storeStorage';
 
 export type RoutineState = {
-  isLogin: Promise<boolean | null> | boolean;
-  token: Promise<string | null> | string;
+  isLogin: boolean;
+  token: string;
   userinfo: unknown;
 };
 
 const initialState: RoutineState = {
-  isLogin: faultTolerant<boolean>('isLogin') || false,
-  token: faultTolerant<string>('token') || '',
-  userinfo: faultTolerant('userinfo') || {}
+  isLogin: storeStorage.getStringItem({
+    key: 'token',
+    reducers: 'setToken'
+  }),
+  token: storeStorage.getStringItem({
+    key: 'token',
+    reducers: 'setToken'
+  }),
+  userinfo: storeStorage.getObjectItem({
+    key: 'userinfo',
+    reducers: 'setUserInfo'
+  })
 };
 
 const routineSlice = createSlice({
@@ -23,19 +29,20 @@ const routineSlice = createSlice({
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
+      state.isLogin = true;
       storage.setStringItem('token', action.payload);
-      storage.setObjectItem('isLogin', JSON.stringify(true));
+      storage.setObjectItem('isLogin', true);
     },
     setUserInfo: (state, action: PayloadAction<unknown>) => {
       state.userinfo = action.payload;
-      storage.setObjectItem('userinfo', JSON.stringify(action.payload));
+      storage.setObjectItem('userinfo', action.payload);
     },
     setLogout: state => {
       state.token = '';
       storage.setStringItem('token', '');
-      storage.setObjectItem('isLogin', JSON.stringify(false));
+      storage.setObjectItem('isLogin', false);
       state.userinfo = {};
-      storage.setObjectItem('userinfo', JSON.stringify({}));
+      storage.setObjectItem('userinfo', {});
     }
   }
 });
