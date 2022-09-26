@@ -51,6 +51,12 @@ const router: Router[] = [
     component: require('../views/theater/Theater').default
   },
   {
+    name: 'Coming',
+    title: '即将上映',
+    headerShown: true,
+    component: require('../views/coming/Coming').default
+  },
+  {
     name: 'HighScore',
     title: 'TOP 100',
     headerShown: true,
@@ -79,6 +85,12 @@ const router: Router[] = [
     title: '',
     headerShown: true,
     component: require('../views/actor-detail/ActorDetail').default
+  },
+  {
+    name: 'ActorList',
+    title: '演员表',
+    headerShown: true,
+    component: require('../views/actor-list/ActorList').default
   },
   {
     name: 'Photos',

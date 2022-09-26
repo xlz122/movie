@@ -9,16 +9,16 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
-import { movieTheater } from '@/api/home';
+import { movieComing } from '@/api/home';
 import type { Navigation, ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-function Theater(): React.ReactElement {
+function Coming(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getMovieTheater = ({ page, per_page }): Promise<unknown[]> => {
+  const getMovieComing = ({ page, per_page }): Promise<unknown[]> => {
     return new Promise((resolve, reject) => {
-      movieTheater({ page, per_page })
+      movieComing({ page, per_page })
         .then((res: ResponseType<unknown[]>) => {
           if (res.code === 200) {
             resolve(res.data!);
@@ -46,7 +46,8 @@ function Theater(): React.ReactElement {
             {item.title}
           </Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
-            {item.year}
+            <Text style={styles.itemCountText}>{item.wish_count}</Text>
+            <Text>人想看</Text>
           </Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
             {item.genres}
@@ -55,11 +56,6 @@ function Theater(): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {item?.rating > 0 && (
-          <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text> 分
-          </Text>
-        )}
       </View>
     </TouchableOpacity>
   );
@@ -69,7 +65,7 @@ function Theater(): React.ReactElement {
       <ScrollRefresh
         page={1}
         pageSize={10}
-        request={getMovieTheater}
+        request={getMovieComing}
         initialNumToRender={6}
         renderItem={renderItem}
       />
@@ -88,8 +84,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     paddingTop: 18,
-    marginLeft: 16,
-    marginRight: -20
+    marginRight: -20,
+    marginLeft: 16
   },
   itemImage: {
     width: 93,
@@ -112,15 +108,10 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#999'
   },
-  itemRating: {
-    width: 68,
-    fontSize: 8,
-    color: '#f16c00'
-  },
-  itemRatingWeight: {
-    fontSize: 12,
-    fontWeight: '700'
+  itemCountText: {
+    fontSize: 13,
+    color: '#e54847'
   }
 });
 
-export default Theater;
+export default Coming;
