@@ -42,11 +42,21 @@ function MineCount(): React.ReactElement {
     getUserCount();
   }, [isLogin]);
 
+  // 跳转关注详情
+  const jumpFlollowDetail = (path: string): boolean | undefined => {
+    if (!isLogin) {
+      navigation.push('Login');
+      return false;
+    }
+
+    navigation.push(path);
+  };
+
   return (
     <View style={styles.count}>
       <TouchableOpacity
         activeOpacity={1}
-        onPress={() => navigation.push('Actor')}
+        onPress={() => jumpFlollowDetail('Actor')}
         style={styles.countItem}
       >
         <Text style={styles.countItemCount}>
@@ -54,12 +64,16 @@ function MineCount(): React.ReactElement {
         </Text>
         <Text style={styles.countItemName}>关注影人</Text>
       </TouchableOpacity>
-      <View style={styles.countItem}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => jumpFlollowDetail('Role')}
+        style={styles.countItem}
+      >
         <Text style={styles.countItemCount}>
           {isLogin ? `${count.role_count}` : '-'}
         </Text>
         <Text style={styles.countItemName}>关注角色</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.countItem}>
         <Text style={styles.countItemCount}>
           {isLogin ? `${count.review_count}` : '-'}
