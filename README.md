@@ -17,30 +17,20 @@ Readme | [平台差异对比](docs/difference.md) | [阿里字体图标](docs/ic
 
 ## 简介
 
-本项目是一个仿写[慕影网H5端](https://github.com/NameLi/muying-h5)项目。
+本项目是一个仿写[慕影网H5端](https://github.com/NameLi/muying-h5)项目
+
+项目使用react-native-web实现web端应用,可查看[web分支](https://github.com/xlz122/react-native-movie/tree/web)
 
 ## 项目使用技术栈
 
 * React
-* React Native 0.70.1
+* React Native 0.70.2
 * Redux
 * Typescript
 
-## 插件介绍
-
-阿里字体图标
-* 详细文档请查看: [docs/iconfont.md](docs/iconfont.md)
-
-项目其余插件
-* 详细文档请查看: [docs/plugin.md](docs/plugin.md)
-
 ## 加入项目
 
-如果想加入本项目开发，需将项目fork到自己的仓库下，功能开发完成后，提PR即可。
-
-项目使用react-native-web实现web端应用,可查看[web分支](https://github.com/xlz122/react-native-movie/tree/web)。
-
-0.69.5分支轮播图在app端可用，其余分支不可用(插件不支持，用图片代替)。
+如果想加入本项目开发，需将项目fork到自己的仓库下，功能开发完成后，提PR即可
 
 ## 运行
 
