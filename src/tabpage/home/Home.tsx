@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
 import { indexData } from '@/api/home';
 import type { ResponseType } from '@/types/index';
-import type { Movie } from './category/Category';
+import type { MovieItemType } from './category/Category';
 import Panel from '@/components/panel/Panel';
 import Search from './search/Search';
 import Banner from './banner/Banner';
@@ -12,17 +12,20 @@ import Nav from './nav/Nav';
 import Category from './category/Category';
 
 export type Gathers = {
-  swiper?: { bgcolor: string }[];
+  swiper: {
+    bgcolor: string;
+    banner: string;
+  }[];
   theater: {
-    data?: Movie[];
+    data?: MovieItemType[];
     total?: number;
   };
   coming: {
-    data?: Movie[];
+    data?: MovieItemType[];
     total?: number;
   };
   today: {
-    data?: Movie[];
+    data?: MovieItemType[];
     total?: number;
   };
 };
@@ -41,7 +44,7 @@ function Home(): React.ReactElement {
     indexData()
       .then((res: ResponseType<Gathers>) => {
         if (res.code === 200) {
-          setBanner(res?.data?.swiper);
+          setBanner(res?.data?.swiper || []);
           setMovie({
             theater: res?.data?.theater,
             coming: res?.data?.coming,
@@ -88,54 +91,51 @@ function Home(): React.ReactElement {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.page}>
-        <LinearGradinet colors={gradientColor} style={styles.bgcolor}>
-          <Search />
-          <Banner banner={banner} onChange={bannerChange} />
-        </LinearGradinet>
-        <Nav />
-        {movie?.theater?.data && movie?.theater?.data?.length > 0 && (
-          <Panel
-            title="正在热映"
-            subtitle={`${movie?.theater?.total}部`}
-            to={{ path: 'Theater' }}
-          >
-            <Category movie={movie?.theater?.data} />
-          </Panel>
-        )}
-        {movie?.coming?.data && movie?.coming?.data?.length > 0 && (
-          <Panel
-            title="即将上映"
-            subtitle={`${movie?.coming?.total}部`}
-            to={{ path: 'Coming' }}
-          >
-            <Category movie={movie?.coming?.data} />
-          </Panel>
-        )}
-        {movie?.today?.data && movie?.today?.data?.length > 0 && (
-          <Panel
-            title="那年今日"
-            subtitle={`${movie?.today?.total}部`}
-            to={{ path: 'Today' }}
-          >
-            <Category movie={movie?.today?.data} />
-          </Panel>
-        )}
-      </View>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+      <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
+      <Search />
+      <Banner banner={banner} onChange={bannerChange} />
+      <Nav />
+      {movie?.theater?.data && movie?.theater?.data?.length > 0 && (
+        <Panel
+          title="正在热映"
+          subtitle={`${movie?.theater?.total}部`}
+          to={{ path: 'Theater' }}
+        >
+          <Category movie={movie?.theater?.data} />
+        </Panel>
+      )}
+      {movie?.coming?.data && movie?.coming?.data?.length > 0 && (
+        <Panel
+          title="即将上映"
+          subtitle={`${movie?.coming?.total}部`}
+          to={{ path: 'Coming' }}
+        >
+          <Category movie={movie?.coming?.data} />
+        </Panel>
+      )}
+      {movie?.today?.data && movie?.today?.data?.length > 0 && (
+        <Panel
+          title="那年今日"
+          subtitle={`${movie?.today?.total}部`}
+          to={{ path: 'Today' }}
+        >
+          <Category movie={movie?.today?.data} />
+        </Panel>
+      )}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 240,
     backgroundColor: '#f5f5f5'
   },
   bgcolor: {
     position: 'absolute',
     top: 0,
     left: 0,
+    zIndex: -1,
     width: '100%',
     height: 300
   }
