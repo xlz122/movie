@@ -73,7 +73,9 @@ function Movies(): React.ReactElement {
         resizeMode={'stretch'}
         style={[styles.itemImage]}
       />
-      <Text style={styles.itemRating}>{item?.rating}</Text>
+      {Number(item?.rating) > 0 && (
+        <Text style={styles.itemRating}>{item?.rating}</Text>
+      )}
       <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
         {item.title}
       </Text>
@@ -113,9 +115,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
+    width: 105,
     paddingBottom: 10,
     marginHorizontal: 5,
-    width: 105,
     textAlign: 'center'
   },
   itemImage: {
