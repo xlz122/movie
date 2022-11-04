@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
-import { userRoles } from '@/api/mine';
+import { userActors } from '@/api/mine';
 import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { ResponseType, Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -19,12 +19,14 @@ type ItemType = {
   avatar: string;
   name: string;
   name_en: string;
+  gender: string;
+  country: string;
 };
 
-function Role(): React.ReactElement {
+function UserActor(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getUserRoles = ({
+  const getUserActors = ({
     page,
     per_page
   }: {
@@ -32,7 +34,7 @@ function Role(): React.ReactElement {
     per_page: number;
   }): Promise<unknown[]> => {
     return new Promise((resolve, reject) => {
-      userRoles({ page, per_page })
+      userActors({ page, per_page })
         .then((res: ResponseType<unknown[]>) => {
           if (res.code === 200) {
             resolve(res.data!);
@@ -47,7 +49,7 @@ function Role(): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => navigation.push('RoleDetail', { id: item.id })}
+      onPress={() => navigation.push('ActorDetail', { id: item.id })}
     >
       <View style={styles.item}>
         <Image
@@ -62,6 +64,15 @@ function Role(): React.ReactElement {
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
             {item.name_en}
           </Text>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+            {item.gender}
+            {Boolean(item?.country) && (
+              <>
+                <Text> · </Text>
+                {item?.country}
+              </>
+            )}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -70,7 +81,7 @@ function Role(): React.ReactElement {
   // 无数据展示
   const ListEmptyComponent = (): React.ReactElement => (
     <View style={styles.noData}>
-      <Text style={styles.noDataText}>您还没有关注任何角色</Text>
+      <Text style={styles.noDataText}>您还没有关注任何影人</Text>
     </View>
   );
 
@@ -79,7 +90,7 @@ function Role(): React.ReactElement {
       <ScrollRefresh
         page={1}
         pageSize={10}
-        request={getUserRoles}
+        request={getUserActors}
         initialNumToRender={6}
         renderItem={renderItem}
         ListEmptyComponent={<ListEmptyComponent />}
@@ -107,14 +118,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 92,
     borderRadius: 3
-  },
-  itemCoverText: {
-    position: 'absolute',
-    top: 1.6,
-    left: 5,
-    zIndex: 1,
-    fontSize: 10,
-    color: '#fff'
   },
   itemInfo: {
     flex: 1,
@@ -144,4 +147,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Role;
+export default UserActor;
