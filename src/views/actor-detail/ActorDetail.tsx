@@ -1,7 +1,6 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { actorsDetail } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType, Navigation } from '@/types/index';
@@ -95,8 +94,8 @@ function ActorDetail(): React.ReactElement {
           </Text>
         )}
         {!detail?.summary && (
-          <View style={styles.summary}>
-            <Text style={styles.summaryText}>暂无简介</Text>
+          <View style={styles.noSummary}>
+            <Text style={styles.noSummaryText}>暂无简介</Text>
           </View>
         )}
       </Panel>
@@ -158,6 +157,11 @@ const styles = StyleSheet.create({
     borderRightWidth: 0
   },
   summary: {
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    color: '#303133'
+  },
+  noSummary: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -165,7 +169,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     color: '#303133'
   },
-  summaryText: {
+  noSummaryText: {
     height: 75,
     lineHeight: 75,
     fontSize: 12,
