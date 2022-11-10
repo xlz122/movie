@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import type { ListRenderItemInfo } from 'react-native';
+import { formatDate } from '@/utils/utils';
+import type { ViewStyle, ListRenderItemInfo } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -12,6 +13,7 @@ type Route = RouteProp<{ params: { id: number } }>;
 type Props = {
   method: Function;
   close?: () => void;
+  commentStyle?: ViewStyle;
 };
 
 type ItemType = {
@@ -23,7 +25,7 @@ type ItemType = {
   content: string;
   created_at: string;
   like_count: number;
-  is_delete: boolean;
+  is_delete: number;
 };
 
 function Comment(props: Props): React.ReactElement {
@@ -85,10 +87,15 @@ function Comment(props: Props): React.ReactElement {
         </TouchableOpacity>
       </View>
       <View style={styles.itemContent}>
-        <Text style={styles.itemText}>{item.content}</Text>
+        {item.is_delete === 0 && (
+          <Text style={styles.itemText}>{item.content}</Text>
+        )}
+        {item.is_delete === 1 && (
+          <Text style={styles.itemDeleteText}>{item.content}</Text>
+        )}
       </View>
       <View style={styles.itemInfo}>
-        <Text style={styles.infoText}>{item.created_at?.slice(0, 10)}</Text>
+        <Text style={styles.infoText}>{formatDate(item.created_at)}</Text>
         <View style={styles.infoDesc}>
           <Text style={styles.descText}>{item.like_count}</Text>
           <Text style={styles.descIcon}>{'\ue669'}</Text>
@@ -105,7 +112,7 @@ function Comment(props: Props): React.ReactElement {
   );
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, props?.commentStyle]}>
       <TouchableOpacity activeOpacity={1} style={styles.mask} />
       <View style={styles.modal}>
         <View style={styles.modalHeader}>
