@@ -14,9 +14,19 @@ import styles from './actor-detail.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
-type Detail = {
+export type ActorDetailType = {
   id: number;
   avatar?: string;
+  name?: string;
+  name_en?: string;
+  gender?: string;
+  birthday?: string;
+  age?: string;
+  country?: string;
+  born_place?: string;
+  professions?: Array<string>;
+  constellation?: string;
+  height?: string;
   collection_count: number;
   works_count: number;
   role_count: number;
@@ -37,11 +47,11 @@ function ActorDetail(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
-  const [detail, setDetail] = useState<Partial<Detail>>({});
+  const [detail, setDetail] = useState<Partial<ActorDetailType>>({});
 
   const getActorDetail = () => {
     actorsDetail({ id: route.params.id })
-      .then((res: ResponseType<Partial<Detail>>) => {
+      .then((res: ResponseType<Partial<ActorDetailType>>) => {
         if (res.code === 200) {
           setDetail(res.data!);
         }
@@ -76,7 +86,7 @@ function ActorDetail(): React.ReactElement {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
-      <ActorInfo data={detail} refreshDetail={refreshDetail} />
+      <ActorInfo detail={detail} refreshDetail={refreshDetail} />
       <View style={styles.count}>
         <View style={styles.countItem}>
           <Text style={styles.countItemValue}>
@@ -138,6 +148,7 @@ function ActorDetail(): React.ReactElement {
         <Panel
           title="影视作品"
           subtitle={`全部${detail?.works_count}部`}
+          to={{ path: 'ActorWorksList', params: { id: route.params.id } }}
           panelStyle={{ paddingBottom: 10 }}
         >
           <ActorWorks movie={detail?.works} />
