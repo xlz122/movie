@@ -178,6 +178,12 @@ const router: Router[] = [
     component: require('../views/author/Author').default
   },
   {
+    name: 'Changelog',
+    title: '更新日志',
+    headerShown: true,
+    component: require('../views/changelog/Changelog').default
+  },
+  {
     name: 'WebView',
     title: '',
     headerShown: false,
