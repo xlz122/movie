@@ -97,10 +97,19 @@ function Mine(props: Props): React.ReactElement {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => props?.navigation?.push('Author')}
-          style={[styles.cellItem, styles.cellLastItem]}
+          style={styles.cellItem}
         >
           <Text style={styles.cellItemIcon}>{'\ue634'}</Text>
           <Text style={styles.cellItemText}>关于作者</Text>
+          <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => props?.navigation?.push('Changelog')}
+          style={[styles.cellItem, styles.cellLastItem]}
+        >
+          <Text style={styles.cellItemIcon}>{'\ue60b'}</Text>
+          <Text style={styles.cellItemText}>更新日志</Text>
           <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
         </TouchableOpacity>
       </View>
