@@ -35,6 +35,7 @@ type RefreshState = {
   isRefresh: boolean;
   isLoadMore: boolean;
   loadText: string;
+  currentComplete: boolean;
   complete: boolean;
   noData: boolean;
 };
@@ -50,7 +51,9 @@ function ScrollRefresh(props: Props): React.ReactElement {
     isLoadMore: false,
     // 加载文字
     loadText: '',
-    // 数据是否加载完成
+    // 当前请求数据是否加载完成
+    currentComplete: false,
+    // 数据是否全部加载完成
     complete: false,
     // 是否没有数据
     noData: false
@@ -62,6 +65,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       page: 1,
       data: [],
       isRefresh: true,
+      currentComplete: false,
       complete: false,
       noData: false,
       loadText: ''
@@ -69,8 +73,8 @@ function ScrollRefresh(props: Props): React.ReactElement {
   };
 
   const onEndReached = (): boolean | undefined => {
-    // 加载完成
-    if (refreshState.complete) {
+    // 当前请求未完成 / 加载完成
+    if (!refreshState.currentComplete || refreshState.complete) {
       return false;
     }
 
@@ -78,6 +82,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       ...refreshState,
       page: refreshState.page + 1,
       isLoadMore: true,
+      currentComplete: false,
       loadText: '加载中...'
     });
   };
@@ -117,6 +122,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         ...refreshState,
         isRefresh: false,
         isLoadMore: false,
+        currentComplete: true,
         loadText: '接口请求失败,请重试...'
       });
       return false;
@@ -129,6 +135,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         data,
         isRefresh: false,
         isLoadMore: false,
+        currentComplete: true,
         complete: true,
         noData: true,
         loadText: ''
@@ -144,6 +151,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         data,
         isRefresh: false,
         isLoadMore: false,
+        currentComplete: true,
         complete: true,
         loadText: '没有更多数据了'
       });
@@ -158,6 +166,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         data: refreshState.data.concat(data),
         isRefresh: false,
         isLoadMore: false,
+        currentComplete: true,
         complete: true,
         loadText: '没有更多数据了'
       });
@@ -170,6 +179,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       data: refreshState.data.concat(data),
       isRefresh: false,
       isLoadMore: false,
+      currentComplete: true,
       loadText: '加载更多...'
     });
   };
