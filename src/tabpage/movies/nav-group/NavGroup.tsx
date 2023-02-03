@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 
 type Props = {
+  group: string;
   category: GroupItem[];
   active: string;
-  onChange: (name: string) => void;
+  onChange: (group: string, name: string) => void;
 };
 
 type GroupItem = {
@@ -22,7 +23,7 @@ function NavGroup(props: Props): React.ReactElement {
     <TouchableOpacity
       activeOpacity={1}
       onPress={() => {
-        props.onChange(item.name);
+        props.onChange(props.group, item.name);
       }}
     >
       <Text

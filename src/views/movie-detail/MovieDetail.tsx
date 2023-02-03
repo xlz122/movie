@@ -1,11 +1,13 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
 import { deviceHeight } from '@/utils/screen';
 import { moviesDetail, movieComment } from '@/api/movies';
 import type { RouteProp } from '@react-navigation/native';
+import type { RootState } from '@/store/index';
 import type { ResponseType, Navigation } from '@/types/index';
 import type { ActorItemType } from './movie-actor/MovieActor';
 import type { ItemType } from './movie-similar/MovieSimilar';
@@ -72,6 +74,8 @@ export type MovieDetailType = {
 function MovieDeail(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
+
+  const isLogin = useSelector((state: RootState) => state.routine.isLogin);
 
   const [detail, setDetail] = useState<Partial<MovieDetailType>>({});
 
@@ -157,6 +161,14 @@ function MovieDeail(): React.ReactElement {
     });
   }, [gradientColor]);
 
+  // 收藏
+  const collectionChange = (): boolean | undefined => {
+    if (!isLogin) {
+      navigation.push('Login');
+      return false;
+    }
+  };
+
   // 评论
   const [comment, setComment] = useState({
     visible: false
@@ -241,14 +253,18 @@ function MovieDeail(): React.ReactElement {
           </Text>
         </View>
         <View style={styles.tool}>
-          <View style={styles.toolItem}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={collectionChange}
+            style={styles.toolItem}
+          >
             <Text style={styles.toolItemIcon}>{'\ue911'}</Text>
             <Text style={styles.toolItemText}>
               {detail?.collection_count && detail?.collection_count > 0
                 ? detail?.collection_count
                 : '收藏'}
             </Text>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => setComment({ ...comment, visible: true })}
