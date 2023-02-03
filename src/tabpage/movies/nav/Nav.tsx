@@ -75,24 +75,18 @@ function Nav(props: Props): React.ReactElement {
     year: '全部'
   });
 
-  const categoriesChange = (name: string) => {
-    const genres: Category['genres'] = handlerGroup(name);
+  const navChange = (group: string, name: string) => {
+    if (group === 'category') {
+      const genres: Category['genres'] = handlerGroup(name);
 
-    setCategory({ ...category, genres });
+      setCategory({ ...category, genres });
+      setCategoryParams({ ...categoryParams, category: name, genre: '全部' });
+      return;
+    }
 
-    setCategoryParams({ ...categoryParams, category: name });
-  };
+    setCategoryParams({ ...categoryParams, [group]: name });
 
-  const genresChange = (name: string) => {
-    setCategoryParams({ ...categoryParams, genre: name });
-  };
-
-  const countriesChange = (name: string) => {
-    setCategoryParams({ ...categoryParams, country: name });
-  };
-
-  const yearsChange = (name: string) => {
-    setCategoryParams({ ...categoryParams, year: name });
+    props.onChange({ ...categoryParams, [group]: name });
   };
 
   function handlerGroup(name: string): Category['genres'] {
@@ -121,35 +115,31 @@ function Nav(props: Props): React.ReactElement {
     return genres;
   }
 
-  useEffect(() => {
-    if (category.categories.length === 0) {
-      return;
-    }
-
-    props.onChange(categoryParams);
-  }, [categoryParams]);
-
   return (
     <View style={styles.nav}>
       <NavGroup
+        group={'category'}
         category={category.categories}
         active={categoryParams.category}
-        onChange={categoriesChange}
+        onChange={navChange}
       />
       <NavGroup
+        group={'genre'}
         category={category.genres}
         active={categoryParams.genre}
-        onChange={genresChange}
+        onChange={navChange}
       />
       <NavGroup
+        group={'country'}
         category={category.countries}
         active={categoryParams.country}
-        onChange={countriesChange}
+        onChange={navChange}
       />
       <NavGroup
+        group={'year'}
         category={category.years}
         active={categoryParams.year}
-        onChange={yearsChange}
+        onChange={navChange}
       />
     </View>
   );
