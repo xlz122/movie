@@ -30,7 +30,7 @@ function Movies(): React.ReactElement {
     year: '全部'
   });
 
-  const timer = useRef<NodeJS.Timeout>();
+  const timer = useRef<number>();
 
   const navChange = (categoryParams: Partial<MovieParams>) => {
     setNavParams({ ...navParams, ...categoryParams });

@@ -45,7 +45,7 @@ function Forget(): React.ReactElement {
     visible: false,
     time: 120
   });
-  const timer = useRef<NodeJS.Timer>();
+  const timer = useRef<number>();
 
   const handleTimeText = () => {
     if (timer.current) {
