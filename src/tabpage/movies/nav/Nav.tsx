@@ -81,11 +81,11 @@ function Nav(props: Props): React.ReactElement {
 
       setCategory({ ...category, genres });
       setCategoryParams({ ...categoryParams, category: name, genre: '全部' });
+      props.onChange({ ...categoryParams, category: name, genre: '全部' });
       return;
     }
 
     setCategoryParams({ ...categoryParams, [group]: name });
-
     props.onChange({ ...categoryParams, [group]: name });
   };
 
