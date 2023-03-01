@@ -6,12 +6,12 @@ function Project(): React.ReactElement {
     <View style={styles.page}>
       <View style={styles.cell}>
         <View style={styles.cellItem}>
-          <Text style={styles.itemText}>react native</Text>
-          <Text style={styles.itemRightText}>0.71.2</Text>
+          <Text style={styles.itemText}>react</Text>
+          <Text style={styles.itemRightText}>18.2.0</Text>
         </View>
         <View style={[styles.cellItem, styles.cellLastItem]}>
-          <Text style={styles.itemText}>维护</Text>
-          <Text style={styles.itemRightText}>长期维护</Text>
+          <Text style={styles.itemText}>react native</Text>
+          <Text style={styles.itemRightText}>0.71.3</Text>
         </View>
       </View>
     </View>
