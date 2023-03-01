@@ -14,11 +14,7 @@ function Author(): React.ReactElement {
           <Text style={styles.itemRightText}>撇捺</Text>
         </View>
         <View style={styles.cellItem}>
-          <Text style={styles.itemText}>城市</Text>
-          <Text style={styles.itemRightText}>厦门</Text>
-        </View>
-        <View style={styles.cellItem}>
-          <Text style={styles.itemText}>工作</Text>
+          <Text style={styles.itemText}>职业</Text>
           <Text style={styles.itemRightText}>前端开发</Text>
         </View>
         <TouchableOpacity
@@ -31,30 +27,6 @@ function Author(): React.ReactElement {
           <Text style={styles.itemText}>github主页</Text>
           <Text style={[styles.itemRightText, styles.itemHref]}>
             https://github.com/xlz122
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() =>
-            navigation?.push('WebView', { to: 'https://www.xlz122.cn' })
-          }
-          style={styles.cellItem}
-        >
-          <Text style={styles.itemText}>个人博客</Text>
-          <Text style={[styles.itemRightText, styles.itemHref]}>
-            https://www.xlz122.cn
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() =>
-            navigation?.push('WebView', { to: 'https://n.xlz122.cn' })
-          }
-          style={[styles.cellItem, styles.cellLastItem]}
-        >
-          <Text style={styles.itemText}>开源项目 - 网易云</Text>
-          <Text style={[styles.itemRightText, styles.itemHref]}>
-            https://n.xlz122.cn
           </Text>
         </TouchableOpacity>
       </View>
