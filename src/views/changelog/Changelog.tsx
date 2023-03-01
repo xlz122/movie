@@ -6,6 +6,15 @@ function Changelog(): React.ReactElement {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
       <View style={styles.list}>
         <View style={styles.item}>
+          <Text style={styles.itemTitle}>2023-03-01</Text>
+          <View style={styles.itemContent}>
+            <Text style={styles.itemText}>1.react native版本更新至0.71.3</Text>
+            <Text style={styles.itemText}>2.更新关于作者页面</Text>
+            <Text style={styles.itemText}>3.更新关于项目页面</Text>
+            <Text style={styles.itemText}>2.更新项目效果图</Text>
+          </View>
+        </View>
+        <View style={styles.item}>
           <Text style={styles.itemTitle}>2023-02-02</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.react native版本更新至0.71.2</Text>
