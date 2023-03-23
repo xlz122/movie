@@ -9,7 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-async-storage/async-storage": "^1.17.12",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
@@ -18,7 +18,7 @@
     "babel-plugin-react-native-web": "^0.18.12",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "react-native": "0.71.3",
+    "react-native": "0.71.4",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-reanimated": "2.9.1",
     "react-native-reanimated-carousel": "^3.3.0",
@@ -39,17 +39,17 @@
     "babel-loader": "^9.1.2",
     "babel-plugin-module-resolver": "^5.0.0",
     "compression-webpack-plugin": "^10.0.0",
-    "eslint": "^8.35.0",
+    "eslint": "^8.36.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
+    "lint-staged": "^13.2.0",
     "metro-react-native-babel-preset": "0.72.3",
     "prettier": "^2.4.1",
     "typescript": "^4.9.5",
     "url-loader": "^4.1.1",
-    "webpack": "^5.75.0",
+    "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^4.13.1"
   },
   "engines": {
     "node": ">=16.0.0"
