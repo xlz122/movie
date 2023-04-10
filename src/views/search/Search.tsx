@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import storage from '@/utils/storage';
 import type { Navigation, TextInputEvent } from '@/types/index';
@@ -83,9 +77,9 @@ function Search(): React.ReactElement {
             style={styles.inputText}
           />
           {Boolean(search?.keyword) && (
-            <TouchableOpacity activeOpacity={1} onPress={handleClearKeyword}>
+            <Pressable onPress={handleClearKeyword}>
               <Text style={styles.inputClearIcon}>{'\ue637'}</Text>
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
         <Text onPress={cancel} style={styles.cancelText}>
@@ -97,9 +91,8 @@ function Search(): React.ReactElement {
           <View style={styles.tab}>
             {tab.map((item, index) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   key={index}
-                  activeOpacity={1}
                   onPress={() => toggleSort(item.type)}
                   style={styles.tabItem}
                 >
@@ -109,7 +102,7 @@ function Search(): React.ReactElement {
                       search.type === item.type ? styles.tabActiveLine : null
                     }
                   />
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
           </View>

@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -76,8 +76,7 @@ function Coming(): React.ReactElement {
         </View>
       )}
       {!item.stickyTitle && (
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() => navigation.push('MovieDetail', { id: item.id })}
         >
           <View style={styles.item}>
@@ -102,7 +101,7 @@ function Coming(): React.ReactElement {
               <Text style={styles.itemText}>{item.countries}</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       )}
     </>
   );

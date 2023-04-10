@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
@@ -29,10 +29,7 @@ function RoleMovie(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   const renderItem = ({ item }: ListRenderItemInfo<MovieItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.poster }}
@@ -52,7 +49,7 @@ function RoleMovie(props: Props): React.ReactElement {
           {item.title}
         </Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

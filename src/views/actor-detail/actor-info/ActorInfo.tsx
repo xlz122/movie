@@ -51,11 +51,13 @@ function ActorInfo(props: Props): React.ReactElement {
 
   return (
     <View style={styles.page}>
-      <Image
-        source={{ uri: detail?.avatar }}
-        resizeMode={'cover'}
-        style={[styles.infoImage]}
-      />
+      {detail?.avatar && (
+        <Image
+          source={{ uri: detail?.avatar }}
+          resizeMode={'cover'}
+          style={[styles.infoImage]}
+        />
+      )}
       <View style={styles.info}>
         <View style={styles.infoBrief}>
           <Text style={styles.briefName}>{detail?.name}</Text>

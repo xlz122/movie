@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { userCount } from '@/api/mine';
@@ -69,8 +69,7 @@ function MineCount(): React.ReactElement {
 
   return (
     <View style={styles.count}>
-      <TouchableOpacity
-        activeOpacity={1}
+      <Pressable
         onPress={() => jumpFlollowDetail('UserActor')}
         style={styles.countItem}
       >
@@ -78,9 +77,8 @@ function MineCount(): React.ReactElement {
           {isLogin ? `${count.actor_count}` : '-'}
         </Text>
         <Text style={styles.countItemName}>关注影人</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={1}
+      </Pressable>
+      <Pressable
         onPress={() => jumpFlollowDetail('UserRole')}
         style={styles.countItem}
       >
@@ -88,19 +86,14 @@ function MineCount(): React.ReactElement {
           {isLogin ? `${count.role_count}` : '-'}
         </Text>
         <Text style={styles.countItemName}>关注角色</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => jumpFlollowDetail('')}
-        style={styles.countItem}
-      >
+      </Pressable>
+      <Pressable onPress={() => jumpFlollowDetail('')} style={styles.countItem}>
         <Text style={styles.countItemCount}>
           {isLogin ? `${count.review_count}` : '-'}
         </Text>
         <Text style={styles.countItemName}>收藏影评</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={1}
+      </Pressable>
+      <Pressable
         onPress={() => jumpFlollowDetail('UserVideo')}
         style={styles.countItem}
       >
@@ -108,7 +101,7 @@ function MineCount(): React.ReactElement {
           {isLogin ? `${count.video_count}` : '-'}
         </Text>
         <Text style={styles.countItemName}>收藏视频</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

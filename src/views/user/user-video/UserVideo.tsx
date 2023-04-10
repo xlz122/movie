@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -49,10 +49,7 @@ function UserVideo(): React.ReactElement {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('VideoDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
           <Image
@@ -78,7 +75,7 @@ function UserVideo(): React.ReactElement {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   // 无数据展示

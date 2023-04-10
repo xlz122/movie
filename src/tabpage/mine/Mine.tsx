@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/index';
 import type { Navigation } from '@/types/index';
@@ -50,28 +50,26 @@ function Mine(props: Props): React.ReactElement {
           </>
         )}
         {isLogin && (
-          <TouchableOpacity
-            activeOpacity={1}
+          <Pressable
             onPress={() => props?.navigation.push('Setting')}
             style={styles.setting}
           >
             <Text style={styles.settingIcon}>{'\ue65e'}</Text>
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
       {/* 收藏统计 */}
       <MineCount />
       {isLogin && (
         <View style={styles.cell}>
-          <TouchableOpacity
-            activeOpacity={1}
+          <Pressable
             onPress={() => props?.navigation?.push('UserProfile')}
             style={styles.cellItem}
           >
             <Text style={styles.cellItemIcon}>{'\ue6c8'}</Text>
             <Text style={styles.cellItemText}>我的资料</Text>
             <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
-          </TouchableOpacity>
+          </Pressable>
           <View style={[styles.cellItem, styles.cellLastItem]}>
             <Text style={styles.cellItemIcon}>{'\ue611'}</Text>
             <Text style={styles.cellItemText}>影片收藏夹</Text>
@@ -85,33 +83,30 @@ function Mine(props: Props): React.ReactElement {
           <Text style={styles.cellItemText}>兴趣爱好</Text>
           <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() => props?.navigation?.push('Project')}
           style={styles.cellItem}
         >
           <Text style={styles.cellItemIcon}>{'\ue655'}</Text>
           <Text style={styles.cellItemText}>关于项目</Text>
           <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
+        </Pressable>
+        <Pressable
           onPress={() => props?.navigation?.push('Author')}
           style={styles.cellItem}
         >
           <Text style={styles.cellItemIcon}>{'\ue634'}</Text>
           <Text style={styles.cellItemText}>关于作者</Text>
           <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
+        </Pressable>
+        <Pressable
           onPress={() => props?.navigation?.push('Changelog')}
           style={[styles.cellItem, styles.cellLastItem]}
         >
           <Text style={styles.cellItemIcon}>{'\ue60b'}</Text>
           <Text style={styles.cellItemText}>更新日志</Text>
           <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

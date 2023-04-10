@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { formatDate } from '@/utils/utils';
 import type { ViewStyle, ListRenderItemInfo } from 'react-native';
@@ -82,9 +82,9 @@ function Comment(props: Props): React.ReactElement {
         >
           {item?.author?.username}
         </Text>
-        <TouchableOpacity>
+        <Pressable>
           <Text style={styles.itemMoreIcon}>{'\ue85c'}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.itemContent}>
         {item.is_delete === 0 && (
@@ -113,17 +113,16 @@ function Comment(props: Props): React.ReactElement {
 
   return (
     <View style={[styles.page, props?.commentStyle]}>
-      <TouchableOpacity activeOpacity={1} style={styles.mask} />
+      <View style={styles.mask} />
       <View style={styles.modal}>
         <View style={styles.modalHeader}>
           <Text style={styles.headerTitle}>全部评论</Text>
-          <TouchableOpacity
-            activeOpacity={1}
+          <Pressable
             onPress={() => props.close && props.close()}
             style={styles.headerClose}
           >
             <Text style={styles.headerCloseIcon}>{'\ue612'}</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <View style={styles.modalBody}>
           {commentCount > 0 && (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 import LoginForm from './login-form/LoginForm';
@@ -28,21 +28,18 @@ function Login(): React.ReactElement {
 
   return (
     <View style={styles.login}>
-      <TouchableOpacity activeOpacity={1} onPress={close} style={styles.close}>
+      <Pressable onPress={close} style={styles.close}>
         <Text style={styles.closeIcon}>{'\ue612'}</Text>
-      </TouchableOpacity>
+      </Pressable>
       {state.type === 'login' && <LoginForm />}
       {state.type === 'register' && <RegisterForm />}
       <View style={styles.tool}>
-        <TouchableOpacity activeOpacity={1} onPress={typeChange}>
+        <Pressable onPress={typeChange}>
           <Text style={styles.toolText}>{state.typeText}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => navigation.push('Forget')}
-        >
+        </Pressable>
+        <Pressable onPress={() => navigation.push('Forget')}>
           <Text style={styles.toolText}>找回密码</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

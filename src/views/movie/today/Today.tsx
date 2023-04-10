@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -61,10 +61,7 @@ function Today(): React.ReactElement {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.poster }}
@@ -101,7 +98,7 @@ function Today(): React.ReactElement {
           </Text>
         )}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

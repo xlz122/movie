@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -82,10 +82,7 @@ function SearchDetail(props: Props): React.ReactElement {
 
   // 电影项
   const MovieItem = ({ item }: { item: MovieItemType }) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.poster }}
@@ -121,15 +118,12 @@ function SearchDetail(props: Props): React.ReactElement {
           </Text>
         )}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   // 影人项
   const ActorItem = ({ item }: { item: ActorItemType }) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('ActorDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.avatar }}
@@ -148,15 +142,12 @@ function SearchDetail(props: Props): React.ReactElement {
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   // 角色项
   const RoleItem = ({ item }: { item: RoleItemType }) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('RoleDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.avatar }}
@@ -172,7 +163,7 @@ function SearchDetail(props: Props): React.ReactElement {
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   // 无数据展示

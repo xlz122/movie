@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { deviceWidth } from '@/utils/screen';
 import { moviesList } from '@/api/movies';
@@ -80,8 +80,7 @@ function Movies(): React.ReactElement {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
+    <Pressable
       onPress={() => navigation.push('MovieDetail', { id: item.id })}
       style={styles.item}
     >
@@ -99,7 +98,7 @@ function Movies(): React.ReactElement {
       <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
         {item.title}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

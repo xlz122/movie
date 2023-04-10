@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ViewStyle } from 'react-native';
 import type { StackNavigationOptions } from '@react-navigation/stack';
@@ -18,13 +18,12 @@ function CustomHeader(props: Props): React.ReactElement {
 
   return (
     <View style={[styles.header, props?.headerStyle]}>
-      <TouchableOpacity
-        activeOpacity={1}
+      <Pressable
         onPress={() => navigation.goBack()}
         style={[styles.arrow, props?.arrowStyle]}
       >
         <Text style={styles.arrowIcon}>{'\ue656'}</Text>
-      </TouchableOpacity>
+      </Pressable>
       <Text
         style={[
           styles.titleText,

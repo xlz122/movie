@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ViewStyle, TextStyle } from 'react-native';
 import type { Navigation } from '@/types/index';
@@ -32,8 +32,7 @@ function Panel(props: Props): React.ReactElement {
             {props?.title}
           </Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() =>
             props?.to?.path &&
             navigation.push(props?.to?.path, props?.to?.params)
@@ -46,7 +45,7 @@ function Panel(props: Props): React.ReactElement {
           <Text style={[styles.moreIcon, props?.moreIconStyle]}>
             {'\ue906'}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View>{props?.children}</View>
     </View>

@@ -40,6 +40,7 @@ module.exports = {
     // 检查 effect 的依赖
     'react-hooks/exhaustive-deps': [0],
 
-    'react-native/no-inline-styles': [0]
+    'react-native/no-inline-styles': [0],
+    'react/no-unstable-nested-components': [0]
   }
 };

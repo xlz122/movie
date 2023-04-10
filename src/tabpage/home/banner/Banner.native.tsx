@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions
-} from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import Dot from './dot/Dot';
@@ -28,17 +22,15 @@ function Banner(props: Props): React.ReactElement {
 
   const RenderItem = ({ item }: { item: BannerItem }) => {
     return (
-      <TouchableOpacity activeOpacity={1}>
-        <View style={styles.coverContainer}>
-          <View style={styles.cover}>
-            <Image
-              source={{ uri: item.banner }}
-              resizeMode={'stretch'}
-              style={styles.coverImage}
-            />
-          </View>
+      <View style={styles.coverContainer}>
+        <View style={styles.cover}>
+          <Image
+            source={{ uri: item.banner }}
+            resizeMode={'stretch'}
+            style={styles.coverImage}
+          />
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 

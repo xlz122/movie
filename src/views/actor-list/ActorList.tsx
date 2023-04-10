@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -92,8 +92,7 @@ function ActorList(): React.ReactElement {
         </View>
       )}
       {!item.stickyTitle && (
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() => navigation.push('ActorDetail', { id: item.id })}
         >
           <View
@@ -118,7 +117,7 @@ function ActorList(): React.ReactElement {
               </Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       )}
     </>
   );

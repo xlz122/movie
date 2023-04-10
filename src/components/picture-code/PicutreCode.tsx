@@ -5,7 +5,7 @@ import {
   Image,
   TextInput,
   StyleSheet,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 import { deviceWidth, deviceHeight } from '@/utils/screen';
 import type { ViewStyle } from 'react-native';
@@ -42,11 +42,7 @@ function PicutreCode(props: Props): React.ReactElement {
 
   return (
     <View style={[styles.page, props.picutreStyle]}>
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={close}
-        style={[styles.mask, props?.maskStyle]}
-      />
+      <Pressable onPress={close} style={[styles.mask, props?.maskStyle]} />
       <View style={styles.modal}>
         <View style={styles.modalBody}>
           <Text style={styles.title}>请输入以下验证码数字</Text>
@@ -73,13 +69,9 @@ function PicutreCode(props: Props): React.ReactElement {
             </View>
           </View>
         </View>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={close}
-          style={styles.cancel}
-        >
+        <Pressable onPress={close} style={styles.cancel}>
           <Text style={styles.cancelText}>取消</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

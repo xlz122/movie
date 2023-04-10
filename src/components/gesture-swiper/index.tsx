@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import SimpleSwiper from './GestureSwiper';
 
 type Props = {
@@ -12,13 +12,13 @@ type BannerItem = {
 
 function SimpleSwiperDemo(props: Props): React.ReactElement {
   const renderItem = ({ item }: { item: BannerItem }) => (
-    <TouchableOpacity activeOpacity={1}>
+    <View>
       <Image
         source={{ uri: item?.banner }}
         resizeMode={'stretch'}
         style={styles.coverImage}
       />
-    </TouchableOpacity>
+    </View>
   );
 
   return (
