@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { moviePhotos } from '@/api/movies';
@@ -71,9 +71,8 @@ function MoviePhotoDetail(): React.ReactElement {
       <View style={styles.tab}>
         {tab.map((item, index) => {
           return (
-            <TouchableOpacity
+            <Pressable
               key={index}
-              activeOpacity={1}
               onPress={() => toggleSort(item.type)}
               style={styles.tabItem}
             >
@@ -92,20 +91,20 @@ function MoviePhotoDetail(): React.ReactElement {
                   photoParams.type === item.type ? styles.activeLine : null
                 }
               />
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>
       <View style={styles.list}>
         {photo.map((item, index) => {
           return (
-            <TouchableOpacity key={index} activeOpacity={1} style={styles.item}>
+            <View key={index} style={styles.item}>
               <Image
                 source={{ uri: item.url }}
                 resizeMode={'stretch'}
                 style={[styles.itemImage]}
               />
-            </TouchableOpacity>
+            </View>
           );
         })}
       </View>

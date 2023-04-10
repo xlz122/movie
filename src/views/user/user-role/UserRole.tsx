@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -45,10 +45,7 @@ function UserRole(): React.ReactElement {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('RoleDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.avatar }}
@@ -64,7 +61,7 @@ function UserRole(): React.ReactElement {
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   // 无数据展示

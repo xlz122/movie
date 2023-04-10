@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import lodash from 'lodash';
 import storage from '@/utils/storage';
 
@@ -50,30 +50,21 @@ function SearchHistory(props: Props): React.ReactElement {
           <Text style={styles.titleText}>历史记录</Text>
           <View style={styles.clear}>
             {clearVisible && (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={clearAllHistory}
-                style={styles.clearAll}
-              >
+              <Pressable onPress={clearAllHistory} style={styles.clearAll}>
                 <Text style={styles.clearAllText}>全部删除</Text>
                 <View style={styles.clearAllLine} />
-              </TouchableOpacity>
+              </Pressable>
             )}
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={clearVisibleChange}
-              style={styles.clear}
-            >
+            <Pressable onPress={clearVisibleChange} style={styles.clear}>
               <Text style={styles.clearIcon}>{'\ue614'}</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
         <View style={styles.recordList}>
           {history?.map((item, index) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 key={index}
-                activeOpacity={1}
                 onPress={() => historyChange(item, index)}
                 style={styles.item}
               >
@@ -81,7 +72,7 @@ function SearchHistory(props: Props): React.ReactElement {
                 {clearVisible && (
                   <Text style={styles.itemIcon}>{'\ue637'}</Text>
                 )}
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         </View>

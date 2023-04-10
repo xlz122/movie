@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -71,10 +71,7 @@ function ActorWorksDetail(): React.ReactElement {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.poster }}
@@ -94,7 +91,7 @@ function ActorWorksDetail(): React.ReactElement {
           {item.title}
         </Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
   return (
     <View style={styles.page}>

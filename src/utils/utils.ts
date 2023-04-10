@@ -22,7 +22,7 @@ export const colorToRgba = function (color: string, alpha: number): string {
     const colorChange = [];
     for (let i = 1; i < 7; i += 2) {
       // @ts-ignore
-      colorChange.push(parseInt('0x' + color.slice(i, i + 2)));
+      colorChange.push(parseInt('0x' + color.slice(i, i + 2), 10));
     }
 
     return `rgba(${colorChange.join(',')},${alpha})`;
@@ -39,14 +39,14 @@ export function timeStampToDuration(timeStamp: number): string {
   const time = timeStamp.toString();
   let h = 0,
     i = 0,
-    s = parseInt(time);
+    s = parseInt(time, 10);
 
   if (s > 60) {
-    i = parseInt((s / 60).toString());
-    s = parseInt((s % 60).toString());
+    i = parseInt((s / 60).toString(), 10);
+    s = parseInt((s % 60).toString(), 10);
     if (i > 60) {
-      h = parseInt((i / 60).toString());
-      i = parseInt((i % 60).toString());
+      h = parseInt((i / 60).toString(), 10);
+      i = parseInt((i % 60).toString(), 10);
     }
   }
 
@@ -59,7 +59,7 @@ export function timeStampToDuration(timeStamp: number): string {
   const s2 = zero(s);
 
   let ok = '';
-  if (h2 <= 0) {
+  if (Number(h2) <= 0) {
     ok = [i2, s2].join(':');
   } else {
     ok = [h2, i2, s2].join(':');
@@ -97,19 +97,19 @@ export function formatDate(datatime: string): string {
   let yearC = diffValue / year;
 
   if (yearC >= 1) {
-    return '' + parseInt(String(yearC)) + '年前';
+    return '' + parseInt(String(yearC), 10) + '年前';
   }
 
   if (monthC >= 1) {
-    result = '' + parseInt(String(monthC)) + '月前';
+    result = '' + parseInt(String(monthC), 10) + '月前';
   } else if (weekC >= 1) {
-    result = '' + parseInt(String(weekC)) + '周前';
+    result = '' + parseInt(String(weekC), 10) + '周前';
   } else if (dayC >= 1) {
-    result = '' + parseInt(String(dayC)) + '天前';
+    result = '' + parseInt(String(dayC), 10) + '天前';
   } else if (hourC >= 1) {
-    result = '' + parseInt(String(hourC)) + '小时前';
+    result = '' + parseInt(String(hourC), 10) + '小时前';
   } else if (minC >= 1) {
-    result = '' + parseInt(String(minC)) + '分钟前';
+    result = '' + parseInt(String(minC), 10) + '分钟前';
   } else {
     result = '刚刚';
   }

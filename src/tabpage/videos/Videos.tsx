@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { timeStampToDuration } from '@/utils/utils';
 import { videosList } from '@/api/videos';
@@ -46,10 +46,7 @@ function Videos(): React.ReactElement {
   };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('VideoDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
           <Image
@@ -83,7 +80,7 @@ function Videos(): React.ReactElement {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

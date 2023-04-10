@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity
-} from 'react-native';
+import { View, Image, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
 
 type Props = {
@@ -19,15 +12,13 @@ export type PhotoItemType = {
 
 function RolePhoto(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<PhotoItemType>) => (
-    <TouchableOpacity activeOpacity={1}>
-      <View style={styles.item}>
-        <Image
-          source={{ uri: item.url }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
-        />
-      </View>
-    </TouchableOpacity>
+    <View style={styles.item}>
+      <Image
+        source={{ uri: item.url }}
+        resizeMode={'stretch'}
+        style={[styles.itemImage]}
+      />
+    </View>
   );
 
   return (
