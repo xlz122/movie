@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
@@ -29,10 +29,7 @@ function Category(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   const renderItem = ({ item }: { item: MovieItemType }) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.poster }}
@@ -59,7 +56,7 @@ function Category(props: Props): React.ReactElement {
           <Text style={styles.itemDate}>{item?.release_date}</Text>
         )}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 import type { VideoDetailType } from '../VideoDetail';
@@ -38,8 +38,7 @@ function VideoInfo(props: Props): React.ReactElement {
         <Text style={styles.otherText}>发布于 {detail.created_at}</Text>
         <Text style={styles.otherText}>{detail.play_count} 次播放</Text>
       </View>
-      <TouchableOpacity
-        activeOpacity={1}
+      <Pressable
         onPress={() =>
           navigation.push('MovieDetail', { id: detail?.movie?.id })
         }
@@ -69,7 +68,7 @@ function VideoInfo(props: Props): React.ReactElement {
             <Text>{detail?.movie?.genres}</Text>
           </Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

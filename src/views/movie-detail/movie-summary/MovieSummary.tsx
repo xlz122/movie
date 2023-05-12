@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
@@ -97,9 +97,9 @@ function MovieSummary(): React.ReactElement {
         </View>
       </ScrollView>
       <View style={styles.close}>
-        <TouchableOpacity onPress={navigation.goBack} style={styles.closeView}>
+        <Pressable onPress={navigation.goBack} style={styles.closeView}>
           <Text style={styles.closeIcon}>{'\ue612'}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </>
   );

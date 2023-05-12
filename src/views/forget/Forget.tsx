@@ -5,7 +5,7 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -215,12 +215,9 @@ function Forget(): React.ReactElement {
             style={styles.itemInput}
           />
           {Boolean(formData.account) && (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => handleClearInput('account')}
-            >
+            <Pressable onPress={() => handleClearInput('account')}>
               <Text style={styles.inputClearIcon}>{'\ue637'}</Text>
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       )}
@@ -254,12 +251,9 @@ function Forget(): React.ReactElement {
             style={styles.itemInput}
           />
           {Boolean(formData.password) && (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => handleClearInput('password')}
-            >
+            <Pressable onPress={() => handleClearInput('password')}>
               <Text style={styles.inputClearIcon}>{'\ue637'}</Text>
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       )}

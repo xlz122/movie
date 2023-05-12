@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
@@ -29,10 +29,7 @@ function MovieActor(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   const renderItem = ({ item }: ListRenderItemInfo<ActorItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('ActorDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.avatar }}
@@ -47,7 +44,7 @@ function MovieActor(props: Props): React.ReactElement {
           {item?.act ? `饰: ${item?.act}` : ''}
         </Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

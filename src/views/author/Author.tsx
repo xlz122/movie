@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Linking
-} from 'react-native';
+import { View, Text, StyleSheet, Pressable, Linking } from 'react-native';
 
 function Author(): React.ReactElement {
   // 跳转外部链接
@@ -26,8 +20,7 @@ function Author(): React.ReactElement {
           <Text style={styles.itemText}>职业</Text>
           <Text style={styles.itemRightText}>前端开发</Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() => handlePress('https://github.com/xlz122')}
           style={styles.cellItem}
         >
@@ -35,7 +28,7 @@ function Author(): React.ReactElement {
           <Text style={[styles.itemRightText, styles.itemHref]}>
             https://github.com/xlz122
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

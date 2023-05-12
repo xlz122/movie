@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 
@@ -9,38 +9,31 @@ function Nav(): React.ReactElement {
   return (
     <View style={styles.nav}>
       <View style={styles.list}>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() => navigation.push('Theater')}
           style={styles.item}
         >
           <Text style={[styles.itemIcon, styles.hotMovie]}>{'\ue617'}</Text>
           <Text style={styles.itemText}>热映中</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
+        </Pressable>
+        <Pressable
           onPress={() => navigation.push('HighScore')}
           style={styles.item}
         >
           <Text style={[styles.itemIcon, styles.highScore]}>{'\ue67b'}</Text>
           <Text style={styles.itemText}>高分榜</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
+        </Pressable>
+        <Pressable
           onPress={() => navigation.push('Awards')}
           style={styles.item}
         >
           <Text style={[styles.itemIcon, styles.awards]}>{'\ue668'}</Text>
           <Text style={styles.itemText}>奖项</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => navigation.push('Today')}
-          style={styles.item}
-        >
+        </Pressable>
+        <Pressable onPress={() => navigation.push('Today')} style={styles.item}>
           <Text style={[styles.itemIcon, styles.today]}>{'\ue6c4'}</Text>
           <Text style={styles.itemText}>那年今日</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

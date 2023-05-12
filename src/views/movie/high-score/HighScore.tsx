@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -48,10 +48,7 @@ function HighScore(): React.ReactElement {
   };
 
   const renderItem = ({ item, index }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.push('MovieDetail', { id: item.id })}
-    >
+    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
           <Image
@@ -93,7 +90,7 @@ function HighScore(): React.ReactElement {
           </Text>
         )}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
   FlatList
 } from 'react-native';
@@ -26,6 +26,7 @@ type Detail = {
 type ItemType = {
   type: string;
   count: number;
+  duration: number;
   children: {
     id: number;
     title: string;
@@ -63,7 +64,7 @@ function VideoList(props: Props): React.ReactElement {
   const [navIndex, setNavIndex] = useState(0);
 
   const renderItem = ({ item, index }: ListRenderItemInfo<ItemType>) => (
-    <TouchableOpacity activeOpacity={1} onPress={() => setNavIndex(index)}>
+    <Pressable onPress={() => setNavIndex(index)}>
       <Text
         style={[
           styles.navItem,
@@ -72,7 +73,7 @@ function VideoList(props: Props): React.ReactElement {
       >
         {item.type} {item.count}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (
@@ -90,9 +91,8 @@ function VideoList(props: Props): React.ReactElement {
         {detail?.videos[navIndex] &&
           detail?.videos[navIndex]?.children.map((item, index) => {
             return (
-              <TouchableOpacity
+              <Pressable
                 key={index}
-                activeOpacity={1}
                 onPress={() => props?.playChange(item.id)}
                 style={styles.videoItem}
               >
@@ -126,7 +126,7 @@ function VideoList(props: Props): React.ReactElement {
                     </Text>
                   </View>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         {detail?.videos[navIndex] &&

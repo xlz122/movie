@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import type { Navigation } from '@/types/index';
@@ -20,13 +20,9 @@ function Setting(): React.ReactElement {
   return (
     <>
       <View style={styles.page} />
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={logout}
-        style={styles.logout}
-      >
+      <Pressable onPress={logout} style={styles.logout}>
         <Text style={styles.logoutText}>退出登录</Text>
-      </TouchableOpacity>
+      </Pressable>
     </>
   );
 }

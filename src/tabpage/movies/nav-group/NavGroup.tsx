@@ -4,7 +4,7 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
-  TouchableOpacity
+  Pressable
 } from 'react-native';
 
 type Props = {
@@ -20,8 +20,7 @@ type GroupItem = {
 
 function NavGroup(props: Props): React.ReactElement {
   const renderItem = ({ item }: { item: GroupItem }) => (
-    <TouchableOpacity
-      activeOpacity={1}
+    <Pressable
       onPress={() => {
         props.onChange(props.group, item.name);
       }}
@@ -34,7 +33,7 @@ function NavGroup(props: Props): React.ReactElement {
       >
         {item?.name}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   return (

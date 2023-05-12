@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { timeStampToDuration } from '@/utils/utils';
 import { deviceWidth } from '@/utils/screen';
 
@@ -31,13 +31,9 @@ function Video(props: Props): React.ReactElement {
         style={[styles.coverImage]}
       />
       {!play.status && (
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={playStatusChange}
-          style={styles.play}
-        >
+        <Pressable onPress={playStatusChange} style={styles.play}>
           <Text style={styles.playIcon}>{'\ue616'}</Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
       {play.status && (
         <>

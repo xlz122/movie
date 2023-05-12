@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { movieWish } from '@/api/movies';
@@ -144,7 +144,7 @@ function MovieInfo(props: Props): React.ReactElement {
             )}
           </View>
           <View style={styles.operate}>
-            <TouchableOpacity activeOpacity={1} onPress={movieWishChange}>
+            <Pressable onPress={movieWishChange}>
               <View
                 style={[
                   styles.operateItem,
@@ -158,14 +158,14 @@ function MovieInfo(props: Props): React.ReactElement {
                   {detail?.is_wish ? '已想看' : '想看'}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
             {detail?.release_status !== 1 && (
-              <TouchableOpacity activeOpacity={1} onPress={movieWatchChange}>
+              <Pressable onPress={movieWatchChange}>
                 <View style={styles.operateItem}>
                   <Text style={styles.operateIcon}>{'\ue911'}</Text>
                   <Text style={styles.operateText}>看过</Text>
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
         </View>

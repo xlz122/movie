@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import {
@@ -178,18 +178,16 @@ function VideoDetail(): React.ReactElement {
         />
       </ScrollView>
       <View style={styles.comment}>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() => setComment({ ...comment, visible: true })}
           style={styles.review}
         >
           <View style={styles.reviewInput}>
             <Text style={styles.reviewInputText}>来点碎碎念...</Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
         <View style={styles.tool}>
-          <TouchableOpacity
-            activeOpacity={1}
+          <Pressable
             onPress={() => likeChange(detail?.is_like!)}
             style={styles.toolItem}
           >
@@ -206,9 +204,8 @@ function VideoDetail(): React.ReactElement {
                 ? detail?.like_count
                 : '点赞'}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
+          </Pressable>
+          <Pressable
             onPress={() => collectionChange(detail?.is_collection!)}
             style={styles.toolItem}
           >
@@ -225,9 +222,8 @@ function VideoDetail(): React.ReactElement {
                 ? detail?.collection_count
                 : '收藏'}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
+          </Pressable>
+          <Pressable
             onPress={() => setComment({ ...comment, visible: true })}
             style={styles.toolItem}
           >
@@ -237,7 +233,7 @@ function VideoDetail(): React.ReactElement {
                 ? detail?.comment_count
                 : '评论'}
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
       {comment.visible && (

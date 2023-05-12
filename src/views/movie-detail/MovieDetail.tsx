@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import LinearGradinet from 'react-native-linear-gradient';
@@ -253,20 +253,15 @@ function MovieDeail(): React.ReactElement {
           </Text>
         </View>
         <View style={styles.tool}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={collectionChange}
-            style={styles.toolItem}
-          >
+          <Pressable onPress={collectionChange} style={styles.toolItem}>
             <Text style={styles.toolItemIcon}>{'\ue911'}</Text>
             <Text style={styles.toolItemText}>
               {detail?.collection_count && detail?.collection_count > 0
                 ? detail?.collection_count
                 : '收藏'}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
+          </Pressable>
+          <Pressable
             onPress={() => setComment({ ...comment, visible: true })}
             style={styles.toolItem}
           >
@@ -276,7 +271,7 @@ function MovieDeail(): React.ReactElement {
                 ? detail?.comment_count
                 : '评论'}
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
       {comment.visible && (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 
@@ -17,8 +17,7 @@ function Author(): React.ReactElement {
           <Text style={styles.itemText}>职业</Text>
           <Text style={styles.itemRightText}>前端开发</Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={1}
+        <Pressable
           onPress={() =>
             navigation?.push('WebView', { to: 'https://github.com/xlz122' })
           }
@@ -28,7 +27,7 @@ function Author(): React.ReactElement {
           <Text style={[styles.itemRightText, styles.itemHref]}>
             https://github.com/xlz122
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
