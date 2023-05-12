@@ -25,11 +25,13 @@ function Video(props: Props): React.ReactElement {
 
   return (
     <View style={styles.page}>
-      <Image
-        source={{ uri: detail.poster }}
-        resizeMode={'stretch'}
-        style={[styles.coverImage]}
-      />
+      {detail.poster && (
+        <Image
+          source={{ uri: detail.poster }}
+          resizeMode={'stretch'}
+          style={[styles.coverImage]}
+        />
+      )}
       {!play.status && (
         <Pressable onPress={playStatusChange} style={styles.play}>
           <Text style={styles.playIcon}>{'\ue616'}</Text>

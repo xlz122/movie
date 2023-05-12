@@ -101,11 +101,13 @@ function MovieInfo(props: Props): React.ReactElement {
   return (
     <View style={styles.page}>
       <View style={styles.movieInfo}>
-        <Image
-          source={{ uri: detail?.poster?.small }}
-          resizeMode={'stretch'}
-          style={[styles.infoImage]}
-        />
+        {detail?.poster?.small && (
+          <Image
+            source={{ uri: detail?.poster?.small }}
+            resizeMode={'stretch'}
+            style={[styles.infoImage]}
+          />
+        )}
         <View style={styles.info}>
           <Text style={styles.title}>{detail?.title}</Text>
           {Boolean(detail?.title_original) && (

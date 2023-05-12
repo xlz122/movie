@@ -19,11 +19,13 @@ function VideoInfo(props: Props): React.ReactElement {
     <View style={styles.page}>
       <View style={styles.authorWarp}>
         <View style={styles.author}>
-          <Image
-            source={{ uri: detail?.author?.avatar }}
-            resizeMode={'stretch'}
-            style={[styles.authorAvatar]}
-          />
+          {detail?.author?.avatar && (
+            <Image
+              source={{ uri: detail?.author?.avatar }}
+              resizeMode={'stretch'}
+              style={[styles.authorAvatar]}
+            />
+          )}
           <View style={styles.authorInfo}>
             <Text style={styles.authorName}>{detail?.author?.username}</Text>
             <Text style={styles.authorCount}>
@@ -44,11 +46,13 @@ function VideoInfo(props: Props): React.ReactElement {
         }
         style={styles.movie}
       >
-        <Image
-          source={{ uri: detail?.movie?.poster }}
-          resizeMode={'stretch'}
-          style={[styles.movieImage]}
-        />
+        {detail?.movie?.poster && (
+          <Image
+            source={{ uri: detail?.movie?.poster }}
+            resizeMode={'stretch'}
+            style={[styles.movieImage]}
+          />
+        )}
         <View style={styles.movieInfo}>
           <View style={styles.infoTitle}>
             <Text
