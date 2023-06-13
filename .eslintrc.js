@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: '@react-native-community',
+  extends: '@react-native',
   rules: {
     // 取消函数参数需要重新赋值给另一个变量才能使用
     'no-param-reassign': [0],
