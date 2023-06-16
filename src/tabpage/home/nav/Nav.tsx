@@ -8,33 +8,34 @@ function Nav(): React.ReactElement {
 
   return (
     <View style={styles.nav}>
-      <View style={styles.list}>
-        <Pressable
-          onPress={() => navigation.push('Theater')}
-          style={styles.item}
-        >
-          <Text style={[styles.itemIcon, styles.hotMovie]}>{'\ue617'}</Text>
-          <Text style={styles.itemText}>热映中</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => navigation.push('HighScore')}
-          style={styles.item}
-        >
-          <Text style={[styles.itemIcon, styles.highScore]}>{'\ue67b'}</Text>
-          <Text style={styles.itemText}>高分榜</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => navigation.push('Awards')}
-          style={styles.item}
-        >
-          <Text style={[styles.itemIcon, styles.awards]}>{'\ue668'}</Text>
-          <Text style={styles.itemText}>奖项</Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.push('Today')} style={styles.item}>
-          <Text style={[styles.itemIcon, styles.today]}>{'\ue6c4'}</Text>
-          <Text style={styles.itemText}>那年今日</Text>
-        </Pressable>
-      </View>
+      <Pressable
+        onPress={() => navigation.push('Theater')}
+        style={styles.navItem}
+      >
+        <Text style={[styles.itemIcon, styles.hotMovie]}>{'\ue617'}</Text>
+        <Text style={styles.itemText}>热映中</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => navigation.push('HighScore')}
+        style={styles.navItem}
+      >
+        <Text style={[styles.itemIcon, styles.highScore]}>{'\ue67b'}</Text>
+        <Text style={styles.itemText}>高分榜</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => navigation.push('Awards')}
+        style={styles.navItem}
+      >
+        <Text style={[styles.itemIcon, styles.awards]}>{'\ue668'}</Text>
+        <Text style={styles.itemText}>奖项</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => navigation.push('Today')}
+        style={styles.navItem}
+      >
+        <Text style={[styles.itemIcon, styles.today]}>{'\ue6c4'}</Text>
+        <Text style={styles.itemText}>那年今日</Text>
+      </Pressable>
     </View>
   );
 }
@@ -42,18 +43,14 @@ function Nav(): React.ReactElement {
 const styles = StyleSheet.create({
   nav: {
     display: 'flex',
+    flexDirection: 'row',
     paddingTop: 20,
     paddingBottom: 10,
     margin: 10,
     backgroundColor: '#fff',
     borderRadius: 6
   },
-  list: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 66
-  },
-  item: {
+  navItem: {
     flex: 1,
     alignItems: 'center',
     height: 66

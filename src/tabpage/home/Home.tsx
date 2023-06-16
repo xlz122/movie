@@ -12,11 +12,12 @@ import Banner from './banner/Banner';
 import Nav from './nav/Nav';
 import Category from './category/Category';
 
-export type Gathers = {
-  swiper: {
-    bgcolor: string;
-    banner: string;
-  }[];
+type BannerType = {
+  bgcolor: string;
+  banner: string;
+}[];
+
+type MovieType = {
   theater: {
     data?: MovieItemType[];
     total?: number;
@@ -34,9 +35,9 @@ export type Gathers = {
 function Home(): React.ReactElement {
   const [loading, setLoading] = useState(true);
   // 轮播图
-  const [banner, setBanner] = useState<Gathers['swiper']>([]);
+  const [banner, setBanner] = useState<BannerType>([]);
   // 电影分类
-  const [movie, setMovie] = useState<Partial<Gathers>>({
+  const [movie, setMovie] = useState<MovieType>({
     theater: {},
     coming: {},
     today: {}
@@ -44,7 +45,7 @@ function Home(): React.ReactElement {
 
   const getIndexData = () => {
     indexData()
-      .then((res: ResponseType<Gathers>) => {
+      .then((res: ResponseType) => {
         if (res.code === 200) {
           setLoading(false);
           setBanner(res?.data?.swiper || []);
@@ -88,14 +89,13 @@ function Home(): React.ReactElement {
   }, [banner]);
 
   const bannerChange = (index: number): void => {
-    const color = (banner && banner[index].bgcolor) || '#f5f5f5';
+    const color = banner[index].bgcolor || '#f5f5f5';
 
     handlerGradualChange(color);
   };
 
   // 初始值
   const spinValue = new Animated.Value(0);
-
   // 插值(单位转换)
   const spinBackgroundColor = spinValue.interpolate({
     inputRange: [0, 150],
@@ -105,12 +105,12 @@ function Home(): React.ReactElement {
   const spinWidth = spinValue.interpolate({
     inputRange: [0, 150],
     outputRange: [0, 0.38],
-    extrapolate: 'clamp' // 阻止输出值超过outputRange
+    extrapolate: 'clamp'
   });
   const spinColor = spinValue.interpolate({
     inputRange: [0, 150],
     outputRange: ['transparent', '#dfdfdf'],
-    extrapolate: 'clamp' // 阻止输出值超过outputRange
+    extrapolate: 'clamp'
   });
 
   const animatedEvent = Animated.event(
@@ -149,7 +149,7 @@ function Home(): React.ReactElement {
           <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
           <Banner banner={banner} onChange={bannerChange} />
           <Nav />
-          {movie?.theater?.data && movie?.theater?.data?.length > 0 && (
+          {movie?.theater?.total && (
             <Panel
               title="正在热映"
               subtitle={`${movie?.theater?.total}部`}
@@ -158,7 +158,7 @@ function Home(): React.ReactElement {
               <Category movie={movie?.theater?.data} />
             </Panel>
           )}
-          {movie?.coming?.data && movie?.coming?.data?.length > 0 && (
+          {movie?.coming?.total && (
             <Panel
               title="即将上映"
               subtitle={`${movie?.coming?.total}部`}
@@ -167,7 +167,7 @@ function Home(): React.ReactElement {
               <Category movie={movie?.coming?.data} />
             </Panel>
           )}
-          {movie?.today?.data && movie?.today?.data?.length > 0 && (
+          {movie?.today?.total && (
             <Panel
               title="那年今日"
               subtitle={`${movie?.today?.total}部`}

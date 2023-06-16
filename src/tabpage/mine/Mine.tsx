@@ -10,30 +10,12 @@ type Props = {
   navigation: Navigation;
 };
 
-type UserInfo = {
-  username?: string;
-  avatar?: string;
-};
-
 function Mine(props: Props): React.ReactElement {
-  const userinfo = useSelector(
-    (state: RootState) => state.routine.userinfo
-  ) as UserInfo;
-  const isLogin = useSelector((state: RootState) => state.routine.isLogin);
+  const userinfo = useSelector((state: RootState) => state.routine.userinfo);
 
   return (
     <View style={styles.page}>
       <View style={styles.userInfo}>
-        {Boolean(userinfo?.username) && (
-          <>
-            <Image
-              source={{ uri: userinfo?.avatar }}
-              resizeMode={'stretch'}
-              style={[styles.avatar]}
-            />
-            <Text style={styles.userNameText}>{userinfo?.username}</Text>
-          </>
-        )}
         {!userinfo?.username && (
           <>
             <Image
@@ -49,63 +31,70 @@ function Mine(props: Props): React.ReactElement {
             </Text>
           </>
         )}
-        {isLogin && (
-          <Pressable
-            onPress={() => props?.navigation.push('Setting')}
-            style={styles.setting}
-          >
-            <Text style={styles.settingIcon}>{'\ue65e'}</Text>
-          </Pressable>
+        {userinfo?.username && (
+          <>
+            <Image
+              source={{ uri: userinfo.avatar }}
+              resizeMode={'stretch'}
+              style={[styles.avatar]}
+            />
+            <Text style={styles.userName}>{userinfo?.username}</Text>
+            <Pressable
+              onPress={() => props?.navigation.push('Setting')}
+              style={styles.setting}
+            >
+              <Text style={styles.settingIcon}>{'\ue65e'}</Text>
+            </Pressable>
+          </>
         )}
       </View>
-      {/* 收藏统计 */}
       <MineCount />
-      {isLogin && (
+      {userinfo?.username && (
         <View style={styles.cell}>
           <Pressable
-            onPress={() => props?.navigation?.push('UserProfile')}
+            onPress={() => props?.navigation.push('UserProfile')}
             style={styles.cellItem}
           >
-            <Text style={styles.cellItemIcon}>{'\ue6c8'}</Text>
-            <Text style={styles.cellItemText}>我的资料</Text>
-            <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+            <Text style={styles.itemIcon}>{'\ue6c8'}</Text>
+            <Text style={styles.itemText}>我的资料</Text>
+            <Text style={styles.itemArrow}>{'\ue906'}</Text>
           </Pressable>
           <View style={[styles.cellItem, styles.cellLastItem]}>
-            <Text style={styles.cellItemIcon}>{'\ue611'}</Text>
-            <Text style={styles.cellItemText}>影片收藏夹</Text>
-            <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+            <Text style={styles.itemIcon}>{'\ue611'}</Text>
+            <Text style={styles.itemText}>影片收藏夹</Text>
+            <Text style={styles.itemArrow}>{'\ue906'}</Text>
           </View>
         </View>
       )}
       <View style={styles.cell}>
         <View style={styles.cellItem}>
-          <Text style={styles.cellItemIcon}>{'\ue701'}</Text>
-          <Text style={styles.cellItemText}>兴趣爱好</Text>
-          <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+          <Text style={styles.itemIcon}>{'\ue701'}</Text>
+          <Text style={styles.itemText}>兴趣爱好</Text>
+          <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </View>
         <Pressable
-          onPress={() => props?.navigation?.push('Project')}
+          onPress={() => props?.navigation.push('Project')}
           style={styles.cellItem}
         >
-          <Text style={styles.cellItemIcon}>{'\ue655'}</Text>
-          <Text style={styles.cellItemText}>关于项目</Text>
-          <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+          <Text style={styles.itemIcon}>{'\ue655'}</Text>
+          <Text style={styles.itemText}>关于项目</Text>
+          <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
         <Pressable
-          onPress={() => props?.navigation?.push('Author')}
+          onPress={() => props?.navigation.push('Author')}
           style={styles.cellItem}
         >
-          <Text style={styles.cellItemIcon}>{'\ue634'}</Text>
-          <Text style={styles.cellItemText}>关于作者</Text>
-          <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+          <Text style={styles.itemIcon}>{'\ue634'}</Text>
+          <Text style={styles.itemText}>关于作者</Text>
+          <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
         <Pressable
-          onPress={() => props?.navigation?.push('Changelog')}
+          onPress={() => props?.navigation.push('Changelog')}
           style={[styles.cellItem, styles.cellLastItem]}
         >
-          <Text style={styles.cellItemIcon}>{'\ue60b'}</Text>
-          <Text style={styles.cellItemText}>更新日志</Text>
-          <Text style={styles.cellItemArrow}>{'\ue906'}</Text>
+          <Text style={styles.itemIcon}>{'\ue60b'}</Text>
+          <Text style={styles.itemText}>更新日志</Text>
+          <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
       </View>
     </View>
