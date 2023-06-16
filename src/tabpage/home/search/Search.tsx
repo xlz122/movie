@@ -1,23 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { ViewStyle } from 'react-native';
 import type { Navigation } from '@/types/index';
 
-type Props = {
-  searchStyle?: ViewStyle;
-  inputStyle?: ViewStyle;
-};
-
-function Search(props: Props): React.ReactElement {
+function Search(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   return (
-    <View style={[styles.search, props?.searchStyle]}>
-      <Pressable
-        onPress={() => navigation.push('Search')}
-        style={[styles.input, props?.inputStyle]}
-      >
+    <View style={styles.search}>
+      <Pressable onPress={() => navigation.push('Search')} style={styles.input}>
         <Text style={styles.inputIcon}>{'\ue613'}</Text>
         <Text style={styles.inputText}>请输入你要搜索的内容</Text>
       </Pressable>

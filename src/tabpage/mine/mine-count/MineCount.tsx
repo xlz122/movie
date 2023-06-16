@@ -7,10 +7,10 @@ import type { RootState } from '@/store/index';
 import type { ResponseType, Navigation } from '@/types/index';
 
 type Count = {
-  actor_count: number;
-  review_count: number;
-  role_count: number;
-  video_count: number;
+  actor_count?: number;
+  review_count?: number;
+  role_count?: number;
+  video_count?: number;
 };
 
 function MineCount(): React.ReactElement {
@@ -28,7 +28,7 @@ function MineCount(): React.ReactElement {
     userCount()
       .then((res: ResponseType<Count>) => {
         if (res.code === 200) {
-          setCount(res.data as Count);
+          setCount(res.data || {});
         }
       })
       .catch(() => ({}));
@@ -43,11 +43,14 @@ function MineCount(): React.ReactElement {
   }, [isLogin]);
 
   useEffect(() => {
+    if (!isLogin) {
+      return;
+    }
+
+    // tabbar切换重新请求
     // @ts-ignore
     const unsubscribe = navigation.addListener('tabPress', () => {
-      if (isLogin) {
-        getUserCount();
-      }
+      getUserCount();
     });
 
     return unsubscribe;
@@ -60,10 +63,6 @@ function MineCount(): React.ReactElement {
       return false;
     }
 
-    if (!path) {
-      return false;
-    }
-
     navigation.push(path);
   };
 
@@ -73,34 +72,34 @@ function MineCount(): React.ReactElement {
         onPress={() => jumpFlollowDetail('UserActor')}
         style={styles.countItem}
       >
-        <Text style={styles.countItemCount}>
+        <Text style={styles.itemCount}>
           {isLogin ? `${count.actor_count}` : '-'}
         </Text>
-        <Text style={styles.countItemName}>关注影人</Text>
+        <Text style={styles.itemText}>关注影人</Text>
       </Pressable>
       <Pressable
         onPress={() => jumpFlollowDetail('UserRole')}
         style={styles.countItem}
       >
-        <Text style={styles.countItemCount}>
+        <Text style={styles.itemCount}>
           {isLogin ? `${count.role_count}` : '-'}
         </Text>
-        <Text style={styles.countItemName}>关注角色</Text>
+        <Text style={styles.itemText}>关注角色</Text>
       </Pressable>
-      <Pressable onPress={() => jumpFlollowDetail('')} style={styles.countItem}>
-        <Text style={styles.countItemCount}>
+      <Pressable style={styles.countItem}>
+        <Text style={styles.itemCount}>
           {isLogin ? `${count.review_count}` : '-'}
         </Text>
-        <Text style={styles.countItemName}>收藏影评</Text>
+        <Text style={styles.itemText}>收藏影评</Text>
       </Pressable>
       <Pressable
         onPress={() => jumpFlollowDetail('UserVideo')}
         style={styles.countItem}
       >
-        <Text style={styles.countItemCount}>
+        <Text style={styles.itemCount}>
           {isLogin ? `${count.video_count}` : '-'}
         </Text>
-        <Text style={styles.countItemName}>收藏视频</Text>
+        <Text style={styles.itemText}>收藏视频</Text>
       </Pressable>
     </View>
   );
@@ -119,25 +118,24 @@ const styles = StyleSheet.create({
     borderRadius: 6
   },
   countItem: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1
+    alignItems: 'center'
   },
-  countItemCount: {
+  itemCount: {
     width: 9,
     height: 36,
     lineHeight: 36,
     fontSize: 18,
-    color: '#e54847',
-    borderRadius: 100
+    color: '#e54847'
   },
-  countItemName: {
+  itemText: {
     marginTop: 4,
-    fontSize: 11,
     fontFamily: 'inherit',
     fontWeight: 'bold',
+    fontSize: 11,
     color: '#666'
   }
 });

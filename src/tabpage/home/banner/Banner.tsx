@@ -22,8 +22,8 @@ function Banner(props: Props): React.ReactElement {
 
   const RenderItem = ({ item }: { item: BannerItem }) => {
     return (
-      <View style={styles.coverContainer}>
-        <View style={styles.cover}>
+      <View style={styles.item}>
+        <View style={styles.itemCover}>
           <Image
             source={{ uri: item.banner }}
             resizeMode={'stretch'}
@@ -61,10 +61,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 190
   },
-  coverContainer: {
+  item: {
     paddingHorizontal: 10
   },
-  cover: {
+  itemCover: {
     position: 'relative',
     borderRadius: 4,
     overflow: 'hidden'

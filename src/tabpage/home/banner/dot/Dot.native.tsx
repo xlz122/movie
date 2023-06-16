@@ -66,24 +66,23 @@ function Dot(props: Props): React.ReactElement {
   };
 
   return (
-    <View style={styles.dotContainer}>
-      {props.list &&
-        props.list.map((item, index) => {
-          return (
-            <PaginationItem
-              key={index}
-              animValue={props.progressValue!}
-              index={index}
-              length={props.list.length}
-            />
-          );
-        })}
+    <View style={styles.dot}>
+      {props?.list?.map((item, index) => {
+        return (
+          <PaginationItem
+            key={index}
+            animValue={props.progressValue!}
+            index={index}
+            length={props.list.length}
+          />
+        );
+      })}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  dotContainer: {
+  dot: {
     position: 'absolute',
     top: 178,
     right: 0,

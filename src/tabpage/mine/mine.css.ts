@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginLeft: 11,
     color: '#fff'
   },
-  userNameText: {
+  userName: {
     marginLeft: 11,
     fontWeight: '700',
     fontSize: 16,
@@ -61,22 +61,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 13,
     marginHorizontal: 17,
-    borderBottomWidth: 0.4,
     borderStyle: 'solid',
+    borderBottomWidth: 0.4,
     borderColor: '#eee'
   },
-  cellItemIcon: {
+  itemIcon: {
     marginRight: 6,
     fontFamily: 'iconfont',
     fontSize: 16,
     color: 'rgb(255, 190, 16)'
   },
-  cellItemText: {
+  itemText: {
     flex: 1,
     fontSize: 12,
     color: '#303133'
   },
-  cellItemArrow: {
+  itemArrow: {
     marginLeft: 13,
     fontFamily: 'iconfont',
     fontStyle: 'normal',

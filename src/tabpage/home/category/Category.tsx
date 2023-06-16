@@ -39,7 +39,7 @@ function Category(props: Props): React.ReactElement {
         {item?.category && item?.category !== '电影' && (
           <Text style={styles.itemTag}>{item?.category}</Text>
         )}
-        {item?.rating !== null && Number(item?.rating) === 0 && (
+        {item?.rating && Number(item?.rating) === 0 && (
           <Text style={styles.itemRating}>暂无评分</Text>
         )}
         {Number(item?.rating) > 0 && (
@@ -51,7 +51,6 @@ function Category(props: Props): React.ReactElement {
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
           {item.title}
         </Text>
-        {/* 上映时间 */}
         {item?.release_date && (
           <Text style={styles.itemDate}>{item?.release_date}</Text>
         )}
@@ -60,10 +59,10 @@ function Category(props: Props): React.ReactElement {
   );
 
   return (
-    <SafeAreaView style={styles.list}>
+    <SafeAreaView style={styles.category}>
       <FlatList
         horizontal
-        initialNumToRender={4}
+        initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
         data={props.movie}
         renderItem={renderItem}
@@ -73,7 +72,7 @@ function Category(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
-  list: {
+  category: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
