@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import routineSlice from './routineSlice';
 // redux-persist持久化存储
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   persistStore,
   persistReducer,
@@ -11,16 +11,12 @@ import {
   PURGE,
   REGISTER
 } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import routineSlice from './routineSlice';
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage: AsyncStorage
-  // 黑名单
-  // blacklist: [],
-  // 白名单
-  // whitelist: []
 };
 
 const persistedReducer = persistReducer(persistConfig, routineSlice);

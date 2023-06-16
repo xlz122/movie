@@ -9,36 +9,37 @@ const tabbar = [
     name: 'Find',
     label: '首页',
     title: '首页',
-    headerShown: false,
     icon: '\ue908',
     selectIcon: '\ue908',
+    // 头部标题栏
+    headerShown: false,
     component: require('../tabpage/home/Home').default
   },
   {
     name: 'Movies',
     label: '分类',
     title: '分类',
-    headerShown: false,
     icon: '\ue636',
     selectIcon: '\ue636',
+    headerShown: false,
     component: require('../tabpage/movies/Movies').default
   },
   {
     name: 'Videos',
     label: '短片',
     title: '短片',
-    headerShown: false,
     icon: '\ue617',
     selectIcon: '\ue617',
+    headerShown: false,
     component: require('../tabpage/videos/Videos').default
   },
   {
     name: 'Mine',
     label: '我的',
     title: '我的',
-    headerShown: false,
     icon: '\ue909',
     selectIcon: '\ue909',
+    headerShown: false,
     component: require('../tabpage/mine/Mine').default
   }
 ];
@@ -47,8 +48,6 @@ function TabNavigator(): React.ReactElement {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarInactiveTintColor: '#b7bac3',
-        tabBarActiveTintColor: '#e54847',
         tabBarStyle: {
           height: 50
         },
@@ -57,7 +56,9 @@ function TabNavigator(): React.ReactElement {
         },
         tabBarLabelStyle: {
           fontSize: 10
-        }
+        },
+        tabBarInactiveTintColor: '#b7bac3',
+        tabBarActiveTintColor: '#e54847'
       }}
     >
       {tabbar.map((item, index) => {
@@ -68,7 +69,6 @@ function TabNavigator(): React.ReactElement {
             component={item.component}
             options={{
               title: item.title,
-              headerShown: item.headerShown, // 选项卡的头部标题栏
               tabBarLabel: item.label,
               tabBarIcon: ({ focused }) => {
                 return (
@@ -76,7 +76,8 @@ function TabNavigator(): React.ReactElement {
                     {focused ? item.selectIcon : item.icon}
                   </Text>
                 );
-              }
+              },
+              headerShown: item.headerShown
             }}
           />
         );
