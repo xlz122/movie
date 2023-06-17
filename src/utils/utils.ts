@@ -21,7 +21,6 @@ export const colorToRgba = function (color: string, alpha: number): string {
     // 处理六位的颜色值，转为rgba
     const colorChange = [];
     for (let i = 1; i < 7; i += 2) {
-      // @ts-ignore
       colorChange.push(parseInt('0x' + color.slice(i, i + 2)));
     }
 

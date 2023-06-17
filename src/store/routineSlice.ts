@@ -3,7 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type RoutineState = {
   isLogin: boolean;
   token: string;
-  userinfo: unknown;
+  userinfo: {
+    username?: string;
+    avatar?: string;
+  };
 };
 
 const initialState: RoutineState = {
@@ -22,7 +25,7 @@ const routineSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    setUserInfo: (state, action: PayloadAction<unknown>) => {
+    setUserInfo: (state, action: PayloadAction<RoutineState['userinfo']>) => {
       state.userinfo = action.payload;
     },
     setLogout: state => {
