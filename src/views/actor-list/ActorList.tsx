@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  FlatList,
-  Pressable,
-  Platform
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, FlatList, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { viewHeight } from '@/utils/screen';
 import { movieActor } from '@/api/movies';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
+import styles from './actor-list.css';
 
 type Route = RouteProp<{ params: { movieId: number } }>;
 
-type ComingType = {
+type MovieType = {
   list: ItemType[];
   stickyIndex: number[];
 };
@@ -30,14 +22,14 @@ type ItemType = {
   gender?: string;
   country?: string;
   count?: number;
-  lastItem?: boolean;
+  isLastItem?: boolean;
 };
 
 function ActorList(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
-  const [actor, setActor] = useState<ComingType>({
+  const [actor, setActor] = useState<MovieType>({
     list: [],
     stickyIndex: []
   });
@@ -61,10 +53,10 @@ function ActorList(): React.ReactElement {
               stickyIndex.push(list.length - 1);
             }
 
-            // 演员项
-            item.children.forEach((i: ItemType, ind: number) => {
+            // 列表项
+            item?.children?.forEach((i: ItemType, ind: number) => {
               if (ind === item.children.length - 1) {
-                list.push({ ...i, lastItem: true });
+                list.push({ ...i, isLastItem: true });
                 return false;
               }
 
@@ -96,7 +88,10 @@ function ActorList(): React.ReactElement {
           onPress={() => navigation.push('ActorDetail', { id: item.id })}
         >
           <View
-            style={[styles.item, item.lastItem ? styles.lastItem : styles.item]}
+            style={[
+              styles.item,
+              item.isLastItem ? styles.lastItem : styles.item
+            ]}
           >
             <Image
               source={{ uri: item.avatar }}
@@ -104,14 +99,14 @@ function ActorList(): React.ReactElement {
               style={[styles.itemImage]}
             />
             <View style={styles.itemInfo}>
-              <Text style={styles.itemTitle}>{item.name}</Text>
+              <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemText}>{item.name_en}</Text>
               <Text style={styles.itemText}>
                 {item?.gender}
                 {Boolean(item?.country) && (
                   <>
                     <Text> · </Text>
-                    {item?.country}
+                    <Text>{item?.country}</Text>
                   </>
                 )}
               </Text>
@@ -124,9 +119,10 @@ function ActorList(): React.ReactElement {
 
   return (
     <View style={styles.page}>
-      {Boolean(actor.list.length) && (
+      {actor.list.length > 0 && (
         <FlatList
           stickyHeaderIndices={actor.stickyIndex}
+          keyExtractor={(item: object, index: number) => String(index)}
           data={actor.list}
           renderItem={renderItem}
         />
@@ -134,72 +130,5 @@ function ActorList(): React.ReactElement {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  page: {
-    paddingBottom: 10,
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: '#fff'
-  },
-  sticky: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    height: 45,
-    paddingHorizontal: 10,
-    backgroundColor: '#f5f5f5'
-  },
-  stickySpot: {
-    width: 4,
-    height: 4,
-    marginRight: 5,
-    backgroundColor: '#f8a52d'
-  },
-  stickyText: {
-    fontWeight: '700',
-    fontSize: 12,
-    color: '#303133'
-  },
-  stickyCount: {
-    marginLeft: 3,
-    fontSize: 10,
-    color: '#303133'
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingVertical: 8,
-    marginHorizontal: 15,
-    borderBottomWidth: 0.38,
-    borderStyle: 'solid',
-    borderColor: '#dedede'
-  },
-  itemImage: {
-    width: 68,
-    height: 90,
-    borderRadius: 3
-  },
-  itemInfo: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: 13
-  },
-  itemTitle: {
-    marginBottom: 1,
-    fontSize: 14,
-    color: '#333'
-  },
-  itemText: {
-    marginTop: 4,
-    fontSize: 12,
-    color: '#999'
-  },
-  lastItem: {
-    borderBottomWidth: 0
-  }
-});
 
 export default ActorList;
