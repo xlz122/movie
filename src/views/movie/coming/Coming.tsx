@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  FlatList,
-  Pressable,
-  Platform
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, FlatList, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { viewHeight } from '@/utils/screen';
 import { movieComing } from '@/api/home';
 import type { Navigation, ResponseType } from '@/types/index';
+import styles from './coming.css';
 
-type ComingType = {
+type MovieType = {
   list: ItemType[];
   stickyIndex: number[];
 };
@@ -31,7 +23,7 @@ type ItemType = {
 
 function Coming(): React.ReactElement {
   const navigation: Navigation = useNavigation();
-  const [coming, setComing] = useState<ComingType>({
+  const [coming, setComing] = useState<MovieType>({
     list: [],
     stickyIndex: []
   });
@@ -54,7 +46,7 @@ function Coming(): React.ReactElement {
               stickyIndex.push(list.length - 1);
             }
 
-            // 电影项
+            // 列表项
             list.push(item);
           });
 
@@ -108,9 +100,10 @@ function Coming(): React.ReactElement {
 
   return (
     <View style={styles.page}>
-      {Boolean(coming.list.length) && (
+      {coming.list.length > 0 && (
         <FlatList
           stickyHeaderIndices={coming.stickyIndex}
+          keyExtractor={(item: object, index: number) => String(index)}
           data={coming.list}
           renderItem={renderItem}
         />
@@ -118,59 +111,5 @@ function Coming(): React.ReactElement {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  page: {
-    paddingBottom: 10,
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: '#fff'
-  },
-  sticky: {
-    paddingHorizontal: 14,
-    backgroundColor: '#fff',
-    borderBottomWidth: 0.45,
-    borderStyle: 'solid',
-    borderColor: '#dedede'
-  },
-  stickyText: {
-    paddingVertical: 10,
-    fontWeight: '700',
-    fontSize: 14,
-    color: '#303133'
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 18,
-    marginRight: -20,
-    marginLeft: 16
-  },
-  itemImage: {
-    width: 93,
-    height: 124,
-    borderRadius: 3
-  },
-  itemInfo: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: 13
-  },
-  itemTitle: {
-    marginBottom: 1,
-    fontSize: 14,
-    color: '#333'
-  },
-  itemText: {
-    marginTop: 8,
-    fontSize: 11,
-    color: '#999'
-  },
-  itemCountText: {
-    fontSize: 13,
-    color: '#e54847'
-  }
-});
 
 export default Coming;
