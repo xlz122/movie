@@ -3,18 +3,8 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/index';
 
-type UserInfo = {
-  username?: string;
-  avatar?: string;
-  phone?: string;
-  gender?: string;
-  birthday?: string | null;
-};
-
 function UserProfile(): React.ReactElement {
-  const userinfo = useSelector(
-    (state: RootState) => state.routine.userinfo
-  ) as UserInfo;
+  const userinfo = useSelector((state: RootState) => state.routine.userinfo);
 
   return (
     <View style={styles.page}>
@@ -29,19 +19,19 @@ function UserProfile(): React.ReactElement {
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>用户名</Text>
-          <Text style={styles.itemRightText}>{userinfo?.username}</Text>
+          <Text style={styles.itemContent}>{userinfo?.username}</Text>
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>手机号</Text>
-          <Text style={styles.itemRightText}>{userinfo?.phone}</Text>
+          <Text style={styles.itemContent}>{userinfo?.phone}</Text>
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>性别</Text>
-          <Text style={styles.itemRightText}>{userinfo?.gender}</Text>
+          <Text style={styles.itemContent}>{userinfo?.gender}</Text>
         </View>
         <View style={[styles.cellItem, styles.cellLastItem]}>
           <Text style={styles.itemText}>生日</Text>
-          <Text style={styles.itemRightText}>{userinfo?.birthday}</Text>
+          <Text style={styles.itemContent}>{userinfo?.birthday}</Text>
         </View>
       </View>
     </View>
@@ -75,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#303133'
   },
-  itemRightText: {
+  itemContent: {
     marginLeft: 13,
     fontSize: 12,
     color: 'rgb(153, 153, 153)'

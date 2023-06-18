@@ -4,19 +4,14 @@ import { viewHeight } from '@/utils/screen';
 import { movieAwards } from '@/api/home';
 import type { ResponseType } from '@/types/index';
 
-type AwardsType = {
-  id: number;
-  title: string;
-};
-
 function Awards(): React.ReactElement {
-  const [awards, setAwards] = useState<AwardsType[]>([]);
+  const [awards, setAwards] = useState<Array<{ title?: string }>>([]);
 
   const getMovieAwards = () => {
     movieAwards()
-      .then((res: ResponseType<AwardsType[]>) => {
+      .then((res: ResponseType) => {
         if (res.code === 200) {
-          setAwards(res.data!);
+          setAwards(res.data);
         }
       })
       .catch(() => ({}));
@@ -38,7 +33,7 @@ function Awards(): React.ReactElement {
                 index % 1 === 0 ? styles.itemLine : styles.item
               ]}
             >
-              <Text style={styles.itemText}>{item.title}</Text>
+              <Text style={styles.itemTitle}>{item?.title}</Text>
             </View>
           );
         })}
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#eee'
   },
-  itemText: {
+  itemTitle: {
     fontSize: 12.3,
     color: '#303133'
   }

@@ -7,11 +7,11 @@ function Project(): React.ReactElement {
       <View style={styles.cell}>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>react</Text>
-          <Text style={styles.itemRightText}>18.2.0</Text>
+          <Text style={styles.itemContent}>18.2.0</Text>
         </View>
         <View style={[styles.cellItem, styles.cellLastItem]}>
           <Text style={styles.itemText}>react native</Text>
-          <Text style={styles.itemRightText}>0.72.0-rc.6</Text>
+          <Text style={styles.itemContent}>0.72.0-rc.6</Text>
         </View>
       </View>
     </View>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#303133'
   },
-  itemRightText: {
+  itemContent: {
     marginLeft: 13,
     fontSize: 12,
     color: 'rgb(153, 153, 153)'
