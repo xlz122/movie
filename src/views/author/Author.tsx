@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable, Linking } from 'react-native';
 
 function Author(): React.ReactElement {
-  // 跳转外部链接
-  const handlePress = (url: string) => {
+  // 外部链接
+  const handleOpenUrl = (url: string) => {
     Linking.canOpenURL(url).then(() => {
       return Linking.openURL(url);
     });
@@ -14,18 +14,18 @@ function Author(): React.ReactElement {
       <View style={styles.cell}>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>作者</Text>
-          <Text style={styles.itemRightText}>撇捺</Text>
+          <Text style={styles.itemContent}>撇捺</Text>
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>职业</Text>
-          <Text style={styles.itemRightText}>前端开发</Text>
+          <Text style={styles.itemContent}>前端开发</Text>
         </View>
         <Pressable
-          onPress={() => handlePress('https://github.com/xlz122')}
+          onPress={() => handleOpenUrl('https://github.com/xlz122')}
           style={styles.cellItem}
         >
           <Text style={styles.itemText}>github主页</Text>
-          <Text style={[styles.itemRightText, styles.itemHref]}>
+          <Text style={[styles.itemContent, styles.itemLink]}>
             https://github.com/xlz122
           </Text>
         </Pressable>
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#303133'
   },
-  itemRightText: {
+  itemContent: {
     marginLeft: 13,
     fontSize: 12,
     color: 'rgb(153, 153, 153)'
   },
-  itemHref: {
+  itemLink: {
     color: '#e54847'
   },
   cellLastItem: {
