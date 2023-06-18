@@ -8,11 +8,11 @@ import Dot from './dot/Dot';
 const pageWidth = Dimensions.get('window').width;
 
 type Props = {
-  banner: BannerItem[];
+  banner: ItemType[];
   onChange: (index: number) => void;
 };
 
-type BannerItem = {
+type ItemType = {
   banner: string;
 };
 
@@ -20,7 +20,7 @@ function Banner(props: Props): React.ReactElement {
   // 轮播滚动值
   const progressValue = useSharedValue<number>(0);
 
-  const RenderItem = ({ item }: { item: BannerItem }) => {
+  const RenderItem = ({ item }: { item: ItemType }) => {
     return (
       <View style={styles.item}>
         <View style={styles.itemCover}>

@@ -7,12 +7,14 @@ export type RoutineState = {
     username?: string;
     avatar?: string;
   };
+  searchHistory: string[];
 };
 
 const initialState: RoutineState = {
   isLogin: false,
   token: '',
-  userinfo: {}
+  userinfo: {},
+  searchHistory: []
 };
 
 const routineSlice = createSlice({
@@ -27,6 +29,9 @@ const routineSlice = createSlice({
     },
     setUserInfo: (state, action: PayloadAction<RoutineState['userinfo']>) => {
       state.userinfo = action.payload;
+    },
+    setSearchHistory: (state, action: PayloadAction<string[]>) => {
+      state.searchHistory = action.payload;
     },
     setLogout: state => {
       state.token = '';

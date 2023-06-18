@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import storage from '@/utils/storage';
+import { useStore, useSelector } from 'react-redux';
+import type { RootState } from '@/store/index';
 import type { Navigation, TextInputEvent } from '@/types/index';
 import SearchDetail from './search-detail/SearchDetail';
 import SearchHistory from './search-history/SearchHistory';
+import styles from './search.css';
 
 function Search(): React.ReactElement {
   const navigation: Navigation = useNavigation();
+  const store = useStore();
 
-  const cancel = () => {
-    navigation.goBack();
-  };
+  const searchHistory = useSelector(
+    (state: RootState) => state.routine.searchHistory
+  );
 
   const [search, setSearch] = useState({
     keyword: '',
@@ -26,26 +29,20 @@ function Search(): React.ReactElement {
     setSearch({ ...search, keyword: '' });
   };
 
+  const handleCancel = () => {
+    navigation.goBack();
+  };
+
   // 记录历史记录
   const handleInputBlur = async (): Promise<void | boolean> => {
     if (!search.keyword) {
       return false;
     }
 
-    const history = await storage.getObjectItem('history');
-
-    const searchHistory: string[] = [];
-    if (!history) {
-      searchHistory.push(search.keyword);
-      await storage.setObjectItem('history', searchHistory);
-    }
-
-    if (history && history instanceof Array) {
-      history[history.length] = search.keyword;
-
-      // 搜索记录去重
-      await storage.setObjectItem('history', Array.from(new Set(history)));
-    }
+    store.dispatch({
+      type: 'routine/setSearchHistory',
+      payload: Array.from(new Set([search.keyword, ...searchHistory]))
+    });
   };
 
   // 历史记录搜索
@@ -64,13 +61,13 @@ function Search(): React.ReactElement {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.search}>
+    <View style={styles.search}>
+      <View style={styles.searchContainer}>
         <View style={styles.input}>
           <Text style={styles.inputIcon}>{'\ue613'}</Text>
           <TextInput
+            autoFocus
             value={search.keyword}
-            autoFocus={true}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             placeholder="找影视 / 影人 / 角色"
@@ -82,7 +79,7 @@ function Search(): React.ReactElement {
             </Pressable>
           )}
         </View>
-        <Text onPress={cancel} style={styles.cancelText}>
+        <Text onPress={handleCancel} style={styles.cancelText}>
           取消
         </Text>
       </View>
@@ -113,91 +110,5 @@ function Search(): React.ReactElement {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  search: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 40,
-    paddingTop: 10,
-    paddingLeft: 10
-  },
-  input: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    height: 30,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 70
-  },
-  inputIcon: {
-    paddingHorizontal: 10,
-    fontFamily: 'iconfont',
-    fontSize: 14
-  },
-  inputText: {
-    flex: 1,
-    padding: 0,
-    fontSize: 13,
-    color: '#666'
-  },
-  inputClearIcon: {
-    marginRight: 12,
-    fontFamily: 'iconfont',
-    fontSize: 16,
-    color: '#c5c5c5'
-  },
-  cancelText: {
-    paddingRight: 10,
-    width: 78,
-    height: '100%',
-    lineHeight: 30,
-    fontSize: 12.5,
-    color: '#777',
-    textAlign: 'center'
-  },
-  tab: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    height: 45,
-    paddingLeft: 8,
-    borderBottomWidth: 0.5,
-    borderStyle: 'solid',
-    borderColor: '#eee',
-    overflow: 'hidden'
-  },
-  tabItem: {
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 57,
-    height: '100%'
-  },
-  tabItemText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#666',
-    textAlign: 'center'
-  },
-  tabActiveLine: {
-    position: 'absolute',
-    left: '50%',
-    bottom: 2.6,
-    marginLeft: -11,
-    width: 22,
-    height: 3,
-    backgroundColor: 'rgb(229, 72, 71)',
-    borderRadius: 6
-  }
-});
 
 export default Search;
