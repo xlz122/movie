@@ -9,10 +9,7 @@ function Setting(): React.ReactElement {
   const store = useStore();
 
   const logout = () => {
-    store.dispatch({
-      type: 'routine/setLogout',
-      payload: ''
-    });
+    store.dispatch({ type: 'routine/setLogout' });
 
     navigation.goBack();
   };

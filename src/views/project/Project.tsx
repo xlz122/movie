@@ -11,7 +11,7 @@ function Project(): React.ReactElement {
         </View>
         <View style={[styles.cellItem, styles.cellLastItem]}>
           <Text style={styles.itemText}>react native</Text>
-          <Text style={styles.itemRightText}>0.71.3</Text>
+          <Text style={styles.itemRightText}>0.72.0-rc.6</Text>
         </View>
       </View>
     </View>
