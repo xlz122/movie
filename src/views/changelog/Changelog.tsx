@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 function Changelog(): React.ReactElement {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
-      <View style={styles.list}>
-        <View style={styles.item}>
+      <View style={styles.cell}>
+        <View style={styles.cellItem}>
           <Text style={styles.itemTitle}>2023-03-01</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.react native版本更新至0.71.3</Text>
@@ -14,7 +14,7 @@ function Changelog(): React.ReactElement {
             <Text style={styles.itemText}>2.更新项目效果图</Text>
           </View>
         </View>
-        <View style={styles.item}>
+        <View style={styles.cellItem}>
           <Text style={styles.itemTitle}>2023-02-02</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.react native版本更新至0.71.2</Text>
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
-  list: {
+  cell: {
     paddingTop: 10
   },
-  item: {
+  cellItem: {
     padding: 16,
     marginTop: 8,
     marginBottom: 16,
