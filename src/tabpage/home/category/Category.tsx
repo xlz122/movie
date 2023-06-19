@@ -39,7 +39,7 @@ function Category(props: Props): React.ReactElement {
         {item?.category && item?.category !== '电影' && (
           <Text style={styles.itemTag}>{item?.category}</Text>
         )}
-        {item?.rating && Number(item?.rating) === 0 && (
+        {item?.rating !== null && Number(item?.rating) === 0 && (
           <Text style={styles.itemRating}>暂无评分</Text>
         )}
         {Number(item?.rating) > 0 && (

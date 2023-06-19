@@ -44,7 +44,7 @@ function RoleActor(props: Props): React.ReactElement {
     <SafeAreaView style={styles.list}>
       <FlatList
         horizontal
-        initialNumToRender={4}
+        initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
         data={props.movie}
         renderItem={renderItem}

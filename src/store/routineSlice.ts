@@ -6,6 +6,9 @@ export type RoutineState = {
   userinfo: {
     username?: string;
     avatar?: string;
+    phone?: string;
+    gender?: string;
+    birthday?: string;
   };
   searchHistory: string[];
 };
