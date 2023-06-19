@@ -13,10 +13,10 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie?: ItemType[];
+  movie: SimilarItemType[];
 };
 
-export type ItemType = {
+export type SimilarItemType = {
   id: number;
   title: string;
   poster: string;
@@ -28,7 +28,7 @@ export type ItemType = {
 function MovieSimilar(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<SimilarItemType>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -56,10 +56,11 @@ function MovieSimilar(props: Props): React.ReactElement {
     <SafeAreaView style={styles.list}>
       <FlatList
         horizontal
-        initialNumToRender={4}
+        initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
-        data={props.movie}
+        keyExtractor={(item, index) => String(index)}
         renderItem={renderItem}
+        data={props.movie}
       />
     </SafeAreaView>
   );

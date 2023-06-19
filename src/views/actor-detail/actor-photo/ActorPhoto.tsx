@@ -27,8 +27,9 @@ function ActorPhoto(props: Props): React.ReactElement {
         horizontal
         initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
-        data={props.photo}
+        keyExtractor={(item, index) => String(index)}
         renderItem={renderItem}
+        data={props.photo}
       />
     </SafeAreaView>
   );

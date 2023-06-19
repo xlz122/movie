@@ -3,10 +3,25 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
-import type { MovieDetailType } from '../MovieDetail';
 import styles from './movie-summary.css';
 
-type Route = RouteProp<{ params: { detail: MovieDetailType } }>;
+type Route = RouteProp<{ params: { detail: SummaryType } }>;
+
+type SummaryType = {
+  id?: number;
+  title?: string;
+  akas?: string[];
+  category?: string;
+  genres?: string[];
+  pubdates?: string[];
+  season_count?: number;
+  episode_count?: number;
+  durations?: string[];
+  countries?: string[];
+  color?: number;
+  languages?: string[];
+  summary?: string;
+};
 
 function MovieSummary(): React.ReactElement {
   const navigation: Navigation = useNavigation();
@@ -15,7 +30,10 @@ function MovieSummary(): React.ReactElement {
 
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.movieSummary}
+      >
         <View style={styles.summary}>
           <View style={styles.summaryContent}>
             <View style={styles.summaryTitle}>
@@ -45,7 +63,7 @@ function MovieSummary(): React.ReactElement {
                 {detail?.pubdates?.join(' / ')}
               </Text>
             </View>
-            {detail?.season_count > 0 && (
+            {Number(detail?.season_count) > 0 && (
               <View style={styles.summaryItem}>
                 <Text style={styles.itemLabel}>季数: </Text>
                 <Text style={styles.itemValue}>
@@ -53,7 +71,7 @@ function MovieSummary(): React.ReactElement {
                 </Text>
               </View>
             )}
-            {detail?.episode_count > 0 && (
+            {Number(detail?.episode_count) > 0 && (
               <View style={styles.summaryItem}>
                 <Text style={styles.itemLabel}>集数: </Text>
                 <Text style={styles.itemValue}>
@@ -61,7 +79,7 @@ function MovieSummary(): React.ReactElement {
                 </Text>
               </View>
             )}
-            {detail?.durations.length > 0 && (
+            {detail?.durations && detail?.durations.length > 0 && (
               <View style={styles.summaryItem}>
                 <Text style={styles.itemLabel}>片长: </Text>
                 <Text style={styles.itemValue}>

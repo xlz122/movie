@@ -14,10 +14,6 @@ import type { ResponseType } from '@/types/index';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
-type Photo = {
-  url: string;
-};
-
 function MoviePhotoDetail(): React.ReactElement {
   const route: Route = useRoute();
 
@@ -28,9 +24,9 @@ function MoviePhotoDetail(): React.ReactElement {
     { title: '截图', type: 'cut' },
     { title: '其他', type: 'other' }
   ]);
-  const [photo, setPhoto] = useState<Photo[]>([]);
+  const [photo, setPhoto] = useState<Array<{ url?: string }>>([]);
   const [photoParams, setPhotoParams] = useState({
-    id: 0,
+    id: route.params.id,
     page: 1,
     per_page: 11,
     type: 'all'
@@ -46,16 +42,16 @@ function MoviePhotoDetail(): React.ReactElement {
 
   const getPhotos = () => {
     moviePhotos({ ...photoParams })
-      .then((res: ResponseType<Photo[]>) => {
+      .then((res: ResponseType) => {
         if (res.code === 200) {
-          setPhoto(res.data!);
+          setPhoto(res.data);
         }
       })
       .catch(() => ({}));
   };
 
   useEffect(() => {
-    if (!route.params.id || photoParams.id === 0) {
+    if (!route.params.id) {
       return;
     }
 

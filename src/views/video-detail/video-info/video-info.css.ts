@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  page: {
+  videoInfo: {
     backgroundColor: '#fff'
   },
   authorWarp: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: '#999'
   },
-  reportBtn: {
+  report: {
     fontSize: 11.5,
     color: '#999'
   },

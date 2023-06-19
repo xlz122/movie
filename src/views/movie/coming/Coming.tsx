@@ -103,9 +103,9 @@ function Coming(): React.ReactElement {
       {coming.list.length > 0 && (
         <FlatList
           stickyHeaderIndices={coming.stickyIndex}
-          keyExtractor={(item: object, index: number) => String(index)}
-          data={coming.list}
+          keyExtractor={(item, index) => String(index)}
           renderItem={renderItem}
+          data={coming.list}
         />
       )}
     </View>

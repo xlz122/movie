@@ -19,7 +19,7 @@ function Author(): React.ReactElement {
         </View>
         <Pressable
           onPress={() =>
-            navigation?.push('WebView', { to: 'https://github.com/xlz122' })
+            navigation?.push('WebView', { uri: 'https://github.com/xlz122' })
           }
           style={styles.cellItem}
         >

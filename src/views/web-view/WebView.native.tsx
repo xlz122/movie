@@ -6,7 +6,7 @@ import type { RouteProp } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
-type Route = RouteProp<{ params: { to: string } }>;
+type Route = RouteProp<{ params: { uri: string } }>;
 
 function MyWebView(): React.ReactElement {
   const route: Route = useRoute();
@@ -19,7 +19,7 @@ function MyWebView(): React.ReactElement {
     <View style={styles.flex}>
       <WebView
         style={styles.web}
-        source={{ uri: route.params.to }}
+        source={{ uri: route.params.uri }}
         startInLoadingState={true}
         renderLoading={() => <RenderLoading />}
       />

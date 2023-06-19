@@ -5,12 +5,37 @@ import { useSelector } from 'react-redux';
 import { movieWish } from '@/api/movies';
 import type { RootState } from '@/store/index';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { MovieDetailType } from '../MovieDetail';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import styles from './movie-info.css';
 
 type Props = {
-  detail: MovieDetailType;
+  detail: {
+    id?: number;
+    poster?: {
+      small: string;
+    };
+    title?: string;
+    title_original?: string;
+    genres?: string[];
+    countries?: string[];
+    year?: number;
+    durations?: string[];
+    episode_count?: number;
+    is_wish?: boolean;
+    tags?: string[];
+    egg_hunt?: number;
+    release_status?: number;
+    release_date?: string;
+    wish_count?: number;
+    thrid_rating?: {
+      douban: {
+        count: string;
+        rating: string;
+      };
+    };
+    rating?: string;
+    awards_nominate_count?: number;
+  };
   refreshDetail: () => void;
 };
 
@@ -27,7 +52,7 @@ function MovieInfo(props: Props): React.ReactElement {
       return false;
     }
 
-    movieWish({ id: detail.id })
+    movieWish({ id: detail.id! })
       .then((res: ResponseType) => {
         if (res.code === 200) {
           props.refreshDetail();
@@ -43,7 +68,6 @@ function MovieInfo(props: Props): React.ReactElement {
     }
   };
 
-  // 即将上映/已上映
   const RenderRating = (): React.ReactElement => {
     // 即将上映
     if (detail?.release_status === 1) {
@@ -99,7 +123,7 @@ function MovieInfo(props: Props): React.ReactElement {
   };
 
   return (
-    <View style={styles.page}>
+    <>
       <View style={styles.movieInfo}>
         {detail?.poster?.small && (
           <Image
@@ -129,11 +153,11 @@ function MovieInfo(props: Props): React.ReactElement {
               <Text>{detail?.countries?.join(' / ')}</Text>
               <Text>·</Text>
               <Text>{detail?.year}</Text>
-              {detail?.episode_count === 0 && detail?.durations?.length > 0 && (
+              {detail?.episode_count === 0 && detail?.durations!.length > 0 && (
                 <Text>{`·${detail?.durations?.join(' / ')}`}</Text>
               )}
             </Text>
-            {detail?.episode_count > 0 && (
+            {Number(detail?.episode_count) > 0 && (
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
@@ -141,7 +165,9 @@ function MovieInfo(props: Props): React.ReactElement {
               >
                 <Text>{`共${detail?.episode_count}集`}</Text>
                 <Text>·</Text>
-                <Text>{`每集${detail?.durations[0]}分钟`}</Text>
+                <Text>
+                  {`每集${detail?.durations && detail.durations[0]}分钟`}
+                </Text>
               </Text>
             )}
           </View>
@@ -192,7 +218,7 @@ function MovieInfo(props: Props): React.ReactElement {
           </Text>
         </View>
       )}
-    </View>
+    </>
   );
 }
 

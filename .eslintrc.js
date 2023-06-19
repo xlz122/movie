@@ -7,8 +7,10 @@ module.exports = {
     // 取消 { a, b, c } 多个变量需要换行
     'object-curly-newline': [0],
     'no-alert': [0],
+    // eslint注释
+    'eslint-comments/no-unlimited-disable': [0],
 
-    // 禁用var，使用let、const
+    // 禁用var, 使用let、const
     'no-var': 2,
     // 禁止出现未使用的变量
     'no-unused-vars': 2,
@@ -33,7 +35,7 @@ module.exports = {
     // 'indent': [2, 2],
     // jsx空格缩进
     'react/jsx-indent': [2, 2],
-    // 标签(组件省略闭合标签，html不省略闭合标签)
+    // 标签(组件省略闭合标签, html不省略闭合标签)
     'react/self-closing-comp': [2, { component: true, html: false }],
     // 检查 Hook 的规则(不允许在if for里面使用)
     'react-hooks/rules-of-hooks': [2],

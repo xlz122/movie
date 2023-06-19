@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { viewHeight } from '@/utils/screen';
 
 const styles = StyleSheet.create({
-  page: {
+  movieSummary: {
     height: viewHeight - 60,
     backgroundColor: '#fff'
   },

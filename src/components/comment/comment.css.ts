@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { deviceWidth, deviceHeight } from '@/utils/screen';
 
 const styles = StyleSheet.create({
-  page: {
+  comment: {
     position: 'absolute',
     top: 0,
     left: 0,

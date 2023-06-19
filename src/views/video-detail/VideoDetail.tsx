@@ -16,38 +16,23 @@ import type { ResponseType, Navigation } from '@/types/index';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import Comment from '@/components/comment/Comment';
-import Video from './video/Video';
+import VideoPlayer from './video-player/VideoPlayer';
 import VideoInfo from './video-info/VideoInfo';
 import VideoList from './video-list/VideoList';
 import styles from './video-detail.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
-export type VideoDetailType = {
+type VideoDetailType = {
   id?: number;
-  poster?: string;
   movie?: {
     id?: number;
-    poster?: string;
-    title?: string;
-    rating?: string;
-    year?: number;
-    countries?: string;
-    genres?: string;
   };
   is_like?: boolean;
   like_count?: number;
   is_collection?: boolean;
   collection_count?: number;
   comment_count?: number;
-  author?: {
-    avatar?: string;
-    username?: string;
-    video_count?: number;
-  };
-  title?: string;
-  created_at?: string;
-  play_count?: number;
 };
 
 function VideoDetail(): React.ReactElement {
@@ -57,19 +42,14 @@ function VideoDetail(): React.ReactElement {
 
   const [detail, setDetail] = useState<VideoDetailType>({});
 
-  const getVideoDetail = (id?: number) => {
-    videosDetail({ id: id || route.params.id })
-      .then((res: ResponseType<VideoDetailType>) => {
+  const getVideoDetail = () => {
+    videosDetail({ id: route.params.id })
+      .then((res: ResponseType) => {
         if (res.code === 200) {
-          setDetail(res.data!);
+          setDetail(res.data);
         }
       })
       .catch(() => ({}));
-  };
-
-  // 刷新详情
-  const refreshDetail = () => {
-    getVideoDetail();
   };
 
   useEffect(() => {
@@ -83,7 +63,6 @@ function VideoDetail(): React.ReactElement {
         return (
           <CustomHeader
             options={options}
-            headerTitleAlign={true}
             headerStyle={{ height: 0 }}
             arrowStyle={{ position: 'absolute', top: 2 }}
           />
@@ -92,13 +71,8 @@ function VideoDetail(): React.ReactElement {
     });
   }, []);
 
-  // 预告片列表刷新详情
-  const playChange = (id: number) => {
-    getVideoDetail(id);
-  };
-
   // 点赞/取消点赞
-  const likeChange = (is_like: boolean): boolean | undefined => {
+  const handleLikeChange = (is_like: boolean) => {
     if (!isLogin) {
       navigation.push('Login');
       return false;
@@ -128,7 +102,7 @@ function VideoDetail(): React.ReactElement {
   };
 
   // 收藏/取消收藏
-  const collectionChange = (is_collection: boolean): boolean | undefined => {
+  const handleCollectionChange = (is_collection: boolean) => {
     if (!isLogin) {
       navigation.push('Login');
       return false;
@@ -158,77 +132,70 @@ function VideoDetail(): React.ReactElement {
   };
 
   // 评论
-  const [comment, setComment] = useState({
-    visible: false
-  });
-
+  const [commentVisible, setCommentVisible] = useState(false);
   const handleCommentClose = (): void => {
-    setComment({ ...comment, visible: false });
+    setCommentVisible(false);
   };
 
   return (
     <>
-      <Video detail={detail} />
+      <VideoPlayer detail={detail} />
       <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
-        <VideoInfo detail={detail} refreshDetail={refreshDetail} />
-        <VideoList
-          detailId={detail.id}
-          movieId={detail.movie?.id}
-          playChange={playChange}
-        />
+        <VideoInfo detail={detail} />
+        <VideoList movieId={detail.movie?.id} />
       </ScrollView>
       <View style={styles.comment}>
         <Pressable
-          onPress={() => setComment({ ...comment, visible: true })}
+          onPress={() => setCommentVisible(true)}
           style={styles.review}
         >
           <View style={styles.reviewInput}>
-            <Text style={styles.reviewInputText}>来点碎碎念...</Text>
+            <Text style={styles.inputText}>来点碎碎念...</Text>
           </View>
         </Pressable>
         <View style={styles.tool}>
           <Pressable
-            onPress={() => likeChange(detail?.is_like!)}
+            onPress={() => handleLikeChange(detail?.is_like!)}
             style={styles.toolItem}
           >
             <Text
               style={[
-                styles.toolItemIcon,
-                detail?.is_like ? styles.activeIcon : styles.toolItemIcon
+                styles.itemIcon,
+                detail?.is_like ? styles.activeIcon : styles.itemIcon
               ]}
             >
               {'\ue669'}
             </Text>
-            <Text style={styles.toolItemText}>
+            <Text style={styles.itemText}>
               {detail?.like_count && detail?.like_count > 0
                 ? detail?.like_count
                 : '点赞'}
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => collectionChange(detail?.is_collection!)}
+            onPress={() => handleCollectionChange(detail?.is_collection!)}
             style={styles.toolItem}
           >
             <Text
               style={[
-                styles.toolItemIcon,
-                detail?.is_collection ? styles.activeIcon : styles.toolItemIcon
+                styles.itemIcon,
+                detail?.is_collection ? styles.activeIcon : styles.itemIcon
               ]}
             >
               {'\ue911'}
             </Text>
-            <Text style={styles.toolItemText}>
+            <Text style={styles.itemText}>
               {detail?.collection_count && detail?.collection_count > 0
                 ? detail?.collection_count
                 : '收藏'}
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => setComment({ ...comment, visible: true })}
+            onPress={() => setCommentVisible(true)}
             style={styles.toolItem}
           >
-            <Text style={styles.toolItemIcon}>{'\ue620'}</Text>
-            <Text style={styles.toolItemText}>
+            <Text style={styles.itemIcon}>{'\ue620'}</Text>
+            <Text style={styles.itemText}>
               {detail?.comment_count && detail?.comment_count > 0
                 ? detail?.comment_count
                 : '评论'}
@@ -236,7 +203,7 @@ function VideoDetail(): React.ReactElement {
           </Pressable>
         </View>
       </View>
-      {comment.visible && (
+      {commentVisible && (
         <Comment method={videoComment} close={handleCommentClose} />
       )}
     </>

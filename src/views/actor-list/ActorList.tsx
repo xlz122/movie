@@ -122,9 +122,9 @@ function ActorList(): React.ReactElement {
       {actor.list.length > 0 && (
         <FlatList
           stickyHeaderIndices={actor.stickyIndex}
-          keyExtractor={(item: object, index: number) => String(index)}
-          data={actor.list}
+          keyExtractor={(item, index) => String(index)}
           renderItem={renderItem}
+          data={actor.list}
         />
       )}
     </View>

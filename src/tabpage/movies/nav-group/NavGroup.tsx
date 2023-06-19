@@ -42,8 +42,9 @@ function NavGroup(props: Props): React.ReactElement {
         horizontal
         initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
-        data={props.category}
+        keyExtractor={(item, index) => String(index)}
         renderItem={renderItem}
+        data={props.category}
       />
     </SafeAreaView>
   );
