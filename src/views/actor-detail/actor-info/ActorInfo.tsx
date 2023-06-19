@@ -5,19 +5,25 @@ import { useSelector } from 'react-redux';
 import { followActor, unFollowActor } from '@/api/actor';
 import type { RootState } from '@/store/index';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { ActorDetailType } from '../ActorDetail';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 
 type Props = {
-  detail: Partial<ActorDetailType>;
+  detail: {
+    id?: number;
+    avatar?: string;
+    name?: string;
+    name_en?: string;
+    is_collection?: number;
+    gender?: string;
+    birthday?: string;
+    country?: string;
+  };
   refreshDetail: () => void;
 };
 
 function ActorInfo(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
-
-  const { detail } = props;
 
   // 关注/取消关注影人
   const collectionChange = (is_collection: number): boolean | undefined => {
@@ -27,7 +33,7 @@ function ActorInfo(props: Props): React.ReactElement {
     }
 
     if (is_collection === 0) {
-      followActor({ id: detail.id! })
+      followActor({ id: props.detail.id! })
         .then((res: ResponseType) => {
           if (res.code === 200) {
             props.refreshDetail();
@@ -38,7 +44,7 @@ function ActorInfo(props: Props): React.ReactElement {
     }
 
     if (is_collection === 1) {
-      unFollowActor({ id: detail.id! })
+      unFollowActor({ id: props.detail.id! })
         .then((res: ResponseType) => {
           if (res.code === 200) {
             props.refreshDetail();
@@ -50,42 +56,44 @@ function ActorInfo(props: Props): React.ReactElement {
   };
 
   return (
-    <View style={styles.page}>
-      {detail?.avatar && (
+    <View style={styles.actorInfo}>
+      {props.detail?.avatar && (
         <Image
-          source={{ uri: detail?.avatar }}
+          source={{ uri: props.detail?.avatar }}
           resizeMode={'cover'}
           style={[styles.infoImage]}
         />
       )}
       <View style={styles.info}>
         <View style={styles.infoBrief}>
-          <Text style={styles.briefName}>{detail?.name}</Text>
-          <Text style={styles.briefEnName}>{detail?.name_en}</Text>
+          <Text style={styles.briefName}>{props.detail?.name}</Text>
+          <Text style={styles.briefEnName}>{props.detail?.name_en}</Text>
           <Text style={styles.briefExtra}>
-            {detail?.gender}
-            {Boolean(detail?.birthday) && (
+            {props.detail?.gender}
+            {Boolean(props.detail?.birthday) && (
               <>
                 <Text> · </Text>
-                {detail?.birthday}
+                {props.detail?.birthday}
               </>
             )}
-            {Boolean(detail?.country) && (
+            {Boolean(props.detail?.country) && (
               <>
                 <Text> · </Text>
-                {detail?.country}
+                {props.detail?.country}
               </>
             )}
           </Text>
         </View>
         <Text
-          onPress={() => collectionChange(detail.is_collection!)}
+          onPress={() => collectionChange(props.detail.is_collection!)}
           style={[
             styles.infoFocus,
-            detail?.is_collection === 1 ? styles.activeFoucus : styles.infoFocus
+            props.detail?.is_collection === 1
+              ? styles.activeFoucus
+              : styles.infoFocus
           ]}
         >
-          {`${detail?.is_collection === 1 ? '已关注' : '关注'}`}
+          {`${props.detail?.is_collection === 1 ? '已关注' : '关注'}`}
         </Text>
       </View>
     </View>
@@ -93,7 +101,7 @@ function ActorInfo(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
-  page: {
+  actorInfo: {
     position: 'relative',
     height: 222,
     backgroundColor: 'rgba(229,72,71,.85)',

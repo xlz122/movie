@@ -29,20 +29,17 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#e5e5e5'
   },
-  countItemValue: {
+  itemContent: {
     fontWeight: '700',
     fontSize: 14,
     color: '#303133'
   },
-  countItemLabel: {
+  itemText: {
     fontSize: 12,
     color: '#888'
   },
   countLastItem: {
     borderRightWidth: 0
-  },
-  placeholder: {
-    height: 1
   },
   summary: {
     paddingHorizontal: 10,
