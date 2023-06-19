@@ -51,11 +51,11 @@ function MovieActor(props: Props): React.ReactElement {
     <SafeAreaView style={styles.list}>
       <FlatList
         horizontal
-        initialNumToRender={4}
+        initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => String(index)}
         data={props.movie}
         renderItem={renderItem}
-        keyExtractor={item => String(item.union_id)}
       />
     </SafeAreaView>
   );
