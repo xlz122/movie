@@ -26,7 +26,7 @@ function ActorInfo(props: Props): React.ReactElement {
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
 
   // 关注/取消关注影人
-  const collectionChange = (is_collection: number): boolean | undefined => {
+  const handleCollectionChange = (is_collection: number) => {
     if (!isLogin) {
       navigation.push('Login');
       return false;
@@ -85,7 +85,7 @@ function ActorInfo(props: Props): React.ReactElement {
           </Text>
         </View>
         <Text
-          onPress={() => collectionChange(props.detail.is_collection!)}
+          onPress={() => handleCollectionChange(props.detail.is_collection!)}
           style={[
             styles.infoFocus,
             props.detail?.is_collection === 1

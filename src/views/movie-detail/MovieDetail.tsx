@@ -162,7 +162,7 @@ function MovieDeail(): React.ReactElement {
   }, [gradientColor]);
 
   // 收藏
-  const collectionChange = (): boolean | undefined => {
+  const handleCollectionChange = () => {
     if (!isLogin) {
       navigation.push('Login');
       return false;
@@ -170,12 +170,9 @@ function MovieDeail(): React.ReactElement {
   };
 
   // 评论
-  const [comment, setComment] = useState({
-    visible: false
-  });
-
+  const [commentVisible, setCommentVisible] = useState(false);
   const handleCommentClose = (): void => {
-    setComment({ ...comment, visible: false });
+    setCommentVisible(false);
   };
 
   return (
@@ -253,7 +250,7 @@ function MovieDeail(): React.ReactElement {
           </Text>
         </View>
         <View style={styles.tool}>
-          <Pressable onPress={collectionChange} style={styles.toolItem}>
+          <Pressable onPress={handleCollectionChange} style={styles.toolItem}>
             <Text style={styles.toolItemIcon}>{'\ue911'}</Text>
             <Text style={styles.toolItemText}>
               {detail?.collection_count && detail?.collection_count > 0
@@ -262,7 +259,7 @@ function MovieDeail(): React.ReactElement {
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => setComment({ ...comment, visible: true })}
+            onPress={() => setCommentVisible(true)}
             style={styles.toolItem}
           >
             <Text style={styles.toolItemIcon}>{'\ue620'}</Text>
@@ -274,7 +271,7 @@ function MovieDeail(): React.ReactElement {
           </Pressable>
         </View>
       </View>
-      {comment.visible && (
+      {commentVisible && (
         <Comment
           method={movieComment}
           close={handleCommentClose}
