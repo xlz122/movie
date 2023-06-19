@@ -11,16 +11,10 @@ function LoginForm(): React.ReactElement {
   const store = useStore();
 
   // 密码显隐
-  const [password, setPassword] = useState({
-    secureTextEntry: true,
-    iconActive: false
-  });
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const togglePassword = () => {
-    setPassword({
-      secureTextEntry: !password.secureTextEntry,
-      iconActive: !password.iconActive
-    });
+    setSecureTextEntry(!secureTextEntry);
   };
 
   const [formData, setFormData] = useState({
@@ -38,16 +32,15 @@ function LoginForm(): React.ReactElement {
       userinfo()
         .then((res: ResponseType) => {
           if (res.code === 200) {
-            resolve(res.data!);
-          } else {
-            reject();
+            resolve(res.data);
           }
+          reject();
         })
         .catch(() => ({}));
     });
   };
 
-  const submit = () => {
+  const submit = (): boolean | undefined => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请输入手机号' });
       return false;
@@ -105,7 +98,7 @@ function LoginForm(): React.ReactElement {
         </View>
         <View style={styles.formItem}>
           <TextInput
-            secureTextEntry={password.secureTextEntry}
+            secureTextEntry={secureTextEntry}
             value={formData.password}
             onChange={e => {
               handleInputChange(e, 'password');
@@ -118,7 +111,7 @@ function LoginForm(): React.ReactElement {
             onPress={togglePassword}
             style={[
               styles.itemIcon,
-              password.iconActive ? styles.activeIcon : styles.itemIcon
+              secureTextEntry ? styles.itemIcon : styles.activeIcon
             ]}
           >
             {'\ue639'}

@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Pressable,
-  Platform
-} from 'react-native';
+import { View, Text, TextInput, Pressable, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import { viewHeight } from '@/utils/screen';
@@ -20,6 +13,7 @@ import {
 import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import PicutreCode from '@/components/picture-code/PicutreCode';
+import styles from './forget.css';
 
 function Forget(): React.ReactElement {
   const navigation: Navigation = useNavigation();
@@ -44,7 +38,7 @@ function Forget(): React.ReactElement {
     visible: false,
     time: 120
   });
-  const timer = useRef<number>();
+  const timer = useRef<NodeJS.Timeout>();
 
   const handleTimeText = () => {
     if (timer.current) {
@@ -66,18 +60,19 @@ function Forget(): React.ReactElement {
   };
 
   useEffect(() => {
-    return () => {
-      if (timer.current) {
-        clearInterval(timer.current);
-      }
-    };
+    return timer.current && clearInterval(timer.current);
   }, []);
 
   // 进度
   const [progress, setProgress] = useState(0);
 
   // 验证手机号
-  const handleFieldAccount = (): void => {
+  const handleFieldAccount = (): boolean | undefined => {
+    if (!formData.account) {
+      CustomAlert({ title: '提示', message: '请先输入手机号' });
+      return false;
+    }
+
     fieldAccount({ account: formData.account })
       .then((res: ResponseType) => {
         if (res.code === 200) {
@@ -184,7 +179,7 @@ function Forget(): React.ReactElement {
       handleFieldAccount();
     }
 
-    // 发送并校验图片验证码
+    // 获取图片验证码
     if (progress === 1) {
       handleGetCaptcha();
     }
@@ -194,7 +189,7 @@ function Forget(): React.ReactElement {
       handleFiledPhoneCode();
     }
 
-    // 提交
+    // 修改密码
     if (progress === 3) {
       handleModifyPassword();
     }
@@ -277,73 +272,5 @@ function Forget(): React.ReactElement {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    backgroundColor: '#f5f5f5'
-  },
-  fieldItem: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    height: 51,
-    paddingHorizontal: 15,
-    marginTop: 15,
-    backgroundColor: '#fff'
-  },
-  itemText: {
-    fontSize: 14,
-    color: '#303133'
-  },
-  itemInput: {
-    flex: 1,
-    height: 41,
-    textAlign: 'right'
-  },
-  inputClearIcon: {
-    marginLeft: 12,
-    fontFamily: 'iconfont',
-    fontSize: 16,
-    color: '#c5c5c5'
-  },
-  itemCodeInput: {
-    flex: 1,
-    height: 41
-  },
-  codeText: {
-    width: 106,
-    height: 35,
-    lineHeight: 35,
-    backgroundColor: '#409eff',
-    fontSize: 12.5,
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 4
-  },
-  tipText: {
-    marginVertical: 5,
-    marginHorizontal: 15,
-    fontSize: 12,
-    color: '#777'
-  },
-  submit: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8,
-    marginTop: 25,
-    marginHorizontal: 15,
-    backgroundColor: '#409eff',
-    textAlign: 'center',
-    borderRadius: 2
-  },
-  submitText: {
-    fontSize: 14,
-    color: '#fff'
-  }
-});
 
 export default Forget;
