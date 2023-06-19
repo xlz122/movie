@@ -82,8 +82,9 @@ function VideoList(props: Props): React.ReactElement {
           horizontal
           initialNumToRender={5}
           showsHorizontalScrollIndicator={false}
-          data={videos}
+          keyExtractor={(item, index) => String(index)}
           renderItem={renderItem}
+          data={videos}
         />
       </View>
       {videos[navIndex]?.children?.map((item, index) => {

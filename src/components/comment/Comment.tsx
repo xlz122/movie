@@ -34,11 +34,23 @@ function Comment(props: Props): React.ReactElement {
   // 刷新列表
   const [resetRefresh, setResetRefresh] = useState(false);
 
-  const [sortby, setSortby] = useState('hot');
+  const [sort, setSort] = useState({
+    active: 'hot',
+    list: [
+      {
+        title: '热度',
+        type: 'hot'
+      },
+      {
+        title: '最新',
+        type: 'created_at'
+      }
+    ]
+  });
 
   const toggleSort = (value: string): void => {
     setResetRefresh(true);
-    setSortby(value);
+    setSort({ ...sort, active: value });
   };
 
   // 评论总数
@@ -53,7 +65,7 @@ function Comment(props: Props): React.ReactElement {
   }): Promise<unknown[]> => {
     return new Promise((resolve, reject) => {
       props
-        ?.method({ id: route.params.id, page, per_page, sortby })
+        ?.method({ id: route.params.id, page, per_page, sortby: sort.active })
         .then((res: ResponseType<unknown[]>) => {
           if (res.code === 200) {
             setResetRefresh(false);
@@ -112,7 +124,7 @@ function Comment(props: Props): React.ReactElement {
   );
 
   return (
-    <View style={[styles.page, props?.commentStyle]}>
+    <View style={[styles.comment, props?.commentStyle]}>
       <View style={styles.mask} />
       <View style={styles.modal}>
         <View style={styles.modalHeader}>
@@ -129,26 +141,22 @@ function Comment(props: Props): React.ReactElement {
             <View style={styles.bodyTitle}>
               <Text style={styles.titleText}>评论 {commentCount}</Text>
               <View style={styles.titleTab}>
-                <Text
-                  onPress={() => toggleSort('hot')}
-                  style={[
-                    styles.tabItem,
-                    sortby === 'hot' ? styles.tabActiveItem : styles.tabItem
-                  ]}
-                >
-                  热度
-                </Text>
-                <Text
-                  onPress={() => toggleSort('created_at')}
-                  style={[
-                    styles.tabItem,
-                    sortby === 'created_at'
-                      ? styles.tabActiveItem
-                      : styles.tabItem
-                  ]}
-                >
-                  最新
-                </Text>
+                {sort.list.map((item, index) => {
+                  return (
+                    <Text
+                      key={index}
+                      onPress={() => toggleSort(item.type)}
+                      style={[
+                        styles.tabItem,
+                        item.type === sort.active
+                          ? styles.tabActiveItem
+                          : styles.tabItem
+                      ]}
+                    >
+                      {item.title}
+                    </Text>
+                  );
+                })}
               </View>
             </View>
           )}

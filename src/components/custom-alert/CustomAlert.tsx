@@ -13,7 +13,7 @@ function CustomAlert({ title, message, buttons }: AlertParams): void {
   }
 
   if (Platform.OS === 'web') {
-    alert(message);
+    alert(message || '');
   }
 }
 

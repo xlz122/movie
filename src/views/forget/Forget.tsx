@@ -258,7 +258,7 @@ function Forget(): React.ReactElement {
       </Pressable>
       {captcha.visible && (
         <PicutreCode
-          img={captcha.img}
+          image={captcha.img}
           complete={handleCaptchaComplete}
           close={handleCaptchaClose}
           picutreStyle={{
