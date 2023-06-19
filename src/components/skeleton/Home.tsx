@@ -4,7 +4,7 @@ import { viewHeight } from '@/utils/screen';
 
 function HomeSkeleton(): React.ReactElement {
   return (
-    <View style={styles.page}>
+    <View style={styles.home}>
       <View style={styles.search} />
       <View style={styles.banner} />
       <View style={styles.nav}>
@@ -39,7 +39,7 @@ function HomeSkeleton(): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
-  page: {
+  home: {
     height: viewHeight,
     backgroundColor: '#fff',
     overflow: 'hidden'

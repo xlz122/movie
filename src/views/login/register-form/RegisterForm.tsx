@@ -203,7 +203,7 @@ function RegisterForm(): React.ReactElement {
       </View>
       {captcha.visible && (
         <PicutreCode
-          img={captcha.img}
+          image={captcha.img}
           complete={handleCaptchaComplete}
           close={handleCaptchaClose}
         />
