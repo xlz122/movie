@@ -149,7 +149,7 @@ function Home(): React.ReactElement {
           <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
           <Banner banner={banner} onChange={bannerChange} />
           <Nav />
-          {movie?.theater?.total && (
+          {Number(movie?.theater?.total) > 0 && (
             <Panel
               title="正在热映"
               subtitle={`${movie?.theater?.total}部`}
@@ -158,7 +158,7 @@ function Home(): React.ReactElement {
               <Category movie={movie?.theater?.data} />
             </Panel>
           )}
-          {movie?.coming?.total && (
+          {Number(movie?.coming?.total) > 0 && (
             <Panel
               title="即将上映"
               subtitle={`${movie?.coming?.total}部`}
@@ -167,7 +167,7 @@ function Home(): React.ReactElement {
               <Category movie={movie?.coming?.data} />
             </Panel>
           )}
-          {movie?.today?.total && (
+          {Number(movie?.today?.total) > 0 && (
             <Panel
               title="那年今日"
               subtitle={`${movie?.today?.total}部`}

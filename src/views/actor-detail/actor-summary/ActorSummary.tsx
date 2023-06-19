@@ -3,10 +3,25 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
-import type { ActorDetailType } from '../ActorDetail';
 import styles from './actor-summary.css';
 
-type Route = RouteProp<{ params: { detail: ActorDetailType } }>;
+type Route = RouteProp<{ params: { detail: SummaryType } }>;
+
+type SummaryType = {
+  id: number;
+  avatar?: string;
+  name?: string;
+  name_en?: string;
+  gender?: string;
+  birthday?: string;
+  age?: string;
+  country?: string;
+  born_place?: string;
+  professions?: Array<string>;
+  constellation?: string;
+  height?: string;
+  summary?: string;
+};
 
 function ActorSummary(): React.ReactElement {
   const navigation: Navigation = useNavigation();

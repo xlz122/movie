@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  Platform
-} from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { deviceWidth, viewHeight } from '@/utils/screen';
+import { deviceWidth } from '@/utils/screen';
 import { actorWorks } from '@/api/actor';
 import type { ListRenderItemInfo } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
+import styles from './actor-works-list.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
@@ -32,15 +26,30 @@ function ActorWorksDetail(): React.ReactElement {
 
   // 作品数
   const [total, setTotal] = useState(0);
-
   // 刷新列表
   const [resetRefresh, setResetRefresh] = useState(false);
 
-  const [sortby, setSortby] = useState('hot');
+  const [sort, setSort] = useState({
+    active: 'hot',
+    list: [
+      {
+        title: '热度',
+        type: 'hot'
+      },
+      {
+        title: '时间',
+        type: 'year'
+      },
+      {
+        title: '评分',
+        type: 'rating'
+      }
+    ]
+  });
 
   const toggleSort = (value: string): void => {
     setResetRefresh(true);
-    setSortby(value);
+    setSort({ ...sort, active: value });
   };
 
   const getActorsList = ({
@@ -55,7 +64,7 @@ function ActorWorksDetail(): React.ReactElement {
         id: route.params.id,
         page,
         per_page,
-        sortby
+        sortby: sort.active
       })
         .then((res: ResponseType<unknown[]>) => {
           if (res.code === 200) {
@@ -98,33 +107,22 @@ function ActorWorksDetail(): React.ReactElement {
       <View style={styles.title}>
         <Text style={styles.titleText}>作品 {total}</Text>
         <View style={styles.titleTab}>
-          <Text
-            onPress={() => toggleSort('hot')}
-            style={[
-              styles.tabItem,
-              sortby === 'hot' ? styles.tabActiveItem : styles.tabItem
-            ]}
-          >
-            热度
-          </Text>
-          <Text
-            onPress={() => toggleSort('year')}
-            style={[
-              styles.tabItem,
-              sortby === 'year' ? styles.tabActiveItem : styles.tabItem
-            ]}
-          >
-            时间
-          </Text>
-          <Text
-            onPress={() => toggleSort('rating')}
-            style={[
-              styles.tabItem,
-              sortby === 'rating' ? styles.tabActiveItem : styles.tabItem
-            ]}
-          >
-            评分
-          </Text>
+          {sort.list.map((item, index) => {
+            return (
+              <Text
+                key={index}
+                onPress={() => toggleSort(item.type)}
+                style={[
+                  styles.tabItem,
+                  item.type === sort.active
+                    ? styles.tabActiveItem
+                    : styles.tabItem
+                ]}
+              >
+                {item.title}
+              </Text>
+            );
+          })}
         </View>
       </View>
       {/* 单项宽度105 */}
@@ -144,82 +142,5 @@ function ActorWorksDetail(): React.ReactElement {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  page: {
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: 'rgb(255, 255, 255)'
-  },
-  title: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 12
-  },
-  titleText: {
-    flex: 1,
-    fontWeight: '700',
-    fontSize: 14,
-    color: '#303133'
-  },
-  titleTab: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    borderRadius: 18
-  },
-  tabItem: {
-    paddingVertical: 3,
-    paddingHorizontal: 7,
-    margin: 3.5,
-    fontSize: 12,
-    color: '#999'
-  },
-  tabActiveItem: {
-    backgroundColor: '#fff',
-    color: '#303133',
-    borderRadius: 18
-  },
-  item: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    paddingBottom: 14
-  },
-  itemImage: {
-    width: 105,
-    height: 156,
-    borderRadius: 3
-  },
-  itemTag: {
-    position: 'absolute',
-    top: 6,
-    right: 5,
-    paddingVertical: 0.3,
-    paddingHorizontal: 1.8,
-    backgroundColor: 'rgba(255, 165, 0, 0.7)',
-    fontSize: 9,
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 2
-  },
-  itemRating: {
-    position: 'absolute',
-    right: 4,
-    bottom: 40,
-    fontSize: 10.5,
-    color: 'orange'
-  },
-  itemText: {
-    width: 94,
-    marginTop: 5,
-    color: '#333',
-    fontSize: 12
-  }
-});
 
 export default ActorWorksDetail;

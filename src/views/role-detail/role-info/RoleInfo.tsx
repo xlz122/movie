@@ -5,19 +5,22 @@ import { useSelector } from 'react-redux';
 import { followRole, unFollowRole } from '@/api/role';
 import type { RootState } from '@/store/index';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { RoleDetailType } from '../RoleDetail';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 
 type Props = {
-  detail: Partial<RoleDetailType>;
+  detail: {
+    id?: number;
+    avatar?: string;
+    name?: string;
+    name_en?: string;
+    is_collection?: number;
+  };
   refreshDetail: () => void;
 };
 
 function RoleInfo(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
-
-  const { detail } = props;
 
   // 收藏/取消收藏角色
   const collectionChange = (is_collection: number): boolean | undefined => {
@@ -27,22 +30,22 @@ function RoleInfo(props: Props): React.ReactElement {
     }
 
     if (is_collection === 0) {
-      followRole({ id: detail.id! })
+      followRole({ id: props.detail.id! })
         .then((res: ResponseType) => {
           if (res.code === 200) {
-            props.refreshDetail();
             CustomAlert({ title: '提示', message: res?.message });
+            props.refreshDetail();
           }
         })
         .catch(() => ({}));
     }
 
     if (is_collection === 1) {
-      unFollowRole({ id: detail.id! })
+      unFollowRole({ id: props.detail.id! })
         .then((res: ResponseType) => {
           if (res.code === 200) {
-            props.refreshDetail();
             CustomAlert({ title: '提示', message: res?.message });
+            props.refreshDetail();
           }
         })
         .catch(() => ({}));
@@ -50,27 +53,29 @@ function RoleInfo(props: Props): React.ReactElement {
   };
 
   return (
-    <View style={styles.page}>
-      {detail?.avatar && !detail?.avatar?.includes('default') && (
+    <View style={styles.roleInfo}>
+      {props.detail?.avatar && !props.detail?.avatar?.includes('default') && (
         <Image
-          source={{ uri: detail?.avatar }}
+          source={{ uri: props.detail?.avatar }}
           resizeMode={'cover'}
           style={[styles.infoImage]}
         />
       )}
       <View style={styles.info}>
         <View style={styles.infoBrief}>
-          <Text style={styles.briefName}>{detail?.name}</Text>
-          <Text style={styles.briefEnName}>{detail?.name_en}</Text>
+          <Text style={styles.briefName}>{props.detail?.name}</Text>
+          <Text style={styles.briefEnName}>{props.detail?.name_en}</Text>
         </View>
         <Text
-          onPress={() => collectionChange(detail.is_collection!)}
+          onPress={() => collectionChange(props.detail.is_collection!)}
           style={[
             styles.infoFocus,
-            detail?.is_collection === 1 ? styles.activeFoucus : styles.infoFocus
+            props.detail?.is_collection === 1
+              ? styles.activeFoucus
+              : styles.infoFocus
           ]}
         >
-          {`${detail?.is_collection === 1 ? '已收藏' : '收藏'}`}
+          {`${props.detail?.is_collection === 1 ? '已收藏' : '收藏'}`}
         </Text>
       </View>
     </View>
@@ -78,7 +83,7 @@ function RoleInfo(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
-  page: {
+  roleInfo: {
     position: 'relative',
     height: 222,
     backgroundColor: 'rgba(229,72,71,.85)',
