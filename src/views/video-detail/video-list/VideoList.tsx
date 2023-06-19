@@ -7,27 +7,25 @@ import {
   ScrollView,
   FlatList
 } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { timeStampToDuration, formatDate } from '@/utils/utils';
 import { videosDetailList } from '@/api/videos';
 import type { ListRenderItemInfo } from 'react-native';
-import type { ResponseType } from '@/types/index';
+import type { RouteProp } from '@react-navigation/native';
+import type { ResponseType, Navigation } from '@/types/index';
 import styles from './video-list.css';
 
-type Props = {
-  detailId?: number;
-  movieId?: number;
-  playChange: (id: number) => void;
-};
+type Route = RouteProp<{ params: { id: number } }>;
 
-type Detail = {
-  videos: ItemType[];
+type Props = {
+  movieId?: number;
 };
 
 type ItemType = {
-  type: string;
-  count: number;
-  duration: number;
-  children: {
+  type?: string;
+  count?: number;
+  duration?: number;
+  children?: {
     id: number;
     title: string;
     poster: string;
@@ -39,15 +37,16 @@ type ItemType = {
 };
 
 function VideoList(props: Props): React.ReactElement {
-  const [detail, setDetail] = useState<Detail>({
-    videos: []
-  });
+  const navigation: Navigation = useNavigation();
+  const route: Route = useRoute();
+
+  const [videos, setVideos] = useState<Array<ItemType>>([]);
 
   const getVideoList = () => {
     videosDetailList({ id: props.movieId! })
-      .then((res: ResponseType<Detail>) => {
+      .then((res: ResponseType) => {
         if (res.code === 200) {
-          setDetail(res.data!);
+          setVideos(res.data.videos);
         }
       })
       .catch(() => ({}));
@@ -77,63 +76,59 @@ function VideoList(props: Props): React.ReactElement {
   );
 
   return (
-    <ScrollView style={styles.page}>
+    <ScrollView style={styles.videoList}>
       <View style={styles.nav}>
         <FlatList
           horizontal
-          initialNumToRender={4}
+          initialNumToRender={5}
           showsHorizontalScrollIndicator={false}
-          data={detail.videos}
+          data={videos}
           renderItem={renderItem}
         />
       </View>
-      <View>
-        {detail?.videos[navIndex] &&
-          detail?.videos[navIndex]?.children.map((item, index) => {
-            return (
-              <Pressable
-                key={index}
-                onPress={() => props?.playChange(item.id)}
-                style={styles.videoItem}
-              >
-                <View style={styles.itemCover}>
-                  <Image
-                    source={{ uri: item?.poster }}
-                    resizeMode={'stretch'}
-                    style={[styles.coverImage]}
-                  />
-                  <Text style={styles.coverText}>
-                    {timeStampToDuration(item.duration)}
-                  </Text>
-                  {item.id === props.detailId && (
-                    <View style={styles.coverMask}>
-                      <Text style={styles.coverMaskText}>播放中</Text>
-                    </View>
-                  )}
+      {videos[navIndex]?.children?.map((item, index) => {
+        return (
+          <Pressable
+            key={index}
+            onPress={() => navigation.replace('VideoDetail', { id: item.id })}
+            style={styles.videoItem}
+          >
+            <View style={styles.itemCover}>
+              <Image
+                source={{ uri: item?.poster }}
+                resizeMode={'stretch'}
+                style={[styles.coverImage]}
+              />
+              <Text style={styles.coverText}>
+                {timeStampToDuration(item.duration)}
+              </Text>
+              {item.id === route.params.id && (
+                <View style={styles.coverMask}>
+                  <Text style={styles.coverMaskText}>播放中</Text>
                 </View>
-                <View style={styles.itemInfo}>
-                  <Text style={styles.infoTitle}>{item.title}</Text>
-                  <View style={styles.infoDesc}>
-                    <Text style={styles.descText}>
-                      {item.like_count}
-                      <Text>赞</Text>
-                      <Text> · </Text>
-                      {item.play_count}
-                      <Text>播放</Text>
-                    </Text>
-                    <Text style={styles.descText}>
-                      {formatDate(item.created_at)}
-                    </Text>
-                  </View>
-                </View>
-              </Pressable>
-            );
-          })}
-        {detail?.videos[navIndex] &&
-          detail?.videos[navIndex]?.children.length === 0 && (
-            <Text style={styles.noDataText}>暂无视频</Text>
-          )}
-      </View>
+              )}
+            </View>
+            <View style={styles.itemInfo}>
+              <Text style={styles.infoTitle}>{item.title}</Text>
+              <View style={styles.infoDesc}>
+                <Text style={styles.descText}>
+                  {item.like_count}
+                  <Text>赞</Text>
+                  <Text> · </Text>
+                  {item.play_count}
+                  <Text>播放</Text>
+                </Text>
+                <Text style={styles.descText}>
+                  {formatDate(item.created_at)}
+                </Text>
+              </View>
+            </View>
+          </Pressable>
+        );
+      })}
+      {videos[navIndex]?.children?.length === 0 && (
+        <Text style={styles.noDataText}>暂无视频</Text>
+      )}
     </ScrollView>
   );
 }

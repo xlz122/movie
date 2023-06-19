@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     borderRadius: 18
   },
-  reviewInputText: {
+  inputText: {
     height: 31,
     lineHeight: 31,
     fontSize: 12,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minWidth: 41
   },
-  toolItemIcon: {
+  itemIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
     color: '#7f889b'
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   activeIcon: {
     color: '#e54847'
   },
-  toolItemText: {
+  itemText: {
     fontSize: 9,
     color: '#7f889b'
   }

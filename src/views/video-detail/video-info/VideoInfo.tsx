@@ -2,12 +2,28 @@ import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
-import type { VideoDetailType } from '../VideoDetail';
 import styles from './video-info.css';
 
 type Props = {
-  detail: Partial<VideoDetailType>;
-  refreshDetail: () => void;
+  detail: {
+    author?: {
+      avatar?: string;
+      username?: string;
+      video_count?: number;
+    };
+    title?: string;
+    created_at?: string;
+    play_count?: number;
+    movie?: {
+      id?: number;
+      poster?: string;
+      title?: string;
+      rating?: string;
+      year?: number;
+      countries?: string;
+      genres?: string;
+    };
+  };
 };
 
 function VideoInfo(props: Props): React.ReactElement {
@@ -16,7 +32,7 @@ function VideoInfo(props: Props): React.ReactElement {
   const { detail } = props;
 
   return (
-    <View style={styles.page}>
+    <View style={styles.videoInfo}>
       <View style={styles.authorWarp}>
         <View style={styles.author}>
           {detail?.author?.avatar && (
@@ -33,7 +49,7 @@ function VideoInfo(props: Props): React.ReactElement {
             </Text>
           </View>
         </View>
-        <Text style={styles.reportBtn}>举报</Text>
+        <Text style={styles.report}>举报</Text>
       </View>
       <Text style={styles.title}>{detail.title}</Text>
       <View style={styles.otherWarp}>

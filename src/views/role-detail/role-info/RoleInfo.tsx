@@ -23,7 +23,7 @@ function RoleInfo(props: Props): React.ReactElement {
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
 
   // 收藏/取消收藏角色
-  const collectionChange = (is_collection: number): boolean | undefined => {
+  const handleCollectionChange = (is_collection: number) => {
     if (!isLogin) {
       navigation.push('Login');
       return false;
@@ -67,7 +67,7 @@ function RoleInfo(props: Props): React.ReactElement {
           <Text style={styles.briefEnName}>{props.detail?.name_en}</Text>
         </View>
         <Text
-          onPress={() => collectionChange(props.detail.is_collection!)}
+          onPress={() => handleCollectionChange(props.detail.is_collection!)}
           style={[
             styles.infoFocus,
             props.detail?.is_collection === 1
