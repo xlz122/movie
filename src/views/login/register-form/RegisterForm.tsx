@@ -24,7 +24,7 @@ function RegisterForm(): React.ReactElement {
     visible: false,
     time: 120
   });
-  const timer = useRef<number>();
+  const timer = useRef<NodeJS.Timeout>();
 
   const handleTimeText = () => {
     if (timer.current) {
@@ -46,11 +46,7 @@ function RegisterForm(): React.ReactElement {
   };
 
   useEffect(() => {
-    return () => {
-      if (timer.current) {
-        clearInterval(timer.current);
-      }
-    };
+    return timer.current && clearInterval(timer.current);
   }, []);
 
   const [captcha, setCaptcha] = useState({
@@ -92,6 +88,13 @@ function RegisterForm(): React.ReactElement {
           setCaptcha({ ...captcha, visible: false });
           handleTimeText();
 
+          CustomAlert({ title: '提示', message: res?.message });
+          return false;
+        }
+
+        // 手机号已注册
+        if (res.code === 403) {
+          setCaptcha({ ...captcha, visible: false });
           CustomAlert({ title: '提示', message: res?.message });
           return false;
         }

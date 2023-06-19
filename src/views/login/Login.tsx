@@ -14,20 +14,20 @@ function Login(): React.ReactElement {
 
   const [state, setState] = useState({
     type: 'login',
-    typeText: '账号注册'
+    text: '账号注册'
   });
 
   const typeChange = () => {
     if (state.type === 'login') {
-      setState({ type: 'register', typeText: '账号登录' });
+      setState({ type: 'register', text: '账号登录' });
       return false;
     }
 
-    setState({ type: 'login', typeText: '账号注册' });
+    setState({ type: 'login', text: '账号注册' });
   };
 
   return (
-    <View style={styles.login}>
+    <View style={styles.page}>
       <Pressable onPress={close} style={styles.close}>
         <Text style={styles.closeIcon}>{'\ue612'}</Text>
       </Pressable>
@@ -35,7 +35,7 @@ function Login(): React.ReactElement {
       {state.type === 'register' && <RegisterForm />}
       <View style={styles.tool}>
         <Pressable onPress={typeChange}>
-          <Text style={styles.toolText}>{state.typeText}</Text>
+          <Text style={styles.toolText}>{state.text}</Text>
         </Pressable>
         <Pressable onPress={() => navigation.push('Forget')}>
           <Text style={styles.toolText}>找回密码</Text>
@@ -46,15 +46,15 @@ function Login(): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
-  login: {
+  page: {
     flex: 1,
     backgroundColor: '#fff'
   },
   close: {
     width: 52,
     height: 52,
-    paddingLeft: 16,
-    paddingTop: 16
+    paddingTop: 16,
+    paddingLeft: 16
   },
   closeIcon: {
     fontFamily: 'iconfont',
