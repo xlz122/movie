@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import { login, userinfo } from '@/api/user';
@@ -124,9 +124,9 @@ function LoginForm(): React.ReactElement {
             {'\ue639'}
           </Text>
         </View>
-        <View style={styles.submit}>
-          <Button title="登 录" onPress={submit} />
-        </View>
+        <Pressable onPress={submit} style={styles.submit}>
+          <Text style={styles.submitText}>登 录</Text>
+        </Pressable>
       </View>
     </>
   );
@@ -171,7 +171,19 @@ const styles = StyleSheet.create({
     color: '#e54847'
   },
   submit: {
-    paddingTop: 34
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    marginTop: 34,
+    backgroundColor: '#409eff',
+    textAlign: 'center',
+    borderRadius: 2
+  },
+  submitText: {
+    fontSize: 14,
+    color: '#fff'
   }
 });
 
