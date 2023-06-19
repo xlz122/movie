@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   comment: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     height: 44,
     backgroundColor: '#fff',
@@ -18,6 +17,7 @@ const styles = StyleSheet.create({
     borderColor: '#eee'
   },
   review: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   reviewInput: {
     paddingHorizontal: 15,
-    width: 202,
+    width: '100%',
     height: 31,
     lineHeight: 31,
     backgroundColor: '#efefef',
