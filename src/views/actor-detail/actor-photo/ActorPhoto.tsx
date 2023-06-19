@@ -3,15 +3,15 @@ import { View, Image, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
 
 type Props = {
-  photo: ItemType[];
+  photo: PhotoItemType[];
 };
 
-type ItemType = {
+export type PhotoItemType = {
   url: string;
 };
 
 function ActorPhoto(props: Props): React.ReactElement {
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<PhotoItemType>) => (
     <View style={styles.item}>
       <Image
         source={{ uri: item.url }}

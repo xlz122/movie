@@ -41,9 +41,6 @@ const styles = StyleSheet.create({
   countLastItem: {
     borderRightWidth: 0
   },
-  placeholder: {
-    height: 1
-  },
   summary: {
     paddingHorizontal: 10,
     marginBottom: 10,

@@ -98,12 +98,12 @@ function ActorDetail(): React.ReactElement {
           </View>
         )}
       </Panel>
-      {Boolean(detail?.photo_count) && (
+      {Number(detail?.photo_count) > 0 && (
         <Panel title="相册" subtitle={`全部${detail?.photo_count}张`}>
           <RolePhoto photo={detail?.photos || []} />
         </Panel>
       )}
-      {Boolean(detail?.movie_count) && (
+      {Number(detail?.movie_count) > 0 && (
         <Panel
           title="角色影视"
           subtitle={`全部${detail?.movie_count}部`}
@@ -112,7 +112,7 @@ function ActorDetail(): React.ReactElement {
           <RoleMovie movie={detail?.movies} />
         </Panel>
       )}
-      {Boolean(detail?.actor_count) && (
+      {Number(detail?.actor_count) > 0 && (
         <Panel
           title="角色影人"
           subtitle={`全部${detail?.actor_count}部`}
