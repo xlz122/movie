@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   Pressable,
   Platform
@@ -257,9 +256,11 @@ function Forget(): React.ReactElement {
           )}
         </View>
       )}
-      <View style={styles.progressBtn}>
-        <Button title={progress === 3 ? '提交' : '下一步'} onPress={nextStep} />
-      </View>
+      <Pressable onPress={nextStep} style={styles.submit}>
+        <Text style={styles.submitText}>
+          {progress === 3 ? '提交' : '下一步'}
+        </Text>
+      </Pressable>
       {captcha.visible && (
         <PicutreCode
           img={captcha.img}
@@ -327,9 +328,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#777'
   },
-  progressBtn: {
-    paddingHorizontal: 15,
-    marginTop: 25
+  submit: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    marginTop: 25,
+    marginHorizontal: 15,
+    backgroundColor: '#409eff',
+    textAlign: 'center',
+    borderRadius: 2
+  },
+  submitText: {
+    fontSize: 14,
+    color: '#fff'
   }
 });
 
