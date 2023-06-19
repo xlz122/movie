@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { register, getCaptcha, filedCaptcha, filedPhoneCode } from '@/api/user';
 import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
@@ -194,9 +194,9 @@ function RegisterForm(): React.ReactElement {
             {codeTime.visible ? `${codeTime.time}s` : '获取验证码'}
           </Text>
         </View>
-        <View style={styles.submit}>
-          <Button title="注 册" onPress={submit} />
-        </View>
+        <Pressable onPress={submit} style={styles.submit}>
+          <Text style={styles.submitText}>注 册</Text>
+        </Pressable>
       </View>
       {captcha.visible && (
         <PicutreCode
@@ -244,7 +244,19 @@ const styles = StyleSheet.create({
     color: '#e54847'
   },
   submit: {
-    paddingTop: 34
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    marginTop: 34,
+    backgroundColor: '#409eff',
+    textAlign: 'center',
+    borderRadius: 2
+  },
+  submitText: {
+    fontSize: 14,
+    color: '#fff'
   }
 });
 
