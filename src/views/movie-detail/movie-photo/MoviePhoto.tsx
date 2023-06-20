@@ -3,15 +3,15 @@ import { View, Image, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
 
 type Props = {
-  photo: ItemType[];
+  photo: PhotoItemType[];
 };
 
-type ItemType = {
+export type PhotoItemType = {
   url: string;
 };
 
 function MoviePhoto(props: Props): React.ReactElement {
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<PhotoItemType>) => (
     <View style={styles.item}>
       <Image
         source={{ uri: item.url }}
@@ -27,8 +27,9 @@ function MoviePhoto(props: Props): React.ReactElement {
         horizontal
         initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
-        data={props.photo}
+        keyExtractor={(item, index) => String(index)}
         renderItem={renderItem}
+        data={props.photo}
       />
     </SafeAreaView>
   );

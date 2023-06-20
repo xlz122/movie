@@ -64,8 +64,9 @@ function Category(props: Props): React.ReactElement {
         horizontal
         initialNumToRender={6}
         showsHorizontalScrollIndicator={false}
-        data={props.movie}
+        keyExtractor={(item, index) => String(index)}
         renderItem={renderItem}
+        data={props.movie}
       />
     </SafeAreaView>
   );
