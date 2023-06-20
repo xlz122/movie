@@ -162,8 +162,8 @@ function SearchDetail(props: Props): React.ReactElement {
 
   // 无数据展示
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>未找到相关内容</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>未找到相关内容</Text>
     </View>
   );
 

@@ -59,8 +59,8 @@ function UserVideo(): React.ReactElement {
 
   // 无数据展示
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>您还没有收藏任何视频</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>您还没有收藏任何视频</Text>
     </View>
   );
 
@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#999'
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 280
   },
-  noDataText: {
+  emptyDataText: {
     fontSize: 13.5,
     color: '#aaa'
   }

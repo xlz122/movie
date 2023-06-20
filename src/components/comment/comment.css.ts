@@ -185,13 +185,13 @@ const styles = StyleSheet.create({
     color: '#7f889b',
     borderRadius: 18
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 190
   },
-  noDataText: {
+  emptyDataText: {
     fontSize: 13.5,
     color: '#aaa'
   }
