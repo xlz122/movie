@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { searchDetail } from '@/api/search';
-import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './search-detail.css';
@@ -160,7 +159,7 @@ function SearchDetail(props: Props): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
     <View style={styles.emptyData}>
       <Text style={styles.emptyDataText}>未找到相关内容</Text>
@@ -193,7 +192,7 @@ function SearchDetail(props: Props): React.ReactElement {
           type: sort.active
         }}
         request={searchDetail}
-        renderItem={({ item }: ListRenderItemInfo<unknown>) => {
+        renderItem={({ item }: { item: unknown }) => {
           if (sort.active === 'movie') {
             return <MovieItem item={item as MovieItemType} />;
           }
