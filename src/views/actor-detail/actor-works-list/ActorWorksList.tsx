@@ -30,13 +30,6 @@ function ActorWorksDetail(): React.ReactElement {
     setTotal(res?.total || 0);
   };
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
-  const handleRefreshSuccess = () => {
-    setResetRefresh(false);
-  };
-
   const [sort, setSort] = useState({
     active: 'hot',
     list: [
@@ -56,7 +49,6 @@ function ActorWorksDetail(): React.ReactElement {
   });
 
   const toggleSort = (value: string): void => {
-    setResetRefresh(true);
     setSort({ ...sort, active: value });
   };
 
@@ -114,12 +106,11 @@ function ActorWorksDetail(): React.ReactElement {
           pageSize: Math.floor(deviceWidth / 105) * 5,
           sortby: sort.active
         }}
+        sortParams={{ sortby: sort.active }}
         request={actorWorks}
         responseSuccess={handleResponseSuccess}
         renderItem={renderItem}
         initialNumToRender={15}
-        resetRefresh={resetRefresh}
-        refreshSuccess={handleRefreshSuccess}
         numColumns={Math.floor(deviceWidth / 105)}
         columnWrapperStyle={{
           justifyContent: 'space-between'

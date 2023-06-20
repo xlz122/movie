@@ -20,6 +20,7 @@ type SummaryType = {
   professions?: Array<string>;
   constellation?: string;
   height?: string;
+  blood_type?: string;
   summary?: string;
 };
 
@@ -77,6 +78,10 @@ function ActorSummary(): React.ReactElement {
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>身高: </Text>
               <Text style={styles.itemValue}>{detail?.height}</Text>
+            </View>
+            <View style={styles.summaryItem}>
+              <Text style={styles.itemLabel}>血型: </Text>
+              <Text style={styles.itemValue}>{detail?.blood_type}</Text>
             </View>
           </View>
           <View style={styles.summaryContent}>

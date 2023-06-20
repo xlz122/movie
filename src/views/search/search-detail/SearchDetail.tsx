@@ -37,13 +37,6 @@ type RoleItemType = {
 function SearchDetail(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
-  const handleRefreshSuccess = () => {
-    setResetRefresh(false);
-  };
-
   const [sort, setSort] = useState({
     active: 'movie',
     list: [
@@ -63,7 +56,6 @@ function SearchDetail(props: Props): React.ReactElement {
   });
 
   const toggleSort = (value: string): void => {
-    setResetRefresh(true);
     setSort({ ...sort, active: value });
   };
 
@@ -191,6 +183,7 @@ function SearchDetail(props: Props): React.ReactElement {
           keyword: props.keyword,
           type: sort.active
         }}
+        sortParams={{ type: sort.active }}
         request={searchDetail}
         renderItem={({ item }: { item: unknown }) => {
           if (sort.active === 'movie') {
@@ -206,8 +199,6 @@ function SearchDetail(props: Props): React.ReactElement {
           return null;
         }}
         initialNumToRender={6}
-        resetRefresh={resetRefresh}
-        refreshSuccess={handleRefreshSuccess}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>

@@ -31,13 +31,6 @@ type ItemType = {
 function Comment(props: Props): React.ReactElement {
   const route: Route = useRoute();
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
-  const handleRefreshSuccess = () => {
-    setResetRefresh(false);
-  };
-
   const [sort, setSort] = useState({
     active: 'hot',
     list: [
@@ -53,7 +46,6 @@ function Comment(props: Props): React.ReactElement {
   });
 
   const toggleSort = (value: string): void => {
-    setResetRefresh(true);
     setSort({ ...sort, active: value });
   };
 
@@ -79,9 +71,9 @@ function Comment(props: Props): React.ReactElement {
         >
           {item?.author?.username}
         </Text>
-        <Pressable>
+        {item.is_delete !== 1 && (
           <Text style={styles.itemMoreIcon}>{'\ue85c'}</Text>
-        </Pressable>
+        )}
       </View>
       <View style={styles.itemContent}>
         {item.is_delete === 0 && (
@@ -93,10 +85,12 @@ function Comment(props: Props): React.ReactElement {
       </View>
       <View style={styles.itemInfo}>
         <Text style={styles.infoText}>{formatDate(item.created_at)}</Text>
-        <View style={styles.infoDesc}>
-          <Text style={styles.descText}>{item.like_count}</Text>
-          <Text style={styles.descIcon}>{'\ue669'}</Text>
-        </View>
+        {item.is_delete !== 1 && (
+          <View style={styles.infoDesc}>
+            <Text style={styles.descText}>{item.like_count}</Text>
+            <Text style={styles.descIcon}>{'\ue669'}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -152,12 +146,11 @@ function Comment(props: Props): React.ReactElement {
               pageSize: 10,
               sortby: sort.active
             }}
+            sortParams={{ sortby: sort.active }}
             request={props?.method}
             responseSuccess={handleResponseSuccess}
             renderItem={renderItem}
             initialNumToRender={6}
-            resetRefresh={resetRefresh}
-            refreshSuccess={handleRefreshSuccess}
             ListEmptyComponent={<ListEmptyComponent />}
           />
         </View>
