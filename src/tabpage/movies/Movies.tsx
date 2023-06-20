@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { deviceWidth } from '@/utils/screen';
 import { moviesList } from '@/api/movies';
-import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import type { MovieParams } from '@/api/movies';
 import Nav from './nav/Nav';
@@ -55,7 +54,7 @@ function Movies(): React.ReactElement {
     };
   }, []);
 
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable
       onPress={() => navigation.push('MovieDetail', { id: item.id })}
       style={styles.item}

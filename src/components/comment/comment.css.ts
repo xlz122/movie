@@ -29,24 +29,26 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4
   },
   modalHeader: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 9,
+    paddingVertical: 10,
     borderBottomWidth: 0.65,
     borderStyle: 'solid',
     borderColor: '#f5f5f5'
   },
   headerTitle: {
     flex: 1,
-    paddingLeft: 54,
     fontWeight: '700',
     fontSize: 14,
     color: '#303133',
     textAlign: 'center'
   },
   headerClose: {
-    marginRight: 12,
+    position: 'absolute',
+    right: 12,
     backgroundColor: '#e5e5e5',
     borderRadius: 18
   },
