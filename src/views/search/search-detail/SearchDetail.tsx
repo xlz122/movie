@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  Platform
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { viewHeight } from '@/utils/screen';
 import { searchDetail } from '@/api/search';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
+import styles from './search-detail.css';
 
 type Props = {
-  search: {
-    keyword: string;
-    type: string;
-  };
+  keyword: string;
 };
 
 type MovieItemType = {
@@ -48,47 +37,39 @@ type RoleItemType = {
 function SearchDetail(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getSearchDetail = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      searchDetail({
-        page,
-        per_page,
-        keyword: props.search.keyword,
-        type: props.search.type
-      })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
+  const [sort, setSort] = useState({
+    active: 'movie',
+    list: [
+      {
+        title: '影视',
+        type: 'movie'
+      },
+      {
+        title: '影人',
+        type: 'actor'
+      },
+      {
+        title: '角色',
+        type: 'role'
+      }
+    ]
+  });
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-  useEffect(() => {
-    setResetRefresh(true);
-  }, [props.search]);
+  const toggleSort = (value: string): void => {
+    setSort({ ...sort, active: value });
+  };
 
   // 电影项
   const MovieItem = ({ item }: { item: MovieItemType }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
-        />
+        {item.poster && (
+          <Image
+            source={{ uri: item.poster }}
+            resizeMode={'stretch'}
+            style={[styles.itemImage]}
+          />
+        )}
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.title}
@@ -125,11 +106,13 @@ function SearchDetail(props: Props): React.ReactElement {
   const ActorItem = ({ item }: { item: ActorItemType }) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.avatar }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
-        />
+        {item.avatar && (
+          <Image
+            source={{ uri: item.avatar }}
+            resizeMode={'stretch'}
+            style={[styles.itemImage]}
+          />
+        )}
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.name}
@@ -149,11 +132,13 @@ function SearchDetail(props: Props): React.ReactElement {
   const RoleItem = ({ item }: { item: RoleItemType }) => (
     <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.avatar }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
-        />
+        {item.avatar && (
+          <Image
+            source={{ uri: item.avatar }}
+            resizeMode={'stretch'}
+            style={[styles.itemImage]}
+          />
+        )}
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.name}
@@ -166,118 +151,58 @@ function SearchDetail(props: Props): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>未找到相关内容</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>未找到相关内容</Text>
     </View>
   );
 
   return (
     <View style={styles.page}>
+      <View style={styles.tab}>
+        {sort.list.map((item, index) => {
+          return (
+            <Pressable
+              key={index}
+              onPress={() => toggleSort(item.type)}
+              style={styles.tabItem}
+            >
+              <Text style={styles.tabItemText}>{item.title}</Text>
+              <View
+                style={item.type === sort.active ? styles.tabActiveLine : null}
+              />
+            </Pressable>
+          );
+        })}
+      </View>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getSearchDetail}
-        initialNumToRender={6}
-        renderItem={({ item }: ListRenderItemInfo<unknown>) => {
-          if (props.search.type === 'movie') {
+        requestParams={{
+          page: 1,
+          pageSize: 10,
+          keyword: props.keyword,
+          type: sort.active
+        }}
+        sortParams={{ type: sort.active }}
+        request={searchDetail}
+        renderItem={({ item }: { item: unknown }) => {
+          if (sort.active === 'movie') {
             return <MovieItem item={item as MovieItemType} />;
           }
-          if (props.search.type === 'actor') {
+          if (sort.active === 'actor') {
             return <ActorItem item={item as ActorItemType} />;
           }
-          if (props.search.type === 'role') {
+          if (sort.active === 'role') {
             return <RoleItem item={item as RoleItemType} />;
           }
 
-          return <View />;
+          return null;
         }}
+        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
-        resetRefresh={resetRefresh}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  page: {
-    paddingBottom: Platform.OS !== 'web' ? 10 : 0,
-    width: '100%',
-    height: Platform.OS === 'web' ? viewHeight - 85 : viewHeight + 42 - 85,
-    backgroundColor: '#fff'
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 16,
-    marginRight: -20,
-    marginLeft: 16
-  },
-  itemImage: {
-    width: 70,
-    height: 92,
-    borderRadius: 3
-  },
-  itemCoverText: {
-    position: 'absolute',
-    top: 1.6,
-    left: 5,
-    zIndex: 1,
-    fontSize: 10,
-    color: '#fff'
-  },
-  itemInfo: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: 13
-  },
-  itemTitle: {
-    marginBottom: 1,
-    fontSize: 13,
-    color: '#333'
-  },
-  itemTag: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
-  tag: {
-    paddingVertical: 0.5,
-    paddingHorizontal: 1.8,
-    marginTop: 8.5,
-    marginRight: 5,
-    backgroundColor: 'rgba(254, 179, 0, .15)',
-    fontSize: 10,
-    color: '#feb300',
-    textAlign: 'center',
-    borderRadius: 2
-  },
-  itemText: {
-    marginTop: 8,
-    fontSize: 11,
-    color: '#999'
-  },
-  itemRating: {
-    width: 68,
-    fontSize: 8,
-    color: '#f16c00'
-  },
-  itemRatingWeight: {
-    fontSize: 12,
-    fontWeight: '700'
-  },
-  noData: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 140
-  },
-  noDataText: {
-    color: '#888'
-  }
-});
 
 export default SearchDetail;

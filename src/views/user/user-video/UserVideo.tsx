@@ -11,8 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { timeStampToDuration, formatDate } from '@/utils/utils';
 import { viewHeight } from '@/utils/screen';
 import { userVideos } from '@/api/mine';
-import type { ListRenderItemInfo } from 'react-native';
-import type { ResponseType, Navigation } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -28,27 +27,7 @@ type ItemType = {
 function UserVideo(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getUserVideos = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      userVideos({ page, per_page })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
@@ -57,7 +36,7 @@ function UserVideo(): React.ReactElement {
             resizeMode={'stretch'}
             style={[styles.itemImage]}
           />
-          <Text style={styles.coverText}>
+          <Text style={styles.itemText}>
             {timeStampToDuration(item.duration)}
           </Text>
         </View>
@@ -78,21 +57,23 @@ function UserVideo(): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>您还没有收藏任何视频</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>您还没有收藏任何视频</Text>
     </View>
   );
 
   return (
     <View style={styles.page}>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getUserVideos}
-        initialNumToRender={6}
+        requestParams={{
+          page: 1,
+          pageSize: 10
+        }}
+        request={userVideos}
         renderItem={renderItem}
+        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>
@@ -121,7 +102,7 @@ const styles = StyleSheet.create({
     height: 66,
     borderRadius: 3
   },
-  coverText: {
+  itemText: {
     position: 'absolute',
     top: 47,
     right: 6,
@@ -151,13 +132,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#999'
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 280
   },
-  noDataText: {
+  emptyDataText: {
     fontSize: 13.5,
     color: '#aaa'
   }

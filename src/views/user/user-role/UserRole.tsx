@@ -10,8 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
 import { userRoles } from '@/api/mine';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -24,27 +23,7 @@ type ItemType = {
 function UserRole(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getUserRoles = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      userRoles({ page, per_page })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -53,7 +32,7 @@ function UserRole(): React.ReactElement {
           style={[styles.itemImage]}
         />
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemName}>
             {item.name}
           </Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
@@ -64,21 +43,23 @@ function UserRole(): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>您还没有关注任何角色</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>您还没有关注任何角色</Text>
     </View>
   );
 
   return (
     <View style={styles.page}>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getUserRoles}
-        initialNumToRender={6}
+        requestParams={{
+          page: 1,
+          pageSize: 10
+        }}
+        request={userRoles}
         renderItem={renderItem}
+        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>
@@ -111,7 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: 13
   },
-  itemTitle: {
+  itemName: {
     marginBottom: 1,
     fontSize: 13,
     color: '#333'
@@ -121,13 +102,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#999'
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 280
   },
-  noDataText: {
+  emptyDataText: {
     fontSize: 13.5,
     color: '#aaa'
   }

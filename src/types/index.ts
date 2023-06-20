@@ -13,6 +13,7 @@ export type ResponseType<T = any> = {
   code?: number;
   data?: T;
   message?: string;
+  total?: number;
 };
 
 export type TextInputEvent = NativeSyntheticEvent<TextInputChangeEventData>;

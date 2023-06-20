@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { deviceWidth } from '@/utils/screen';
 import { moviesList } from '@/api/movies';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import type { MovieParams } from '@/api/movies';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -20,9 +19,6 @@ type ItemType = {
 function Movies(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
   const [navParams, setNavParams] = useState({
     category: '全部',
     genre: '全部',
@@ -30,17 +26,15 @@ function Movies(): React.ReactElement {
     year: '全部'
   });
 
-  const timer = useRef<number>();
+  const timer = useRef<NodeJS.Timeout>();
 
   const navChange = (categoryParams: Partial<MovieParams>) => {
-    setNavParams({ ...navParams, ...categoryParams });
-
     if (timer.current) {
       clearTimeout(timer.current);
     }
     timer.current = setTimeout(() => {
-      setResetRefresh(true);
-    }, 1000);
+      setNavParams({ ...navParams, ...categoryParams });
+    }, 500);
   };
 
   useEffect(() => {
@@ -51,35 +45,7 @@ function Movies(): React.ReactElement {
     };
   }, []);
 
-  const getMoviesList = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      moviesList({
-        page,
-        per_page,
-        category: navParams.category,
-        genre: navParams.genre,
-        country: navParams.country,
-        year: navParams.year
-      })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable
       onPress={() => navigation.push('MovieDetail', { id: item.id })}
       style={styles.item}
@@ -107,16 +73,27 @@ function Movies(): React.ReactElement {
       <View style={styles.page}>
         {/* 单项宽度105 */}
         <ScrollRefresh
-          page={1}
-          pageSize={Math.floor(deviceWidth / 105) * 5}
-          request={getMoviesList}
+          requestParams={{
+            page: 1,
+            pageSize: Math.floor(deviceWidth / 105) * 5,
+            category: navParams.category,
+            genre: navParams.genre,
+            country: navParams.country,
+            year: navParams.year
+          }}
+          sortParams={{
+            category: navParams.category,
+            genre: navParams.genre,
+            country: navParams.country,
+            year: navParams.year
+          }}
+          request={moviesList}
+          renderItem={renderItem}
           initialNumToRender={15}
           numColumns={Math.floor(deviceWidth / 105)}
           columnWrapperStyle={{
             justifyContent: 'space-between'
           }}
-          renderItem={renderItem}
-          resetRefresh={resetRefresh}
         />
       </View>
     </>

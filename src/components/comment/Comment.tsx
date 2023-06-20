@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { formatDate } from '@/utils/utils';
-import type { ViewStyle, ListRenderItemInfo } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -31,9 +31,6 @@ type ItemType = {
 function Comment(props: Props): React.ReactElement {
   const route: Route = useRoute();
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
   const [sort, setSort] = useState({
     active: 'hot',
     list: [
@@ -49,37 +46,17 @@ function Comment(props: Props): React.ReactElement {
   });
 
   const toggleSort = (value: string): void => {
-    setResetRefresh(true);
     setSort({ ...sort, active: value });
   };
 
   // 评论总数
   const [commentCount, setCommentCount] = useState(0);
 
-  const method = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      props
-        ?.method({ id: route.params.id, page, per_page, sortby: sort.active })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            setCommentCount((res as { total: number }).total);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
+  const handleResponseSuccess = (res: ResponseType) => {
+    setCommentCount(res?.total || 0);
   };
 
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <View style={styles.item}>
       <View style={styles.itemCover}>
         <Image
@@ -94,9 +71,9 @@ function Comment(props: Props): React.ReactElement {
         >
           {item?.author?.username}
         </Text>
-        <Pressable>
+        {item.is_delete !== 1 && (
           <Text style={styles.itemMoreIcon}>{'\ue85c'}</Text>
-        </Pressable>
+        )}
       </View>
       <View style={styles.itemContent}>
         {item.is_delete === 0 && (
@@ -108,18 +85,20 @@ function Comment(props: Props): React.ReactElement {
       </View>
       <View style={styles.itemInfo}>
         <Text style={styles.infoText}>{formatDate(item.created_at)}</Text>
-        <View style={styles.infoDesc}>
-          <Text style={styles.descText}>{item.like_count}</Text>
-          <Text style={styles.descIcon}>{'\ue669'}</Text>
-        </View>
+        {item.is_delete !== 1 && (
+          <View style={styles.infoDesc}>
+            <Text style={styles.descText}>{item.like_count}</Text>
+            <Text style={styles.descIcon}>{'\ue669'}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>还没有用户发表过评论</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>还没有用户发表过评论</Text>
     </View>
   );
 
@@ -161,12 +140,17 @@ function Comment(props: Props): React.ReactElement {
             </View>
           )}
           <ScrollRefresh
-            page={1}
-            pageSize={10}
-            request={method}
-            initialNumToRender={6}
+            requestParams={{
+              id: route.params.id,
+              page: 1,
+              pageSize: 10,
+              sortby: sort.active
+            }}
+            sortParams={{ sortby: sort.active }}
+            request={props?.method}
+            responseSuccess={handleResponseSuccess}
             renderItem={renderItem}
-            resetRefresh={resetRefresh}
+            initialNumToRender={6}
             ListEmptyComponent={<ListEmptyComponent />}
           />
         </View>

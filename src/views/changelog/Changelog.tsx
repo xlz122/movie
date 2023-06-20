@@ -6,6 +6,16 @@ function Changelog(): React.ReactElement {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
       <View style={styles.cell}>
         <View style={styles.cellItem}>
+          <Text style={styles.itemTitle}>2023-06-20</Text>
+          <View style={styles.itemContent}>
+            <Text style={styles.itemText}>
+              1.react native版本更新至0.72.0-rc.6
+            </Text>
+            <Text style={styles.itemText}>2.优化各页面代码</Text>
+            <Text style={styles.itemText}>3.重构ScrollRefresh组件</Text>
+          </View>
+        </View>
+        <View style={styles.cellItem}>
           <Text style={styles.itemTitle}>2023-03-01</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.react native版本更新至0.71.3</Text>

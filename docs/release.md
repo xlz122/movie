@@ -1,6 +1,6 @@
 [Readme.md](../README.md) | [阿里字体图标](./iconfont.md) | [插件介绍](./plugin.md) | [平台差异对比](./difference.md) | 打包apk 
 
-# 安卓打包
+# Android打包
 
 ## 1.生成签名
 
@@ -73,4 +73,4 @@ gradlew assembleRelease
 
 # IOS打包
 
-待补充
+未适配

@@ -3,7 +3,6 @@ import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { deviceWidth } from '@/utils/screen';
 import { actorWorks } from '@/api/actor';
-import type { ListRenderItemInfo } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -26,8 +25,10 @@ function ActorWorksDetail(): React.ReactElement {
 
   // 作品数
   const [total, setTotal] = useState(0);
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
+
+  const handleResponseSuccess = (res: ResponseType) => {
+    setTotal(res?.total || 0);
+  };
 
   const [sort, setSort] = useState({
     active: 'hot',
@@ -48,38 +49,10 @@ function ActorWorksDetail(): React.ReactElement {
   });
 
   const toggleSort = (value: string): void => {
-    setResetRefresh(true);
     setSort({ ...sort, active: value });
   };
 
-  const getActorsList = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      actorWorks({
-        id: route.params.id,
-        page,
-        per_page,
-        sortby: sort.active
-      })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            setTotal((res as { total: number })?.total);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -127,16 +100,21 @@ function ActorWorksDetail(): React.ReactElement {
       </View>
       {/* 单项宽度105 */}
       <ScrollRefresh
-        page={1}
-        pageSize={Math.floor(deviceWidth / 105) * 5}
-        request={getActorsList}
+        requestParams={{
+          id: route.params.id,
+          page: 1,
+          pageSize: Math.floor(deviceWidth / 105) * 5,
+          sortby: sort.active
+        }}
+        sortParams={{ sortby: sort.active }}
+        request={actorWorks}
+        responseSuccess={handleResponseSuccess}
+        renderItem={renderItem}
         initialNumToRender={15}
         numColumns={Math.floor(deviceWidth / 105)}
         columnWrapperStyle={{
           justifyContent: 'space-between'
         }}
-        renderItem={renderItem}
-        resetRefresh={resetRefresh}
         listStyle={{ paddingHorizontal: 10 }}
       />
     </View>
