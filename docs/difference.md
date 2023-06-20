@@ -10,7 +10,7 @@
 2.接口文件(src/utils/axios)
 
 * app端不需要处理跨域
-* web端需要处理跨域，跨域处理请查看web/webpack.config.js - devServer配置项
+* web端需要处理跨域，请查看web/webpack.config.js - devServer配置项
 
 ## 插件差异
 
@@ -33,7 +33,7 @@ import { StatusBar, Dimensions } from 'react-native';
 const StatusBarHeight = StatusBar.currentHeight || 0;
 // 屏幕高度
 const deviceHeight = Dimensions.get('window').height;
-// 获取屏幕内容高度
+// 屏幕内容高度
 const viewHeight = deviceHeight - StatusBarHeight;
 ```
 

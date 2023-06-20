@@ -18,7 +18,7 @@
 * react-native-safe-area-context
 * react-native-screens
 
-tab导航
+tabbar路由
 
 * @react-navigation/bottom-tabs
 
@@ -32,24 +32,12 @@ tab导航
 plugins: ['react-native-reanimated/plugin']
 ```
 
-轮播图2.10.0版本，启动项目时会进行下载boost_1_76_0.tar.gz(下载极慢，所以需使用2.10.0版本以上)，2.10.0版本示例如下：
-
-```
-> Task :react-native-reanimated:downloadGlog FAILED
-<===========--> 85% EXECUTING [4m 37s]
-> IDLE
-> IDLE
-> IDLE
-> IDLE
-> :react-native-reanimated:downloadBoost > boost_1_76_0.tar.gz > 77.67 MB/124.24 MB downloaded
-```
-
 渐变背景色
 
 * react-native-linear-gradient(app端)
 * react-native-web-linear-gradient(web端)
 
-打开外部网页
+app端内置网页
 
 * react-native-webview
 
@@ -60,19 +48,22 @@ plugins: ['react-native-reanimated/plugin']
 配置babel.config.js
 
 ```
-[
-  'module-resolver',
-  {
-    root: ['./src'],
-    extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
-    alias: {
-      '@': ['./src']
+plugins: [
+  ...
+  [
+    'module-resolver',
+    {
+      root: ['./src'],
+      extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
+      alias: {
+        '@': ['./src']
+      }
     }
-  }
+  ]
 ]
 ```
 
-配置tsconfig.json(可直接拿create-react-app的官方配置)
+tsconfig.json(create-react-app脚手架配置)
 
 ```
 {
