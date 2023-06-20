@@ -10,6 +10,10 @@ type Props = {
     pageSize?: number;
     [index: string]: unknown;
   };
+  // 排序参数
+  sortParams?: {
+    [index: string]: unknown;
+  };
   // 请求方法
   request: Function;
   // 响应数据筛选函数
@@ -18,10 +22,6 @@ type Props = {
   responseSuccess?: (response: ResponseType) => void;
   // 响应失败回调函数
   responseError?: () => void;
-  // 重置刷新(适用于tab切换列表)
-  resetRefresh?: boolean;
-  // 重置刷新回调函数
-  refreshSuccess?: () => void;
   listStyle?: ViewStyle;
 } & FlatListProps;
 
@@ -92,7 +92,6 @@ function ScrollRefresh(props: Props): React.ReactElement {
           props?.responseError && props?.responseError();
           reject();
         });
-      /* eslint-enable */
     });
   };
 
@@ -196,26 +195,23 @@ function ScrollRefresh(props: Props): React.ReactElement {
     });
   };
 
-  // 初始加载、加载列表
+  // 初始化
   useEffect(() => {
-    // 防止加载列表和下拉刷新同时触发
-    if (refreshState.isRefresh) {
+    // 排序
+    if (props.sortParams) {
+      onRefresh();
       return;
     }
 
     handleRefreshStatus();
-  }, [refreshState.page]);
+  }, [props.sortParams]);
 
-  // 下拉刷新
   useEffect(() => {
-    refreshState.isRefresh && handleRefreshStatus();
-  }, [refreshState.isRefresh]);
-
-  // 重置刷新(适用于tab切换列表)
-  useEffect(() => {
-    props?.resetRefresh && onRefresh();
-    props?.resetRefresh && props?.refreshSuccess && props?.refreshSuccess();
-  }, [props?.resetRefresh]);
+    // 下拉刷新、上拉加载
+    if (refreshState.isRefresh || refreshState.isLoadMore) {
+      handleRefreshStatus();
+    }
+  }, [refreshState]);
 
   const ListFooterComponent = (): React.ReactElement => {
     return (

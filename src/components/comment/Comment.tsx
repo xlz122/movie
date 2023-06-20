@@ -31,13 +31,6 @@ type ItemType = {
 function Comment(props: Props): React.ReactElement {
   const route: Route = useRoute();
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
-  const handleRefreshSuccess = () => {
-    setResetRefresh(false);
-  };
-
   const [sort, setSort] = useState({
     active: 'hot',
     list: [
@@ -53,7 +46,6 @@ function Comment(props: Props): React.ReactElement {
   });
 
   const toggleSort = (value: string): void => {
-    setResetRefresh(true);
     setSort({ ...sort, active: value });
   };
 
@@ -152,12 +144,11 @@ function Comment(props: Props): React.ReactElement {
               pageSize: 10,
               sortby: sort.active
             }}
+            sortParams={{ sortby: sort.active }}
             request={props?.method}
             responseSuccess={handleResponseSuccess}
             renderItem={renderItem}
             initialNumToRender={6}
-            resetRefresh={resetRefresh}
-            refreshSuccess={handleRefreshSuccess}
             ListEmptyComponent={<ListEmptyComponent />}
           />
         </View>

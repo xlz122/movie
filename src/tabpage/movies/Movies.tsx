@@ -19,13 +19,6 @@ type ItemType = {
 function Movies(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  // 刷新列表
-  const [resetRefresh, setResetRefresh] = useState(false);
-
-  const handleRefreshSuccess = () => {
-    setResetRefresh(false);
-  };
-
   const [navParams, setNavParams] = useState({
     category: '全部',
     genre: '全部',
@@ -36,14 +29,12 @@ function Movies(): React.ReactElement {
   const timer = useRef<NodeJS.Timeout>();
 
   const navChange = (categoryParams: Partial<MovieParams>) => {
-    setNavParams({ ...navParams, ...categoryParams });
-
     if (timer.current) {
       clearTimeout(timer.current);
     }
     timer.current = setTimeout(() => {
-      setResetRefresh(true);
-    }, 1000);
+      setNavParams({ ...navParams, ...categoryParams });
+    }, 500);
   };
 
   useEffect(() => {
@@ -90,11 +81,15 @@ function Movies(): React.ReactElement {
             country: navParams.country,
             year: navParams.year
           }}
+          sortParams={{
+            category: navParams.category,
+            genre: navParams.genre,
+            country: navParams.country,
+            year: navParams.year
+          }}
           request={moviesList}
           renderItem={renderItem}
           initialNumToRender={15}
-          resetRefresh={resetRefresh}
-          refreshSuccess={handleRefreshSuccess}
           numColumns={Math.floor(deviceWidth / 105)}
           columnWrapperStyle={{
             justifyContent: 'space-between'
