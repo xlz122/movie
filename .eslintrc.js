@@ -8,7 +8,7 @@ module.exports = {
     'object-curly-newline': [0],
     'no-alert': [0],
     // eslint注释
-    'eslint-comments/no-unlimited-disable': [0],
+    'eslint-comments/no-unused-enable': [0],
 
     // 禁用var, 使用let、const
     'no-var': 2,
