@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700'
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 140
   },
-  noDataText: {
+  emptyDataText: {
     color: '#888'
   }
 });

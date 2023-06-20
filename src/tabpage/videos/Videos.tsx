@@ -71,7 +71,7 @@ function Videos(): React.ReactElement {
         }}
         request={videosList}
         renderItem={renderItem}
-        initialNumToRender={6}
+        initialNumToRender={5}
       />
     </View>
   );

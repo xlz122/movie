@@ -34,7 +34,7 @@ function UserActor(): React.ReactElement {
           style={[styles.itemImage]}
         />
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemName}>
             {item.name}
           </Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
@@ -54,10 +54,10 @@ function UserActor(): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>您还没有关注任何影人</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>您还没有关注任何影人</Text>
     </View>
   );
 
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: 13
   },
-  itemTitle: {
+  itemName: {
     marginBottom: 1,
     fontSize: 13,
     color: '#333'
@@ -113,13 +113,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#999'
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 280
   },
-  noDataText: {
+  emptyDataText: {
     fontSize: 13.5,
     color: '#aaa'
   }

@@ -36,7 +36,7 @@ function UserVideo(): React.ReactElement {
             resizeMode={'stretch'}
             style={[styles.itemImage]}
           />
-          <Text style={styles.coverText}>
+          <Text style={styles.itemText}>
             {timeStampToDuration(item.duration)}
           </Text>
         </View>
@@ -57,10 +57,10 @@ function UserVideo(): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>您还没有收藏任何视频</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>您还没有收藏任何视频</Text>
     </View>
   );
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     height: 66,
     borderRadius: 3
   },
-  coverText: {
+  itemText: {
     position: 'absolute',
     top: 47,
     right: 6,
@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#999'
   },
-  noData: {
+  emptyData: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 280
   },
-  noDataText: {
+  emptyDataText: {
     fontSize: 13.5,
     color: '#aaa'
   }

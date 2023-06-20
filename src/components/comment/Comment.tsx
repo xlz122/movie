@@ -101,10 +101,10 @@ function Comment(props: Props): React.ReactElement {
     </View>
   );
 
-  // 无数据展示
+  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.noData}>
-      <Text style={styles.noDataText}>还没有用户发表过评论</Text>
+    <View style={styles.emptyData}>
+      <Text style={styles.emptyDataText}>还没有用户发表过评论</Text>
     </View>
   );
 
