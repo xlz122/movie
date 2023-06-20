@@ -11,8 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
 import { movieToday } from '@/api/home';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -32,35 +31,30 @@ function Today(): React.ReactElement {
   // 刷新列表
   const [resetRefresh, setResetRefresh] = useState(false);
 
-  const [sortby, setSortby] = useState('hot');
+  const handleRefreshSuccess = () => {
+    setResetRefresh(false);
+  };
+
+  const [sort, setSort] = useState({
+    active: 'hot',
+    list: [
+      {
+        title: '热度排序',
+        type: 'hot'
+      },
+      {
+        title: '时间排序',
+        type: 'date'
+      }
+    ]
+  });
 
   const toggleSort = (value: string): void => {
     setResetRefresh(true);
-    setSortby(value);
+    setSort({ ...sort, active: value });
   };
 
-  const getMovieToday = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      movieToday({ page, per_page, sortby })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -104,32 +98,34 @@ function Today(): React.ReactElement {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.tab}>
-        <Text
-          onPress={() => toggleSort('hot')}
-          style={[
-            styles.tabItem,
-            sortby === 'hot' ? styles.tabActiveItem : styles.tabItem
-          ]}
-        >
-          热度排序
-        </Text>
-        <Text
-          onPress={() => toggleSort('date')}
-          style={[
-            styles.tabItem,
-            sortby === 'date' ? styles.tabActiveItem : styles.tabItem
-          ]}
-        >
-          时间排序
-        </Text>
+        {sort.list.map((item, index) => {
+          return (
+            <Text
+              key={index}
+              onPress={() => toggleSort(item.type)}
+              style={[
+                styles.tabItem,
+                item.type === sort.active
+                  ? styles.tabActiveItem
+                  : styles.tabItem
+              ]}
+            >
+              {item.title}
+            </Text>
+          );
+        })}
       </View>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getMovieToday}
-        initialNumToRender={6}
+        requestParams={{
+          page: 1,
+          pageSize: 10,
+          sortby: sort.active
+        }}
+        request={movieToday}
         renderItem={renderItem}
+        initialNumToRender={6}
         resetRefresh={resetRefresh}
+        refreshSuccess={handleRefreshSuccess}
       />
     </SafeAreaView>
   );

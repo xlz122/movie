@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { formatDate } from '@/utils/utils';
-import type { ViewStyle, ListRenderItemInfo } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -34,6 +34,10 @@ function Comment(props: Props): React.ReactElement {
   // 刷新列表
   const [resetRefresh, setResetRefresh] = useState(false);
 
+  const handleRefreshSuccess = () => {
+    setResetRefresh(false);
+  };
+
   const [sort, setSort] = useState({
     active: 'hot',
     list: [
@@ -56,30 +60,11 @@ function Comment(props: Props): React.ReactElement {
   // 评论总数
   const [commentCount, setCommentCount] = useState(0);
 
-  const method = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      props
-        ?.method({ id: route.params.id, page, per_page, sortby: sort.active })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            setCommentCount((res as { total: number }).total);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
+  const handleResponseSuccess = (res: ResponseType) => {
+    setCommentCount(res?.total || 0);
   };
 
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <View style={styles.item}>
       <View style={styles.itemCover}>
         <Image
@@ -161,12 +146,18 @@ function Comment(props: Props): React.ReactElement {
             </View>
           )}
           <ScrollRefresh
-            page={1}
-            pageSize={10}
-            request={method}
-            initialNumToRender={6}
+            requestParams={{
+              id: route.params.id,
+              page: 1,
+              pageSize: 10,
+              sortby: sort.active
+            }}
+            request={props?.method}
+            responseSuccess={handleResponseSuccess}
             renderItem={renderItem}
+            initialNumToRender={6}
             resetRefresh={resetRefresh}
+            refreshSuccess={handleRefreshSuccess}
             ListEmptyComponent={<ListEmptyComponent />}
           />
         </View>

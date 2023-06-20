@@ -11,8 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { timeStampToDuration, formatDate } from '@/utils/utils';
 import { viewHeight } from '@/utils/screen';
 import { userVideos } from '@/api/mine';
-import type { ListRenderItemInfo } from 'react-native';
-import type { ResponseType, Navigation } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -28,27 +27,7 @@ type ItemType = {
 function UserVideo(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getUserVideos = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      userVideos({ page, per_page })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
@@ -88,11 +67,13 @@ function UserVideo(): React.ReactElement {
   return (
     <View style={styles.page}>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getUserVideos}
-        initialNumToRender={6}
+        requestParams={{
+          page: 1,
+          pageSize: 10
+        }}
+        request={userVideos}
         renderItem={renderItem}
+        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>

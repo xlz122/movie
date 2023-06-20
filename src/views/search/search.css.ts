@@ -48,41 +48,6 @@ const styles = StyleSheet.create({
     fontSize: 12.5,
     color: '#777',
     textAlign: 'center'
-  },
-  tab: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    height: 45,
-    paddingLeft: 8,
-    borderBottomWidth: 0.5,
-    borderStyle: 'solid',
-    borderColor: '#eee',
-    overflow: 'hidden'
-  },
-  tabItem: {
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 57,
-    height: '100%'
-  },
-  tabItemText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#666',
-    textAlign: 'center'
-  },
-  tabActiveLine: {
-    position: 'absolute',
-    left: '50%',
-    bottom: 2.6,
-    marginLeft: -11,
-    width: 22,
-    height: 3,
-    backgroundColor: 'rgb(229, 72, 71)',
-    borderRadius: 6
   }
 });
 

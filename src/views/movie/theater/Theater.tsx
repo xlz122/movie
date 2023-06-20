@@ -10,8 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
 import { movieTheater } from '@/api/home';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -27,27 +26,7 @@ type ItemType = {
 function Theater(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getMovieTheater = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      movieTheater({ page, per_page })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -81,11 +60,13 @@ function Theater(): React.ReactElement {
   return (
     <View style={styles.page}>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getMovieTheater}
-        initialNumToRender={6}
+        requestParams={{
+          page: 1,
+          pageSize: 10
+        }}
+        request={movieTheater}
         renderItem={renderItem}
+        initialNumToRender={6}
       />
     </View>
   );

@@ -10,8 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
 import { userActors } from '@/api/mine';
-import type { ListRenderItemInfo } from 'react-native';
-import type { ResponseType, Navigation } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -26,27 +25,7 @@ type ItemType = {
 function UserActor(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const getUserActors = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      userActors({ page, per_page })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
-
-  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item }: { item: ItemType }) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -85,11 +64,13 @@ function UserActor(): React.ReactElement {
   return (
     <View style={styles.page}>
       <ScrollRefresh
-        page={1}
-        pageSize={10}
-        request={getUserActors}
-        initialNumToRender={6}
+        requestParams={{
+          page: 1,
+          pageSize: 10
+        }}
+        request={userActors}
         renderItem={renderItem}
+        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>

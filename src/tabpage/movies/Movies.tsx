@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { deviceWidth } from '@/utils/screen';
 import { moviesList } from '@/api/movies';
 import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation } from '@/types/index';
 import type { MovieParams } from '@/api/movies';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -23,6 +23,10 @@ function Movies(): React.ReactElement {
   // 刷新列表
   const [resetRefresh, setResetRefresh] = useState(false);
 
+  const handleRefreshSuccess = () => {
+    setResetRefresh(false);
+  };
+
   const [navParams, setNavParams] = useState({
     category: '全部',
     genre: '全部',
@@ -30,7 +34,7 @@ function Movies(): React.ReactElement {
     year: '全部'
   });
 
-  const timer = useRef<number>();
+  const timer = useRef<NodeJS.Timeout>();
 
   const navChange = (categoryParams: Partial<MovieParams>) => {
     setNavParams({ ...navParams, ...categoryParams });
@@ -50,34 +54,6 @@ function Movies(): React.ReactElement {
       }
     };
   }, []);
-
-  const getMoviesList = ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }): Promise<unknown[]> => {
-    return new Promise((resolve, reject) => {
-      moviesList({
-        page,
-        per_page,
-        category: navParams.category,
-        genre: navParams.genre,
-        country: navParams.country,
-        year: navParams.year
-      })
-        .then((res: ResponseType<unknown[]>) => {
-          if (res.code === 200) {
-            setResetRefresh(false);
-            resolve(res.data!);
-          } else {
-            reject();
-          }
-        })
-        .catch(() => ({}));
-    });
-  };
 
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable
@@ -107,16 +83,23 @@ function Movies(): React.ReactElement {
       <View style={styles.page}>
         {/* 单项宽度105 */}
         <ScrollRefresh
-          page={1}
-          pageSize={Math.floor(deviceWidth / 105) * 5}
-          request={getMoviesList}
+          requestParams={{
+            page: 1,
+            pageSize: Math.floor(deviceWidth / 105) * 5,
+            category: navParams.category,
+            genre: navParams.genre,
+            country: navParams.country,
+            year: navParams.year
+          }}
+          request={moviesList}
+          renderItem={renderItem}
           initialNumToRender={15}
+          resetRefresh={resetRefresh}
+          refreshSuccess={handleRefreshSuccess}
           numColumns={Math.floor(deviceWidth / 105)}
           columnWrapperStyle={{
             justifyContent: 'space-between'
           }}
-          renderItem={renderItem}
-          resetRefresh={resetRefresh}
         />
       </View>
     </>
