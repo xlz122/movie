@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
-import type { ViewStyle, ListRenderItemInfo } from 'react-native';
+import type { ViewStyle, ListRenderItem } from 'react-native';
+import type { ResponseType } from '@/types/index';
 
 type Props = {
-  page?: number;
-  pageSize?: number;
-  request: ({
-    page,
-    per_page
-  }: {
-    page: number;
-    per_page: number;
-  }) => Promise<unknown[]>;
+  // 请求参数
+  requestParams?: {
+    page?: number;
+    pageSize?: number;
+    [index: string]: unknown;
+  };
+  // 请求方法
+  request: Function;
+  // 响应数据筛选函数
+  responseFilter?: (response: ResponseType) => ResponseType;
+  // 响应成功回调函数
+  responseSuccess?: (response: ResponseType) => void;
+  // 响应失败回调函数
+  responseError?: () => void;
+  // 重置刷新(适用于tab切换列表)
   resetRefresh?: boolean;
+  // 重置刷新回调函数
+  refreshSuccess?: () => void;
   listStyle?: ViewStyle;
 } & FlatListProps;
 
 type FlatListProps = {
+  renderItem?: ListRenderItem<any>;
   initialNumToRender?: number;
   showsVerticalScrollIndicator?: boolean;
   numColumns?: number;
   columnWrapperStyle?: ViewStyle;
-  renderItem?: React.FunctionComponent<ListRenderItemInfo<any>>;
+  ItemSeparatorComponent?: ListRenderItem<unknown> | null | undefined;
   ListEmptyComponent?: React.FunctionComponent | React.ReactElement;
   ListHeaderComponent?: React.FunctionComponent | React.ReactElement;
   ListFooterComponent?: React.FunctionComponent | React.ReactElement;
@@ -37,89 +47,63 @@ type RefreshState = {
   loadText: string;
   currentComplete: boolean;
   complete: boolean;
-  noData: boolean;
+  emptyData: boolean;
 };
 
 function ScrollRefresh(props: Props): React.ReactElement {
   const [refreshState, setRefreshState] = useState<RefreshState>({
-    page: props?.page || 1,
-    pageSize: props?.pageSize || 10,
+    page: props?.requestParams?.page || 1,
+    pageSize: props?.requestParams?.pageSize || 10,
     data: [],
     // 下拉刷新
     isRefresh: false,
-    // 加载更多
+    // 上拉加载
     isLoadMore: false,
     // 加载文字
     loadText: '',
-    // 当前请求数据是否加载完成
+    // 当前请求是否请求完成
     currentComplete: false,
-    // 数据是否全部加载完成
+    // 数据是否全部请求完成
     complete: false,
-    // 是否没有数据
-    noData: false
+    // 空数据
+    emptyData: false
   });
 
-  const onRefresh = (): void => {
-    setRefreshState({
-      ...refreshState,
-      page: 1,
-      data: [],
-      isRefresh: true,
-      currentComplete: false,
-      complete: false,
-      noData: false,
-      loadText: ''
+  const getListData = (): Promise<unknown[]> => {
+    return new Promise((resolve, reject) => {
+      props
+        .request({
+          ...props.requestParams,
+          page: refreshState.page,
+          per_page: refreshState.pageSize
+        })
+        .then((res: ResponseType) => {
+          if (res.code === 200) {
+            props?.responseSuccess && props?.responseSuccess(res);
+            // 筛选数据源
+            const data =
+              (props?.responseFilter && props?.responseFilter(res)) ||
+              res?.data ||
+              [];
+            resolve(data);
+          }
+        })
+        .catch(() => {
+          props?.responseError && props?.responseError();
+          reject();
+        });
+      /* eslint-enable */
     });
   };
-
-  const onEndReached = (): boolean | undefined => {
-    // 当前请求未完成 / 加载完成
-    if (!refreshState.currentComplete || refreshState.complete) {
-      return false;
-    }
-
-    setRefreshState({
-      ...refreshState,
-      page: refreshState.page + 1,
-      isLoadMore: true,
-      currentComplete: false,
-      loadText: '加载中...'
-    });
-  };
-
-  // 重置刷新
-  useEffect(() => {
-    if (props?.resetRefresh) {
-      onRefresh();
-    }
-  }, [props?.resetRefresh]);
-
-  // 下拉刷新
-  useEffect(() => {
-    if (refreshState.isRefresh) {
-      handleRefreshStatus();
-    }
-  }, [refreshState.isRefresh]);
-
-  // 下拉刷新不触发
-  useEffect(() => {
-    if (refreshState.isRefresh) {
-      return;
-    }
-
-    handleRefreshStatus();
-  }, [refreshState.page]);
 
   const handleRefreshStatus = async () => {
-    const data = await props.request({
-      page: refreshState.page,
-      per_page: refreshState.pageSize
-    });
+    const data = await getListData();
 
     // 加载失败
     if (!data) {
       setRefreshState({
         ...refreshState,
+        data: [],
         isRefresh: false,
         isLoadMore: false,
         currentComplete: true,
@@ -128,23 +112,23 @@ function ScrollRefresh(props: Props): React.ReactElement {
       return false;
     }
 
-    // 第一页，没有数据
+    // 第一页, 空数据
     if (refreshState.page === 1 && data?.length === 0) {
       setRefreshState({
         ...refreshState,
-        data,
+        data: [],
         isRefresh: false,
         isLoadMore: false,
         currentComplete: true,
         complete: true,
-        noData: true,
+        emptyData: true,
         loadText: ''
       });
 
       return false;
     }
 
-    // 第一页，数据量少于一页数据量
+    // 第一页, 数据量少于一页数据量
     if (refreshState.page === 1 && data?.length < refreshState.pageSize) {
       setRefreshState({
         ...refreshState,
@@ -184,7 +168,56 @@ function ScrollRefresh(props: Props): React.ReactElement {
     });
   };
 
-  const _createListFooter = (): React.ReactElement => {
+  const onRefresh = (): void => {
+    setRefreshState({
+      ...refreshState,
+      page: 1,
+      data: [],
+      isRefresh: true,
+      currentComplete: false,
+      complete: false,
+      emptyData: false,
+      loadText: ''
+    });
+  };
+
+  const onEndReached = (): boolean | undefined => {
+    // 当前请求未完成 / 加载完成
+    if (!refreshState.currentComplete || refreshState.complete) {
+      return false;
+    }
+
+    setRefreshState({
+      ...refreshState,
+      page: refreshState.page + 1,
+      isLoadMore: true,
+      currentComplete: false,
+      loadText: '加载中...'
+    });
+  };
+
+  // 初始加载、加载列表
+  useEffect(() => {
+    // 防止加载列表和下拉刷新同时触发
+    if (refreshState.isRefresh) {
+      return;
+    }
+
+    handleRefreshStatus();
+  }, [refreshState.page]);
+
+  // 下拉刷新
+  useEffect(() => {
+    refreshState.isRefresh && handleRefreshStatus();
+  }, [refreshState.isRefresh]);
+
+  // 重置刷新(适用于tab切换列表)
+  useEffect(() => {
+    props?.resetRefresh && onRefresh();
+    props?.resetRefresh && props?.refreshSuccess && props?.refreshSuccess();
+  }, [props?.resetRefresh]);
+
+  const ListFooterComponent = (): React.ReactElement => {
     return (
       <View style={styles.loadMore}>
         <Text style={styles.loadMoreText}>{refreshState.loadText}</Text>
@@ -195,23 +228,26 @@ function ScrollRefresh(props: Props): React.ReactElement {
   return (
     <SafeAreaView style={[styles.list, props?.listStyle]}>
       <FlatList
+        keyExtractor={(item: unknown, index: number) => String(index)}
+        renderItem={props?.renderItem}
+        data={refreshState.data}
         // 初始渲染个数
         initialNumToRender={props?.initialNumToRender || 6}
         // 滚动条
         showsVerticalScrollIndicator={
           props?.showsVerticalScrollIndicator || false
         }
-        data={refreshState.data}
         numColumns={props?.numColumns || 1}
         columnWrapperStyle={props?.columnWrapperStyle}
-        renderItem={props?.renderItem}
+        // 分隔线组件(不会出现在第一行之前和最后一行之后)
+        ItemSeparatorComponent={props?.ItemSeparatorComponent}
         // 空布局
         ListEmptyComponent={
-          refreshState.noData ? props?.ListEmptyComponent : null
+          refreshState.emptyData ? props?.ListEmptyComponent : null
         }
         // 头尾布局
         ListHeaderComponent={props?.ListHeaderComponent}
-        ListFooterComponent={props?.ListFooterComponent || _createListFooter}
+        ListFooterComponent={props?.ListFooterComponent || ListFooterComponent}
         // 下拉刷新
         refreshing={refreshState.isRefresh}
         onRefresh={onRefresh}

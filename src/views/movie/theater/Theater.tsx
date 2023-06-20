@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { viewHeight } from '@/utils/screen';
 import { movieTheater } from '@/api/home';
 import type { Navigation } from '@/types/index';
-import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh2';
+import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
   id: number;
