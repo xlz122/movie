@@ -71,9 +71,9 @@ function Comment(props: Props): React.ReactElement {
         >
           {item?.author?.username}
         </Text>
-        <Pressable>
+        {item.is_delete !== 1 && (
           <Text style={styles.itemMoreIcon}>{'\ue85c'}</Text>
-        </Pressable>
+        )}
       </View>
       <View style={styles.itemContent}>
         {item.is_delete === 0 && (
@@ -85,10 +85,12 @@ function Comment(props: Props): React.ReactElement {
       </View>
       <View style={styles.itemInfo}>
         <Text style={styles.infoText}>{formatDate(item.created_at)}</Text>
-        <View style={styles.infoDesc}>
-          <Text style={styles.descText}>{item.like_count}</Text>
-          <Text style={styles.descIcon}>{'\ue669'}</Text>
-        </View>
+        {item.is_delete !== 1 && (
+          <View style={styles.infoDesc}>
+            <Text style={styles.descText}>{item.like_count}</Text>
+            <Text style={styles.descIcon}>{'\ue669'}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
