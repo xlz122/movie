@@ -40,7 +40,7 @@ function NavGroup(props: Props): React.ReactElement {
     <SafeAreaView style={styles.navGroup}>
       <FlatList
         horizontal
-        initialNumToRender={6}
+        initialNumToRender={10}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => String(index)}
         renderItem={renderItem}
