@@ -117,6 +117,7 @@ type MovieCommentParams = {
   id: number;
   page: number;
   per_page: number;
+  sortby?: string;
 };
 
 /**
@@ -124,9 +125,15 @@ type MovieCommentParams = {
  * @param { Number } id - 影视id
  * @param { Number } page - 页数
  * @param { Number } per_page - 条数
+ * @param { Number } sortby - 排序参数
  */
-export const movieComment = ({ id, page, per_page }: MovieCommentParams) => {
-  const params = { id, page, per_page };
+export const movieComment = ({
+  id,
+  page,
+  per_page,
+  sortby
+}: MovieCommentParams) => {
+  const params = { page, per_page, sortby };
 
   return axios.request({
     url: `/movies/${id}/comments`,

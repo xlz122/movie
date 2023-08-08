@@ -137,7 +137,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://test-h5-api.ixook.com',
+        target: 'https://h5-api-test.ixook.com',
         ws: true,
         secure: false,
         changeOrigin: true,

@@ -48,7 +48,7 @@ function Home(): React.ReactElement {
       .then((res: ResponseType) => {
         if (res.code === 200) {
           setLoading(false);
-          setBanner(res?.data?.swiper || []);
+          setBanner(res?.data?.banners || []);
           setMovie({
             theater: res?.data?.theater,
             coming: res?.data?.coming,

@@ -25,14 +25,16 @@ function ActorPhotoDetail(): React.ReactElement {
   ]);
   const [photo, setPhoto] = useState<Array<{ url?: string }>>([]);
   const [photoParams, setPhotoParams] = useState({
-    id: route.params.id,
     page: 1,
     per_page: 11,
     type: 'all'
   });
 
   const getPhotos = () => {
-    actorPhotos({ ...photoParams })
+    actorPhotos({
+      id: route.params.id,
+      ...photoParams
+    })
       .then((res: ResponseType) => {
         if (res.code === 200) {
           setPhoto(res.data);

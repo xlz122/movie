@@ -26,22 +26,16 @@ function MoviePhotoDetail(): React.ReactElement {
   ]);
   const [photo, setPhoto] = useState<Array<{ url?: string }>>([]);
   const [photoParams, setPhotoParams] = useState({
-    id: route.params.id,
     page: 1,
     per_page: 11,
     type: 'all'
   });
 
-  useEffect(() => {
-    if (!route.params.id) {
-      return;
-    }
-
-    setPhotoParams({ ...photoParams, id: route.params.id });
-  }, [route.params.id]);
-
   const getPhotos = () => {
-    moviePhotos({ ...photoParams })
+    moviePhotos({
+      id: route.params.id,
+      ...photoParams
+    })
       .then((res: ResponseType) => {
         if (res.code === 200) {
           setPhoto(res.data);
