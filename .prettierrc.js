@@ -5,13 +5,13 @@ module.exports = {
   bracketSpacing: true,
   // 对象末尾是否需要逗号
   trailingComma: 'none',
-  // 箭头函数参数括号(1个参数不需要,1个以上需要)
+  // 箭头函数参数括号(1个参数不需要, 1个以上需要)
   arrowParens: 'avoid',
-  // jsx中的 '>' 是否单独放一行
+  // jsx中的'>'是否单独放一行
   bracketSameLine: false,
   // 折行标准(默认)
   proseWrap: 'preserve',
-  // 根据显示样式决定 html 是否折行
+  // 根据显示样式决定html是否折行
   htmlWhitespaceSensitivity: 'css',
   // 换行符(crlf/lf/auto)
   endOfLine: 'auto'

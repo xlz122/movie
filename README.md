@@ -2,16 +2,16 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 ## 环境要求
 
-需要 NodeJS 16.0.0+ 环境
+需要 NodeJS 18.0.0+ 环境
 
 ![](./src/assets/design-sketch/npm-7.10.0.svg)
 ![](./src/assets/design-sketch/node-16.0.0.svg)
 
-需要 Java JDK 11+ 环境
+需要 Java JDK 17 环境
 
 ![](./src/assets/design-sketch/java-jdk-11.0.0.svg)
 
-需要 Android SDK 31+ 环境
+需要 Android SDK 34 环境
 
 ![](./src/assets/design-sketch/android-sdk-31.0.0.svg)
 
@@ -21,12 +21,12 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 项目使用react-native-web实现web端应用，可查看[web-webpack分支](https://github.com/xlz122/react-native-movie/tree/web-webpack)
 
-目前仅支持android端和web端, ios端未适配
+目前仅支持android端和web端，ios端未适配
 
 ## 项目使用技术栈
 
 * React
-* React Native 0.72.4
+* React Native 0.73.0
 * Redux
 * Typescript
 
