@@ -4,16 +4,9 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 需要 NodeJS 18.0.0+ 环境
 
-![](./src/assets/design-sketch/npm-7.10.0.svg)
-![](./src/assets/design-sketch/node-16.0.0.svg)
-
 需要 Java JDK 17 环境
 
-![](./src/assets/design-sketch/java-jdk-11.0.0.svg)
-
 需要 Android SDK 34 环境
-
-![](./src/assets/design-sketch/android-sdk-31.0.0.svg)
 
 ## 简介
 
