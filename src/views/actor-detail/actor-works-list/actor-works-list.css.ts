@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
+    marginHorizontal: 5,
     paddingBottom: 14
   },
   itemImage: {

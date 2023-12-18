@@ -98,12 +98,12 @@ function ActorWorksDetail(): React.ReactElement {
           })}
         </View>
       </View>
-      {/* 单项宽度105 */}
+      {/* 单项宽度115 */}
       <ScrollRefresh
         requestParams={{
           id: route.params.id,
           page: 1,
-          pageSize: Math.floor(deviceWidth / 105) * 5,
+          pageSize: Math.floor(deviceWidth / 115) * 5,
           sortby: sort.active
         }}
         sortParams={{ sortby: sort.active }}
@@ -111,9 +111,9 @@ function ActorWorksDetail(): React.ReactElement {
         responseSuccess={handleResponseSuccess}
         renderItem={renderItem}
         initialNumToRender={15}
-        numColumns={Math.floor(deviceWidth / 105)}
+        numColumns={Math.floor(deviceWidth / 115)}
         columnWrapperStyle={{
-          justifyContent: 'space-between'
+          justifyContent: 'space-around'
         }}
         listStyle={{ paddingHorizontal: 10 }}
       />

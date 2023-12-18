@@ -38,6 +38,8 @@ function Movies(): React.ReactElement {
   };
 
   useEffect(() => {
+    console.log(deviceWidth);
+    console.log(Math.floor(deviceWidth / 115));
     return () => {
       if (timer.current) {
         clearTimeout(timer.current);
@@ -71,11 +73,11 @@ function Movies(): React.ReactElement {
     <>
       <Nav onChange={navChange} />
       <View style={styles.page}>
-        {/* 单项宽度105 */}
+        {/* 单项宽度115 */}
         <ScrollRefresh
           requestParams={{
             page: 1,
-            pageSize: Math.floor(deviceWidth / 105) * 5,
+            pageSize: Math.floor(deviceWidth / 115) * 5,
             category: navParams.category,
             genre: navParams.genre,
             country: navParams.country,
@@ -90,9 +92,9 @@ function Movies(): React.ReactElement {
           request={moviesList}
           renderItem={renderItem}
           initialNumToRender={15}
-          numColumns={Math.floor(deviceWidth / 105)}
+          numColumns={Math.floor(deviceWidth / 115)}
           columnWrapperStyle={{
-            justifyContent: 'space-between'
+            justifyContent: 'space-around'
           }}
         />
       </View>
