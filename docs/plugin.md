@@ -1,10 +1,10 @@
-[Readme.md](../README.md) | [阿里字体图标](./iconfont.md) | 插件介绍 | [平台差异对比](./difference.md) | [打包apk](./release.md) 
+[Readme.md](../README.md) | [阿里字体图标](./iconfont.md) | 插件介绍 | [平台差异对比](./difference.md) | [打包](./release.md) 
 
 手势
 
 * react-native-gesture-handler
 
-持久化状态管理(redux + 本地存储 + redux-persist)
+状态管理 + 本地存储 + 持久化
 
 * @reduxjs/toolkit
 * react-redux
@@ -18,7 +18,7 @@
 * react-native-safe-area-context
 * react-native-screens
 
-tabbar路由
+TabBar路由
 
 * @react-navigation/bottom-tabs
 
@@ -27,7 +27,8 @@ tabbar路由
 * react-native-reanimated
 * react-native-reanimated-carousel
 
-配置babel.config.js
+轮播图 - 配置babel.config.js
+
 ```
 plugins: ['react-native-reanimated/plugin']
 ```
@@ -45,7 +46,7 @@ app端内置网页
 
 * babel-plugin-module-resolver
 
-配置babel.config.js
+路径别名 - 配置babel.config.js
 
 ```
 plugins: [
@@ -61,38 +62,4 @@ plugins: [
     }
   ]
 ]
-```
-
-tsconfig.json(create-react-app脚手架配置)
-
-```
-{
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
-}
 ```
