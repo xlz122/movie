@@ -39,7 +39,6 @@ function GestureSwiper(props: Props): React.ReactElement {
     }
 
     id = positionAnimated.addListener(({ value }) => {
-      // console.log('realtime', value);
       position.realtime = value;
       props.onProgressChange && props.onProgressChange(value);
     });

@@ -38,8 +38,6 @@ function Movies(): React.ReactElement {
   };
 
   useEffect(() => {
-    console.log(deviceWidth);
-    console.log(Math.floor(deviceWidth / 115));
     return () => {
       if (timer.current) {
         clearTimeout(timer.current);
