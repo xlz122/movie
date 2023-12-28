@@ -28,7 +28,7 @@ keytool -genkey -v -keystore app.keystore -alias app.alias -keyalg RSA -keysize 
 
 打开 android/app/build.gradle 文件
 
-### 修改 signingConfigs 配置项
+### 配置 signingConfigs
 
 新增 release 配置项
 
@@ -37,8 +37,7 @@ keytool -genkey -v -keystore app.keystore -alias app.alias -keyalg RSA -keysize 
 * keyAlias - 自定义别名
 * keyPassword - 密钥库口令
 
-```
-// 修改前
+```diff
 signingConfigs {
   debug {
     storeFile file('debug.keystore')
@@ -46,31 +45,20 @@ signingConfigs {
     keyAlias 'androiddebugkey'
     keyPassword 'android'
   }
-}
-
-// 修改后
-signingConfigs {
-  debug {
-    storeFile file('debug.keystore')
-    storePassword 'android'
-    keyAlias 'androiddebugkey'
-    keyPassword 'android'
-  }
-  release {
-    storeFile file('app.keystore')
-    storePassword '123456'
-    keyAlias 'app.alias'
-    keyPassword '123456'
-  }
++ release {
++   storeFile file('app.keystore')
++   storePassword '123456'
++   keyAlias 'app.alias'
++   keyPassword '123456'
++ }
 }
 ```
 
-### 修改 buildTypes 配置项
+### 配置 buildTypes
 
-* release.signingConfig - 将默认的 debug 改成 release
+修改 signingConfig 配置项
 
-```
-// 修改前
+```diff
 buildTypes {
   debug {
     signingConfig signingConfigs.debug
@@ -78,37 +66,19 @@ buildTypes {
   release {
     // Caution! In production, you need to generate your own keystore file.
     // see https://reactnative.dev/docs/signed-apk-android.
-    signingConfig signingConfigs.debug
-    minifyEnabled enableProguardInReleaseBuilds
-    proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-  }
-}
-
-// 修改后
-buildTypes {
-  debug {
-    signingConfig signingConfigs.debug
-  }
-  release {
-    // Caution! In production, you need to generate your own keystore file.
-    // see https://reactnative.dev/docs/signed-apk-android.
-    signingConfig signingConfigs.release
+-   signingConfig signingConfigs.debug
++   signingConfig signingConfigs.release
     minifyEnabled enableProguardInReleaseBuilds
     proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
   }
 }
 ```
 
-### 修改 enableProguardInReleaseBuilds 配置项
+### 配置 enableProguardInReleaseBuilds
 
-* enableProguardInReleaseBuilds - 将默认的 false 改成 true
-
-```
-// 修改前
-def enableProguardInReleaseBuilds = false
-
-// 修改后
-def enableProguardInReleaseBuilds = true
+```diff
+- def enableProguardInReleaseBuilds = false
++ def enableProguardInReleaseBuilds = true
 ```
 
 ## 4.打包
