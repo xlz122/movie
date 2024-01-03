@@ -32,7 +32,8 @@ export const colorToRgba = function (color: string, alpha: number): string {
 
 /**
  * @description 时间戳转视频时长
- * @return { String } 视频时长 01:23:45
+ * @param { number } timeStamp - 时间戳
+ * @return { string } 视频时长 01:23:45
  */
 export function timeStampToDuration(timeStamp: number): string {
   const time = timeStamp.toString();
@@ -69,7 +70,8 @@ export function timeStampToDuration(timeStamp: number): string {
 
 /**
  * @description 格式化日期字符串
- * @return { String } 1分钟前/1小时前
+ * @param { string } datatime - 日期字符串
+ * @return { string } 1分钟前/1小时前
  */
 export function formatDate(datatime: string): string {
   let dateTimeStamp = new Date(datatime).getTime();

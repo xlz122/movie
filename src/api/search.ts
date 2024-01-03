@@ -9,10 +9,11 @@ export type SearchParams = {
 
 /**
  * @description 影视/影人/角色信息查询
- * @param { Number } keyword - 查询关键字
- * @param { Number } type - 类别
- * @param { Number } page - 图片id
- * @param { Number } per_page - 图片id
+ * @param { Object } params
+ * @param { string } params.keyword - 关键字
+ * @param { string } params.type - 类别
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const searchDetail = ({
   keyword,

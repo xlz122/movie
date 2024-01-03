@@ -7,8 +7,9 @@ type VideoListParams = {
 
 /**
  * @description 视频列表
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const videosList = ({ page, per_page }: VideoListParams) => {
   const params = { page, per_page };
@@ -22,7 +23,8 @@ export const videosList = ({ page, per_page }: VideoListParams) => {
 
 /**
  * @description 视频详情
- * @param { Number } id - 视频id
+ * @param { Object } params
+ * @param { number } params.id - 视频id
  */
 export const videosDetail = ({ id }: { id: number }) => {
   const params = { id };
@@ -36,7 +38,8 @@ export const videosDetail = ({ id }: { id: number }) => {
 
 /**
  * @description 视频详情 - 视频列表
- * @param { Number } id - 视频id
+ * @param { Object } params
+ * @param { number } params.id - 视频id
  */
 export const videosDetailList = ({ id }: { id: number }) => {
   const params = { id };
@@ -50,7 +53,8 @@ export const videosDetailList = ({ id }: { id: number }) => {
 
 /**
  * @description 视频详情 - 点赞
- * @param { Number } id - 视频id
+ * @param { Object } params
+ * @param { number } params.id - 视频id
  */
 export const videoLike = ({ id }: { id: number }) => {
   return axios.request({
@@ -61,7 +65,8 @@ export const videoLike = ({ id }: { id: number }) => {
 
 /**
  * @description 视频详情 - 取消点赞
- * @param { Number } id - 视频id
+ * @param { Object } params
+ * @param { number } params.id - 视频id
  */
 export const unVideoLike = ({ id }: { id: number }) => {
   return axios.request({
@@ -72,7 +77,8 @@ export const unVideoLike = ({ id }: { id: number }) => {
 
 /**
  * @description 视频详情 - 收藏
- * @param { Number } id - 影人id
+ * @param { Object } params
+ * @param { number } params.id - 影人id
  */
 export const followVideo = ({ id }: { id: number }) => {
   return axios.request({
@@ -83,7 +89,8 @@ export const followVideo = ({ id }: { id: number }) => {
 
 /**
  * @description 视频详情 - 取消收藏
- * @param { Number } id - 影人id
+ * @param { Object } params
+ * @param { number } params.id - 影人id
  */
 export const unFollowVideo = ({ id }: { id: number }) => {
   return axios.request({
@@ -101,10 +108,11 @@ type VideoCommentParams = {
 
 /**
  * @description 视频详情 - 评论列表
- * @param { Number } id - 视频id
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
- * @param { Number } sortby - 排序参数
+ * @param { Object } params
+ * @param { number } params.id - 视频id
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
+ * @param { string } [params.sortby] - 排序参数
  */
 export const videoComment = ({
   id,

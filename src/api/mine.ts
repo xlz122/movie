@@ -17,6 +17,9 @@ export type BaseParams = {
 
 /**
  * @description 用户关注的影人
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const userActors = ({ page, per_page }: BaseParams) => {
   const params = { page, per_page };
@@ -30,6 +33,9 @@ export const userActors = ({ page, per_page }: BaseParams) => {
 
 /**
  * @description 用户关注的角色
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const userRoles = ({ page, per_page }: BaseParams) => {
   const params = { page, per_page };
@@ -43,6 +49,9 @@ export const userRoles = ({ page, per_page }: BaseParams) => {
 
 /**
  * @description 用户收藏的视频
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const userVideos = ({ page, per_page }: BaseParams) => {
   const params = { page, per_page };

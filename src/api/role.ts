@@ -2,7 +2,8 @@ import axios from '@/utils/axios';
 
 /**
  * @description 角色详情
- * @param { Number } id - 角色id
+ * @param { Object } params
+ * @param { number } params.id - 角色id
  */
 export const roleDetail = ({ id }: { id: number }) => {
   const params = { id };
@@ -15,8 +16,9 @@ export const roleDetail = ({ id }: { id: number }) => {
 };
 
 /**
- * @description 关注角色
- * @param { Number } id - 角色id
+ * @description 角色详情 - 关注
+ * @param { Object } params
+ * @param { number } params.id - 角色id
  */
 export const followRole = ({ id }: { id: number }) => {
   return axios.request({
@@ -26,8 +28,9 @@ export const followRole = ({ id }: { id: number }) => {
 };
 
 /**
- * @description 取消关注角色
- * @param { Number } id - 角色id
+ * @description 角色详情 - 取消关注
+ * @param { Object } params
+ * @param { number } params.id - 角色id
  */
 export const unFollowRole = ({ id }: { id: number }) => {
   return axios.request({

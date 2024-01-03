@@ -17,9 +17,10 @@ export type PagingParams = {
 };
 
 /**
- * @description 正在热映影片
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @description 正在热映
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const movieTheater = ({ page, per_page }: PagingParams) => {
   const params = { page, per_page };
@@ -32,9 +33,10 @@ export const movieTheater = ({ page, per_page }: PagingParams) => {
 };
 
 /**
- * @description 即将上映影片
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @description 即将上映
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const movieComing = ({ page, per_page }: PagingParams) => {
   const params = { page, per_page };
@@ -47,9 +49,10 @@ export const movieComing = ({ page, per_page }: PagingParams) => {
 };
 
 /**
- * @description 最受欢迎的100部影片
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @description 高分榜
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const movieTop = ({ page, per_page }: PagingParams) => {
   const params = { page, per_page };
@@ -72,10 +75,11 @@ export const movieAwards = () => {
 };
 
 /**
- * @description 历史上的今天上映的影片
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
- * @param { String } sortby - 排序方式
+ * @description 那年今日
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
+ * @param { string } [params.sortby] - 排序方式(hot热度, year时间, rating评分)
  */
 export const movieToday = ({ page, per_page, sortby }: PagingParams) => {
   const params = { page, per_page, sortby };

@@ -2,7 +2,8 @@ import axios from '@/utils/axios';
 
 /**
  * @description 影人详情
- * @param { Number } id - 影人id
+ * @param { Object } params
+ * @param { number } params.id - 影人id
  */
 export const actorsDetail = ({ id }: { id: number }) => {
   const params = { id };
@@ -15,8 +16,9 @@ export const actorsDetail = ({ id }: { id: number }) => {
 };
 
 /**
- * @description 关注影人
- * @param { Number } id - 影人id
+ * @description 影人详情 - 关注
+ * @param { Object } params
+ * @param { number } params.id - 影人id
  */
 export const followActor = ({ id }: { id: number }) => {
   return axios.request({
@@ -26,8 +28,9 @@ export const followActor = ({ id }: { id: number }) => {
 };
 
 /**
- * @description 取消关注影人
- * @param { Number } id - 影人id
+ * @description 影人详情 - 取消关注
+ * @param { Object } params
+ * @param { number } params.id - 影人id
  */
 export const unFollowActor = ({ id }: { id: number }) => {
   return axios.request({
@@ -45,10 +48,11 @@ type ActorPhotosParams = {
 
 /**
  * @description 影人详情 - 相册列表
- * @param { Number } id - 影人id
- * @param { String } type - 照片类型(all全部, portrait写真, cut截图, other其它)
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @param { Object } params
+ * @param { number } params.id - 影人id
+ * @param { string } params.type - 照片类型(all全部, portrait写真, cut截图, other其它)
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const actorPhotos = ({
   id,
@@ -67,25 +71,26 @@ export const actorPhotos = ({
 
 type ActorWorksParams = {
   id: number;
-  sortby: string;
   page: number;
   per_page: number;
+  sortby: string;
 };
 
 /**
  * @description 影人详情 - 作品列表
- * @param { Number } id - 影人id
- * @param { String } sortby - 排序方式(hot热度, year时间, rating评分)
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @param { Object } params
+ * @param { number } params.id - 影人id
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
+ * @param { string } [params.sortby] - 排序方式(hot热度, year时间, rating评分)
  */
 export const actorWorks = ({
   id,
-  sortby,
   page,
-  per_page
+  per_page,
+  sortby
 }: ActorWorksParams) => {
-  const params = { id, sortby, page, per_page };
+  const params = { id, page, per_page, sortby };
 
   return axios.request({
     url: `/actors/${id}/works`,

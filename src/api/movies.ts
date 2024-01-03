@@ -20,13 +20,14 @@ export type MovieParams = {
 };
 
 /**
- * @description 影视列表
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
- * @param { String } category - 类别
- * @param { String } genre - 分类
- * @param { String } country - 国家
- * @param { String } year - 年份
+ * @description 影视详情
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
+ * @param { string } params.category - 类别
+ * @param { string } params.genre - 分类
+ * @param { string } params.country - 国家
+ * @param { string } params.year - 年份
  */
 export const moviesList = ({
   page,
@@ -47,7 +48,8 @@ export const moviesList = ({
 
 /**
  * @description 影视详情
- * @param { Number } id - 影视id
+ * @param { Object } params
+ * @param { number } params.id - 影视id
  */
 export const moviesDetail = ({ id }: { id: number }) => {
   const params = { id };
@@ -60,8 +62,9 @@ export const moviesDetail = ({ id }: { id: number }) => {
 };
 
 /**
- * @description 影视详情 - 新增或删除我的想看
- * @param { Number } id - 影视id
+ * @description 影视详情 - 新增/删除我的想看
+ * @param { Object } params
+ * @param { number } params.id - 影视id
  */
 export const movieWish = ({ id }: { id: number }) => {
   return axios.request({
@@ -72,7 +75,8 @@ export const movieWish = ({ id }: { id: number }) => {
 
 /**
  * @description 影视详情 - 演员列表
- * @param { Number } id - 影视id
+ * @param { Object } params
+ * @param { number } params.id - 影视id
  */
 export const movieActor = ({ id }: { id: number }) => {
   const params = { id };
@@ -93,10 +97,11 @@ type MoviePhotosParams = {
 
 /**
  * @description 影视详情 - 相册列表
- * @param { Number } id - 影视id
- * @param { String } type - 照片类型(all全部, poster海报, still剧照, cut截图, other其它)
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
+ * @param { Object } params
+ * @param { number } params.id - 影视id
+ * @param { string } params.type - 照片类型(all全部, poster海报, still剧照, cut截图, other其它)
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const moviePhotos = ({
   id,
@@ -122,10 +127,11 @@ type MovieCommentParams = {
 
 /**
  * @description 影视详情 - 评论列表
- * @param { Number } id - 影视id
- * @param { Number } page - 页数
- * @param { Number } per_page - 条数
- * @param { Number } sortby - 排序参数
+ * @param { Object } params
+ * @param { number } params.id - 影视id
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
+ * @param { string } [params.sortby] - 排序参数
  */
 export const movieComment = ({
   id,

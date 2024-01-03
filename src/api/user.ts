@@ -7,8 +7,9 @@ type LoginParams = {
 
 /**
  * @description 登录
- * @param { String } account - 账号
- * @param { String } password - 密码
+ * @param { Object } params
+ * @param { string } params.account - 账号
+ * @param { string } params.password - 密码
  */
 export const login = ({ account, password }: LoginParams) => {
   const data = { account, password };
@@ -28,9 +29,10 @@ type RegisterParams = {
 
 /**
  * @description 注册
- * @param { String } account - 账号
- * @param { String } password - 密码
- * @param { String } code - 验证码
+ * @param { Object } params
+ * @param { string } params.account - 账号
+ * @param { string } params.password - 密码
+ * @param { string } params.code - 验证码
  */
 export const register = ({ account, password, code }: RegisterParams) => {
   const data = { account, password, code };
@@ -44,7 +46,8 @@ export const register = ({ account, password, code }: RegisterParams) => {
 
 /**
  * @description 校验账号是否存在
- * @param { String } account - 账号
+ * @param { Object } params
+ * @param { string } params.account - 账号
  */
 export const fieldAccount = ({ account }: { account: string }) => {
   const data = { account };
@@ -74,9 +77,10 @@ type FiledCaptcha = {
 
 /**
  * @description 校验图片验证码并发送短信验证码
- * @param { String } phone - 手机号
- * @param { String } code - 图片验证码
- * @param { String } type - 类型(注册: register, 找回密码: forget)
+ * @param { Object } params
+ * @param { string } params.phone - 手机号
+ * @param { string } params.code - 图片验证码
+ * @param { string } params.type - 类型(注册: register, 找回密码: forget)
  */
 export const filedCaptcha = ({ phone, code, type }: FiledCaptcha) => {
   const params = { phone, code, type };
@@ -95,8 +99,9 @@ type FiledPhoneCode = {
 
 /**
  * @description 校验短信验证码
- * @param { String } phone - 手机号
- * @param { String } code - 手机验证码
+ * @param { Object } params
+ * @param { string } params.phone - 手机号
+ * @param { string } params.code - 手机验证码
  */
 export const filedPhoneCode = ({ phone, code }: FiledPhoneCode) => {
   const data = { phone, code };
@@ -120,7 +125,8 @@ export const userinfo = () => {
 
 /**
  * @description 修改密码
- * @param { String } password - 新密码
+ * @param { Object } params
+ * @param { string } params.password - 新密码
  */
 export const modifyPassword = ({ password }: { password: string }) => {
   const data = { password };
