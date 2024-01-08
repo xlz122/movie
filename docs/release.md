@@ -14,15 +14,15 @@ keytool -genkey -v -keystore app.keystore -alias app.alias -keyalg RSA -keysize 
 * -alias - 自定义别名，示例为 app.alias
 * 密钥库口令 - 示例为 123456
 
-![](../src/assets/design-sketch/release-config.png)
+![](../preview/release-config.png)
 
 如果出现以下情况，请配置 Java JDK 环境变量
 
-![](../src/assets/design-sketch/release-config-error.png)
+![](../preview/release-config-error.png)
 
 ## 2.将根目录下的 app.keystore 文件放置在 android/app 文件夹下
 
-![](../src/assets/design-sketch/release-location.png)
+![](../preview/release-location.png)
 
 ## 3.打包配置
 
@@ -89,11 +89,11 @@ buildTypes {
 gradlew assembleRelease
 ```
 
-![](../src/assets/design-sketch/release-build.png)
+![](../preview/release-build.png)
 
 打包成功后，在 android/app/build/outputs/apk/release 文件夹下，可以找到 app-release.apk 文件
 
-![](../src/assets/design-sketch/release-apk.png)
+![](../preview/release-apk.png)
 
 # IOS
 

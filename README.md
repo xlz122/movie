@@ -25,7 +25,7 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 ## 加入项目
 
-如果想加入本项目开发，需将项目fork到自己的仓库下，功能开发完成后，提PR即可
+如果想加入本项目开发，需将项目fork到自己的仓库下，功能开发完成后，提PR即可。
 
 ## 运行
 
@@ -47,11 +47,11 @@ yarn android
 
 |首页|分类|短片|我的|
 |---|---|---|---|
-|![](./src/assets/design-sketch/home.jpg)|![](./src/assets/design-sketch/movies.jpg)|![](./src/assets/design-sketch/videos.jpg)|![](./src/assets/design-sketch/mine.jpg)|
+|![](./preview/home.jpg)|![](./preview/movies.jpg)|![](./preview/videos.jpg)|![](./preview/mine.jpg)|
 
 |搜索|详情|登录|关于|
 |---|---|---|---|
-|![](./src/assets/design-sketch/search.jpg)|![](./src/assets/design-sketch/detail.jpg)|![](./src/assets/design-sketch/login.jpg)|![](./src/assets/design-sketch/author.jpg)|
+|![](./preview/search.jpg)|![](./preview/detail.jpg)|![](./preview/login.jpg)|![](./preview/author.jpg)|
 
 ## 写在最后
 
