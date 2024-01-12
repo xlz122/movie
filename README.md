@@ -36,13 +36,13 @@ yarn install
 ```
 
 ```
-yarn start
-
-yarn start --experimental-debugger
+yarn dev
 ```
 
+项目打包
+
 ```
-yarn android
+yarn build
 ```
 
 ## 项目效果图
