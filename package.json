@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "web": "webpack serve --mode=development --config ./web/webpack.config.js",
+    "dev": "webpack serve --mode=development --config ./web/webpack.config.js",
     "build": "webpack --mode=production --config ./web/webpack.config.js",
     "lint": "eslint src",
     "prepare": "husky install"
