@@ -29,7 +29,7 @@ function ActorInfo(props: Props): React.ReactElement {
   const handleCollectionChange = (is_collection: number) => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     if (is_collection === 0) {

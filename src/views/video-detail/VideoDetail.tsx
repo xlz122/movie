@@ -26,7 +26,7 @@ type Route = RouteProp<{ params: { id: number } }>;
 type VideoDetailType = {
   id?: number;
   movie?: {
-    id?: number;
+    id: number;
   };
   is_like?: boolean;
   like_count?: number;
@@ -75,7 +75,7 @@ function VideoDetail(): React.ReactElement {
   const handleLikeChange = (is_like: boolean) => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     if (!is_like) {
@@ -105,7 +105,7 @@ function VideoDetail(): React.ReactElement {
   const handleCollectionChange = (is_collection: boolean) => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     if (!is_collection) {
@@ -133,7 +133,7 @@ function VideoDetail(): React.ReactElement {
 
   // 评论
   const [commentVisible, setCommentVisible] = useState(false);
-  const handleCommentClose = (): void => {
+  const handleCommentClose = () => {
     setCommentVisible(false);
   };
 

@@ -1,43 +1,44 @@
 import axios from '@/utils/axios';
+import type { AxiosPromise } from 'axios';
 
 /**
- * @description 影视分类菜单
+ * @description 影视分类
  */
-export const movieCategories = () => {
+export const movieCategories = (): AxiosPromise => {
   return axios.request({
     url: '/categories',
     method: 'get'
   });
 };
 
-export type MovieParams = {
-  page: number;
-  per_page: number;
+type MovieList = {
   category: string;
   genre: string;
   country: string;
   year: string;
+  page?: number;
+  per_page?: number;
 };
 
 /**
- * @description 影视详情
+ * @description 影视列表
  * @param { Object } params
- * @param { number } [params.page] - 页数
- * @param { number } [params.per_page] - 条数
- * @param { string } params.category - 类别
- * @param { string } params.genre - 分类
+ * @param { string } params.category - 分类
+ * @param { string } params.genre - 类别
  * @param { string } params.country - 国家
  * @param { string } params.year - 年份
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
 export const moviesList = ({
-  page,
-  per_page,
   category,
   genre,
   country,
-  year
-}: MovieParams) => {
-  const params = { page, per_page, category, genre, country, year };
+  year,
+  page,
+  per_page
+}: MovieList): AxiosPromise => {
+  const params = { category, genre, country, year, page, per_page };
 
   return axios.request({
     url: '/movies',
@@ -51,7 +52,7 @@ export const moviesList = ({
  * @param { Object } params
  * @param { number } params.id - 影视id
  */
-export const moviesDetail = ({ id }: { id: number }) => {
+export const moviesDetail = ({ id }: { id: number }): AxiosPromise => {
   const params = { id };
 
   return axios.request({
@@ -66,7 +67,7 @@ export const moviesDetail = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 影视id
  */
-export const movieWish = ({ id }: { id: number }) => {
+export const movieWish = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/movies/${id}/wish`,
     method: 'post'
@@ -74,11 +75,11 @@ export const movieWish = ({ id }: { id: number }) => {
 };
 
 /**
- * @description 影视详情 - 演员列表
+ * @description 影视详情 - 演员
  * @param { Object } params
  * @param { number } params.id - 影视id
  */
-export const movieActor = ({ id }: { id: number }) => {
+export const movieActor = ({ id }: { id: number }): AxiosPromise => {
   const params = { id };
 
   return axios.request({
@@ -88,18 +89,18 @@ export const movieActor = ({ id }: { id: number }) => {
   });
 };
 
-type MoviePhotosParams = {
+type MoviePhotos = {
   id: number;
   type: string;
-  page: number;
-  per_page: number;
+  page?: number;
+  per_page?: number;
 };
 
 /**
- * @description 影视详情 - 相册列表
+ * @description 影视详情 - 相册
  * @param { Object } params
  * @param { number } params.id - 影视id
- * @param { string } params.type - 照片类型(all全部, poster海报, still剧照, cut截图, other其它)
+ * @param { string } params.type - 类型(all全部, poster海报, still剧照, cut截图, other其它)
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
  */
@@ -108,7 +109,7 @@ export const moviePhotos = ({
   type,
   page,
   per_page
-}: MoviePhotosParams) => {
+}: MoviePhotos): AxiosPromise => {
   const params = { id, type, page, per_page };
 
   return axios.request({
@@ -118,27 +119,27 @@ export const moviePhotos = ({
   });
 };
 
-type MovieCommentParams = {
+type MovieComment = {
   id: number;
-  page: number;
-  per_page: number;
+  page?: number;
+  per_page?: number;
   sortby?: string;
 };
 
 /**
- * @description 影视详情 - 评论列表
+ * @description 影视详情 - 评论
  * @param { Object } params
  * @param { number } params.id - 影视id
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
- * @param { string } [params.sortby] - 排序参数
+ * @param { string } [params.sortby] - 排序
  */
 export const movieComment = ({
   id,
   page,
   per_page,
   sortby
-}: MovieCommentParams) => {
+}: MovieComment): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({

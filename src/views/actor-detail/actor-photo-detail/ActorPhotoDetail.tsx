@@ -51,7 +51,7 @@ function ActorPhotoDetail(): React.ReactElement {
     getPhotos();
   }, [photoParams]);
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setPhotoParams({ ...photoParams, type: value });
   };
 

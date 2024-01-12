@@ -16,7 +16,7 @@ function VideoPlayer(props: Props): React.ReactElement {
     paused: true
   });
 
-  const handlePlayChange = (): void => {
+  const handlePlayChange = () => {
     setVideo({ paused: !video.paused });
   };
 

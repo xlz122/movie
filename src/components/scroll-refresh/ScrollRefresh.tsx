@@ -108,7 +108,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         currentComplete: true,
         loadText: '接口请求失败,请重试...'
       });
-      return false;
+      return;
     }
 
     // 第一页, 空数据
@@ -124,7 +124,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         loadText: ''
       });
 
-      return false;
+      return;
     }
 
     // 第一页, 数据量少于一页数据量
@@ -139,7 +139,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         loadText: '没有更多数据了'
       });
 
-      return false;
+      return;
     }
 
     // 数据量少于一页数据量
@@ -154,7 +154,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         loadText: '没有更多数据了'
       });
 
-      return false;
+      return;
     }
 
     setRefreshState({
@@ -167,7 +167,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
     });
   };
 
-  const onRefresh = (): void => {
+  const onRefresh = () => {
     setRefreshState({
       ...refreshState,
       page: 1,
@@ -183,7 +183,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
   const onEndReached = (): boolean | undefined => {
     // 当前请求未完成 / 加载完成
     if (!refreshState.currentComplete || refreshState.complete) {
-      return false;
+      return;
     }
 
     setRefreshState({

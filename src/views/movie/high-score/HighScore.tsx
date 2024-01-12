@@ -13,7 +13,7 @@ import { movieTop } from '@/api/home';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-type ItemType = {
+type MovieItem = {
   id: number;
   title: string;
   poster: string;
@@ -26,7 +26,7 @@ type ItemType = {
 function HighScore(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item, index }: { item: ItemType; index: number }) => (
+  const renderItem = ({ item, index }: { item: MovieItem; index: number }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
@@ -90,7 +90,7 @@ function HighScore(): React.ReactElement {
 const styles = StyleSheet.create({
   page: {
     paddingBottom: Platform.OS !== 'web' ? 10 : 0,
-    // web端需要减去标题高度
+    // web端需减去标题栏高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: '#fff'
   },

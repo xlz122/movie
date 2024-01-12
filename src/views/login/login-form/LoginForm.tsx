@@ -43,11 +43,11 @@ function LoginForm(): React.ReactElement {
   const submit = (): boolean | undefined => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请输入手机号' });
-      return false;
+      return;
     }
     if (!formData.password) {
       CustomAlert({ title: '提示', message: '请输入密码' });
-      return false;
+      return;
     }
 
     login({ ...formData })

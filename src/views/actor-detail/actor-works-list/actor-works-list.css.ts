@@ -3,7 +3,7 @@ import { viewHeight } from '@/utils/screen';
 
 const styles = StyleSheet.create({
   page: {
-    // web端需要减去标题高度
+    // web端需减去标题栏高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: 'rgb(255, 255, 255)'
   },

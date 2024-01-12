@@ -10,7 +10,7 @@ import styles from './actor-works-list.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
-type ItemType = {
+type ActorWorkItem = {
   id: number;
   title: string;
   poster: string;
@@ -48,11 +48,11 @@ function ActorWorksDetail(): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: ActorWorkItem }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image

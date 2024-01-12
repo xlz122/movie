@@ -1,11 +1,12 @@
 import axios from '@/utils/axios';
+import type { AxiosPromise } from 'axios';
 
 /**
  * @description 影人详情
  * @param { Object } params
  * @param { number } params.id - 影人id
  */
-export const actorsDetail = ({ id }: { id: number }) => {
+export const actorsDetail = ({ id }: { id: number }): AxiosPromise => {
   const params = { id };
 
   return axios.request({
@@ -20,7 +21,7 @@ export const actorsDetail = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 影人id
  */
-export const followActor = ({ id }: { id: number }) => {
+export const followActor = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/actors/${id}/collections`,
     method: 'post'
@@ -32,25 +33,25 @@ export const followActor = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 影人id
  */
-export const unFollowActor = ({ id }: { id: number }) => {
+export const unFollowActor = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/actors/${id}/collections`,
     method: 'delete'
   });
 };
 
-type ActorPhotosParams = {
+type ActorPhotos = {
   id: number;
   type: string;
-  page: number;
-  per_page: number;
+  page?: number;
+  per_page?: number;
 };
 
 /**
  * @description 影人详情 - 相册列表
  * @param { Object } params
  * @param { number } params.id - 影人id
- * @param { string } params.type - 照片类型(all全部, portrait写真, cut截图, other其它)
+ * @param { string } params.type - 类型(all全部, portrait写真, cut截图, other其它)
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
  */
@@ -59,7 +60,7 @@ export const actorPhotos = ({
   type,
   page,
   per_page
-}: ActorPhotosParams) => {
+}: ActorPhotos): AxiosPromise => {
   const params = { id, type, page, per_page };
 
   return axios.request({
@@ -69,11 +70,11 @@ export const actorPhotos = ({
   });
 };
 
-type ActorWorksParams = {
+type ActorWorks = {
   id: number;
-  page: number;
-  per_page: number;
-  sortby: string;
+  page?: number;
+  per_page?: number;
+  sortby?: string;
 };
 
 /**
@@ -89,7 +90,7 @@ export const actorWorks = ({
   page,
   per_page,
   sortby
-}: ActorWorksParams) => {
+}: ActorWorks): AxiosPromise => {
   const params = { id, page, per_page, sortby };
 
   return axios.request({

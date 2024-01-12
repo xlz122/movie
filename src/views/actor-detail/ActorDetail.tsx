@@ -4,8 +4,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { actorsDetail } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { PhotoItemType } from './actor-photo/ActorPhoto';
-import type { WorksItemType } from './actor-wroks/ActorWorks';
+import type { ActorPhotoItem } from './actor-photo/ActorPhoto';
+import type { ActorWorkItem } from './actor-wroks/ActorWorks';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import Panel from '@/components/panel/Panel';
 import ActorInfo from './actor-info/ActorInfo';
@@ -27,8 +27,8 @@ type ActorDetailType = {
   award_count?: number;
   summary?: string;
   photo_count?: number;
-  photos?: PhotoItemType[];
-  works?: WorksItemType[];
+  photos?: ActorPhotoItem[];
+  works?: ActorWorkItem[];
 };
 
 function ActorDetail(): React.ReactElement {
@@ -51,7 +51,6 @@ function ActorDetail(): React.ReactElement {
     getActorDetail();
   }, []);
 
-  // 刷新详情
   const refreshDetail = () => {
     getActorDetail();
   };

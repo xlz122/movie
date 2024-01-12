@@ -14,7 +14,7 @@ import { movieToday } from '@/api/home';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-type ItemType = {
+type MovieItem = {
   id: number;
   poster: string;
   title: string;
@@ -42,11 +42,11 @@ function Today(): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: MovieItem }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -125,7 +125,7 @@ function Today(): React.ReactElement {
 const styles = StyleSheet.create({
   page: {
     paddingBottom: Platform.OS !== 'web' ? 10 : 0,
-    // web端需要减去标题高度
+    // web端需减去标题栏高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: '#fff'
   },

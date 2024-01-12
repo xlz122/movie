@@ -8,7 +8,7 @@ import RegisterForm from './register-form/RegisterForm';
 function Login(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const close = (): void => {
+  const close = () => {
     navigation.goBack();
   };
 
@@ -20,7 +20,7 @@ function Login(): React.ReactElement {
   const typeChange = () => {
     if (state.type === 'login') {
       setState({ type: 'register', text: '账号登录' });
-      return false;
+      return;
     }
 
     setState({ type: 'login', text: '账号注册' });

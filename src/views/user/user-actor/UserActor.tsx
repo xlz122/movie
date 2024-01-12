@@ -13,7 +13,7 @@ import { userActors } from '@/api/mine';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-type ItemType = {
+type UserActorItem = {
   id: number;
   avatar: string;
   name: string;
@@ -25,7 +25,7 @@ type ItemType = {
 function UserActor(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: UserActorItem }) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   page: {
     paddingBottom: Platform.OS !== 'web' ? 10 : 0,
     width: '100%',
-    // web端需要减去标题高度
+    // web端需减去标题栏高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: '#fff'
   },

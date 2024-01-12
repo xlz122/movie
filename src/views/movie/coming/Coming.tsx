@@ -6,11 +6,11 @@ import type { Navigation, ResponseType } from '@/types/index';
 import styles from './coming.css';
 
 type MovieType = {
-  list: ItemType[];
+  list: MovieItem[];
   stickyIndex: number[];
 };
 
-type ItemType = {
+type MovieItem = {
   stickyTitle?: string;
   id?: number;
   poster?: string;
@@ -28,14 +28,14 @@ function Coming(): React.ReactElement {
     stickyIndex: []
   });
 
-  const getMovieComing = (): void => {
+  const getMovieComing = () => {
     movieComing({ page: 1, per_page: 100 })
-      .then((res: ResponseType<any[]>) => {
+      .then((res: ResponseType) => {
         if (res.code === 200) {
-          const list: ItemType[] = [];
+          const list: MovieItem[] = [];
           const stickyIndex: number[] = [];
 
-          res.data?.forEach(item => {
+          res.data?.forEach((item: { release_date: string }) => {
             const isExist = list.find(
               t => t.release_date === item.release_date
             );
@@ -60,7 +60,7 @@ function Coming(): React.ReactElement {
     getMovieComing();
   }, []);
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: MovieItem }) => (
     <>
       {item.stickyTitle && (
         <View style={styles.sticky}>

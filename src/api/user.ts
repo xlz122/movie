@@ -1,6 +1,7 @@
 import axios from '@/utils/axios';
+import type { AxiosPromise } from 'axios';
 
-type LoginParams = {
+type Login = {
   account: string;
   password: string;
 };
@@ -11,7 +12,7 @@ type LoginParams = {
  * @param { string } params.account - 账号
  * @param { string } params.password - 密码
  */
-export const login = ({ account, password }: LoginParams) => {
+export const login = ({ account, password }: Login): AxiosPromise => {
   const data = { account, password };
 
   return axios.request({
@@ -21,7 +22,7 @@ export const login = ({ account, password }: LoginParams) => {
   });
 };
 
-type RegisterParams = {
+type Register = {
   account: string;
   password: string;
   code: string;
@@ -34,7 +35,11 @@ type RegisterParams = {
  * @param { string } params.password - 密码
  * @param { string } params.code - 验证码
  */
-export const register = ({ account, password, code }: RegisterParams) => {
+export const register = ({
+  account,
+  password,
+  code
+}: Register): AxiosPromise => {
   const data = { account, password, code };
 
   return axios.request({
@@ -44,12 +49,16 @@ export const register = ({ account, password, code }: RegisterParams) => {
   });
 };
 
+type FieldAccount = {
+  account: string;
+};
+
 /**
  * @description 校验账号是否存在
  * @param { Object } params
  * @param { string } params.account - 账号
  */
-export const fieldAccount = ({ account }: { account: string }) => {
+export const fieldAccount = ({ account }: FieldAccount): AxiosPromise => {
   const data = { account };
 
   return axios.request({
@@ -62,7 +71,7 @@ export const fieldAccount = ({ account }: { account: string }) => {
 /**
  * @description 图片验证码
  */
-export const getCaptcha = () => {
+export const getCaptcha = (): AxiosPromise => {
   return axios.request({
     url: '/captcha',
     method: 'get'
@@ -82,7 +91,11 @@ type FiledCaptcha = {
  * @param { string } params.code - 图片验证码
  * @param { string } params.type - 类型(注册: register, 找回密码: forget)
  */
-export const filedCaptcha = ({ phone, code, type }: FiledCaptcha) => {
+export const filedCaptcha = ({
+  phone,
+  code,
+  type
+}: FiledCaptcha): AxiosPromise => {
   const params = { phone, code, type };
 
   return axios.request({
@@ -103,7 +116,10 @@ type FiledPhoneCode = {
  * @param { string } params.phone - 手机号
  * @param { string } params.code - 手机验证码
  */
-export const filedPhoneCode = ({ phone, code }: FiledPhoneCode) => {
+export const filedPhoneCode = ({
+  phone,
+  code
+}: FiledPhoneCode): AxiosPromise => {
   const data = { phone, code };
 
   return axios.request({
@@ -116,11 +132,15 @@ export const filedPhoneCode = ({ phone, code }: FiledPhoneCode) => {
 /**
  * @description 用户信息
  */
-export const userinfo = () => {
+export const userinfo = (): AxiosPromise => {
   return axios.request({
     url: '/user',
     method: 'get'
   });
+};
+
+type ModifyPassword = {
+  password: string;
 };
 
 /**
@@ -128,7 +148,7 @@ export const userinfo = () => {
  * @param { Object } params
  * @param { string } params.password - 新密码
  */
-export const modifyPassword = ({ password }: { password: string }) => {
+export const modifyPassword = ({ password }: ModifyPassword): AxiosPromise => {
   const data = { password };
 
   return axios.request({

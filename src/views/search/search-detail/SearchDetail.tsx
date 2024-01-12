@@ -10,7 +10,7 @@ type Props = {
   keyword: string;
 };
 
-type MovieItemType = {
+type MovieItem = {
   id: number;
   poster: string;
   title: string;
@@ -20,14 +20,14 @@ type MovieItemType = {
   countries: string;
   rating: string;
 };
-type ActorItemType = {
+type ActorItem = {
   id: number;
   avatar: string;
   name: string;
   name_en: string;
   gender: string;
 };
-type RoleItemType = {
+type RoleItem = {
   id: number;
   avatar: string;
   name: string;
@@ -55,12 +55,12 @@ function SearchDetail(props: Props): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
   // 电影项
-  const MovieItem = ({ item }: { item: MovieItemType }) => (
+  const MovieItem = ({ item }: { item: MovieItem }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         {item.poster && (
@@ -103,7 +103,7 @@ function SearchDetail(props: Props): React.ReactElement {
   );
 
   // 影人项
-  const ActorItem = ({ item }: { item: ActorItemType }) => (
+  const ActorItem = ({ item }: { item: ActorItem }) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         {item.avatar && (
@@ -129,7 +129,7 @@ function SearchDetail(props: Props): React.ReactElement {
   );
 
   // 角色项
-  const RoleItem = ({ item }: { item: RoleItemType }) => (
+  const RoleItem = ({ item }: { item: RoleItem }) => (
     <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
         {item.avatar && (
@@ -187,13 +187,13 @@ function SearchDetail(props: Props): React.ReactElement {
         request={searchDetail}
         renderItem={({ item }: { item: unknown }) => {
           if (sort.active === 'movie') {
-            return <MovieItem item={item as MovieItemType} />;
+            return <MovieItem item={item as MovieItem} />;
           }
           if (sort.active === 'actor') {
-            return <ActorItem item={item as ActorItemType} />;
+            return <ActorItem item={item as ActorItem} />;
           }
           if (sort.active === 'role') {
-            return <RoleItem item={item as RoleItemType} />;
+            return <RoleItem item={item as RoleItem} />;
           }
 
           return null;

@@ -21,7 +21,7 @@ type Props = {
   movieId?: number;
 };
 
-type ItemType = {
+type VideoItem = {
   type?: string;
   count?: number;
   duration?: number;
@@ -40,7 +40,7 @@ function VideoList(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
-  const [videos, setVideos] = useState<Array<ItemType>>([]);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
 
   const getVideoList = () => {
     videosDetailList({ id: props.movieId! })
@@ -62,7 +62,7 @@ function VideoList(props: Props): React.ReactElement {
 
   const [navIndex, setNavIndex] = useState(0);
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item, index }: ListRenderItemInfo<VideoItem>) => (
     <Pressable onPress={() => setNavIndex(index)}>
       <Text
         style={[

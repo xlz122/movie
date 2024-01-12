@@ -13,10 +13,10 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie: SimilarItemType[];
+  movie: MovieSimilarItem[];
 };
 
-export type SimilarItemType = {
+export type MovieSimilarItem = {
   id: number;
   title: string;
   poster: string;
@@ -28,7 +28,7 @@ export type SimilarItemType = {
 function MovieSimilar(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<SimilarItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<MovieSimilarItem>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image

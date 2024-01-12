@@ -8,6 +8,13 @@ type Props = {
   onChange: (categoryParams: CategoryParams) => void;
 };
 
+type CategoryParams = {
+  category: string;
+  genre: string;
+  country: string;
+  year: string;
+};
+
 type Category = {
   categories: {
     name: string;
@@ -18,13 +25,6 @@ type Category = {
   genres: { name: string }[];
   countries: { name: string }[];
   years: { name: string }[];
-};
-
-type CategoryParams = {
-  category: string;
-  genre: string;
-  country: string;
-  year: string;
 };
 
 function Nav(props: Props): React.ReactElement {
@@ -102,7 +102,7 @@ function Nav(props: Props): React.ReactElement {
           }
         });
 
-        return false;
+        return;
       }
 
       if (name === item.name) {

@@ -13,10 +13,10 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie?: WorksItemType[];
+  movie?: ActorWorkItem[];
 };
 
-export type WorksItemType = {
+export type ActorWorkItem = {
   id: number;
   title: string;
   poster: string;
@@ -28,7 +28,7 @@ export type WorksItemType = {
 function ActorWorks(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<WorksItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<ActorWorkItem>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image

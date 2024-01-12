@@ -1,8 +1,9 @@
 import axios from '@/utils/axios';
+import type { AxiosPromise } from 'axios';
 
-type VideoListParams = {
-  page: number;
-  per_page: number;
+type VideoList = {
+  page?: number;
+  per_page?: number;
 };
 
 /**
@@ -11,7 +12,7 @@ type VideoListParams = {
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
  */
-export const videosList = ({ page, per_page }: VideoListParams) => {
+export const videosList = ({ page, per_page }: VideoList): AxiosPromise => {
   const params = { page, per_page };
 
   return axios.request({
@@ -26,7 +27,7 @@ export const videosList = ({ page, per_page }: VideoListParams) => {
  * @param { Object } params
  * @param { number } params.id - 视频id
  */
-export const videosDetail = ({ id }: { id: number }) => {
+export const videosDetail = ({ id }: { id: number }): AxiosPromise => {
   const params = { id };
 
   return axios.request({
@@ -41,7 +42,7 @@ export const videosDetail = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 视频id
  */
-export const videosDetailList = ({ id }: { id: number }) => {
+export const videosDetailList = ({ id }: { id: number }): AxiosPromise => {
   const params = { id };
 
   return axios.request({
@@ -56,7 +57,7 @@ export const videosDetailList = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 视频id
  */
-export const videoLike = ({ id }: { id: number }) => {
+export const videoLike = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/videos/${id}/like`,
     method: 'post'
@@ -68,7 +69,7 @@ export const videoLike = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 视频id
  */
-export const unVideoLike = ({ id }: { id: number }) => {
+export const unVideoLike = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/videos/${id}/like`,
     method: 'delete'
@@ -80,7 +81,7 @@ export const unVideoLike = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 影人id
  */
-export const followVideo = ({ id }: { id: number }) => {
+export const followVideo = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/videos/${id}/collections`,
     method: 'post'
@@ -92,17 +93,17 @@ export const followVideo = ({ id }: { id: number }) => {
  * @param { Object } params
  * @param { number } params.id - 影人id
  */
-export const unFollowVideo = ({ id }: { id: number }) => {
+export const unFollowVideo = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/videos/${id}/collections`,
     method: 'delete'
   });
 };
 
-type VideoCommentParams = {
+type VideoComment = {
   id: number;
-  page: number;
-  per_page: number;
+  page?: number;
+  per_page?: number;
   sortby?: string;
 };
 
@@ -112,14 +113,14 @@ type VideoCommentParams = {
  * @param { number } params.id - 视频id
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
- * @param { string } [params.sortby] - 排序参数
+ * @param { string } [params.sortby] - 排序
  */
 export const videoComment = ({
   id,
   page,
   per_page,
   sortby
-}: VideoCommentParams) => {
+}: VideoComment): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({

@@ -4,9 +4,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { roleDetail } from '@/api/role';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { PhotoItemType } from './role-photo/RolePhoto';
-import type { MovieItemType } from './role-movie/RoleMovie';
-import type { ActorItemType } from './role-actor/RoleActor';
+import type { RolePhotoItem } from './role-photo/RolePhoto';
+import type { RoleMovieItem } from './role-movie/RoleMovie';
+import type { RoleActorItem } from './role-actor/RoleActor';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import Panel from '@/components/panel/Panel';
 import RoleInfo from './role-info/RoleInfo';
@@ -24,12 +24,12 @@ type RoleDetailType = {
   actor_count?: number;
   brief?: string;
   photo_count?: number;
-  photos?: PhotoItemType[];
-  movies?: MovieItemType[];
-  actors?: ActorItemType[];
+  photos?: RolePhotoItem[];
+  movies?: RoleMovieItem[];
+  actors?: RoleActorItem[];
 };
 
-function ActorDetail(): React.ReactElement {
+function RoleDetail(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
@@ -49,7 +49,6 @@ function ActorDetail(): React.ReactElement {
     getRoleDetail();
   }, []);
 
-  // 刷新详情
   const refreshDetail = () => {
     getRoleDetail();
   };
@@ -125,4 +124,4 @@ function ActorDetail(): React.ReactElement {
   );
 }
 
-export default ActorDetail;
+export default RoleDetail;

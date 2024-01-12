@@ -8,17 +8,17 @@ const { width, height } = Dimensions.get('window');
 
 type Route = RouteProp<{ params: { uri: string } }>;
 
-function MyWebView(): React.ReactElement {
+function Webview(): React.ReactElement {
   const route: Route = useRoute();
 
-  const RenderLoading = () => {
+  const RenderLoading = (): React.ReactElement => {
     return <Text style={styles.loading}>loading...</Text>;
   };
 
   return (
     <View style={styles.flex}>
       <WebView
-        style={styles.web}
+        style={styles.webView}
         source={{ uri: route.params.uri }}
         startInLoadingState={true}
         renderLoading={() => <RenderLoading />}
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1
   },
-  web: {
+  webView: {
     width: width,
     height: height
   },
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MyWebView;
+export default Webview;

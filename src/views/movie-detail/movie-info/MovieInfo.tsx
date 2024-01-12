@@ -49,7 +49,7 @@ function MovieInfo(props: Props): React.ReactElement {
   const movieWishChange = (): boolean | undefined => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     movieWish({ id: detail.id! })
@@ -62,7 +62,7 @@ function MovieInfo(props: Props): React.ReactElement {
       .catch(() => ({}));
   };
 
-  const movieWatchChange = (): void => {
+  const movieWatchChange = () => {
     if (!isLogin) {
       navigation.push('Login');
     }

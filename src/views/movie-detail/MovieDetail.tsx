@@ -9,10 +9,10 @@ import { moviesDetail, movieComment } from '@/api/movies';
 import type { RouteProp } from '@react-navigation/native';
 import type { RootState } from '@/store/index';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { ActorItemType } from './movie-actor/MovieActor';
-import type { RoleItemType } from './movie-roles/MovieRoles';
-import type { PhotoItemType } from './movie-photo/MoviePhoto';
-import type { SimilarItemType } from './movie-similar/MovieSimilar';
+import type { ActorItem } from './movie-actor/MovieActor';
+import type { MovieRoleItem } from './movie-roles/MovieRoles';
+import type { MoviePhotoItem } from './movie-photo/MoviePhoto';
+import type { MovieSimilarItem } from './movie-similar/MovieSimilar';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import Panel from '@/components/panel/Panel';
 import Comment from '@/components/comment/Comment';
@@ -30,12 +30,12 @@ export type MovieDetailType = {
   bgcolor?: string;
   summary?: string;
   cast_count?: number;
-  cast?: ActorItemType[];
+  cast?: ActorItem[];
   role_count?: number;
-  roles?: RoleItemType[];
+  roles?: MovieRoleItem[];
   photo_count?: number;
-  photos?: PhotoItemType[];
-  like_movies?: SimilarItemType[];
+  photos?: MoviePhotoItem[];
+  like_movies?: MovieSimilarItem[];
   review_count?: number;
   collection_count?: number;
   comment_count?: number;
@@ -63,7 +63,6 @@ function MovieDeail(): React.ReactElement {
     getMovieDetail();
   }, []);
 
-  // 刷新详情
   const refreshDetail = () => {
     getMovieDetail();
   };
@@ -74,7 +73,7 @@ function MovieDeail(): React.ReactElement {
     '#f5f5f5'
   ]);
 
-  const handlerGradualChange = (color: string): void => {
+  const handlerGradualChange = (color: string) => {
     const result: string[] = [];
 
     const gradient = [0.9, 0.82, 0.7, 0.68];
@@ -131,13 +130,13 @@ function MovieDeail(): React.ReactElement {
   const handleCollectionChange = () => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
   };
 
   // 评论
   const [commentVisible, setCommentVisible] = useState(false);
-  const handleCommentClose = (): void => {
+  const handleCommentClose = () => {
     setCommentVisible(false);
   };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, {
-  Extrapolate,
   interpolate,
   useAnimatedStyle
 } from 'react-native-reanimated';
@@ -12,14 +11,14 @@ type Props = {
   progressValue?: SharedValue<number>;
 };
 
-type PaginationItemType = {
+type PaginationItem = {
   animValue: SharedValue<number>;
   index: number;
   length: number;
 };
 
 function Dot(props: Props): React.ReactElement {
-  const PaginationItem = ({ animValue, index, length }: PaginationItemType) => {
+  const PaginationItem = ({ animValue, index, length }: PaginationItem) => {
     const width = 15;
 
     const animStyle = useAnimatedStyle(() => {
@@ -34,12 +33,7 @@ function Dot(props: Props): React.ReactElement {
       return {
         transform: [
           {
-            translateX: interpolate(
-              animValue?.value,
-              inputRange,
-              outputRange,
-              Extrapolate.CLAMP
-            )
+            translateX: interpolate(animValue?.value, inputRange, outputRange)
           }
         ],
         backgroundColor: '#e54847'

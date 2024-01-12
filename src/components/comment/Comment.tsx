@@ -16,7 +16,7 @@ type Props = {
   commentStyle?: ViewStyle;
 };
 
-type ItemType = {
+type CommentItem = {
   id: number;
   author: {
     avatar: string;
@@ -45,7 +45,7 @@ function Comment(props: Props): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
@@ -56,7 +56,7 @@ function Comment(props: Props): React.ReactElement {
     setCommentCount(res?.total || 0);
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: CommentItem }) => (
     <View style={styles.item}>
       <View style={styles.itemCover}>
         <Image

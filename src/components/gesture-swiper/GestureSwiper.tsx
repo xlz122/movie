@@ -65,7 +65,7 @@ function GestureSwiper(props: Props): React.ReactElement {
   };
 
   // 执行动画
-  const scrollTo = (index: number): void => {
+  const scrollTo = (index: number) => {
     Animated.spring(positionAnimated, {
       toValue: -index * layoutWidth,
       friction: 12,

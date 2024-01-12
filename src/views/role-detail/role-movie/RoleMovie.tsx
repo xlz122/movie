@@ -13,10 +13,10 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie?: MovieItemType[];
+  movie?: RoleMovieItem[];
 };
 
-export type MovieItemType = {
+export type RoleMovieItem = {
   id: number;
   title: string;
   poster: string;
@@ -28,7 +28,7 @@ export type MovieItemType = {
 function RoleMovie(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<MovieItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<RoleMovieItem>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image

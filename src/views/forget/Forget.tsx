@@ -29,7 +29,7 @@ function Forget(): React.ReactElement {
     setFormData({ ...formData, [name]: e.nativeEvent.text });
   };
 
-  const handleClearInput = (name: string): void => {
+  const handleClearInput = (name: string) => {
     setFormData({ ...formData, [name]: '' });
   };
 
@@ -70,7 +70,7 @@ function Forget(): React.ReactElement {
   const handleFieldAccount = (): boolean | undefined => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
     }
 
     fieldAccount({ account: formData.account })
@@ -103,7 +103,7 @@ function Forget(): React.ReactElement {
   };
 
   // 校验图片验证码并发送短信验证码
-  const handleCaptchaComplete = (code: string): void => {
+  const handleCaptchaComplete = (code: string) => {
     filedCaptcha({
       phone: formData.account,
       code,
@@ -117,14 +117,14 @@ function Forget(): React.ReactElement {
           handleTimeText();
 
           CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          return;
         }
 
         // 短信验证上限
         if (res.code === 450) {
           setCaptcha({ ...captcha, visible: false });
           CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          return;
         }
 
         handleGetCaptcha();
@@ -133,12 +133,12 @@ function Forget(): React.ReactElement {
       .catch(() => ({}));
   };
 
-  const handleCaptchaClose = (): void => {
+  const handleCaptchaClose = () => {
     setCaptcha({ ...captcha, visible: false });
   };
 
   // 校验短信验证码
-  const handleFiledPhoneCode = (): void => {
+  const handleFiledPhoneCode = () => {
     filedPhoneCode({ phone: formData.account, code: formData.code })
       .then((res: ResponseType) => {
         if (res.code === 200) {
@@ -173,7 +173,7 @@ function Forget(): React.ReactElement {
       .catch(() => ({}));
   };
 
-  const nextStep = (): void => {
+  const nextStep = () => {
     // 验证手机号
     if (progress === 0) {
       handleFieldAccount();

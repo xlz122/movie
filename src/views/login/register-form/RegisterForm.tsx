@@ -15,7 +15,7 @@ function RegisterForm(): React.ReactElement {
     code: ''
   });
 
-  const handleInputChange = (e: TextInputEvent, name: string): void => {
+  const handleInputChange = (e: TextInputEvent, name: string) => {
     setFormData({ ...formData, [name]: e.nativeEvent.text });
   };
 
@@ -58,11 +58,11 @@ function RegisterForm(): React.ReactElement {
   const handleGetCaptcha = () => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
     }
     if (!formData.password) {
       CustomAlert({ title: '提示', message: '请先输入密码' });
-      return false;
+      return;
     }
 
     getCaptcha()
@@ -77,7 +77,7 @@ function RegisterForm(): React.ReactElement {
   };
 
   // 校验图片验证码并发送短信验证码
-  const handleCaptchaComplete = (code: string): void => {
+  const handleCaptchaComplete = (code: string) => {
     filedCaptcha({
       phone: formData.account,
       code,
@@ -89,21 +89,21 @@ function RegisterForm(): React.ReactElement {
           handleTimeText();
 
           CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          return;
         }
 
         // 手机号已注册
         if (res.code === 403) {
           setCaptcha({ ...captcha, visible: false });
           CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          return;
         }
 
         // 短信验证上限
         if (res.code === 450) {
           setCaptcha({ ...captcha, visible: false });
           CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          return;
         }
 
         handleGetCaptcha();
@@ -112,7 +112,7 @@ function RegisterForm(): React.ReactElement {
       .catch(() => ({}));
   };
 
-  const handleCaptchaClose = (): void => {
+  const handleCaptchaClose = () => {
     setCaptcha({ ...captcha, visible: false });
   };
 
@@ -134,17 +134,17 @@ function RegisterForm(): React.ReactElement {
   const submit = async (): Promise<boolean | undefined> => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
     }
     if (!formData.password) {
       CustomAlert({ title: '提示', message: '请先输入密码' });
-      return false;
+      return;
     }
 
     const filedCode = await handleFiledPhoneCode();
     if (!filedCode.code) {
       CustomAlert({ title: '提示', message: filedCode?.message });
-      return false;
+      return;
     }
 
     register({ ...formData })

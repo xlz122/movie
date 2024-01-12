@@ -24,7 +24,7 @@ function Mine(props: Props): React.ReactElement {
               style={[styles.avatar]}
             />
             <Text
-              onPress={() => props?.navigation.push('Login')}
+              onPress={() => props.navigation.push('Login')}
               style={styles.userText}
             >
               立即登录
@@ -40,7 +40,7 @@ function Mine(props: Props): React.ReactElement {
             />
             <Text style={styles.userName}>{userinfo?.username}</Text>
             <Pressable
-              onPress={() => props?.navigation.push('Setting')}
+              onPress={() => props.navigation.push('Setting')}
               style={styles.setting}
             >
               <Text style={styles.settingIcon}>{'\ue65e'}</Text>
@@ -52,7 +52,7 @@ function Mine(props: Props): React.ReactElement {
       {userinfo?.username && (
         <View style={styles.cell}>
           <Pressable
-            onPress={() => props?.navigation.push('UserProfile')}
+            onPress={() => props.navigation.push('UserProfile')}
             style={styles.cellItem}
           >
             <Text style={styles.itemIcon}>{'\ue6c8'}</Text>
@@ -73,7 +73,7 @@ function Mine(props: Props): React.ReactElement {
           <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </View>
         <Pressable
-          onPress={() => props?.navigation.push('Project')}
+          onPress={() => props.navigation.push('Project')}
           style={styles.cellItem}
         >
           <Text style={styles.itemIcon}>{'\ue655'}</Text>
@@ -81,7 +81,7 @@ function Mine(props: Props): React.ReactElement {
           <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
         <Pressable
-          onPress={() => props?.navigation.push('Author')}
+          onPress={() => props.navigation.push('Author')}
           style={styles.cellItem}
         >
           <Text style={styles.itemIcon}>{'\ue634'}</Text>
@@ -89,7 +89,7 @@ function Mine(props: Props): React.ReactElement {
           <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
         <Pressable
-          onPress={() => props?.navigation.push('Changelog')}
+          onPress={() => props.navigation.push('Changelog')}
           style={[styles.cellItem, styles.cellLastItem]}
         >
           <Text style={styles.itemIcon}>{'\ue60b'}</Text>
