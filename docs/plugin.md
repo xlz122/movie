@@ -29,8 +29,11 @@ TabBar路由
 
 轮播图 - 配置babel.config.js
 
-```
-plugins: ['react-native-reanimated/plugin']
+```diff
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
++ plugins: ['react-native-reanimated/plugin']
+};
 ```
 
 渐变背景色
@@ -48,18 +51,20 @@ app端内置网页
 
 路径别名 - 配置babel.config.js
 
-```
-plugins: [
-  ...
-  [
-    'module-resolver',
-    {
-      root: ['./src'],
-      extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
-      alias: {
-        '@': ['./src']
-      }
-    }
-  ]
-]
+```diff
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
++ plugins: [
++   [
++     'module-resolver',
++     {
++       root: ['./src'],
++       extensions: ['.android.js', '.ios.js', '.js', '.ts', '.tsx', '.json'],
++       alias: {
++         '@': ['./src']
++       }
++     }
++   ]
++ ]
+};
 ```

@@ -16,10 +16,10 @@ yarn add react-native-asset --save
 
 根目录新建react-native.config.js
 
-```
-module.exports = {
-  assets: ['./src/assets/fonts/']
-};
+```diff
++ module.exports = {
++   assets: ['./src/assets/fonts/']
++ };
 ```
 
 执行链接
