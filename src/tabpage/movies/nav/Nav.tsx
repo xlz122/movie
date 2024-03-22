@@ -18,7 +18,7 @@ type CategoryParams = {
 type Category = {
   categories: {
     name: string;
-    children: {
+    children?: {
       name: never;
     }[];
   }[];
@@ -39,6 +39,7 @@ function Nav(props: Props): React.ReactElement {
     movieCategories()
       .then((res: ResponseType<Category>) => {
         if (res.code === 200) {
+          res.data?.categories.unshift({ name: '全部' });
           res.data?.countries.unshift({ name: '全部' });
           res.data?.years.unshift({ name: '全部' });
 
@@ -96,7 +97,7 @@ function Nav(props: Props): React.ReactElement {
 
     category?.categories?.forEach(item => {
       if (name === '全部') {
-        item?.children.forEach(i => {
+        item?.children?.forEach(i => {
           if (!genres.includes(i.name)) {
             genres.push({ name: i.name });
           }
@@ -106,7 +107,7 @@ function Nav(props: Props): React.ReactElement {
       }
 
       if (name === item.name) {
-        item?.children.forEach(i => {
+        item?.children?.forEach(i => {
           genres.push({ name: i.name });
         });
       }
