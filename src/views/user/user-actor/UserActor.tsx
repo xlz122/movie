@@ -42,10 +42,10 @@ function UserActor(): React.ReactElement {
           </Text>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
             {item.gender}
-            {Boolean(item?.country) && (
+            {Boolean(item.country) && (
               <>
                 <Text> · </Text>
-                {item?.country}
+                {item.country}
               </>
             )}
           </Text>

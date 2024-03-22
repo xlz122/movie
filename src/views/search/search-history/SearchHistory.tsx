@@ -61,7 +61,7 @@ function SearchHistory(props: Props): React.ReactElement {
           </View>
         </View>
         <View style={styles.recordList}>
-          {searchHistory?.map((item, index) => {
+          {searchHistory.map?.((item, index) => {
             return (
               <Pressable
                 key={index}

@@ -35,17 +35,17 @@ function VideoInfo(props: Props): React.ReactElement {
     <View style={styles.videoInfo}>
       <View style={styles.authorWarp}>
         <View style={styles.author}>
-          {detail?.author?.avatar && (
+          {detail.author?.avatar && (
             <Image
-              source={{ uri: detail?.author?.avatar }}
+              source={{ uri: detail.author.avatar }}
               resizeMode={'stretch'}
               style={[styles.authorAvatar]}
             />
           )}
           <View style={styles.authorInfo}>
-            <Text style={styles.authorName}>{detail?.author?.username}</Text>
+            <Text style={styles.authorName}>{detail.author?.username}</Text>
             <Text style={styles.authorCount}>
-              上传视频 {detail?.author?.video_count} 个
+              上传视频 {detail.author?.video_count} 个
             </Text>
           </View>
         </View>
@@ -57,14 +57,12 @@ function VideoInfo(props: Props): React.ReactElement {
         <Text style={styles.otherText}>{detail.play_count} 次播放</Text>
       </View>
       <Pressable
-        onPress={() =>
-          navigation.push('MovieDetail', { id: detail?.movie?.id })
-        }
+        onPress={() => navigation.push('MovieDetail', { id: detail.movie?.id })}
         style={styles.movie}
       >
-        {detail?.movie?.poster && (
+        {detail.movie?.poster && (
           <Image
-            source={{ uri: detail?.movie?.poster }}
+            source={{ uri: detail.movie.poster }}
             resizeMode={'stretch'}
             style={[styles.movieImage]}
           />
@@ -81,11 +79,11 @@ function VideoInfo(props: Props): React.ReactElement {
             <Text style={styles.titleRating}>{detail.movie?.rating}分</Text>
           </View>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.infoDesc}>
-            <Text>{detail?.movie?.year}</Text>
+            <Text>{detail.movie?.year}</Text>
             <Text>·</Text>
-            <Text>{detail?.movie?.countries}</Text>
+            <Text>{detail.movie?.countries}</Text>
             <Text>·</Text>
-            <Text>{detail?.movie?.genres}</Text>
+            <Text>{detail.movie?.genres}</Text>
           </Text>
         </View>
       </Pressable>

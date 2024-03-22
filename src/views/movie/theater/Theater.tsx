@@ -40,8 +40,8 @@ function Theater(): React.ReactElement {
             {item.title}
           </Text>
           <View style={styles.itemTag}>
-            {item?.category && item?.category !== '电影' && (
-              <Text style={styles.tag}>{item?.category}</Text>
+            {item.category && item.category !== '电影' && (
+              <Text style={styles.tag}>{item.category}</Text>
             )}
             <Text
               numberOfLines={1}
@@ -58,9 +58,9 @@ function Theater(): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {Number(item?.rating) > 0 && (
+        {Number(item.rating) > 0 && (
           <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text> 分
+            <Text style={styles.itemRatingWeight}>{item.rating}</Text> 分
           </Text>
         )}
       </View>

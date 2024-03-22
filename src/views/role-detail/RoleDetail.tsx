@@ -38,8 +38,8 @@ function RoleDetail(): React.ReactElement {
   const getRoleDetail = () => {
     roleDetail({ id: route.params.id })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setDetail(res.data);
+        if (res?.code === 200) {
+          setDetail(res.data || {});
         }
       })
       .catch(() => ({}));
@@ -73,51 +73,51 @@ function RoleDetail(): React.ReactElement {
       <RoleInfo detail={detail} refreshDetail={refreshDetail} />
       <View style={styles.count}>
         <View style={styles.countItem}>
-          <Text style={styles.itemContent}>{detail?.collection_count}人</Text>
+          <Text style={styles.itemContent}>{detail.collection_count}人</Text>
           <Text style={styles.itemText}>关注数</Text>
         </View>
         <View style={styles.countItem}>
-          <Text style={styles.itemContent}>{detail?.movie_count}部</Text>
+          <Text style={styles.itemContent}>{detail.movie_count}部</Text>
           <Text style={styles.itemText}>影视数</Text>
         </View>
         <View style={[styles.countItem, styles.countLastItem]}>
-          <Text style={styles.itemContent}>{detail?.actor_count}个</Text>
+          <Text style={styles.itemContent}>{detail.actor_count}个</Text>
           <Text style={styles.itemText}>影人数</Text>
         </View>
       </View>
       <Panel title="个人简介" subtitle={'更多信息'}>
-        {Boolean(detail?.brief) && (
+        {Boolean(detail.brief) && (
           <Text numberOfLines={4} ellipsizeMode="tail" style={styles.summary}>
-            {detail?.brief}
+            {detail.brief}
           </Text>
         )}
-        {!detail?.brief && (
+        {!detail.brief && (
           <View style={styles.noSummary}>
             <Text style={styles.noSummaryText}>暂无简介</Text>
           </View>
         )}
       </Panel>
-      {Number(detail?.photo_count) > 0 && (
-        <Panel title="相册" subtitle={`全部${detail?.photo_count}张`}>
-          <RolePhoto photo={detail?.photos || []} />
+      {Number(detail.photo_count) > 0 && (
+        <Panel title="相册" subtitle={`全部${detail.photo_count}张`}>
+          <RolePhoto photo={detail.photos || []} />
         </Panel>
       )}
-      {Number(detail?.movie_count) > 0 && (
+      {Number(detail.movie_count) > 0 && (
         <Panel
           title="角色影视"
-          subtitle={`全部${detail?.movie_count}部`}
+          subtitle={`全部${detail.movie_count}部`}
           panelStyle={{ paddingBottom: 10 }}
         >
-          <RoleMovie movie={detail?.movies} />
+          <RoleMovie movie={detail.movies} />
         </Panel>
       )}
-      {Number(detail?.actor_count) > 0 && (
+      {Number(detail.actor_count) > 0 && (
         <Panel
           title="角色影人"
-          subtitle={`全部${detail?.actor_count}部`}
+          subtitle={`全部${detail.actor_count}部`}
           panelStyle={{ paddingBottom: 10 }}
         >
-          <RoleActor movie={detail?.actors} />
+          <RoleActor movie={detail.actors} />
         </Panel>
       )}
     </ScrollView>

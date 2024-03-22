@@ -31,11 +31,11 @@ function Coming(): React.ReactElement {
   const getMovieComing = () => {
     movieComing({ page: 1, per_page: 100 })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           const list: MovieItem[] = [];
           const stickyIndex: number[] = [];
 
-          res.data?.forEach((item: { release_date: string }) => {
+          res.data?.forEach?.((item: { release_date: string }) => {
             const isExist = list.find(
               t => t.release_date === item.release_date
             );

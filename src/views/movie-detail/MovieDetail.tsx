@@ -52,8 +52,8 @@ function MovieDeail(): React.ReactElement {
   const getMovieDetail = () => {
     moviesDetail({ id: route.params.id })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setDetail(res.data);
+        if (res?.code === 200) {
+          setDetail(res.data || {});
         }
       })
       .catch(() => ({}));
@@ -155,12 +155,12 @@ function MovieDeail(): React.ReactElement {
             moreIconStyle={{ color: '#fff' }}
           >
             <Text numberOfLines={4} ellipsizeMode="tail" style={styles.summary}>
-              {detail?.summary}
+              {detail.summary}
             </Text>
           </Panel>
           <Panel
             title="演员"
-            subtitle={`全部${detail?.cast_count}`}
+            subtitle={`全部${detail.cast_count}`}
             to={{ path: 'ActorList', params: { movieId: detail.id } }}
             panelStyle={{ backgroundColor: 'transparent' }}
             headerStyle={{ paddingLeft: 0, paddingRight: 2 }}
@@ -169,12 +169,12 @@ function MovieDeail(): React.ReactElement {
             subTitleStyle={{ color: '#fff' }}
             moreIconStyle={{ color: '#fff' }}
           >
-            <MovieActor movie={detail?.cast || []} />
+            <MovieActor movie={detail.cast || []} />
           </Panel>
-          {Number(detail?.role_count) > 0 && (
+          {Number(detail.role_count) > 0 && (
             <Panel
               title="角色"
-              subtitle={`全部${detail?.role_count}`}
+              subtitle={`全部${detail.role_count}`}
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingLeft: 0, paddingRight: 2 }}
               lineStyle={{ display: 'none' }}
@@ -182,23 +182,23 @@ function MovieDeail(): React.ReactElement {
               subTitleStyle={{ color: '#fff' }}
               moreIconStyle={{ color: '#fff' }}
             >
-              <MovieRoles movie={detail?.roles || []} />
+              <MovieRoles movie={detail.roles || []} />
             </Panel>
           )}
         </LinearGradinet>
-        {Number(detail?.photo_count) > 0 && (
+        {Number(detail.photo_count) > 0 && (
           <Panel
             title="相册"
-            subtitle={`全部${detail?.photo_count}`}
+            subtitle={`全部${detail.photo_count}`}
             to={{ path: 'MoviePhotoDetail', params: { id: route.params.id } }}
             panelStyle={{ marginTop: 10 }}
           >
-            <MoviePhoto photo={detail?.photos || []} />
+            <MoviePhoto photo={detail.photos || []} />
           </Panel>
         )}
-        {detail?.like_movies && detail?.like_movies?.length > 0 && (
+        {detail.like_movies && detail.like_movies?.length > 0 && (
           <Panel title="相似影视" moreIconStyle={{ display: 'none' }}>
-            <MovieSimilar movie={detail?.like_movies} />
+            <MovieSimilar movie={detail.like_movies} />
           </Panel>
         )}
       </ScrollView>
@@ -206,8 +206,8 @@ function MovieDeail(): React.ReactElement {
         <View style={styles.review}>
           <Text style={styles.reviewIcon}>{'\ue650'}</Text>
           <Text style={styles.reviewText}>
-            {Number(detail?.review_count) > 0
-              ? `共有${detail?.review_count}条影评`
+            {Number(detail.review_count) > 0
+              ? `共有${detail.review_count}条影评`
               : '还没有人发布过影评'}
           </Text>
         </View>
@@ -215,8 +215,8 @@ function MovieDeail(): React.ReactElement {
           <Pressable onPress={handleCollectionChange} style={styles.toolItem}>
             <Text style={styles.toolItemIcon}>{'\ue911'}</Text>
             <Text style={styles.toolItemText}>
-              {detail?.collection_count && detail?.collection_count > 0
-                ? detail?.collection_count
+              {detail.collection_count && detail.collection_count > 0
+                ? detail.collection_count
                 : '收藏'}
             </Text>
           </Pressable>
@@ -226,8 +226,8 @@ function MovieDeail(): React.ReactElement {
           >
             <Text style={styles.toolItemIcon}>{'\ue620'}</Text>
             <Text style={styles.toolItemText}>
-              {detail?.comment_count && detail?.comment_count > 0
-                ? detail?.comment_count
+              {detail.comment_count && detail.comment_count > 0
+                ? detail.comment_count
                 : '评论'}
             </Text>
           </Pressable>

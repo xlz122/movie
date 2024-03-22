@@ -61,7 +61,7 @@ function TabNavigator(): React.ReactElement {
         tabBarActiveTintColor: '#e54847'
       }}
     >
-      {tabbar.map((item, index) => {
+      {tabbar.map?.((item, index) => {
         return (
           <Tab.Screen
             key={index}

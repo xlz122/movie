@@ -75,8 +75,8 @@ function SearchDetail(props: Props): React.ReactElement {
             {item.title}
           </Text>
           <View style={styles.itemTag}>
-            {item?.category && item?.category !== '电影' && (
-              <Text style={styles.tag}>{item?.category}</Text>
+            {item.category && item.category !== '电影' && (
+              <Text style={styles.tag}>{item.category}</Text>
             )}
             <Text
               numberOfLines={1}
@@ -93,9 +93,9 @@ function SearchDetail(props: Props): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {Number(item?.rating) > 0 && (
+        {Number(item.rating) > 0 && (
           <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text> 分
+            <Text style={styles.itemRatingWeight}>{item.rating}</Text> 分
           </Text>
         )}
       </View>
@@ -161,7 +161,7 @@ function SearchDetail(props: Props): React.ReactElement {
   return (
     <View style={styles.page}>
       <View style={styles.tab}>
-        {sort.list.map((item, index) => {
+        {sort.list.map?.((item, index) => {
           return (
             <Pressable
               key={index}

@@ -37,11 +37,11 @@ function ActorList(): React.ReactElement {
   const getMovieActor = () => {
     movieActor({ id: route.params.movieId })
       .then((res: ResponseType<any[]>) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           const list: ActorItem[] = [];
           const stickyIndex: number[] = [];
 
-          res.data?.forEach(item => {
+          res.data?.forEach?.(item => {
             const isExist = list.find(t => t.name === item.name);
 
             // 吸顶标题、索引
@@ -54,7 +54,7 @@ function ActorList(): React.ReactElement {
             }
 
             // 列表项
-            item?.children?.forEach((i: ActorItem, ind: number) => {
+            item.children?.forEach?.((i: ActorItem, ind: number) => {
               if (ind === item.children.length - 1) {
                 list.push({ ...i, isLastItem: true });
                 return;
@@ -102,11 +102,11 @@ function ActorList(): React.ReactElement {
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemText}>{item.name_en}</Text>
               <Text style={styles.itemText}>
-                {item?.gender}
-                {Boolean(item?.country) && (
+                {item.gender}
+                {Boolean(item.country) && (
                   <>
                     <Text> · </Text>
-                    <Text>{item?.country}</Text>
+                    <Text>{item.country}</Text>
                   </>
                 )}
               </Text>

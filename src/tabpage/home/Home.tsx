@@ -55,13 +55,13 @@ function Home(): React.ReactElement {
   const getIndexData = () => {
     indexData()
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setLoading(false);
-          setBanner(res?.data?.banners || []);
+          setBanner(res.data?.banners || []);
           setMovie({
-            theater: res?.data?.theater || {},
-            coming: res?.data?.coming || {},
-            today: res?.data?.today || {}
+            theater: res.data?.theater || {},
+            coming: res.data?.coming || {},
+            today: res.data?.today || {}
           });
         }
       })
@@ -154,31 +154,31 @@ function Home(): React.ReactElement {
           <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
           <Banner banner={banner} onChange={bannerChange} />
           <Category />
-          {Number(movie?.theater?.total) > 0 && (
+          {Number(movie.theater?.total) > 0 && (
             <Panel
               title="正在热映"
-              subtitle={`${movie?.theater?.total}部`}
+              subtitle={`${movie.theater.total}部`}
               to={{ path: 'Theater' }}
             >
-              <MovieList movie={movie?.theater?.data} />
+              <MovieList movie={movie.theater.data} />
             </Panel>
           )}
-          {Number(movie?.coming?.total) > 0 && (
+          {Number(movie.coming?.total) > 0 && (
             <Panel
               title="即将上映"
-              subtitle={`${movie?.coming?.total}部`}
+              subtitle={`${movie.coming.total}部`}
               to={{ path: 'Coming' }}
             >
-              <MovieList movie={movie?.coming?.data} />
+              <MovieList movie={movie.coming.data} />
             </Panel>
           )}
-          {Number(movie?.today?.total) > 0 && (
+          {Number(movie.today?.total) > 0 && (
             <Panel
               title="那年今日"
-              subtitle={`${movie?.today?.total}部`}
+              subtitle={`${movie.today.total}部`}
               to={{ path: 'Today' }}
             >
-              <MovieList movie={movie?.today?.data} />
+              <MovieList movie={movie.today.data} />
             </Panel>
           )}
         </ScrollView>

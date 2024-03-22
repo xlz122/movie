@@ -67,11 +67,12 @@ function RegisterForm(): React.ReactElement {
 
     getCaptcha()
       .then((res: ResponseType<string>) => {
-        if (res.code === 200) {
-          setCaptcha({ ...captcha, visible: true, img: res?.data || '' });
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
+          setCaptcha({ ...captcha, visible: true, img: res.data || '' });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
@@ -84,25 +85,25 @@ function RegisterForm(): React.ReactElement {
       type: 'register'
     })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setCaptcha({ ...captcha, visible: false });
           handleTimeText();
 
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
           return;
         }
 
         // 手机号已注册
-        if (res.code === 403) {
+        if (res?.code === 403) {
           setCaptcha({ ...captcha, visible: false });
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
           return;
         }
 
         // 短信验证上限
-        if (res.code === 450) {
+        if (res?.code === 450) {
           setCaptcha({ ...captcha, visible: false });
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
           return;
         }
 
@@ -121,11 +122,12 @@ function RegisterForm(): React.ReactElement {
     return new Promise(resolve => {
       filedPhoneCode({ phone: formData.account, code: formData.code! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             resolve(res);
-          } else {
-            CustomAlert({ title: '提示', message: res?.message });
+            return;
           }
+
+          CustomAlert({ title: '提示', message: res?.message });
         })
         .catch(() => ({}));
     });
@@ -149,12 +151,13 @@ function RegisterForm(): React.ReactElement {
 
     register({ ...formData })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
           navigation.replace('Login');
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };

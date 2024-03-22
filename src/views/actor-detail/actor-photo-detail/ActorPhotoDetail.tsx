@@ -36,8 +36,8 @@ function ActorPhotoDetail(): React.ReactElement {
       ...photoParams
     })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setPhoto(res.data);
+        if (res?.code === 200) {
+          setPhoto(res.data || []);
         }
       })
       .catch(() => ({}));
@@ -58,7 +58,7 @@ function ActorPhotoDetail(): React.ReactElement {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
       <View style={styles.tab}>
-        {tab.map((item, index) => {
+        {tab.map?.((item, index) => {
           return (
             <Pressable
               key={index}
@@ -85,7 +85,7 @@ function ActorPhotoDetail(): React.ReactElement {
         })}
       </View>
       <View style={styles.list}>
-        {photo.map((item, index) => {
+        {photo.map?.((item, index) => {
           return (
             <View key={index} style={styles.item}>
               <Image
