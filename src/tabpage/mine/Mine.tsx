@@ -16,7 +16,7 @@ function Mine(props: Props): React.ReactElement {
   return (
     <View style={styles.page}>
       <View style={styles.userInfo}>
-        {!userinfo?.username && (
+        {!userinfo.username && (
           <>
             <Image
               source={require('../../assets/image/default-avatar.jpg')}
@@ -31,14 +31,14 @@ function Mine(props: Props): React.ReactElement {
             </Text>
           </>
         )}
-        {userinfo?.username && (
+        {userinfo.username && (
           <>
             <Image
               source={{ uri: userinfo.avatar }}
               resizeMode={'stretch'}
               style={[styles.avatar]}
             />
-            <Text style={styles.userName}>{userinfo?.username}</Text>
+            <Text style={styles.userName}>{userinfo.username}</Text>
             <Pressable
               onPress={() => props.navigation.push('Setting')}
               style={styles.setting}
@@ -49,7 +49,7 @@ function Mine(props: Props): React.ReactElement {
         )}
       </View>
       <MineCount />
-      {userinfo?.username && (
+      {userinfo.username && (
         <View style={styles.cell}>
           <Pressable
             onPress={() => props.navigation.push('UserProfile')}

@@ -106,7 +106,7 @@ function GestureSwiper(props: Props): React.ReactElement {
             width: layoutWidth,
             transform: [{ translateX: positionAnimated }]
           },
-          props?.itemStyle
+          props.itemStyle
         ]}
       >
         {props.renderItem({ item, index })}
@@ -118,9 +118,9 @@ function GestureSwiper(props: Props): React.ReactElement {
     <View
       onLayout={handleLayout}
       {...responder.panHandlers}
-      style={[styles.page, props?.style]}
+      style={[styles.page, props.style]}
     >
-      {props.data.map((item, index) => {
+      {props.data?.map?.((item, index) => {
         return <RenderSwiper key={index} item={item} index={index} />;
       })}
     </View>

@@ -59,8 +59,8 @@ function Today(): React.ReactElement {
             {item.title}
           </Text>
           <View style={styles.itemTag}>
-            {item?.category && item?.category !== '电影' && (
-              <Text style={styles.tag}>{item?.category}</Text>
+            {item.category && item.category !== '电影' && (
+              <Text style={styles.tag}>{item.category}</Text>
             )}
             <Text
               numberOfLines={1}
@@ -77,9 +77,9 @@ function Today(): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {Number(item?.rating) > 0 && (
+        {Number(item.rating) > 0 && (
           <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text>
+            <Text style={styles.itemRatingWeight}>{item.rating}</Text>
             <Text> 分</Text>
           </Text>
         )}
@@ -90,7 +90,7 @@ function Today(): React.ReactElement {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.tab}>
-        {sort.list.map((item, index) => {
+        {sort.list.map?.((item, index) => {
           return (
             <Text
               key={index}

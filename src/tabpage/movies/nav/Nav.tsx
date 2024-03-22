@@ -38,10 +38,10 @@ function Nav(props: Props): React.ReactElement {
   const getMovieCategories = () => {
     movieCategories()
       .then((res: ResponseType<Category>) => {
-        if (res.code === 200) {
-          res.data?.categories.unshift({ name: '全部' });
-          res.data?.countries.unshift({ name: '全部' });
-          res.data?.years.unshift({ name: '全部' });
+        if (res?.code === 200) {
+          res.data?.categories?.unshift({ name: '全部' });
+          res.data?.countries?.unshift({ name: '全部' });
+          res.data?.years?.unshift({ name: '全部' });
 
           setCategory({
             categories: res.data?.categories || [],
@@ -60,14 +60,14 @@ function Nav(props: Props): React.ReactElement {
 
   // 初始化第二分类
   useEffect(() => {
-    if (!category?.categories) {
+    if (!category.categories) {
       return;
     }
 
     const genres: Category['genres'] = handlerGroup('全部');
 
     setCategory({ ...category, genres });
-  }, [category?.categories]);
+  }, [category.categories]);
 
   const [categoryParams, setCategoryParams] = useState<CategoryParams>({
     category: '全部',
@@ -95,9 +95,9 @@ function Nav(props: Props): React.ReactElement {
 
     genres.unshift({ name: '全部' });
 
-    category?.categories?.forEach(item => {
+    category.categories?.forEach?.(item => {
       if (name === '全部') {
-        item?.children?.forEach(i => {
+        item.children?.forEach?.(i => {
           if (!genres.includes(i.name)) {
             genres.push({ name: i.name });
           }
@@ -107,7 +107,7 @@ function Nav(props: Props): React.ReactElement {
       }
 
       if (name === item.name) {
-        item?.children?.forEach(i => {
+        item.children?.forEach?.(i => {
           genres.push({ name: i.name });
         });
       }

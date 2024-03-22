@@ -36,14 +36,14 @@ function RoleMovie(props: Props): React.ReactElement {
           resizeMode={'stretch'}
           style={[styles.itemImage]}
         />
-        {item?.category && item?.category !== '电影' && (
-          <Text style={styles.itemTag}>{item?.category}</Text>
+        {item.category && item.category !== '电影' && (
+          <Text style={styles.itemTag}>{item.category}</Text>
         )}
-        {item?.rating !== null && Number(item?.rating) === 0 && (
+        {item.rating !== null && Number(item.rating) === 0 && (
           <Text style={styles.itemRating}>暂无评分</Text>
         )}
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>{item?.rating}分</Text>
+        {Number(item.rating) > 0 && (
+          <Text style={styles.itemRating}>{item.rating}分</Text>
         )}
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
           {item.title}

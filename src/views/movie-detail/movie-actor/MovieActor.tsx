@@ -40,8 +40,8 @@ function MovieActor(props: Props): React.ReactElement {
           {item.name}
         </Text>
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.labelText}>
-          {item?.profession === '导演' ? item?.profession : ''}
-          {item?.act ? `饰: ${item?.act}` : ''}
+          {item.profession === '导演' ? item.profession : ''}
+          {item.act ? `饰: ${item.act}` : ''}
         </Text>
       </View>
     </Pressable>

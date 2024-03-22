@@ -25,7 +25,7 @@ function Dot(props: Props): React.ReactElement {
       let inputRange = [index - 1, index, index + 1];
       let outputRange = [-width, 0, width];
 
-      if (index === 0 && animValue?.value > length - 1) {
+      if (index === 0 && animValue.value > length - 1) {
         inputRange = [length - 1, length, length + 1];
         outputRange = [-width, 0, width];
       }
@@ -33,7 +33,7 @@ function Dot(props: Props): React.ReactElement {
       return {
         transform: [
           {
-            translateX: interpolate(animValue?.value, inputRange, outputRange)
+            translateX: interpolate(animValue.value, inputRange, outputRange)
           }
         ],
         backgroundColor: '#e54847'
@@ -61,7 +61,7 @@ function Dot(props: Props): React.ReactElement {
 
   return (
     <View style={styles.dot}>
-      {props?.list?.map((item, index) => {
+      {props.list?.map?.((item, index) => {
         return (
           <PaginationItem
             key={index}

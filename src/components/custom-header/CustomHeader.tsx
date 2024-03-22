@@ -18,10 +18,10 @@ function CustomHeader(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   return (
-    <View style={[styles.header, props?.headerStyle]}>
+    <View style={[styles.header, props.headerStyle]}>
       <Pressable
         onPress={() => navigation.goBack()}
-        style={[styles.arrow, props?.arrowStyle]}
+        style={[styles.arrow, props.arrowStyle]}
       >
         <Text style={styles.arrowIcon}>{'\ue656'}</Text>
       </Pressable>
@@ -31,9 +31,9 @@ function CustomHeader(props: Props): React.ReactElement {
           props.headerTitleAlign ? styles.titleCenter : styles.titleText
         ]}
       >
-        {props?.options?.title}
+        {props.options?.title}
       </Text>
-      {props?.children}
+      {props.children}
     </View>
   );
 }

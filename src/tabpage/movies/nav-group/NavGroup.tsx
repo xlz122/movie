@@ -31,7 +31,7 @@ function NavGroup(props: Props): React.ReactElement {
           item.name === props.active ? styles.activeItem : styles.item
         ]}
       >
-        {item?.name}
+        {item.name}
       </Text>
     </Pressable>
   );

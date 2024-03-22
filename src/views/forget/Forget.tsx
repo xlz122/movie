@@ -75,11 +75,12 @@ function Forget(): React.ReactElement {
 
     fieldAccount({ account: formData.account })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setProgress(1);
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
@@ -93,11 +94,12 @@ function Forget(): React.ReactElement {
   const handleGetCaptcha = () => {
     getCaptcha()
       .then((res: ResponseType<string>) => {
-        if (res.code === 200) {
-          setCaptcha({ ...captcha, visible: true, img: res?.data || '' });
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
+          setCaptcha({ ...captcha, visible: true, img: res.data || '' });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
@@ -110,20 +112,20 @@ function Forget(): React.ReactElement {
       type: 'forget'
     })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setProgress(2);
 
           setCaptcha({ ...captcha, visible: false });
           handleTimeText();
 
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
           return;
         }
 
         // 短信验证上限
-        if (res.code === 450) {
+        if (res?.code === 450) {
           setCaptcha({ ...captcha, visible: false });
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
           return;
         }
 
@@ -141,16 +143,17 @@ function Forget(): React.ReactElement {
   const handleFiledPhoneCode = () => {
     filedPhoneCode({ phone: formData.account, code: formData.code })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setProgress(3);
 
           store.dispatch({
             type: 'routine/setToken',
-            payload: res?.data?.token
+            payload: res.data?.token
           });
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
@@ -159,16 +162,17 @@ function Forget(): React.ReactElement {
   const handleModifyPassword = () => {
     modifyPassword({ password: formData.password })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
           store.dispatch({
             type: 'routine/setLogout',
             payload: ''
           });
           navigation.replace('Login');
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };

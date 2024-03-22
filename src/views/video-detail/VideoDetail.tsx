@@ -45,8 +45,8 @@ function VideoDetail(): React.ReactElement {
   const getVideoDetail = () => {
     videosDetail({ id: route.params.id })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setDetail(res.data);
+        if (res?.code === 200) {
+          setDetail(res.data || {});
         }
       })
       .catch(() => ({}));
@@ -81,9 +81,9 @@ function VideoDetail(): React.ReactElement {
     if (!is_like) {
       videoLike({ id: route.params.id })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             getVideoDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -92,9 +92,9 @@ function VideoDetail(): React.ReactElement {
     if (is_like) {
       unVideoLike({ id: route.params.id })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             getVideoDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -111,9 +111,9 @@ function VideoDetail(): React.ReactElement {
     if (!is_collection) {
       followVideo({ id: route.params.id })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             getVideoDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -122,9 +122,9 @@ function VideoDetail(): React.ReactElement {
     if (is_collection) {
       unFollowVideo({ id: route.params.id })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             getVideoDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -155,38 +155,38 @@ function VideoDetail(): React.ReactElement {
         </Pressable>
         <View style={styles.tool}>
           <Pressable
-            onPress={() => handleLikeChange(detail?.is_like!)}
+            onPress={() => handleLikeChange(detail.is_like!)}
             style={styles.toolItem}
           >
             <Text
               style={[
                 styles.itemIcon,
-                detail?.is_like ? styles.activeIcon : styles.itemIcon
+                detail.is_like ? styles.activeIcon : styles.itemIcon
               ]}
             >
               {'\ue669'}
             </Text>
             <Text style={styles.itemText}>
-              {detail?.like_count && detail?.like_count > 0
-                ? detail?.like_count
+              {detail.like_count && detail.like_count > 0
+                ? detail.like_count
                 : '点赞'}
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => handleCollectionChange(detail?.is_collection!)}
+            onPress={() => handleCollectionChange(detail.is_collection!)}
             style={styles.toolItem}
           >
             <Text
               style={[
                 styles.itemIcon,
-                detail?.is_collection ? styles.activeIcon : styles.itemIcon
+                detail.is_collection ? styles.activeIcon : styles.itemIcon
               ]}
             >
               {'\ue911'}
             </Text>
             <Text style={styles.itemText}>
-              {detail?.collection_count && detail?.collection_count > 0
-                ? detail?.collection_count
+              {detail.collection_count && detail.collection_count > 0
+                ? detail.collection_count
                 : '收藏'}
             </Text>
           </Pressable>
@@ -196,8 +196,8 @@ function VideoDetail(): React.ReactElement {
           >
             <Text style={styles.itemIcon}>{'\ue620'}</Text>
             <Text style={styles.itemText}>
-              {detail?.comment_count && detail?.comment_count > 0
-                ? detail?.comment_count
+              {detail.comment_count && detail.comment_count > 0
+                ? detail.comment_count
                 : '评论'}
             </Text>
           </Pressable>

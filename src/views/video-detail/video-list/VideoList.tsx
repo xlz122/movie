@@ -45,8 +45,8 @@ function VideoList(props: Props): React.ReactElement {
   const getVideoList = () => {
     videosDetailList({ id: props.movieId! })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setVideos(res.data.videos);
+        if (res?.code === 200) {
+          setVideos(res.data?.videos || []);
         }
       })
       .catch(() => ({}));
@@ -87,7 +87,7 @@ function VideoList(props: Props): React.ReactElement {
           data={videos}
         />
       </View>
-      {videos[navIndex]?.children?.map((item, index) => {
+      {videos?.[navIndex]?.children?.map?.((item, index) => {
         return (
           <Pressable
             key={index}
@@ -96,7 +96,7 @@ function VideoList(props: Props): React.ReactElement {
           >
             <View style={styles.itemCover}>
               <Image
-                source={{ uri: item?.poster }}
+                source={{ uri: item.poster }}
                 resizeMode={'stretch'}
                 style={[styles.coverImage]}
               />
@@ -127,7 +127,7 @@ function VideoList(props: Props): React.ReactElement {
           </Pressable>
         );
       })}
-      {videos[navIndex]?.children?.length === 0 && (
+      {videos?.[navIndex]?.children?.length === 0 && (
         <Text style={styles.noDataText}>暂无视频</Text>
       )}
     </ScrollView>

@@ -10,8 +10,8 @@ function Awards(): React.ReactElement {
   const getMovieAwards = () => {
     movieAwards()
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setAwards(res.data);
+        if (res?.code === 200) {
+          setAwards(res.data || []);
         }
       })
       .catch(() => ({}));
@@ -24,7 +24,7 @@ function Awards(): React.ReactElement {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
       <View style={styles.list}>
-        {awards.map((item, index) => {
+        {awards.map?.((item, index) => {
           return (
             <View
               key={index}
@@ -33,7 +33,7 @@ function Awards(): React.ReactElement {
                 index % 1 === 0 ? styles.itemLine : styles.item
               ]}
             >
-              <Text style={styles.itemTitle}>{item?.title}</Text>
+              <Text style={styles.itemTitle}>{item.title}</Text>
             </View>
           );
         })}

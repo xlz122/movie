@@ -30,12 +30,12 @@ function PicutreCode(props: Props): React.ReactElement {
   }, [code]);
 
   const close = () => {
-    props.close && props.close();
+    props.close?.();
   };
 
   return (
     <View style={[styles.picutre, props.picutreStyle]}>
-      <Pressable onPress={close} style={[styles.mask, props?.maskStyle]} />
+      <Pressable onPress={close} style={[styles.mask, props.maskStyle]} />
       <View style={styles.modal}>
         <View style={styles.modalBody}>
           <Text style={styles.title}>请输入以下验证码数字</Text>

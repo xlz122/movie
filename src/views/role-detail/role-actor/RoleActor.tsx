@@ -29,12 +29,12 @@ function RoleActor(props: Props): React.ReactElement {
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
-          source={{ uri: item?.avatar }}
+          source={{ uri: item.avatar }}
           resizeMode={'stretch'}
           style={[styles.itemImage]}
         />
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
-          {item?.name}
+          {item.name}
         </Text>
       </View>
     </Pressable>

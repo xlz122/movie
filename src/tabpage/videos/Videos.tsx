@@ -45,11 +45,11 @@ function Videos(): React.ReactElement {
         <View style={styles.userinfo}>
           <View style={styles.author}>
             <Image
-              source={{ uri: item.author.avatar }}
+              source={{ uri: item.author?.avatar }}
               resizeMode={'stretch'}
               style={[styles.authorAvatar]}
             />
-            <Text style={styles.authorName}>{item.author.username}</Text>
+            <Text style={styles.authorName}>{item.author?.username}</Text>
           </View>
           <View style={styles.tool}>
             <Text style={styles.toolIcon}>{'\ue816'}</Text>

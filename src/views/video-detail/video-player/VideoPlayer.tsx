@@ -22,7 +22,7 @@ function VideoPlayer(props: Props): React.ReactElement {
 
   return (
     <View style={styles.videoPlayer}>
-      {props.detail.poster && (
+      {props.detail?.poster && (
         <Image
           source={{ uri: props.detail.poster }}
           resizeMode={'stretch'}

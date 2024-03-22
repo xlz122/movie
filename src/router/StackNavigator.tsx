@@ -15,7 +15,7 @@ function StackNavigator(): React.ReactElement {
         }
       }}
     >
-      {router.map((item, index) => {
+      {router.map?.((item, index) => {
         return (
           <Stack.Screen
             key={index}
