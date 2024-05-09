@@ -11,7 +11,6 @@ const appDirectory = path.resolve(__dirname, '../');
 
 // 添加需要编译的react-native包
 const compileNodeModules = [
-  'react-native-reanimated',
   'react-native-linear-gradient',
   'react-native-webview'
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
@@ -137,7 +136,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://h5-api-test.ixook.com',
+        target: 'https://movie.xlz122.cn/api',
         ws: true,
         secure: false,
         changeOrigin: true,
