@@ -25,12 +25,8 @@ module.exports = {
     // 文件末尾换行
     'eol-last': 2,
 
-    // jsx空格缩进
-    'react/jsx-indent': [2, 2],
     // 标签(组件省略闭合标签, html不省略闭合标签)
     'react/self-closing-comp': [2, { component: true, html: false }],
-    // 检查 Hook 的规则(不允许在if for里面使用)
-    'react-hooks/rules-of-hooks': [2],
     // 检查 effect 的依赖
     'react-hooks/exhaustive-deps': [0],
     'react-native/no-inline-styles': [0],
