@@ -49,20 +49,20 @@ function MovieInfo(props: Props): React.ReactElement {
   const movieWishChange = (): boolean | undefined => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     movieWish({ id: detail.id! })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          props.refreshDetail();
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
+          props.refreshDetail?.();
+          CustomAlert({ title: '提示', message: res.message });
         }
       })
       .catch(() => ({}));
   };
 
-  const movieWatchChange = (): void => {
+  const movieWatchChange = () => {
     if (!isLogin) {
       navigation.push('Login');
     }
@@ -70,16 +70,16 @@ function MovieInfo(props: Props): React.ReactElement {
 
   const RenderRating = (): React.ReactElement => {
     // 即将上映
-    if (detail?.release_status === 1) {
+    if (detail.release_status === 1) {
       return (
         <>
           <View style={styles.ratingItem}>
             <View style={styles.ratingWish}>
-              <Text style={styles.ratingWishCount}>{detail?.wish_count}</Text>
+              <Text style={styles.ratingWishCount}>{detail.wish_count}</Text>
               <Text style={styles.ratingWishText}>人想看</Text>
             </View>
           </View>
-          <Text style={styles.ratingWishDesc}>{detail?.release_date}上映</Text>
+          <Text style={styles.ratingWishDesc}>{detail.release_date}上映</Text>
         </>
       );
     }
@@ -87,35 +87,35 @@ function MovieInfo(props: Props): React.ReactElement {
     // 已上映
     return (
       <>
-        {Boolean(detail?.rating) && (
+        {Boolean(detail.rating) && (
           <View style={styles.ratingItem}>
             <View style={styles.ratingCover}>
               <Text style={styles.ratingText}>慕影评分</Text>
               <View style={styles.ratingLine} />
             </View>
-            <Text style={styles.ratingScore}>{detail?.rating}</Text>
+            <Text style={styles.ratingScore}>{detail.rating}</Text>
             <Text style={styles.ratingText}>
-              {detail?.awards_nominate_count}
+              {detail.awards_nominate_count}
               <Text>人评</Text>
             </Text>
           </View>
         )}
-        {Boolean(detail?.thrid_rating?.douban?.rating) && (
+        {Boolean(detail.thrid_rating?.douban?.rating) && (
           <View style={styles.ratingItem}>
             <View style={styles.ratingCover}>
               <Text style={styles.ratingText}>豆瓣评分</Text>
               <Text style={styles.ratingIcon}>{'\ue602'}</Text>
             </View>
             <Text style={styles.ratingScore}>
-              {detail?.thrid_rating?.douban?.rating}
+              {detail.thrid_rating?.douban?.rating}
             </Text>
             <Text style={styles.ratingText}>
-              {detail?.thrid_rating?.douban?.count}
+              {detail.thrid_rating?.douban?.count}
               <Text>人评</Text>
             </Text>
           </View>
         )}
-        {!detail?.rating && !detail?.thrid_rating?.douban?.rating && (
+        {!detail.rating && !detail.thrid_rating?.douban?.rating && (
           <Text style={styles.noRating}>暂无评分</Text>
         )}
       </>
@@ -125,17 +125,17 @@ function MovieInfo(props: Props): React.ReactElement {
   return (
     <>
       <View style={styles.movieInfo}>
-        {detail?.poster?.small && (
+        {detail.poster?.small && (
           <Image
-            source={{ uri: detail?.poster?.small }}
+            source={{ uri: detail.poster.small }}
             resizeMode={'stretch'}
             style={[styles.infoImage]}
           />
         )}
         <View style={styles.info}>
-          <Text style={styles.title}>{detail?.title}</Text>
-          {Boolean(detail?.title_original) && (
-            <Text style={styles.subTitle}>{detail?.title_original}</Text>
+          <Text style={styles.title}>{detail.title}</Text>
+          {Boolean(detail.title_original) && (
+            <Text style={styles.subTitle}>{detail.title_original}</Text>
           )}
           <View style={styles.brief}>
             <Text
@@ -143,31 +143,29 @@ function MovieInfo(props: Props): React.ReactElement {
               ellipsizeMode="tail"
               style={styles.briefText}
             >
-              {detail?.genres?.join(' / ')}
+              {detail.genres?.join?.(' / ')}
             </Text>
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
               style={styles.briefText}
             >
-              <Text>{detail?.countries?.join(' / ')}</Text>
+              <Text>{detail.countries?.join?.(' / ')}</Text>
               <Text>·</Text>
-              <Text>{detail?.year}</Text>
-              {detail?.episode_count === 0 && detail?.durations!.length > 0 && (
-                <Text>{`·${detail?.durations?.join(' / ')}`}</Text>
+              <Text>{detail.year}</Text>
+              {detail.episode_count === 0 && detail.durations!.length > 0 && (
+                <Text>{`·${detail.durations?.join?.(' / ')}`}</Text>
               )}
             </Text>
-            {Number(detail?.episode_count) > 0 && (
+            {Number(detail.episode_count) > 0 && (
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
                 style={styles.briefText}
               >
-                <Text>{`共${detail?.episode_count}集`}</Text>
+                <Text>{`共${detail.episode_count}集`}</Text>
                 <Text>·</Text>
-                <Text>
-                  {`每集${detail?.durations && detail.durations[0]}分钟`}
-                </Text>
+                <Text>{`每集${detail.durations?.[0]}分钟`}</Text>
               </Text>
             )}
           </View>
@@ -176,18 +174,16 @@ function MovieInfo(props: Props): React.ReactElement {
               <View
                 style={[
                   styles.operateItem,
-                  detail?.is_wish
-                    ? styles.operateActiveItem
-                    : styles.operateItem
+                  detail.is_wish ? styles.operateActiveItem : styles.operateItem
                 ]}
               >
                 <Text style={styles.operateIcon}>{'\ue60a'}</Text>
                 <Text style={styles.operateText}>
-                  {detail?.is_wish ? '已想看' : '想看'}
+                  {detail.is_wish ? '已想看' : '想看'}
                 </Text>
               </View>
             </Pressable>
-            {detail?.release_status !== 1 && (
+            {detail.release_status !== 1 && (
               <Pressable onPress={movieWatchChange}>
                 <View style={styles.operateItem}>
                   <Text style={styles.operateIcon}>{'\ue911'}</Text>
@@ -202,7 +198,7 @@ function MovieInfo(props: Props): React.ReactElement {
         <RenderRating />
       </View>
       <View style={styles.tag}>
-        {detail?.tags?.map((item, index) => {
+        {detail.tags?.map?.((item, index) => {
           return (
             <Text key={index} style={styles.tagItem}>
               {item}
@@ -210,11 +206,11 @@ function MovieInfo(props: Props): React.ReactElement {
           );
         })}
       </View>
-      {Boolean(detail?.egg_hunt) && (
+      {Boolean(detail.egg_hunt) && (
         <View style={styles.egg}>
           <Text style={styles.eggIcon}>{'\ue61e'}</Text>
           <Text style={styles.eggText}>
-            {`有${detail?.egg_hunt}个彩蛋,不要错过哦~ `}
+            {`有${detail.egg_hunt}个彩蛋,不要错过哦~ `}
           </Text>
         </View>
       )}

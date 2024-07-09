@@ -29,15 +29,15 @@ function ActorInfo(props: Props): React.ReactElement {
   const handleCollectionChange = (is_collection: number) => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     if (is_collection === 0) {
       followActor({ id: props.detail.id! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            props.refreshDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+          if (res?.code === 200) {
+            props.refreshDetail?.();
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -46,9 +46,9 @@ function ActorInfo(props: Props): React.ReactElement {
     if (is_collection === 1) {
       unFollowActor({ id: props.detail.id! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            props.refreshDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+          if (res?.code === 200) {
+            props.refreshDetail?.();
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -59,7 +59,7 @@ function ActorInfo(props: Props): React.ReactElement {
     <View style={styles.actorInfo}>
       {props.detail?.avatar && (
         <Image
-          source={{ uri: props.detail?.avatar }}
+          source={{ uri: props.detail.avatar }}
           resizeMode={'cover'}
           style={[styles.infoImage]}
         />
@@ -73,13 +73,13 @@ function ActorInfo(props: Props): React.ReactElement {
             {Boolean(props.detail?.birthday) && (
               <>
                 <Text> · </Text>
-                {props.detail?.birthday}
+                {props.detail.birthday}
               </>
             )}
             {Boolean(props.detail?.country) && (
               <>
                 <Text> · </Text>
-                {props.detail?.country}
+                {props.detail.country}
               </>
             )}
           </Text>

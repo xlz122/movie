@@ -31,9 +31,11 @@ function LoginForm(): React.ReactElement {
     return new Promise((resolve, reject) => {
       userinfo()
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             resolve(res.data);
+            return;
           }
+
           reject();
         })
         .catch(() => ({}));
@@ -43,23 +45,23 @@ function LoginForm(): React.ReactElement {
   const submit = (): boolean | undefined => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请输入手机号' });
-      return false;
+      return;
     }
     if (!formData.password) {
       CustomAlert({ title: '提示', message: '请输入密码' });
-      return false;
+      return;
     }
 
     login({ ...formData })
       .then(async (res: ResponseType<{ token: string }>) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           store.dispatch({
             type: 'routine/setLogin',
             payload: true
           });
           store.dispatch({
             type: 'routine/setToken',
-            payload: res?.data?.token
+            payload: res.data?.token
           });
 
           const userInfo = await getUserInfo();
@@ -71,14 +73,17 @@ function LoginForm(): React.ReactElement {
 
             navigation.goBack();
           }
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(err => {
-        if (err?.response?.data?.message) {
-          CustomAlert({ title: '提示', message: err?.response?.data?.message });
+        if (!err.response?.data?.message) {
+          return;
         }
+
+        CustomAlert({ title: '提示', message: err.response.data.message });
       });
   };
 

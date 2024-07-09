@@ -29,7 +29,7 @@ function Forget(): React.ReactElement {
     setFormData({ ...formData, [name]: e.nativeEvent.text });
   };
 
-  const handleClearInput = (name: string): void => {
+  const handleClearInput = (name: string) => {
     setFormData({ ...formData, [name]: '' });
   };
 
@@ -70,16 +70,17 @@ function Forget(): React.ReactElement {
   const handleFieldAccount = (): boolean | undefined => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
     }
 
     fieldAccount({ account: formData.account })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setProgress(1);
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
@@ -93,38 +94,39 @@ function Forget(): React.ReactElement {
   const handleGetCaptcha = () => {
     getCaptcha()
       .then((res: ResponseType<string>) => {
-        if (res.code === 200) {
-          setCaptcha({ ...captcha, visible: true, img: res?.data || '' });
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
+          setCaptcha({ ...captcha, visible: true, img: res.data || '' });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
 
   // 校验图片验证码并发送短信验证码
-  const handleCaptchaComplete = (code: string): void => {
+  const handleCaptchaComplete = (code: string) => {
     filedCaptcha({
       phone: formData.account,
       code,
       type: 'forget'
     })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setProgress(2);
 
           setCaptcha({ ...captcha, visible: false });
           handleTimeText();
 
-          CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
 
         // 短信验证上限
-        if (res.code === 450) {
+        if (res?.code === 450) {
           setCaptcha({ ...captcha, visible: false });
-          CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
 
         handleGetCaptcha();
@@ -133,24 +135,25 @@ function Forget(): React.ReactElement {
       .catch(() => ({}));
   };
 
-  const handleCaptchaClose = (): void => {
+  const handleCaptchaClose = () => {
     setCaptcha({ ...captcha, visible: false });
   };
 
   // 校验短信验证码
-  const handleFiledPhoneCode = (): void => {
+  const handleFiledPhoneCode = () => {
     filedPhoneCode({ phone: formData.account, code: formData.code })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setProgress(3);
 
           store.dispatch({
             type: 'routine/setToken',
-            payload: res?.data?.token
+            payload: res.data?.token
           });
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
@@ -159,21 +162,22 @@ function Forget(): React.ReactElement {
   const handleModifyPassword = () => {
     modifyPassword({ password: formData.password })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
           store.dispatch({
             type: 'routine/setLogout',
             payload: ''
           });
           navigation.replace('Login');
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
 
-  const nextStep = (): void => {
+  const nextStep = () => {
     // 验证手机号
     if (progress === 0) {
       handleFieldAccount();

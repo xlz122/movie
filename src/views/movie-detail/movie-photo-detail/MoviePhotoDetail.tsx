@@ -26,25 +26,19 @@ function MoviePhotoDetail(): React.ReactElement {
   ]);
   const [photo, setPhoto] = useState<Array<{ url?: string }>>([]);
   const [photoParams, setPhotoParams] = useState({
-    id: route.params.id,
     page: 1,
     per_page: 11,
     type: 'all'
   });
 
-  useEffect(() => {
-    if (!route.params.id) {
-      return;
-    }
-
-    setPhotoParams({ ...photoParams, id: route.params.id });
-  }, [route.params.id]);
-
   const getPhotos = () => {
-    moviePhotos({ ...photoParams })
+    moviePhotos({
+      id: route.params.id,
+      ...photoParams
+    })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setPhoto(res.data);
+        if (res?.code === 200) {
+          setPhoto(res.data || []);
         }
       })
       .catch(() => ({}));
@@ -58,14 +52,14 @@ function MoviePhotoDetail(): React.ReactElement {
     getPhotos();
   }, [photoParams]);
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setPhotoParams({ ...photoParams, type: value });
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
       <View style={styles.tab}>
-        {tab.map((item, index) => {
+        {tab.map?.((item, index) => {
           return (
             <Pressable
               key={index}
@@ -92,7 +86,7 @@ function MoviePhotoDetail(): React.ReactElement {
         })}
       </View>
       <View style={styles.list}>
-        {photo.map((item, index) => {
+        {photo.map?.((item, index) => {
           return (
             <View key={index} style={styles.item}>
               <Image

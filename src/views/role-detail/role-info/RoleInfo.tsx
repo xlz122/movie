@@ -26,15 +26,15 @@ function RoleInfo(props: Props): React.ReactElement {
   const handleCollectionChange = (is_collection: number) => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     if (is_collection === 0) {
       followRole({ id: props.detail.id! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            CustomAlert({ title: '提示', message: res?.message });
-            props.refreshDetail();
+          if (res?.code === 200) {
+            props.refreshDetail?.();
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));
@@ -43,9 +43,9 @@ function RoleInfo(props: Props): React.ReactElement {
     if (is_collection === 1) {
       unFollowRole({ id: props.detail.id! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            CustomAlert({ title: '提示', message: res?.message });
-            props.refreshDetail();
+          if (res?.code === 200) {
+            props.refreshDetail?.();
+            CustomAlert({ title: '提示', message: res.message });
           }
         })
         .catch(() => ({}));

@@ -13,10 +13,10 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie?: WorksItemType[];
+  movie?: ActorWorkItem[];
 };
 
-export type WorksItemType = {
+export type ActorWorkItem = {
   id: number;
   title: string;
   poster: string;
@@ -28,7 +28,7 @@ export type WorksItemType = {
 function ActorWorks(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<WorksItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<ActorWorkItem>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -36,14 +36,14 @@ function ActorWorks(props: Props): React.ReactElement {
           resizeMode={'stretch'}
           style={[styles.itemImage]}
         />
-        {item?.category && item?.category !== '电影' && (
-          <Text style={styles.itemTag}>{item?.category}</Text>
+        {item.category && item.category !== '电影' && (
+          <Text style={styles.itemTag}>{item.category}</Text>
         )}
-        {item?.rating !== null && Number(item?.rating) === 0 && (
+        {item.rating !== null && Number(item.rating) === 0 && (
           <Text style={styles.itemRating}>暂无评分</Text>
         )}
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>{item?.rating}分</Text>
+        {Number(item.rating) > 0 && (
+          <Text style={styles.itemRating}>{item.rating}分</Text>
         )}
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
           {item.title}

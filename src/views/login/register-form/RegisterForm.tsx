@@ -15,7 +15,7 @@ function RegisterForm(): React.ReactElement {
     code: ''
   });
 
-  const handleInputChange = (e: TextInputEvent, name: string): void => {
+  const handleInputChange = (e: TextInputEvent, name: string) => {
     setFormData({ ...formData, [name]: e.nativeEvent.text });
   };
 
@@ -58,52 +58,53 @@ function RegisterForm(): React.ReactElement {
   const handleGetCaptcha = () => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
     }
     if (!formData.password) {
       CustomAlert({ title: '提示', message: '请先输入密码' });
-      return false;
+      return;
     }
 
     getCaptcha()
       .then((res: ResponseType<string>) => {
-        if (res.code === 200) {
-          setCaptcha({ ...captcha, visible: true, img: res?.data || '' });
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
+          setCaptcha({ ...captcha, visible: true, img: res.data || '' });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };
 
   // 校验图片验证码并发送短信验证码
-  const handleCaptchaComplete = (code: string): void => {
+  const handleCaptchaComplete = (code: string) => {
     filedCaptcha({
       phone: formData.account,
       code,
       type: 'register'
     })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setCaptcha({ ...captcha, visible: false });
           handleTimeText();
 
-          CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
 
         // 手机号已注册
-        if (res.code === 403) {
+        if (res?.code === 403) {
           setCaptcha({ ...captcha, visible: false });
-          CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
 
         // 短信验证上限
-        if (res.code === 450) {
+        if (res?.code === 450) {
           setCaptcha({ ...captcha, visible: false });
-          CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
 
         handleGetCaptcha();
@@ -112,7 +113,7 @@ function RegisterForm(): React.ReactElement {
       .catch(() => ({}));
   };
 
-  const handleCaptchaClose = (): void => {
+  const handleCaptchaClose = () => {
     setCaptcha({ ...captcha, visible: false });
   };
 
@@ -121,11 +122,12 @@ function RegisterForm(): React.ReactElement {
     return new Promise(resolve => {
       filedPhoneCode({ phone: formData.account, code: formData.code! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
+          if (res?.code === 200) {
             resolve(res);
-          } else {
-            CustomAlert({ title: '提示', message: res?.message });
+            return;
           }
+
+          CustomAlert({ title: '提示', message: res?.message });
         })
         .catch(() => ({}));
     });
@@ -134,27 +136,28 @@ function RegisterForm(): React.ReactElement {
   const submit = async (): Promise<boolean | undefined> => {
     if (!formData.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
     }
     if (!formData.password) {
       CustomAlert({ title: '提示', message: '请先输入密码' });
-      return false;
+      return;
     }
 
     const filedCode = await handleFiledPhoneCode();
     if (!filedCode.code) {
       CustomAlert({ title: '提示', message: filedCode?.message });
-      return false;
+      return;
     }
 
     register({ ...formData })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          CustomAlert({ title: '提示', message: res?.message });
+        if (res?.code === 200) {
           navigation.replace('Login');
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          CustomAlert({ title: '提示', message: res.message });
+          return;
         }
+
+        CustomAlert({ title: '提示', message: res?.message });
       })
       .catch(() => ({}));
   };

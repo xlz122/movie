@@ -8,12 +8,12 @@ import styles from './actor-list.css';
 
 type Route = RouteProp<{ params: { movieId: number } }>;
 
-type MovieType = {
-  list: ItemType[];
+type ActorType = {
+  list: ActorItem[];
   stickyIndex: number[];
 };
 
-type ItemType = {
+type ActorItem = {
   stickyTitle?: string;
   id?: number;
   avatar?: string;
@@ -29,19 +29,19 @@ function ActorList(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
-  const [actor, setActor] = useState<MovieType>({
+  const [actor, setActor] = useState<ActorType>({
     list: [],
     stickyIndex: []
   });
 
-  const getMovieActor = (): void => {
+  const getMovieActor = () => {
     movieActor({ id: route.params.movieId })
       .then((res: ResponseType<any[]>) => {
-        if (res.code === 200) {
-          const list: ItemType[] = [];
+        if (res?.code === 200) {
+          const list: ActorItem[] = [];
           const stickyIndex: number[] = [];
 
-          res.data?.forEach(item => {
+          res.data?.forEach?.(item => {
             const isExist = list.find(t => t.name === item.name);
 
             // 吸顶标题、索引
@@ -54,10 +54,10 @@ function ActorList(): React.ReactElement {
             }
 
             // 列表项
-            item?.children?.forEach((i: ItemType, ind: number) => {
+            item.children?.forEach?.((i: ActorItem, ind: number) => {
               if (ind === item.children.length - 1) {
                 list.push({ ...i, isLastItem: true });
-                return false;
+                return;
               }
 
               list.push(i);
@@ -74,7 +74,7 @@ function ActorList(): React.ReactElement {
     getMovieActor();
   }, []);
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: ActorItem }) => (
     <>
       {item.stickyTitle && (
         <View style={styles.sticky}>
@@ -102,11 +102,11 @@ function ActorList(): React.ReactElement {
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemText}>{item.name_en}</Text>
               <Text style={styles.itemText}>
-                {item?.gender}
-                {Boolean(item?.country) && (
+                {item.gender}
+                {Boolean(item.country) && (
                   <>
                     <Text> · </Text>
-                    <Text>{item?.country}</Text>
+                    <Text>{item.country}</Text>
                   </>
                 )}
               </Text>

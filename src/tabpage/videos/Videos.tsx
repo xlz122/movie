@@ -7,7 +7,7 @@ import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './videos.css';
 
-type ItemType = {
+type VideoItem = {
   id: number;
   poster: string;
   title: string;
@@ -24,7 +24,7 @@ type ItemType = {
 function Videos(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: VideoItem }) => (
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
@@ -45,11 +45,11 @@ function Videos(): React.ReactElement {
         <View style={styles.userinfo}>
           <View style={styles.author}>
             <Image
-              source={{ uri: item.author.avatar }}
+              source={{ uri: item.author?.avatar }}
               resizeMode={'stretch'}
               style={[styles.authorAvatar]}
             />
-            <Text style={styles.authorName}>{item.author.username}</Text>
+            <Text style={styles.authorName}>{item.author?.username}</Text>
           </View>
           <View style={styles.tool}>
             <Text style={styles.toolIcon}>{'\ue816'}</Text>

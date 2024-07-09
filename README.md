@@ -10,11 +10,9 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 ## 简介
 
-本项目是一个高仿[慕影网](https://github.com/NameLi/muying-h5)项目
+目前仅支持Android端和Web端，Ios端未适配
 
-使用react-native-web实现web端应用，可查看[web-webpack分支](https://github.com/xlz122/react-native-movie/tree/web-webpack)
-
-目前仅支持android端和web端，ios端未适配
+使用[react-native-web](https://github.com/necolas/react-native-web)实现Web端，可查看[web-webpack](https://github.com/xlz122/react-native-movie/tree/web-webpack)分支
 
 ## 项目使用技术栈
 
@@ -36,13 +34,13 @@ yarn install
 ```
 
 ```
-yarn start
-
-yarn start --experimental-debugger
+yarn dev
 ```
 
+项目打包
+
 ```
-yarn android
+yarn build
 ```
 
 ## 项目效果图
@@ -57,5 +55,5 @@ yarn android
 
 ## 写在最后
 
-* [The MIT License (MIT)](https://github.com/xlz122/react-native-movie/blob/master/LICENSE)
+* [The MIT License (MIT)](https://github.com/xlz122/movie/blob/web-webpack/LICENSE)
 * 本项目仅用于学习使用，切勿用于商业用途，否则产生的法律后果与作者无关。

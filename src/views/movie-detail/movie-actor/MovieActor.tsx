@@ -13,10 +13,10 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie: ActorItemType[];
+  movie: ActorItem[];
 };
 
-export type ActorItemType = {
+export type ActorItem = {
   union_id: number;
   id: number;
   avatar: string;
@@ -28,7 +28,7 @@ export type ActorItemType = {
 function MovieActor(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<ActorItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<ActorItem>) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -40,8 +40,8 @@ function MovieActor(props: Props): React.ReactElement {
           {item.name}
         </Text>
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.labelText}>
-          {item?.profession === '导演' ? item?.profession : ''}
-          {item?.act ? `饰: ${item?.act}` : ''}
+          {item.profession === '导演' ? item.profession : ''}
+          {item.act ? `饰: ${item.act}` : ''}
         </Text>
       </View>
     </Pressable>

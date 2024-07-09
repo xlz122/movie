@@ -41,68 +41,68 @@ function MovieSummary(): React.ReactElement {
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>片名: </Text>
-              <Text style={styles.itemValue}>{detail?.title}</Text>
+              <Text style={styles.itemValue}>{detail.title}</Text>
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>别名: </Text>
-              <Text style={styles.itemValue}>{detail?.akas?.join(' / ')}</Text>
+              <Text style={styles.itemValue}>{detail.akas?.join?.(' / ')}</Text>
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>类别: </Text>
-              <Text style={styles.itemValue}>{detail?.category}</Text>
+              <Text style={styles.itemValue}>{detail.category}</Text>
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>类型: </Text>
               <Text style={styles.itemValue}>
-                {detail?.genres?.join(' / ')}
+                {detail.genres?.join?.(' / ')}
               </Text>
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>上映: </Text>
               <Text style={styles.itemValue}>
-                {detail?.pubdates?.join(' / ')}
+                {detail.pubdates?.join?.(' / ')}
               </Text>
             </View>
-            {Number(detail?.season_count) > 0 && (
+            {Number(detail.season_count) > 0 && (
               <View style={styles.summaryItem}>
                 <Text style={styles.itemLabel}>季数: </Text>
                 <Text style={styles.itemValue}>
-                  {`第 ${detail?.season_count} 季`}
+                  {`第 ${detail.season_count} 季`}
                 </Text>
               </View>
             )}
-            {Number(detail?.episode_count) > 0 && (
+            {Number(detail.episode_count) > 0 && (
               <View style={styles.summaryItem}>
                 <Text style={styles.itemLabel}>集数: </Text>
                 <Text style={styles.itemValue}>
-                  {`共 ${detail?.episode_count} 集`}
+                  {`共 ${detail.episode_count} 集`}
                 </Text>
               </View>
             )}
-            {detail?.durations && detail?.durations.length > 0 && (
+            {detail.durations && detail.durations.length > 0 && (
               <View style={styles.summaryItem}>
                 <Text style={styles.itemLabel}>片长: </Text>
                 <Text style={styles.itemValue}>
-                  {`共 ${detail?.durations} 集`}
+                  {`共 ${detail.durations} 集`}
                 </Text>
               </View>
             )}
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>地区: </Text>
               <Text style={styles.itemValue}>
-                {detail?.countries?.join(' / ')}
+                {detail.countries?.join?.(' / ')}
               </Text>
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>色彩: </Text>
               <Text style={styles.itemValue}>
-                {detail?.color === 0 ? '黑白' : '彩色'}
+                {detail.color === 0 ? '黑白' : '彩色'}
               </Text>
             </View>
             <View style={styles.summaryItem}>
               <Text style={styles.itemLabel}>语言: </Text>
               <Text style={styles.itemValue}>
-                {detail?.languages?.join(' / ')}
+                {detail.languages?.join?.(' / ')}
               </Text>
             </View>
           </View>
@@ -110,7 +110,7 @@ function MovieSummary(): React.ReactElement {
             <View style={styles.summaryTitle}>
               <Text style={styles.summaryTitleText}>简介</Text>
             </View>
-            <Text style={styles.descText}>{detail?.summary}</Text>
+            <Text style={styles.descText}>{detail.summary}</Text>
           </View>
         </View>
       </ScrollView>

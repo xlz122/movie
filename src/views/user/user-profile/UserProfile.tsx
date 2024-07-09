@@ -12,26 +12,26 @@ function UserProfile(): React.ReactElement {
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>头像</Text>
           <Image
-            source={{ uri: userinfo?.avatar }}
+            source={{ uri: userinfo.avatar }}
             resizeMode={'stretch'}
             style={[styles.itemRightImage]}
           />
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>用户名</Text>
-          <Text style={styles.itemContent}>{userinfo?.username}</Text>
+          <Text style={styles.itemContent}>{userinfo.username}</Text>
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>手机号</Text>
-          <Text style={styles.itemContent}>{userinfo?.phone}</Text>
+          <Text style={styles.itemContent}>{userinfo.phone}</Text>
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemText}>性别</Text>
-          <Text style={styles.itemContent}>{userinfo?.gender}</Text>
+          <Text style={styles.itemContent}>{userinfo.gender}</Text>
         </View>
         <View style={[styles.cellItem, styles.cellLastItem]}>
           <Text style={styles.itemText}>生日</Text>
-          <Text style={styles.itemContent}>{userinfo?.birthday}</Text>
+          <Text style={styles.itemContent}>{userinfo.birthday}</Text>
         </View>
       </View>
     </View>

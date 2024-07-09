@@ -4,9 +4,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { roleDetail } from '@/api/role';
 import type { RouteProp } from '@react-navigation/native';
 import type { ResponseType, Navigation } from '@/types/index';
-import type { PhotoItemType } from './role-photo/RolePhoto';
-import type { MovieItemType } from './role-movie/RoleMovie';
-import type { ActorItemType } from './role-actor/RoleActor';
+import type { RolePhotoItem } from './role-photo/RolePhoto';
+import type { RoleMovieItem } from './role-movie/RoleMovie';
+import type { RoleActorItem } from './role-actor/RoleActor';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import Panel from '@/components/panel/Panel';
 import RoleInfo from './role-info/RoleInfo';
@@ -24,12 +24,12 @@ type RoleDetailType = {
   actor_count?: number;
   brief?: string;
   photo_count?: number;
-  photos?: PhotoItemType[];
-  movies?: MovieItemType[];
-  actors?: ActorItemType[];
+  photos?: RolePhotoItem[];
+  movies?: RoleMovieItem[];
+  actors?: RoleActorItem[];
 };
 
-function ActorDetail(): React.ReactElement {
+function RoleDetail(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
@@ -38,8 +38,8 @@ function ActorDetail(): React.ReactElement {
   const getRoleDetail = () => {
     roleDetail({ id: route.params.id })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setDetail(res.data);
+        if (res?.code === 200) {
+          setDetail(res.data || {});
         }
       })
       .catch(() => ({}));
@@ -49,7 +49,6 @@ function ActorDetail(): React.ReactElement {
     getRoleDetail();
   }, []);
 
-  // 刷新详情
   const refreshDetail = () => {
     getRoleDetail();
   };
@@ -74,55 +73,55 @@ function ActorDetail(): React.ReactElement {
       <RoleInfo detail={detail} refreshDetail={refreshDetail} />
       <View style={styles.count}>
         <View style={styles.countItem}>
-          <Text style={styles.itemContent}>{detail?.collection_count}人</Text>
+          <Text style={styles.itemContent}>{detail.collection_count}人</Text>
           <Text style={styles.itemText}>关注数</Text>
         </View>
         <View style={styles.countItem}>
-          <Text style={styles.itemContent}>{detail?.movie_count}部</Text>
+          <Text style={styles.itemContent}>{detail.movie_count}部</Text>
           <Text style={styles.itemText}>影视数</Text>
         </View>
         <View style={[styles.countItem, styles.countLastItem]}>
-          <Text style={styles.itemContent}>{detail?.actor_count}个</Text>
+          <Text style={styles.itemContent}>{detail.actor_count}个</Text>
           <Text style={styles.itemText}>影人数</Text>
         </View>
       </View>
       <Panel title="个人简介" subtitle={'更多信息'}>
-        {Boolean(detail?.brief) && (
+        {Boolean(detail.brief) && (
           <Text numberOfLines={4} ellipsizeMode="tail" style={styles.summary}>
-            {detail?.brief}
+            {detail.brief}
           </Text>
         )}
-        {!detail?.brief && (
+        {!detail.brief && (
           <View style={styles.noSummary}>
             <Text style={styles.noSummaryText}>暂无简介</Text>
           </View>
         )}
       </Panel>
-      {Number(detail?.photo_count) > 0 && (
-        <Panel title="相册" subtitle={`全部${detail?.photo_count}张`}>
-          <RolePhoto photo={detail?.photos || []} />
+      {Number(detail.photo_count) > 0 && (
+        <Panel title="相册" subtitle={`全部${detail.photo_count}张`}>
+          <RolePhoto photo={detail.photos || []} />
         </Panel>
       )}
-      {Number(detail?.movie_count) > 0 && (
+      {Number(detail.movie_count) > 0 && (
         <Panel
           title="角色影视"
-          subtitle={`全部${detail?.movie_count}部`}
+          subtitle={`全部${detail.movie_count}部`}
           panelStyle={{ paddingBottom: 10 }}
         >
-          <RoleMovie movie={detail?.movies} />
+          <RoleMovie movie={detail.movies} />
         </Panel>
       )}
-      {Number(detail?.actor_count) > 0 && (
+      {Number(detail.actor_count) > 0 && (
         <Panel
           title="角色影人"
-          subtitle={`全部${detail?.actor_count}部`}
+          subtitle={`全部${detail.actor_count}部`}
           panelStyle={{ paddingBottom: 10 }}
         >
-          <RoleActor movie={detail?.actors} />
+          <RoleActor movie={detail.actors} />
         </Panel>
       )}
     </ScrollView>
   );
 }
 
-export default ActorDetail;
+export default RoleDetail;
