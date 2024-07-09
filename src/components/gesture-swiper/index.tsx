@@ -14,7 +14,7 @@ function SimpleSwiperDemo(props: Props): React.ReactElement {
   const renderItem = ({ item }: { item: BannerItem }) => (
     <View>
       <Image
-        source={{ uri: item?.banner }}
+        source={{ uri: item.banner }}
         resizeMode={'stretch'}
         style={styles.coverImage}
       />
@@ -23,7 +23,7 @@ function SimpleSwiperDemo(props: Props): React.ReactElement {
 
   return (
     <SimpleSwiper
-      data={props?.banner || []}
+      data={props.banner || []}
       renderItem={renderItem}
       style={styles.swiper}
       itemStyle={styles.swiperItem}

@@ -14,7 +14,7 @@ import { movieToday } from '@/api/home';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-type ItemType = {
+type MovieItem = {
   id: number;
   poster: string;
   title: string;
@@ -42,11 +42,11 @@ function Today(): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: MovieItem }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -59,8 +59,8 @@ function Today(): React.ReactElement {
             {item.title}
           </Text>
           <View style={styles.itemTag}>
-            {item?.category && item?.category !== '电影' && (
-              <Text style={styles.tag}>{item?.category}</Text>
+            {item.category && item.category !== '电影' && (
+              <Text style={styles.tag}>{item.category}</Text>
             )}
             <Text
               numberOfLines={1}
@@ -77,9 +77,9 @@ function Today(): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {Number(item?.rating) > 0 && (
+        {Number(item.rating) > 0 && (
           <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text>
+            <Text style={styles.itemRatingWeight}>{item.rating}</Text>
             <Text> 分</Text>
           </Text>
         )}
@@ -90,7 +90,7 @@ function Today(): React.ReactElement {
   return (
     <SafeAreaView style={styles.page}>
       <View style={styles.tab}>
-        {sort.list.map((item, index) => {
+        {sort.list.map?.((item, index) => {
           return (
             <Text
               key={index}
@@ -125,7 +125,7 @@ function Today(): React.ReactElement {
 const styles = StyleSheet.create({
   page: {
     paddingBottom: Platform.OS !== 'web' ? 10 : 0,
-    // web端需要减去标题高度
+    // web端需减去标题栏高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: '#fff'
   },

@@ -4,15 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { deviceWidth } from '@/utils/screen';
 import { moviesList } from '@/api/movies';
 import type { Navigation } from '@/types/index';
-import type { MovieParams } from '@/api/movies';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-type ItemType = {
+type MovieItem = {
   id: number;
   poster: string;
-  episode_count?: number;
-  rating?: number;
+  episode_count: number;
+  rating: number;
   title: string;
 };
 
@@ -28,7 +27,7 @@ function Movies(): React.ReactElement {
 
   const timer = useRef<NodeJS.Timeout>();
 
-  const navChange = (categoryParams: Partial<MovieParams>) => {
+  const navChange = (categoryParams: any) => {
     if (timer.current) {
       clearTimeout(timer.current);
     }
@@ -45,7 +44,7 @@ function Movies(): React.ReactElement {
     };
   }, []);
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: MovieItem }) => (
     <Pressable
       onPress={() => navigation.push('MovieDetail', { id: item.id })}
       style={styles.item}
@@ -55,11 +54,11 @@ function Movies(): React.ReactElement {
         resizeMode={'stretch'}
         style={[styles.itemImage]}
       />
-      {Number(item?.episode_count) > 0 && (
-        <Text style={styles.itemEpisode}>全{item?.episode_count}集</Text>
+      {Number(item.episode_count) > 0 && (
+        <Text style={styles.itemEpisode}>全{item.episode_count}集</Text>
       )}
-      {Number(item?.rating) > 0 && (
-        <Text style={styles.itemRating}>{item?.rating}</Text>
+      {Number(item.rating) > 0 && (
+        <Text style={styles.itemRating}>{item.rating}</Text>
       )}
       <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
         {item.title}
@@ -71,11 +70,11 @@ function Movies(): React.ReactElement {
     <>
       <Nav onChange={navChange} />
       <View style={styles.page}>
-        {/* 单项宽度105 */}
+        {/* 单项宽度115 */}
         <ScrollRefresh
           requestParams={{
             page: 1,
-            pageSize: Math.floor(deviceWidth / 105) * 5,
+            pageSize: Math.floor(deviceWidth / 115) * 5,
             category: navParams.category,
             genre: navParams.genre,
             country: navParams.country,
@@ -90,9 +89,9 @@ function Movies(): React.ReactElement {
           request={moviesList}
           renderItem={renderItem}
           initialNumToRender={15}
-          numColumns={Math.floor(deviceWidth / 105)}
+          numColumns={Math.floor(deviceWidth / 115)}
           columnWrapperStyle={{
-            justifyContent: 'space-between'
+            justifyContent: 'space-around'
           }}
         />
       </View>

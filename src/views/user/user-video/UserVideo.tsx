@@ -14,7 +14,7 @@ import { userVideos } from '@/api/mine';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
-type ItemType = {
+type UserVideoItem = {
   id: number;
   poster: string;
   duration: number;
@@ -27,7 +27,7 @@ type ItemType = {
 function UserVideo(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: UserVideoItem }) => (
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   page: {
     paddingBottom: Platform.OS !== 'web' ? 10 : 0,
     width: '100%',
-    // web端需要减去标题高度
+    // web端需减去标题栏高度
     height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
     backgroundColor: '#fff'
   },

@@ -52,8 +52,8 @@ type RefreshState = {
 
 function ScrollRefresh(props: Props): React.ReactElement {
   const [refreshState, setRefreshState] = useState<RefreshState>({
-    page: props?.requestParams?.page || 1,
-    pageSize: props?.requestParams?.pageSize || 10,
+    page: props.requestParams?.page || 1,
+    pageSize: props.requestParams?.pageSize || 10,
     data: [],
     // 下拉刷新
     isRefresh: false,
@@ -78,18 +78,15 @@ function ScrollRefresh(props: Props): React.ReactElement {
           per_page: refreshState.pageSize
         })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            props?.responseSuccess && props?.responseSuccess(res);
+          if (res?.code === 200) {
+            props.responseSuccess?.(res);
             // 筛选数据源
-            const data =
-              (props?.responseFilter && props?.responseFilter(res)) ||
-              res?.data ||
-              [];
+            const data = props.responseFilter?.(res) || res.data || [];
             resolve(data);
           }
         })
         .catch(() => {
-          props?.responseError && props?.responseError();
+          props.responseError?.();
           reject();
         });
     });
@@ -108,11 +105,11 @@ function ScrollRefresh(props: Props): React.ReactElement {
         currentComplete: true,
         loadText: '接口请求失败,请重试...'
       });
-      return false;
+      return;
     }
 
     // 第一页, 空数据
-    if (refreshState.page === 1 && data?.length === 0) {
+    if (refreshState.page === 1 && data.length === 0) {
       setRefreshState({
         ...refreshState,
         data: [],
@@ -124,11 +121,11 @@ function ScrollRefresh(props: Props): React.ReactElement {
         loadText: ''
       });
 
-      return false;
+      return;
     }
 
     // 第一页, 数据量少于一页数据量
-    if (refreshState.page === 1 && data?.length < refreshState.pageSize) {
+    if (refreshState.page === 1 && data.length < refreshState.pageSize) {
       setRefreshState({
         ...refreshState,
         data,
@@ -139,11 +136,11 @@ function ScrollRefresh(props: Props): React.ReactElement {
         loadText: '没有更多数据了'
       });
 
-      return false;
+      return;
     }
 
     // 数据量少于一页数据量
-    if (data?.length < refreshState.pageSize) {
+    if (data.length < refreshState.pageSize) {
       setRefreshState({
         ...refreshState,
         data: refreshState.data.concat(data),
@@ -154,7 +151,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         loadText: '没有更多数据了'
       });
 
-      return false;
+      return;
     }
 
     setRefreshState({
@@ -167,7 +164,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
     });
   };
 
-  const onRefresh = (): void => {
+  const onRefresh = () => {
     setRefreshState({
       ...refreshState,
       page: 1,
@@ -183,7 +180,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
   const onEndReached = (): boolean | undefined => {
     // 当前请求未完成 / 加载完成
     if (!refreshState.currentComplete || refreshState.complete) {
-      return false;
+      return;
     }
 
     setRefreshState({
@@ -222,33 +219,33 @@ function ScrollRefresh(props: Props): React.ReactElement {
   };
 
   return (
-    <SafeAreaView style={[styles.list, props?.listStyle]}>
+    <SafeAreaView style={[styles.list, props.listStyle]}>
       <FlatList
         keyExtractor={(item: unknown, index: number) => String(index)}
-        renderItem={props?.renderItem}
+        renderItem={props.renderItem}
         data={refreshState.data}
         // 初始渲染个数
-        initialNumToRender={props?.initialNumToRender || 6}
+        initialNumToRender={props.initialNumToRender || 6}
         // 滚动条
         showsVerticalScrollIndicator={
-          props?.showsVerticalScrollIndicator || false
+          props.showsVerticalScrollIndicator || false
         }
-        numColumns={props?.numColumns || 1}
-        columnWrapperStyle={props?.columnWrapperStyle}
+        numColumns={props.numColumns || 1}
+        columnWrapperStyle={props.columnWrapperStyle}
         // 分隔线组件(不会出现在第一行之前和最后一行之后)
-        ItemSeparatorComponent={props?.ItemSeparatorComponent}
+        ItemSeparatorComponent={props.ItemSeparatorComponent}
         // 空布局
         ListEmptyComponent={
-          refreshState.emptyData ? props?.ListEmptyComponent : null
+          refreshState.emptyData ? props.ListEmptyComponent : null
         }
         // 头尾布局
-        ListHeaderComponent={props?.ListHeaderComponent}
-        ListFooterComponent={props?.ListFooterComponent || ListFooterComponent}
+        ListHeaderComponent={props.ListHeaderComponent}
+        ListFooterComponent={props.ListFooterComponent || ListFooterComponent}
         // 下拉刷新
         refreshing={refreshState.isRefresh}
         onRefresh={onRefresh}
         // 加载更多
-        onEndReachedThreshold={props?.onEndReachedThreshold}
+        onEndReachedThreshold={props.onEndReachedThreshold}
         onEndReached={onEndReached}
       />
     </SafeAreaView>

@@ -16,7 +16,7 @@ type Props = {
   commentStyle?: ViewStyle;
 };
 
-type ItemType = {
+type CommentItem = {
   id: number;
   author: {
     avatar: string;
@@ -45,7 +45,7 @@ function Comment(props: Props): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
@@ -53,14 +53,14 @@ function Comment(props: Props): React.ReactElement {
   const [commentCount, setCommentCount] = useState(0);
 
   const handleResponseSuccess = (res: ResponseType) => {
-    setCommentCount(res?.total || 0);
+    setCommentCount(res.total || 0);
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: CommentItem }) => (
     <View style={styles.item}>
       <View style={styles.itemCover}>
         <Image
-          source={{ uri: item?.author?.avatar }}
+          source={{ uri: item.author?.avatar }}
           resizeMode={'stretch'}
           style={[styles.itemImage]}
         />
@@ -69,7 +69,7 @@ function Comment(props: Props): React.ReactElement {
           ellipsizeMode="tail"
           style={styles.itemCoverText}
         >
-          {item?.author?.username}
+          {item.author?.username}
         </Text>
         {item.is_delete !== 1 && (
           <Text style={styles.itemMoreIcon}>{'\ue85c'}</Text>
@@ -103,15 +103,12 @@ function Comment(props: Props): React.ReactElement {
   );
 
   return (
-    <View style={[styles.comment, props?.commentStyle]}>
+    <View style={[styles.comment, props.commentStyle]}>
       <View style={styles.mask} />
       <View style={styles.modal}>
         <View style={styles.modalHeader}>
           <Text style={styles.headerTitle}>全部评论</Text>
-          <Pressable
-            onPress={() => props.close && props.close()}
-            style={styles.headerClose}
-          >
+          <Pressable onPress={() => props.close?.()} style={styles.headerClose}>
             <Text style={styles.headerCloseIcon}>{'\ue612'}</Text>
           </Pressable>
         </View>
@@ -120,7 +117,7 @@ function Comment(props: Props): React.ReactElement {
             <View style={styles.bodyTitle}>
               <Text style={styles.titleText}>评论 {commentCount}</Text>
               <View style={styles.titleTab}>
-                {sort.list.map((item, index) => {
+                {sort.list.map?.((item, index) => {
                   return (
                     <Text
                       key={index}
@@ -147,7 +144,7 @@ function Comment(props: Props): React.ReactElement {
               sortby: sort.active
             }}
             sortParams={{ sortby: sort.active }}
-            request={props?.method}
+            request={props.method}
             responseSuccess={handleResponseSuccess}
             renderItem={renderItem}
             initialNumToRender={6}

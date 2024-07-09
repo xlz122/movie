@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { useStore, useSelector } from 'react-redux';
-import lodash from 'lodash';
 import type { RootState } from '@/store/index';
 import styles from './search-history.css';
 
@@ -23,14 +22,14 @@ function SearchHistory(props: Props): React.ReactElement {
   const handleHistoryChange = (item: string, index: number) => {
     // 删除
     if (clearVisible) {
-      const history = lodash.cloneDeep(searchHistory);
+      const history = JSON.parse(JSON.stringify(searchHistory));
       history.splice(index, 1);
 
       store.dispatch({
         type: 'routine/setSearchHistory',
         payload: history
       });
-      return false;
+      return;
     }
 
     // 搜索
@@ -62,7 +61,7 @@ function SearchHistory(props: Props): React.ReactElement {
           </View>
         </View>
         <View style={styles.recordList}>
-          {searchHistory?.map((item, index) => {
+          {searchHistory.map?.((item, index) => {
             return (
               <Pressable
                 key={index}

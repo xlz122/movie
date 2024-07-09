@@ -8,23 +8,23 @@ type Props = {
   onChange: (categoryParams: CategoryParams) => void;
 };
 
+type CategoryParams = {
+  category: string;
+  genre: string;
+  country: string;
+  year: string;
+};
+
 type Category = {
   categories: {
     name: string;
-    children: {
+    children?: {
       name: never;
     }[];
   }[];
   genres: { name: string }[];
   countries: { name: string }[];
   years: { name: string }[];
-};
-
-type CategoryParams = {
-  category: string;
-  genre: string;
-  country: string;
-  year: string;
 };
 
 function Nav(props: Props): React.ReactElement {
@@ -38,9 +38,10 @@ function Nav(props: Props): React.ReactElement {
   const getMovieCategories = () => {
     movieCategories()
       .then((res: ResponseType<Category>) => {
-        if (res.code === 200) {
-          res.data?.countries.unshift({ name: '全部' });
-          res.data?.years.unshift({ name: '全部' });
+        if (res?.code === 200) {
+          res.data?.categories?.unshift({ name: '全部' });
+          res.data?.countries?.unshift({ name: '全部' });
+          res.data?.years?.unshift({ name: '全部' });
 
           setCategory({
             categories: res.data?.categories || [],
@@ -59,14 +60,14 @@ function Nav(props: Props): React.ReactElement {
 
   // 初始化第二分类
   useEffect(() => {
-    if (!category?.categories) {
+    if (!category.categories) {
       return;
     }
 
     const genres: Category['genres'] = handlerGroup('全部');
 
     setCategory({ ...category, genres });
-  }, [category?.categories]);
+  }, [category.categories]);
 
   const [categoryParams, setCategoryParams] = useState<CategoryParams>({
     category: '全部',
@@ -94,19 +95,19 @@ function Nav(props: Props): React.ReactElement {
 
     genres.unshift({ name: '全部' });
 
-    category?.categories?.forEach(item => {
+    category.categories?.forEach?.(item => {
       if (name === '全部') {
-        item?.children.forEach(i => {
+        item.children?.forEach?.(i => {
           if (!genres.includes(i.name)) {
             genres.push({ name: i.name });
           }
         });
 
-        return false;
+        return;
       }
 
       if (name === item.name) {
-        item?.children.forEach(i => {
+        item.children?.forEach?.(i => {
           genres.push({ name: i.name });
         });
       }

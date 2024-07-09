@@ -16,13 +16,13 @@ function VideoPlayer(props: Props): React.ReactElement {
     paused: true
   });
 
-  const handlePlayChange = (): void => {
+  const handlePlayChange = () => {
     setVideo({ paused: !video.paused });
   };
 
   return (
     <View style={styles.videoPlayer}>
-      {props.detail.poster && (
+      {props.detail?.poster && (
         <Image
           source={{ uri: props.detail.poster }}
           resizeMode={'stretch'}

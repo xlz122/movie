@@ -27,7 +27,7 @@ function MineCount(): React.ReactElement {
   function getUserCount(): void {
     userCount()
       .then((res: ResponseType<Count>) => {
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setCount(res.data || {});
         }
       })
@@ -47,7 +47,7 @@ function MineCount(): React.ReactElement {
       return;
     }
 
-    // tabbar切换重新请求
+    // tabBar切换重新请求
     // @ts-ignore
     const unsubscribe = navigation.addListener('tabPress', () => {
       getUserCount();
@@ -60,7 +60,7 @@ function MineCount(): React.ReactElement {
   const jumpFlollowDetail = (path: string): boolean | undefined => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     navigation.push(path);

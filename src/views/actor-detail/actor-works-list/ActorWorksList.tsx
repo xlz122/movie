@@ -10,7 +10,7 @@ import styles from './actor-works-list.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
-type ItemType = {
+type ActorWorkItem = {
   id: number;
   title: string;
   poster: string;
@@ -48,11 +48,11 @@ function ActorWorksDetail(): React.ReactElement {
     ]
   });
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setSort({ ...sort, active: value });
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: { item: ActorWorkItem }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
@@ -60,14 +60,14 @@ function ActorWorksDetail(): React.ReactElement {
           resizeMode={'stretch'}
           style={[styles.itemImage]}
         />
-        {item?.category && item?.category !== '电影' && (
-          <Text style={styles.itemTag}>{item?.category}</Text>
+        {item.category && item.category !== '电影' && (
+          <Text style={styles.itemTag}>{item.category}</Text>
         )}
-        {item?.rating !== null && Number(item?.rating) === 0 && (
+        {item.rating !== null && Number(item.rating) === 0 && (
           <Text style={styles.itemRating}>暂无评分</Text>
         )}
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>{item?.rating}分</Text>
+        {Number(item.rating) > 0 && (
+          <Text style={styles.itemRating}>{item.rating}分</Text>
         )}
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
           {item.title}
@@ -80,7 +80,7 @@ function ActorWorksDetail(): React.ReactElement {
       <View style={styles.title}>
         <Text style={styles.titleText}>作品 {total}</Text>
         <View style={styles.titleTab}>
-          {sort.list.map((item, index) => {
+          {sort.list.map?.((item, index) => {
             return (
               <Text
                 key={index}
@@ -98,12 +98,12 @@ function ActorWorksDetail(): React.ReactElement {
           })}
         </View>
       </View>
-      {/* 单项宽度105 */}
+      {/* 单项宽度115 */}
       <ScrollRefresh
         requestParams={{
           id: route.params.id,
           page: 1,
-          pageSize: Math.floor(deviceWidth / 105) * 5,
+          pageSize: Math.floor(deviceWidth / 115) * 5,
           sortby: sort.active
         }}
         sortParams={{ sortby: sort.active }}
@@ -111,9 +111,9 @@ function ActorWorksDetail(): React.ReactElement {
         responseSuccess={handleResponseSuccess}
         renderItem={renderItem}
         initialNumToRender={15}
-        numColumns={Math.floor(deviceWidth / 105)}
+        numColumns={Math.floor(deviceWidth / 115)}
         columnWrapperStyle={{
-          justifyContent: 'space-between'
+          justifyContent: 'space-around'
         }}
         listStyle={{ paddingHorizontal: 10 }}
       />

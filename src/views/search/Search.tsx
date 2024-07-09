@@ -18,7 +18,7 @@ function Search(): React.ReactElement {
 
   const [keyword, setKeyword] = useState('');
 
-  const handleInputChange = (e: TextInputEvent): void => {
+  const handleInputChange = (e: TextInputEvent) => {
     setKeyword(e.nativeEvent.text);
   };
 
@@ -33,7 +33,7 @@ function Search(): React.ReactElement {
   // 记录历史记录
   const handleInputBlur = async (): Promise<void | boolean> => {
     if (!keyword) {
-      return false;
+      return;
     }
 
     store.dispatch({

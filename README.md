@@ -10,11 +10,9 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 ## 简介
 
-本项目是一个高仿[慕影网](https://github.com/NameLi/muying-h5)项目
+目前仅支持Android端和Web端，Ios端未适配
 
-使用react-native-web实现web端应用，可查看[web-webpack分支](https://github.com/xlz122/react-native-movie/tree/web-webpack)
-
-目前仅支持android端和web端，ios端未适配
+使用[react-native-web](https://github.com/necolas/react-native-web)实现Web端，可查看[web-webpack](https://github.com/xlz122/react-native-movie/tree/web-webpack)分支
 
 ## 项目使用技术栈
 

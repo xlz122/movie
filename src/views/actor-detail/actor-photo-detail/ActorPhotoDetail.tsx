@@ -25,17 +25,19 @@ function ActorPhotoDetail(): React.ReactElement {
   ]);
   const [photo, setPhoto] = useState<Array<{ url?: string }>>([]);
   const [photoParams, setPhotoParams] = useState({
-    id: route.params.id,
     page: 1,
     per_page: 11,
     type: 'all'
   });
 
   const getPhotos = () => {
-    actorPhotos({ ...photoParams })
+    actorPhotos({
+      id: route.params.id,
+      ...photoParams
+    })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setPhoto(res.data);
+        if (res?.code === 200) {
+          setPhoto(res.data || []);
         }
       })
       .catch(() => ({}));
@@ -49,14 +51,14 @@ function ActorPhotoDetail(): React.ReactElement {
     getPhotos();
   }, [photoParams]);
 
-  const toggleSort = (value: string): void => {
+  const toggleSort = (value: string) => {
     setPhotoParams({ ...photoParams, type: value });
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
       <View style={styles.tab}>
-        {tab.map((item, index) => {
+        {tab.map?.((item, index) => {
           return (
             <Pressable
               key={index}
@@ -83,7 +85,7 @@ function ActorPhotoDetail(): React.ReactElement {
         })}
       </View>
       <View style={styles.list}>
-        {photo.map((item, index) => {
+        {photo.map?.((item, index) => {
           return (
             <View key={index} style={styles.item}>
               <Image

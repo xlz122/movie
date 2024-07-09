@@ -39,7 +39,6 @@ function GestureSwiper(props: Props): React.ReactElement {
     }
 
     id = positionAnimated.addListener(({ value }) => {
-      // console.log('realtime', value);
       position.realtime = value;
       props.onProgressChange && props.onProgressChange(value);
     });
@@ -66,7 +65,7 @@ function GestureSwiper(props: Props): React.ReactElement {
   };
 
   // 执行动画
-  const scrollTo = (index: number): void => {
+  const scrollTo = (index: number) => {
     Animated.spring(positionAnimated, {
       toValue: -index * layoutWidth,
       friction: 12,
@@ -107,7 +106,7 @@ function GestureSwiper(props: Props): React.ReactElement {
             width: layoutWidth,
             transform: [{ translateX: positionAnimated }]
           },
-          props?.itemStyle
+          props.itemStyle
         ]}
       >
         {props.renderItem({ item, index })}
@@ -119,9 +118,9 @@ function GestureSwiper(props: Props): React.ReactElement {
     <View
       onLayout={handleLayout}
       {...responder.panHandlers}
-      style={[styles.page, props?.style]}
+      style={[styles.page, props.style]}
     >
-      {props.data.map((item, index) => {
+      {props.data?.map?.((item, index) => {
         return <RenderSwiper key={index} item={item} index={index} />;
       })}
     </View>
