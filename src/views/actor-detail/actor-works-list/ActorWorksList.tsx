@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Pressable } from 'react-native';
+import { View, Text, Image, Pressable, Dimensions } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { deviceWidth } from '@/utils/screen';
 import { actorWorks } from '@/api/actor';
+import type { ListRenderItemInfo } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -23,51 +23,45 @@ function ActorWorksDetail(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
-  // 作品数
-  const [total, setTotal] = useState(0);
-
-  const handleResponseSuccess = (res: ResponseType) => {
-    setTotal(res?.total || 0);
-  };
-
-  const [sort, setSort] = useState({
-    active: 'hot',
-    list: [
-      {
-        title: '热度',
-        type: 'hot'
-      },
-      {
-        title: '时间',
-        type: 'year'
-      },
-      {
-        title: '评分',
-        type: 'rating'
-      }
-    ]
+  const [params, setParams] = useState({
+    type: 'hot',
+    page: 1,
+    per_page: 10
   });
 
-  const toggleSort = (value: string): void => {
-    setSort({ ...sort, active: value });
+  const [tab] = useState([
+    { title: '热度', type: 'hot' },
+    { title: '时间', type: 'year' },
+    { title: '评分', type: 'rating' }
+  ]);
+
+  const tabChange = (value: string): void => {
+    setParams({ ...params, type: value });
   };
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  // 作品总数
+  const [count, setCount] = useState(0);
+
+  const handleResponseSuccess = (res: ResponseType & { total?: number }) => {
+    setCount(res.total ?? 0);
+  };
+
+  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.poster }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
+          resizeMode="stretch"
+          style={styles.itemImage}
         />
-        {item?.category && item?.category !== '电影' && (
-          <Text style={styles.itemTag}>{item?.category}</Text>
+        {item.category && item.category !== '电影' && (
+          <Text style={styles.itemTag}>{item.category}</Text>
         )}
-        {item?.rating !== null && Number(item?.rating) === 0 && (
+        {item.rating !== null && Number(item.rating) === 0 && (
           <Text style={styles.itemRating}>暂无评分</Text>
         )}
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>{item?.rating}分</Text>
+        {Number(item.rating) > 0 && (
+          <Text style={styles.itemRating}>{item.rating}分</Text>
         )}
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
           {item.title}
@@ -77,20 +71,15 @@ function ActorWorksDetail(): React.ReactElement {
   );
   return (
     <View style={styles.page}>
-      <View style={styles.title}>
-        <Text style={styles.titleText}>作品 {total}</Text>
-        <View style={styles.titleTab}>
-          {sort.list.map((item, index) => {
+      <View style={styles.count}>
+        <Text style={styles.countText}>作品 {count}</Text>
+        <View style={styles.tab}>
+          {tab.map?.((item, index) => {
             return (
               <Text
                 key={index}
-                onPress={() => toggleSort(item.type)}
-                style={[
-                  styles.tabItem,
-                  item.type === sort.active
-                    ? styles.tabActiveItem
-                    : styles.tabItem
-                ]}
+                onPress={() => tabChange(item.type)}
+                style={params.type === item.type ? styles.tabActiveItem : styles.tabItem}
               >
                 {item.title}
               </Text>
@@ -98,25 +87,23 @@ function ActorWorksDetail(): React.ReactElement {
           })}
         </View>
       </View>
-      {/* 单项宽度105 */}
-      <ScrollRefresh
-        requestParams={{
-          id: route.params.id,
-          page: 1,
-          pageSize: Math.floor(deviceWidth / 105) * 5,
-          sortby: sort.active
-        }}
-        sortParams={{ sortby: sort.active }}
-        request={actorWorks}
-        responseSuccess={handleResponseSuccess}
-        renderItem={renderItem}
-        initialNumToRender={15}
-        numColumns={Math.floor(deviceWidth / 105)}
-        columnWrapperStyle={{
-          justifyContent: 'space-between'
-        }}
-        listStyle={{ paddingHorizontal: 10 }}
-      />
+      <View style={styles.list}>
+        <ScrollRefresh
+          initialNumToRender={15}
+          requestParams={{
+            id: route.params.id,
+            sortby: params.type,
+            page: params.page,
+            pageSize: Math.floor(Dimensions.get('window').width / 104) * 5
+          }}
+          sortParams={{ sortby: params.type }}
+          request={actorWorks}
+          responseSuccess={handleResponseSuccess}
+          renderItem={renderItem}
+          numColumns={Math.floor(Dimensions.get('window').width / 104)}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+        />
+      </View>
     </View>
   );
 }

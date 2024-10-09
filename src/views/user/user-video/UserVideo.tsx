@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  Platform
-} from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { timeStampToDuration, formatDate } from '@/utils/utils';
-import { viewHeight } from '@/utils/screen';
+import { timeStampToDuration, formatDistance } from '@/utils/utils';
 import { userVideos } from '@/api/mine';
+import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
@@ -27,53 +20,54 @@ type ItemType = {
 function UserVideo(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
           <Image
             source={{ uri: item.poster }}
-            resizeMode={'stretch'}
-            style={[styles.itemImage]}
+            resizeMode="stretch"
+            style={styles.itemImage}
           />
-          <Text style={styles.itemText}>
+          <Text style={styles.itemDuration}>
             {timeStampToDuration(item.duration)}
           </Text>
         </View>
         <View style={styles.itemInfo}>
-          <Text style={styles.infoTitle}>{item.title}</Text>
-          <View style={styles.infoDesc}>
-            <Text style={styles.descText}>
-              {item.like_count}
+          <Text style={styles.itemTitle}>{item.title}</Text>
+          <View style={styles.intro}>
+            <Text style={styles.introText}>
+              <Text>{item.like_count}</Text>
               <Text>赞</Text>
               <Text> · </Text>
-              {item.play_count}
+              <Text>{item.play_count}</Text>
               <Text>播放</Text>
             </Text>
-            <Text style={styles.descText}>{formatDate(item.created_at)}</Text>
+            <Text style={styles.introText}>
+              {formatDistance(item.created_at)}
+            </Text>
           </View>
         </View>
       </View>
     </Pressable>
   );
 
-  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.emptyData}>
-      <Text style={styles.emptyDataText}>您还没有收藏任何视频</Text>
+    <View style={styles.empty}>
+      <Text style={styles.emptyText}>您还没有收藏任何视频</Text>
     </View>
   );
 
   return (
     <View style={styles.page}>
       <ScrollRefresh
+        initialNumToRender={10}
         requestParams={{
           page: 1,
           pageSize: 10
         }}
         request={userVideos}
         renderItem={renderItem}
-        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>
@@ -82,65 +76,64 @@ function UserVideo(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    paddingBottom: Platform.OS !== 'web' ? 10 : 0,
     width: '100%',
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: '#fff'
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
+    gap: 12,
     paddingTop: 16,
-    marginLeft: 16
+    marginHorizontal: 14
   },
   itemCover: {
     position: 'relative'
   },
   itemImage: {
-    width: 117,
-    height: 66,
+    width: 120,
+    height: 68,
     borderRadius: 3
   },
-  itemText: {
+  itemDuration: {
     position: 'absolute',
-    top: 47,
     right: 6,
-    zIndex: 2,
+    bottom: 10,
+    zIndex: 9,
     fontSize: 9,
-    color: '#fff'
+    color: '#ffffff'
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginHorizontal: 10
+    justifyContent: 'space-between'
   },
-  infoTitle: {
+  itemTitle: {
     fontWeight: '700',
     fontSize: 13,
     color: '#303133'
   },
-  infoDesc: {
+  intro: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  descText: {
-    fontSize: 10,
-    color: '#999'
+  introText: {
+    fontSize: 11,
+    color: '#999999'
   },
-  emptyData: {
+  empty: {
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 280
+    paddingTop: 250
   },
-  emptyDataText: {
-    fontSize: 13.5,
-    color: '#aaa'
+  emptyText: {
+    fontSize: 13,
+    color: '#aaaaaa'
   }
 });
 

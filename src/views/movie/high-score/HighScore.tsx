@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  Platform
-} from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { viewHeight } from '@/utils/screen';
 import { movieTop } from '@/api/home';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
@@ -32,22 +24,20 @@ function HighScore(): React.ReactElement {
         <View style={styles.itemCover}>
           <Image
             source={{ uri: item.poster }}
-            resizeMode={'stretch'}
-            style={[styles.itemImage]}
+            resizeMode="stretch"
+            style={styles.itemImage}
           />
           {index === 0 && (
-            <View style={[styles.itemCoverBg, styles.coverBgColor1]} />
+            <View style={[styles.itemCoverBg, styles.coverBg1]} />
           )}
           {index === 1 && (
-            <View style={[styles.itemCoverBg, styles.coverBgColor2]} />
+            <View style={[styles.itemCoverBg, styles.coverBg2]} />
           )}
           {index === 2 && (
-            <View style={[styles.itemCoverBg, styles.coverBgColor3]} />
+            <View style={[styles.itemCoverBg, styles.coverBg3]} />
           )}
-          {index > 2 && (
-            <View style={[styles.itemCoverBg, styles.coverBgColor4]} />
-          )}
-          <Text style={styles.itemCoverText}>{index + 1}</Text>
+          {index > 2 && <View style={styles.itemCoverBg} />}
+          <Text style={styles.coverText}>{index + 1}</Text>
         </View>
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
@@ -63,10 +53,11 @@ function HighScore(): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text> 分
-          </Text>
+        {Number(item.rating) > 0 && (
+          <View style={styles.itemRating}>
+            <Text style={styles.ratingWeight}>{item.rating}</Text>
+            <Text style={styles.ratingText}>分</Text>
+          </View>
         )}
       </View>
     </Pressable>
@@ -75,13 +66,13 @@ function HighScore(): React.ReactElement {
   return (
     <View style={styles.page}>
       <ScrollRefresh
+        initialNumToRender={10}
         requestParams={{
           page: 1,
           pageSize: 10
         }}
         request={movieTop}
         renderItem={renderItem}
-        initialNumToRender={6}
       />
     </View>
   );
@@ -89,28 +80,28 @@ function HighScore(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    paddingBottom: Platform.OS !== 'web' ? 10 : 0,
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: 18,
-    marginRight: -20,
-    marginLeft: 16
+    gap: 12,
+    paddingTop: 16,
+    marginHorizontal: 14
   },
   itemCover: {
     position: 'relative',
-    width: 93,
-    height: 124,
+    width: 82,
+    height: 110,
     borderRadius: 3,
     overflow: 'hidden'
   },
   itemImage: {
-    width: 93,
-    height: 124
+    width: 82,
+    height: 110,
+    borderRadius: 3
   },
   itemCoverBg: {
     position: 'absolute',
@@ -118,53 +109,54 @@ const styles = StyleSheet.create({
     left: -14,
     width: 30,
     height: 48,
+    backgroundColor: '#adadad',
     transform: [{ rotate: '-135deg' }]
   },
-  coverBgColor1: {
+  coverBg1: {
     backgroundColor: 'red'
   },
-  coverBgColor2: {
+  coverBg2: {
     backgroundColor: '#ff4500'
   },
-  coverBgColor3: {
+  coverBg3: {
     backgroundColor: '#f4a460'
   },
-  coverBgColor4: {
-    backgroundColor: '#adadad'
-  },
-  itemCoverText: {
+  coverText: {
     position: 'absolute',
-    top: 1.6,
-    left: 5,
+    top: 2,
+    left: 4,
     zIndex: 1,
     fontSize: 10,
-    color: '#fff'
+    color: '#ffffff'
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    paddingRight: 15,
-    marginLeft: 13
+    gap: 6
   },
   itemTitle: {
-    marginBottom: 1,
     fontSize: 14,
-    color: '#333'
+    color: '#333333'
   },
   itemText: {
-    marginTop: 8,
-    fontSize: 11,
-    color: '#999'
+    fontSize: 11.5,
+    color: '#999999'
   },
   itemRating: {
-    width: 68,
-    fontSize: 8,
-    color: '#f16c00'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 2
   },
-  itemRatingWeight: {
-    fontSize: 12,
-    fontWeight: '700'
+  ratingWeight: {
+    fontWeight: '700',
+    color: '#f16c00',
+    fontSize: 12.5
+  },
+  ratingText: {
+    fontSize: 10,
+    color: '#f16c00'
   }
 });
 

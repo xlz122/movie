@@ -11,7 +11,7 @@ const tabbar = [
     title: '首页',
     icon: '\ue908',
     selectIcon: '\ue908',
-    // 头部标题栏
+    // 标题栏
     headerShown: false,
     component: require('../tabpage/home/Home').default
   },
@@ -55,13 +55,13 @@ function TabNavigator(): React.ReactElement {
           height: 44
         },
         tabBarLabelStyle: {
-          fontSize: 10
+          fontSize: 11
         },
         tabBarInactiveTintColor: '#b7bac3',
         tabBarActiveTintColor: '#e54847'
       }}
     >
-      {tabbar.map((item, index) => {
+      {tabbar.map?.((item, index) => {
         return (
           <Tab.Screen
             key={index}
@@ -72,7 +72,7 @@ function TabNavigator(): React.ReactElement {
               tabBarLabel: item.label,
               tabBarIcon: ({ focused }) => {
                 return (
-                  <Text style={[focused ? styles.selectIcon : styles.icon]}>
+                  <Text style={focused ? styles.selectIcon : styles.icon}>
                     {focused ? item.selectIcon : item.icon}
                   </Text>
                 );

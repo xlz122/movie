@@ -1,10 +1,9 @@
-import { StyleSheet, Platform } from 'react-native';
-import { viewHeight } from '@/utils/screen';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
+    width: '100%',
+    height: '100%',
     backgroundColor: '#f5f5f5'
   },
   count: {
@@ -12,53 +11,49 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 72,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingVertical: 12,
     margin: 10,
-    backgroundColor: '#fff',
-    borderRadius: 4
+    backgroundColor: '#ffffff',
+    borderRadius: 6
   },
   countItem: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    borderRightWidth: 0.5,
-    borderStyle: 'solid',
-    borderColor: '#e5e5e5'
+    alignItems: 'center'
   },
-  itemContent: {
+  itemLabel: {
+    fontSize: 12,
+    color: '#888888'
+  },
+  itemValue: {
     fontWeight: '700',
     fontSize: 14,
     color: '#303133'
   },
-  itemText: {
-    fontSize: 12,
-    color: '#888'
+  divider: {
+    height: '100%',
+    borderRightWidth: 0.48,
+    borderStyle: 'solid',
+    borderColor: '#e5e5e5'
   },
-  countLastItem: {
-    borderRightWidth: 0
-  },
-  summary: {
-    paddingHorizontal: 10,
+  brief: {
+    marginHorizontal: 10,
     marginBottom: 10,
+    fontSize: 12.5,
     color: '#303133'
   },
-  noSummary: {
+  noBrief: {
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-    color: '#303133'
+    height: 77
   },
-  noSummaryText: {
-    height: 75,
-    lineHeight: 75,
-    fontSize: 12,
-    color: '#999'
+  noBriefText: {
+    fontSize: 12.5,
+    color: '#999999'
   }
 });
 

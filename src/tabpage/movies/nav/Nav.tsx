@@ -8,10 +8,17 @@ type Props = {
   onChange: (categoryParams: CategoryParams) => void;
 };
 
+type CategoryParams = {
+  category: string;
+  genre: string;
+  country: string;
+  year: string;
+};
+
 type Category = {
   categories: {
     name: string;
-    children: {
+    children?: {
       name: never;
     }[];
   }[];
@@ -20,35 +27,26 @@ type Category = {
   years: { name: string }[];
 };
 
-type CategoryParams = {
-  category: string;
-  genre: string;
-  country: string;
-  year: string;
-};
-
 function Nav(props: Props): React.ReactElement {
-  const [category, setCategory] = useState<Category>({
-    categories: [],
-    genres: [],
-    countries: [],
-    years: []
-  });
+  const [category, setCategory] = useState<Partial<Category>>({});
 
-  const getMovieCategories = () => {
+  const getMovieCategories = (): void => {
     movieCategories()
       .then((res: ResponseType<Category>) => {
-        if (res.code === 200) {
-          res.data?.countries.unshift({ name: '全部' });
-          res.data?.years.unshift({ name: '全部' });
-
-          setCategory({
-            categories: res.data?.categories || [],
-            genres: [],
-            countries: res.data?.countries || [],
-            years: res.data?.years || []
-          });
+        if (res?.code !== 200) {
+          return;
         }
+
+        res.data?.categories?.unshift({ name: '全部' });
+        res.data?.countries?.unshift({ name: '全部' });
+        res.data?.years?.unshift({ name: '全部' });
+
+        setCategory({
+          categories: res.data?.categories ?? [],
+          genres: [],
+          countries: res.data?.countries ?? [],
+          years: res.data?.years ?? []
+        });
       })
       .catch(() => ({}));
   };
@@ -57,16 +55,38 @@ function Nav(props: Props): React.ReactElement {
     getMovieCategories();
   }, []);
 
+  const handlerGroup = (name: string): Category['genres'] => {
+    const genres: Category['genres'] = [{ name: '全部' }];
+
+    category.categories?.forEach?.(item => {
+      if (name === '全部') {
+        item.children?.forEach?.(i => {
+          if (!genres.includes(i.name)) {
+            genres.push({ name: i.name });
+          }
+        });
+
+        return;
+      }
+
+      if (name === item.name) {
+        item.children?.forEach?.(i => genres.push({ name: i.name }));
+      }
+    });
+
+    return genres;
+  };
+
   // 初始化第二分类
   useEffect(() => {
-    if (!category?.categories) {
+    if (!category.categories) {
       return;
     }
 
-    const genres: Category['genres'] = handlerGroup('全部');
+    const genres = handlerGroup('全部');
 
     setCategory({ ...category, genres });
-  }, [category?.categories]);
+  }, [category.categories]);
 
   const [categoryParams, setCategoryParams] = useState<CategoryParams>({
     category: '全部',
@@ -75,7 +95,7 @@ function Nav(props: Props): React.ReactElement {
     year: '全部'
   });
 
-  const navChange = (group: string, name: string) => {
+  const navChange = (group: string, name: string): void => {
     if (group === 'category') {
       const genres: Category['genres'] = handlerGroup(name);
 
@@ -89,58 +109,40 @@ function Nav(props: Props): React.ReactElement {
     props.onChange({ ...categoryParams, [group]: name });
   };
 
-  function handlerGroup(name: string): Category['genres'] {
-    const genres: Category['genres'] = [];
-
-    genres.unshift({ name: '全部' });
-
-    category?.categories?.forEach(item => {
-      if (name === '全部') {
-        item?.children.forEach(i => {
-          if (!genres.includes(i.name)) {
-            genres.push({ name: i.name });
-          }
-        });
-
-        return false;
-      }
-
-      if (name === item.name) {
-        item?.children.forEach(i => {
-          genres.push({ name: i.name });
-        });
-      }
-    });
-
-    return genres;
-  }
-
   return (
     <View style={styles.nav}>
-      <NavGroup
-        group={'category'}
-        category={category.categories}
-        active={categoryParams.category}
-        onChange={navChange}
-      />
-      <NavGroup
-        group={'genre'}
-        category={category.genres}
-        active={categoryParams.genre}
-        onChange={navChange}
-      />
-      <NavGroup
-        group={'country'}
-        category={category.countries}
-        active={categoryParams.country}
-        onChange={navChange}
-      />
-      <NavGroup
-        group={'year'}
-        category={category.years}
-        active={categoryParams.year}
-        onChange={navChange}
-      />
+      {category.categories && category.categories.length !== 0 && (
+        <NavGroup
+          group={'category'}
+          active={categoryParams.category}
+          list={category.categories}
+          onChange={navChange}
+        />
+      )}
+      {category.genres && category.genres.length !== 0 && (
+        <NavGroup
+          group={'genre'}
+          active={categoryParams.genre}
+          list={category.genres}
+          onChange={navChange}
+        />
+      )}
+      {category.countries && category.countries.length !== 0 && (
+        <NavGroup
+          group={'country'}
+          active={categoryParams.country}
+          list={category.countries}
+          onChange={navChange}
+        />
+      )}
+      {category.years && category.years.length !== 0 && (
+        <NavGroup
+          group={'year'}
+          active={categoryParams.year}
+          list={category.years}
+          onChange={navChange}
+        />
+      )}
     </View>
   );
 }
@@ -148,7 +150,8 @@ function Nav(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   nav: {
     paddingTop: 10,
-    backgroundColor: '#fff'
+    paddingLeft: 10,
+    backgroundColor: '#ffffff'
   }
 });
 

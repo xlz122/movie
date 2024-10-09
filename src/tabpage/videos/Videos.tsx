@@ -3,6 +3,7 @@ import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { timeStampToDuration } from '@/utils/utils';
 import { videosList } from '@/api/videos';
+import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './videos.css';
@@ -24,32 +25,32 @@ type ItemType = {
 function Videos(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
           <Image
             source={{ uri: item.poster }}
-            resizeMode={'stretch'}
-            style={[styles.itemImage]}
+            resizeMode="stretch"
+            style={styles.itemImage}
           />
           <Text style={styles.itemTitle}>{item.title}</Text>
           <View style={styles.itemPlay}>
-            <Text style={styles.itemPlayIcon}>{'\ue616'}</Text>
+            <Text style={styles.playIcon}>{'\ue616'}</Text>
           </View>
-          <Text style={styles.itemInfoCount}>{item.play_count}次播放</Text>
-          <Text style={styles.itemInfoTime}>
+          <Text style={styles.itemCount}>{item.play_count}次播放</Text>
+          <Text style={styles.itemDuration}>
             {timeStampToDuration(item.duration)}
           </Text>
         </View>
         <View style={styles.userinfo}>
           <View style={styles.author}>
             <Image
-              source={{ uri: item.author.avatar }}
-              resizeMode={'stretch'}
-              style={[styles.authorAvatar]}
+              source={{ uri: item.author?.avatar }}
+              resizeMode="stretch"
+              style={styles.authorAvatar}
             />
-            <Text style={styles.authorName}>{item.author.username}</Text>
+            <Text style={styles.authorName}>{item.author?.username}</Text>
           </View>
           <View style={styles.tool}>
             <Text style={styles.toolIcon}>{'\ue816'}</Text>
@@ -65,13 +66,13 @@ function Videos(): React.ReactElement {
   return (
     <View style={styles.page}>
       <ScrollRefresh
+        initialNumToRender={5}
         requestParams={{
           page: 1,
           pageSize: 5
         }}
         request={videosList}
         renderItem={renderItem}
-        initialNumToRender={5}
       />
     </View>
   );

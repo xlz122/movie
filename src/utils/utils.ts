@@ -1,27 +1,27 @@
 /**
- * @description 16进制颜色值转换成rgba
+ * @description 16进制颜色值转换为rgba
  */
 export const colorToRgba = function (color: string, alpha: number): string {
-  // 16进制颜色值的正则
   const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 
-  // 把颜色值变成小写
+  // 颜色值转为小写
   color = color.toLowerCase();
 
   if (reg.test(color)) {
-    // 如果只有三位的值，需变成六位，如：#fff => #ffffff
+    // 处理三位的颜色值(#fff => #ffffff)
     if (color.length === 4) {
-      let colorNew = '#';
+      let newColor = '#';
       for (let i = 1; i < 4; i += 1) {
-        colorNew += color.slice(i, i + 1).concat(color.slice(i, i + 1));
+        newColor += color.slice(i, i + 1).concat(color.slice(i, i + 1));
       }
-      color = colorNew;
+
+      color = newColor;
     }
 
-    // 处理六位的颜色值，转为rgba
+    // 处理六位的颜色值
     const colorChange = [];
     for (let i = 1; i < 7; i += 2) {
-      colorChange.push(parseInt('0x' + color.slice(i, i + 2)));
+      colorChange.push(parseInt('0x' + color.slice(i, i + 2), 16));
     }
 
     return `rgba(${colorChange.join(',')},${alpha})`;
@@ -31,87 +31,46 @@ export const colorToRgba = function (color: string, alpha: number): string {
 };
 
 /**
- * @description 时间戳转视频时长
- * @return { String } 视频时长 01:23:45
+ * @description 日期字符串格式化
+ * @param { string } dateStr - 日期字符串
+ * @return { string } 刚刚/分钟前/小时前/周前/月前/年前
  */
-export function timeStampToDuration(timeStamp: number): string {
-  const time = timeStamp.toString();
-  let h = 0,
-    i = 0,
-    s = parseInt(time, 10);
+export function formatDistance(dateStr: string): string {
+  const diff = new Date().getTime() - new Date(dateStr).getTime();
 
-  if (s > 60) {
-    i = parseInt((s / 60).toString(), 10);
-    s = parseInt((s % 60).toString(), 10);
-    if (i > 60) {
-      h = parseInt((i / 60).toString(), 10);
-      i = parseInt((i % 60).toString(), 10);
-    }
-  }
-
-  // 补零
-  const zero = function (v: number) {
-    return v >> 0 < 10 ? '0' + v : v;
-  };
-  const h2 = zero(h);
-  const i2 = zero(i);
-  const s2 = zero(s);
-
-  let ok = '';
-  if (Number(h2) <= 0) {
-    ok = [i2, s2].join(':');
+  if (diff < 1000 * 60) {
+    return '刚刚';
+  } else if (diff < 1000 * 60 * 60) {
+    return `${Math.floor(diff / (1000 * 60))}分钟前`;
+  } else if (diff < 1000 * 60 * 60 * 24) {
+    return `${Math.floor(diff / (1000 * 60 * 60))}小时前`;
+  } else if (diff < 1000 * 60 * 60 * 24 * 7) {
+    return `${Math.floor(diff / (1000 * 60 * 60 * 24))}天前`;
+  } else if (diff < 1000 * 60 * 60 * 24 * 7 * 4) {
+    return `${Math.floor(diff / (1000 * 60 * 60 * 24 * 7))}周前`;
+  } else if (diff < 1000 * 60 * 60 * 24 * 30) {
+    return `${Math.floor(diff / (1000 * 60 * 60 * 24))}天前`;
+  } else if (diff < 1000 * 60 * 60 * 24 * 30 * 12) {
+    return `${Math.floor(diff / (1000 * 60 * 60 * 24 * 30))}月前`;
   } else {
-    ok = [h2, i2, s2].join(':');
+    return `${Math.floor(diff / (1000 * 60 * 60 * 24 * 365))}年前`;
   }
-
-  return ok;
 }
 
 /**
- * @description 格式化日期字符串
- * @return { String } 1分钟前/1小时前
+ * @description 时间戳转视频时长
+ * @param { number } timestamp - 时间戳
+ * @return { string } 02:27/01:02:27
  */
-export function formatDate(datatime: string): string {
-  let dateTimeStamp = new Date(datatime).getTime();
+export function timeStampToDuration(timestamp: number): string {
+  const date = new Date(timestamp * 1000);
+  const hours = date.getUTCHours().toString().padStart(2, '0');
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+  const seconds = date.getUTCSeconds().toString().padStart(2, '0');
 
-  let minute = 1000 * 60;
-  let hour = minute * 60;
-  let day = hour * 24;
-
-  let month = day * 30;
-  let year = month * 12;
-  let now = new Date().getTime();
-  let diffValue = now - dateTimeStamp;
-  let result = '';
-
-  if (diffValue < 0) {
-    return '';
+  if (date.getUTCHours() === 0) {
+    return `${minutes}:${seconds}`;
   }
 
-  let monthC = diffValue / month;
-  let weekC = diffValue / (7 * day);
-  let dayC = diffValue / day;
-  let hourC = diffValue / hour;
-  let minC = diffValue / minute;
-  let yearC = diffValue / year;
-
-  if (yearC >= 1) {
-    return '' + parseInt(String(yearC), 10) + '年前';
-  }
-
-  if (monthC >= 1) {
-    result = '' + parseInt(String(monthC), 10) + '月前';
-  } else if (weekC >= 1) {
-    result = '' + parseInt(String(weekC), 10) + '周前';
-  } else if (dayC >= 1) {
-    result = '' + parseInt(String(dayC), 10) + '天前';
-  } else if (hourC >= 1) {
-    result = '' + parseInt(String(hourC), 10) + '小时前';
-  } else if (minC >= 1) {
-    result = '' + parseInt(String(minC), 10) + '分钟前';
-  } else {
-    result = '刚刚';
-  }
-
-  return result;
+  return `${hours}:${minutes}:${seconds}`;
 }

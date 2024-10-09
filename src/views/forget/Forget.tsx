@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, Pressable, Platform } from 'react-native';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
-import { viewHeight } from '@/utils/screen';
 import {
   fieldAccount,
   getCaptcha,
@@ -19,31 +18,37 @@ function Forget(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const store = useStore();
 
-  const [formData, setFormData] = useState({
+  const [params, setParams] = useState({
     account: '',
     password: '',
     code: ''
   });
 
-  const handleInputChange = (e: TextInputEvent, name: string) => {
-    setFormData({ ...formData, [name]: e.nativeEvent.text });
+  const handleAccountChange = (e: TextInputEvent): void => {
+    setParams({ ...params, account: e.nativeEvent.text });
+  };
+
+  const handlePasswordChange = (e: TextInputEvent): void => {
+    setParams({ ...params, password: e.nativeEvent.text });
+  };
+
+  const handleCodeChange = (e: TextInputEvent): void => {
+    setParams({ ...params, code: e.nativeEvent.text });
   };
 
   const handleClearInput = (name: string): void => {
-    setFormData({ ...formData, [name]: '' });
+    setParams({ ...params, [name]: '' });
   };
 
-  // 倒计时逻辑
+  // 验证码倒计时
   const [codeTime, setCodeTime] = useState({
     visible: false,
     time: 120
   });
   const timer = useRef<NodeJS.Timeout>();
 
-  const handleTimeText = () => {
-    if (timer.current) {
-      clearInterval(timer.current);
-    }
+  const handleTimeText = (): void => {
+    timer.current && clearInterval(timer.current);
 
     setCodeTime({ ...codeTime, visible: true });
 
@@ -60,191 +65,189 @@ function Forget(): React.ReactElement {
   };
 
   useEffect(() => {
-    return timer.current && clearInterval(timer.current);
+    return () => timer.current && clearInterval(timer.current);
   }, []);
 
-  // 进度
-  const [progress, setProgress] = useState(0);
+  // 当前步骤
+  const [currentStep, setCurrentStep] = useState(0);
 
   // 验证手机号
-  const handleFieldAccount = (): boolean | undefined => {
-    if (!formData.account) {
+  const handleFieldAccount = (): void => {
+    if (!params.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
-      return false;
+      return;
+    }
+    if (params.account.length !== 11) {
+      CustomAlert({ title: '提示', message: '请输入正确的手机号' });
+      return;
     }
 
-    fieldAccount({ account: formData.account })
+    fieldAccount({ account: params.account })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setProgress(1);
-        } else {
+        if (res?.code !== 200) {
           CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        setCurrentStep(1);
       })
       .catch(() => ({}));
   };
 
+  // 获取图形验证码
   const [captcha, setCaptcha] = useState({
-    visible: false,
-    img: ''
+    open: false,
+    image: ''
   });
 
-  // 获取图片验证码
-  const handleGetCaptcha = () => {
+  const handleGetCaptcha = (): void => {
     getCaptcha()
       .then((res: ResponseType<string>) => {
-        if (res.code === 200) {
-          setCaptcha({ ...captcha, visible: true, img: res?.data || '' });
-        } else {
+        if (res?.code !== 200) {
           CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        setCaptcha({ ...captcha, open: true, image: res.data ?? '' });
       })
       .catch(() => ({}));
   };
 
-  // 校验图片验证码并发送短信验证码
+  // 校验图形验证码并发送短信验证码
   const handleCaptchaComplete = (code: string): void => {
-    filedCaptcha({
-      phone: formData.account,
-      code,
-      type: 'forget'
-    })
+    filedCaptcha({ type: 'forget', phone: params.account, code })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setProgress(2);
-
-          setCaptcha({ ...captcha, visible: false });
-          handleTimeText();
-
-          CustomAlert({ title: '提示', message: res?.message });
-          return false;
-        }
-
         // 短信验证上限
-        if (res.code === 450) {
-          setCaptcha({ ...captcha, visible: false });
+        if (res?.code === 450) {
+          setCaptcha({ ...captcha, open: false });
+          CustomAlert({ title: '提示', message: res.message });
+          return;
+        }
+        if (res?.code !== 200) {
+          handleGetCaptcha();
           CustomAlert({ title: '提示', message: res?.message });
-          return false;
+          return;
         }
 
-        handleGetCaptcha();
-        CustomAlert({ title: '提示', message: res?.message });
+        setCurrentStep(2);
+
+        handleTimeText();
+        setCaptcha({ ...captcha, open: false });
+        CustomAlert({ title: '提示', message: res.message });
       })
       .catch(() => ({}));
   };
 
-  const handleCaptchaClose = (): void => {
-    setCaptcha({ ...captcha, visible: false });
+  const handleCaptchaCancel = (): void => {
+    setCaptcha({ ...captcha, open: false });
   };
 
   // 校验短信验证码
   const handleFiledPhoneCode = (): void => {
-    filedPhoneCode({ phone: formData.account, code: formData.code })
-      .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setProgress(3);
+    if (!params.code) {
+      CustomAlert({ title: '提示', message: '请先输入验证码' });
+      return;
+    }
 
-          store.dispatch({
-            type: 'routine/setToken',
-            payload: res?.data?.token
-          });
-        } else {
+    filedPhoneCode({ phone: params.account, code: params.code })
+      .then((res: ResponseType) => {
+        if (res?.code !== 200) {
           CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        setCurrentStep(3);
+        store.dispatch({ type: 'routine/setToken', payload: res.data?.token });
       })
       .catch(() => ({}));
   };
 
   // 修改密码
-  const handleModifyPassword = () => {
-    modifyPassword({ password: formData.password })
+  const handleModifyPassword = (): void => {
+    modifyPassword({ password: params.password })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
+        if (res?.code !== 200) {
           CustomAlert({ title: '提示', message: res?.message });
-          store.dispatch({
-            type: 'routine/setLogout',
-            payload: ''
-          });
-          navigation.replace('Login');
-        } else {
-          CustomAlert({ title: '提示', message: res?.message });
+          return;
         }
+
+        store.dispatch({ type: 'routine/setLogout', payload: '' });
+        navigation.replace('Login');
+        CustomAlert({ title: '提示', message: res.message });
       })
       .catch(() => ({}));
   };
 
   const nextStep = (): void => {
     // 验证手机号
-    if (progress === 0) {
+    if (currentStep === 0) {
       handleFieldAccount();
     }
 
-    // 获取图片验证码
-    if (progress === 1) {
+    // 获取图形验证码
+    if (currentStep === 1) {
       handleGetCaptcha();
     }
 
     // 校验短信验证码
-    if (progress === 2) {
+    if (currentStep === 2) {
       handleFiledPhoneCode();
     }
 
     // 修改密码
-    if (progress === 3) {
+    if (currentStep === 3) {
       handleModifyPassword();
     }
   };
 
   return (
     <View style={styles.page}>
-      {progress === 0 && (
+      {currentStep === 0 && (
         <View style={styles.fieldItem}>
-          <Text style={styles.itemText}>手机号码</Text>
+          <Text style={styles.itemLabel}>手机号码</Text>
           <TextInput
-            value={formData.account}
-            onChange={e => {
-              handleInputChange(e, 'account');
-            }}
+            value={params.account}
+            onChange={handleAccountChange}
+            inputMode="tel"
             placeholder="请输入注册手机号"
+            placeholderTextColor="#c9c9c9"
             style={styles.itemInput}
           />
-          {Boolean(formData.account) && (
+          {params.account && (
             <Pressable onPress={() => handleClearInput('account')}>
               <Text style={styles.inputClearIcon}>{'\ue637'}</Text>
             </Pressable>
           )}
         </View>
       )}
-      {(progress === 1 || progress === 2) && (
+      {(currentStep === 1 || currentStep === 2) && (
         <>
           <View style={styles.fieldItem}>
             <TextInput
-              value={formData.code}
-              onChange={e => {
-                handleInputChange(e, 'code');
-              }}
+              value={params.code}
+              onChange={handleCodeChange}
               placeholder="请输入验证码"
+              placeholderTextColor="#c9c9c9"
               style={styles.itemCodeInput}
             />
-            <Text onPress={handleGetCaptcha} style={styles.codeText}>
+            <Text onPress={handleGetCaptcha} style={styles.itemCode}>
               {codeTime.visible ? `${codeTime.time}s` : '获取验证码'}
             </Text>
           </View>
           <Text style={styles.tipText}>验证码会发送至您注册的手机号</Text>
         </>
       )}
-      {progress === 3 && (
+      {currentStep === 3 && (
         <View style={styles.fieldItem}>
-          <Text style={styles.itemText}>新密码</Text>
+          <Text style={styles.itemLabel}>新密码</Text>
           <TextInput
-            value={formData.password}
-            onChange={e => {
-              handleInputChange(e, 'password');
-            }}
+            value={params.password}
+            onChange={handlePasswordChange}
             placeholder="请输入新密码"
+            placeholderTextColor="#c9c9c9"
             style={styles.itemInput}
           />
-          {Boolean(formData.password) && (
+          {params.password && (
             <Pressable onPress={() => handleClearInput('password')}>
               <Text style={styles.inputClearIcon}>{'\ue637'}</Text>
             </Pressable>
@@ -253,22 +256,15 @@ function Forget(): React.ReactElement {
       )}
       <Pressable onPress={nextStep} style={styles.submit}>
         <Text style={styles.submitText}>
-          {progress === 3 ? '提交' : '下一步'}
+          {currentStep !== 3 ? '下一步' : '提交'}
         </Text>
       </Pressable>
-      {captcha.visible && (
-        <PicutreCode
-          image={captcha.img}
-          complete={handleCaptchaComplete}
-          close={handleCaptchaClose}
-          picutreStyle={{
-            height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight
-          }}
-          maskStyle={{
-            height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight
-          }}
-        />
-      )}
+      <PicutreCode
+        open={captcha.open}
+        image={captcha.image}
+        onComplete={handleCaptchaComplete}
+        onCancel={handleCaptchaCancel}
+      />
     </View>
   );
 }

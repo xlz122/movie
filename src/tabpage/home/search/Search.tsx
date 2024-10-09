@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 
@@ -18,29 +18,28 @@ function Search(): React.ReactElement {
 
 const styles = StyleSheet.create({
   search: {
-    display: 'flex',
+    width: '100%',
     height: 48,
-    paddingHorizontal: 10,
-    paddingVertical: 11
+    padding: 10
   },
   input: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
+    gap: 8,
+    height: '100%',
+    paddingHorizontal: 10,
     backgroundColor: '#e5e5e5',
-    borderRadius: 48
+    borderRadius: 50
   },
   inputIcon: {
-    paddingHorizontal: 10,
     fontFamily: 'iconfont',
-    fontSize: 14
+    fontSize: 14,
+    color: '#999999'
   },
   inputText: {
-    flex: 1,
     fontSize: 13,
-    color: '#666'
+    color: '#666666'
   }
 });
 

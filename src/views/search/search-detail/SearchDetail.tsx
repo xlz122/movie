@@ -10,7 +10,7 @@ type Props = {
   keyword: string;
 };
 
-type MovieItemType = {
+type MovieItem = {
   id: number;
   poster: string;
   title: string;
@@ -20,14 +20,14 @@ type MovieItemType = {
   countries: string;
   rating: string;
 };
-type ActorItemType = {
+type ActorItem = {
   id: number;
   avatar: string;
   name: string;
   name_en: string;
   gender: string;
 };
-type RoleItemType = {
+type RoleItem = {
   id: number;
   avatar: string;
   name: string;
@@ -37,46 +37,38 @@ type RoleItemType = {
 function SearchDetail(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const [sort, setSort] = useState({
-    active: 'movie',
-    list: [
-      {
-        title: '影视',
-        type: 'movie'
-      },
-      {
-        title: '影人',
-        type: 'actor'
-      },
-      {
-        title: '角色',
-        type: 'role'
-      }
-    ]
+  const [params, setParams] = useState({
+    type: 'movie',
+    page: 1,
+    per_page: 10
   });
 
-  const toggleSort = (value: string): void => {
-    setSort({ ...sort, active: value });
+  const [tab] = useState([
+    { title: '影视', type: 'movie' },
+    { title: '影人', type: 'actor' },
+    { title: '角色', type: 'role' }
+  ]);
+
+  const tabChange = (value: string): void => {
+    setParams({ ...params, type: value });
   };
 
-  // 电影项
-  const MovieItem = ({ item }: { item: MovieItemType }) => (
+  // 电影
+  const MovieItem = ({ item }: { item: MovieItem }) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        {item.poster && (
-          <Image
-            source={{ uri: item.poster }}
-            resizeMode={'stretch'}
-            style={[styles.itemImage]}
-          />
-        )}
+        <Image
+          source={{ uri: item.poster }}
+          resizeMode="stretch"
+          style={styles.itemImage}
+        />
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.title}
           </Text>
           <View style={styles.itemTag}>
-            {item?.category && item?.category !== '电影' && (
-              <Text style={styles.tag}>{item?.category}</Text>
+            {item.category && item.category !== '电影' && (
+              <Text style={styles.tag}>{item.category}</Text>
             )}
             <Text
               numberOfLines={1}
@@ -93,26 +85,25 @@ function SearchDetail(props: Props): React.ReactElement {
             {item.countries}
           </Text>
         </View>
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>
-            <Text style={styles.itemRatingWeight}>{item?.rating}</Text> 分
-          </Text>
+        {Number(item.rating) > 0 && (
+          <View style={styles.itemRating}>
+            <Text style={styles.ratingWeight}>{item.rating}</Text>
+            <Text style={styles.ratingText}>分</Text>
+          </View>
         )}
       </View>
     </Pressable>
   );
 
-  // 影人项
-  const ActorItem = ({ item }: { item: ActorItemType }) => (
+  // 影人
+  const ActorItem = ({ item }: { item: ActorItem }) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
-        {item.avatar && (
-          <Image
-            source={{ uri: item.avatar }}
-            resizeMode={'stretch'}
-            style={[styles.itemImage]}
-          />
-        )}
+        <Image
+          source={{ uri: item.avatar }}
+          resizeMode="stretch"
+          style={styles.itemImage}
+        />
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.name}
@@ -128,17 +119,15 @@ function SearchDetail(props: Props): React.ReactElement {
     </Pressable>
   );
 
-  // 角色项
-  const RoleItem = ({ item }: { item: RoleItemType }) => (
+  // 角色
+  const RoleItem = ({ item }: { item: RoleItem }) => (
     <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
-        {item.avatar && (
-          <Image
-            source={{ uri: item.avatar }}
-            resizeMode={'stretch'}
-            style={[styles.itemImage]}
-          />
-        )}
+        <Image
+          source={{ uri: item.avatar }}
+          resizeMode="stretch"
+          style={styles.itemImage}
+        />
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
             {item.name}
@@ -151,54 +140,51 @@ function SearchDetail(props: Props): React.ReactElement {
     </Pressable>
   );
 
-  // 无数据模板
   const ListEmptyComponent = (): React.ReactElement => (
-    <View style={styles.emptyData}>
-      <Text style={styles.emptyDataText}>未找到相关内容</Text>
+    <View style={styles.empty}>
+      <Text style={styles.emptyText}>未找到相关内容</Text>
     </View>
   );
 
   return (
-    <View style={styles.page}>
+    <View style={styles.searchDetail}>
       <View style={styles.tab}>
-        {sort.list.map((item, index) => {
+        {tab.map?.((item, index) => {
           return (
             <Pressable
               key={index}
-              onPress={() => toggleSort(item.type)}
+              onPress={() => tabChange(item.type)}
               style={styles.tabItem}
             >
-              <Text style={styles.tabItemText}>{item.title}</Text>
-              <View
-                style={item.type === sort.active ? styles.tabActiveLine : null}
-              />
+              <Text style={styles.tabText}>{item.title}</Text>
+              <View style={params.type === item.type ? styles.tabActiveLine : null} />
             </Pressable>
           );
         })}
       </View>
       <ScrollRefresh
+        initialNumToRender={10}
         requestParams={{
-          page: 1,
-          pageSize: 10,
           keyword: props.keyword,
-          type: sort.active
+          type: params.type,
+          page: params.page,
+          pageSize: params.per_page
         }}
-        sortParams={{ type: sort.active }}
+        sortParams={{ type: params.type }}
         request={searchDetail}
-        renderItem={({ item }: { item: unknown }) => {
-          if (sort.active === 'movie') {
-            return <MovieItem item={item as MovieItemType} />;
+        renderItem={({ item }) => {
+          if (params.type === 'movie') {
+            return <MovieItem item={item} />;
           }
-          if (sort.active === 'actor') {
-            return <ActorItem item={item as ActorItemType} />;
+          if (params.type === 'actor') {
+            return <ActorItem item={item} />;
           }
-          if (sort.active === 'role') {
-            return <RoleItem item={item as RoleItemType} />;
+          if (params.type === 'role') {
+            return <RoleItem item={item} />;
           }
 
           return null;
         }}
-        initialNumToRender={6}
         ListEmptyComponent={<ListEmptyComponent />}
       />
     </View>
