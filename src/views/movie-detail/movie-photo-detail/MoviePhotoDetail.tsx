@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
+  ScrollView,
   View,
   Text,
   Image,
-  StyleSheet,
-  ScrollView,
-  Pressable
+  Pressable,
+  StyleSheet
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { moviePhotos } from '@/api/movies';
@@ -17,6 +17,29 @@ type Route = RouteProp<{ params: { id: number } }>;
 function MoviePhotoDetail(): React.ReactElement {
   const route: Route = useRoute();
 
+  const [params, setParams] = useState({
+    type: 'all',
+    page: 1,
+    per_page: 10
+  });
+  const [photos, setPhotos] = useState<Array<{ url: string }>>([]);
+
+  const getPhotos = (): void => {
+    moviePhotos({ ...params, id: route.params.id })
+      .then((res: ResponseType) => {
+        if (res?.code !== 200) {
+          return;
+        }
+
+        setPhotos(res.data ?? []);
+      })
+      .catch(() => ({}));
+  };
+
+  useEffect(() => {
+    getPhotos();
+  }, [params]);
+
   const [tab] = useState([
     { title: '全部', type: 'all' },
     { title: '海报', type: 'poster' },
@@ -24,81 +47,37 @@ function MoviePhotoDetail(): React.ReactElement {
     { title: '截图', type: 'cut' },
     { title: '其他', type: 'other' }
   ]);
-  const [photo, setPhoto] = useState<Array<{ url?: string }>>([]);
-  const [photoParams, setPhotoParams] = useState({
-    id: route.params.id,
-    page: 1,
-    per_page: 11,
-    type: 'all'
-  });
 
-  useEffect(() => {
-    if (!route.params.id) {
-      return;
-    }
-
-    setPhotoParams({ ...photoParams, id: route.params.id });
-  }, [route.params.id]);
-
-  const getPhotos = () => {
-    moviePhotos({ ...photoParams })
-      .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setPhoto(res.data);
-        }
-      })
-      .catch(() => ({}));
-  };
-
-  useEffect(() => {
-    if (!route.params.id) {
-      return;
-    }
-
-    getPhotos();
-  }, [photoParams]);
-
-  const toggleSort = (value: string): void => {
-    setPhotoParams({ ...photoParams, type: value });
+  const tabChange = (value: string): void => {
+    setParams({ ...params, type: value });
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+    <ScrollView style={styles.page}>
       <View style={styles.tab}>
-        {tab.map((item, index) => {
+        {tab.map?.((item, index) => {
           return (
             <Pressable
               key={index}
-              onPress={() => toggleSort(item.type)}
+              onPress={() => tabChange(item.type)}
               style={styles.tabItem}
             >
-              <Text
-                style={[
-                  styles.itemText,
-                  photoParams.type === item.type
-                    ? styles.activeText
-                    : styles.itemText
-                ]}
-              >
+              <Text style={params.type === item.type ? styles.activeText : styles.itemText}>
                 {item.title}
               </Text>
-              <View
-                style={
-                  photoParams.type === item.type ? styles.activeLine : null
-                }
-              />
+              <View style={params.type === item.type ? styles.activeLine : null} />
             </Pressable>
           );
         })}
       </View>
       <View style={styles.list}>
-        {photo.map((item, index) => {
+        {photos.map?.((item, index) => {
           return (
             <View key={index} style={styles.item}>
               <Image
                 source={{ uri: item.url }}
-                resizeMode={'stretch'}
-                style={[styles.itemImage]}
+                resizeMode="stretch"
+                style={styles.itemImage}
               />
             </View>
           );
@@ -110,58 +89,55 @@ function MoviePhotoDetail(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   tab: {
     display: 'flex',
     flexDirection: 'row',
+    width: '100%',
     height: 44,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eee'
+    borderColor: '#e5e5e5'
   },
   tabItem: {
     position: 'relative',
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%'
+    alignItems: 'center'
   },
   itemText: {
     fontSize: 12,
-    color: '#7d7e80',
-    textAlign: 'center'
+    color: '#7d7e80'
   },
   activeText: {
+    fontSize: 12,
     color: '#e54847'
   },
   activeLine: {
     position: 'absolute',
-    left: '50%',
     bottom: 2.8,
-    marginLeft: -12,
     width: 24,
     height: 4,
-    backgroundColor: 'rgb(229, 72, 71)',
+    backgroundColor: '#e54847',
     borderRadius: 6
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    padding: 10
+    gap: 8,
+    margin: 10
   },
   item: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginRight: 6,
-    marginBottom: 10
+    width: 92,
+    height: 'auto'
   },
   itemImage: {
-    width: 93,
+    width: 92,
     height: 124,
     borderRadius: 3
   }

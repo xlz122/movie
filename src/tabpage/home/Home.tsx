@@ -1,60 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Animated } from 'react-native';
+import { ScrollView, View, StyleSheet, Animated } from 'react-native';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
 import { indexData } from '@/api/home';
 import type { ResponseType } from '@/types/index';
-import type { MovieItemType } from './category/Category';
+import type { MovieItem } from './movie-list/MovieList';
 import Skeleton from '@/components/skeleton/Home';
 import Panel from '@/components/panel/Panel';
 import Search from './search/Search';
 import Banner from './banner/Banner';
-import Nav from './nav/Nav';
 import Category from './category/Category';
+import MovieList from './movie-list/MovieList';
 
-type BannerType = {
+type BannerItem = {
   bgcolor: string;
   banner: string;
 }[];
 
 type MovieType = {
   theater: {
-    data?: MovieItemType[];
-    total?: number;
+    data: MovieItem[];
+    total: number;
   };
   coming: {
-    data?: MovieItemType[];
-    total?: number;
+    data: MovieItem[];
+    total: number;
   };
   today: {
-    data?: MovieItemType[];
-    total?: number;
+    data: MovieItem[];
+    total: number;
   };
 };
 
 function Home(): React.ReactElement {
   const [loading, setLoading] = useState(true);
-  // 轮播图
-  const [banner, setBanner] = useState<BannerType>([]);
-  // 电影分类
-  const [movie, setMovie] = useState<MovieType>({
-    theater: {},
-    coming: {},
-    today: {}
-  });
+  const [banner, setBanner] = useState<BannerItem>([]);
+  const [movie, setMovie] = useState<Partial<MovieType>>({});
 
-  const getIndexData = () => {
+  const getIndexData = (): void => {
     indexData()
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setLoading(false);
-          setBanner(res?.data?.swiper || []);
-          setMovie({
-            theater: res?.data?.theater,
-            coming: res?.data?.coming,
-            today: res?.data?.today
-          });
+        if (res?.code !== 200) {
+          return;
         }
+
+        setLoading(false);
+        setBanner(res.data?.banners ?? []);
+        setMovie({
+          theater: res.data?.theater ?? {},
+          coming: res.data?.coming ?? {},
+          today: res.data?.today ?? {}
+        });
       })
       .catch(() => ({}));
   };
@@ -64,16 +60,13 @@ function Home(): React.ReactElement {
   }, []);
 
   // 渐变背景色
-  const [gradientColor, setGradientColor] = useState<string[]>([
-    '#f5f5f5',
-    '#f5f5f5'
-  ]);
+  const [gradientColor, setGradientColor] = useState(['#f5f5f5', '#f5f5f5']);
 
   const handlerGradualChange = (color: string): void => {
     const result: string[] = [];
 
     const gradient = [1, 0.88, 0.65, 0.45, 0];
-    gradient.forEach((item: number) => {
+    gradient.forEach(item => {
       result.push(colorToRgba(color, item));
     });
 
@@ -81,7 +74,7 @@ function Home(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (!banner || banner.length === 0) {
+    if (!banner || !banner[0]?.bgcolor) {
       return;
     }
 
@@ -89,18 +82,17 @@ function Home(): React.ReactElement {
   }, [banner]);
 
   const bannerChange = (index: number): void => {
-    const color = banner[index].bgcolor || '#f5f5f5';
+    const color = banner[index]?.bgcolor ?? '#f5f5f5';
 
     handlerGradualChange(color);
   };
 
-  // 初始值
+  // 搜索框滚动动画
   const spinValue = new Animated.Value(0);
-  // 插值(单位转换)
   const spinBackgroundColor = spinValue.interpolate({
     inputRange: [0, 150],
-    outputRange: ['transparent', '#fff'],
-    extrapolate: 'clamp' // 阻止输出值超过outputRange
+    outputRange: ['transparent', '#ffffff'],
+    extrapolate: 'clamp'
   });
   const spinWidth = spinValue.interpolate({
     inputRange: [0, 150],
@@ -124,66 +116,67 @@ function Home(): React.ReactElement {
     { useNativeDriver: false }
   );
 
+  if (loading) {
+    return <Skeleton />;
+  }
+
   return (
-    <>
-      {loading && <Skeleton />}
-      {!loading && (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
-          scrollEventThrottle={1}
-          onScroll={animatedEvent}
-          style={styles.page}
+    <ScrollView
+      stickyHeaderIndices={[0]}
+      scrollEventThrottle={1}
+      onScroll={animatedEvent}
+      showsVerticalScrollIndicator={false}
+      style={styles.page}
+    >
+      <View>
+        <Animated.View
+          style={{
+            backgroundColor: spinBackgroundColor,
+            borderBottomWidth: spinWidth,
+            borderColor: spinColor
+          }}
         >
-          <View>
-            <Animated.View
-              style={{
-                backgroundColor: spinBackgroundColor,
-                borderBottomWidth: spinWidth,
-                borderColor: spinColor
-              }}
-            >
-              <Search />
-            </Animated.View>
-          </View>
-          <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
-          <Banner banner={banner} onChange={bannerChange} />
-          <Nav />
-          {Number(movie?.theater?.total) > 0 && (
-            <Panel
-              title="正在热映"
-              subtitle={`${movie?.theater?.total}部`}
-              to={{ path: 'Theater' }}
-            >
-              <Category movie={movie?.theater?.data} />
-            </Panel>
-          )}
-          {Number(movie?.coming?.total) > 0 && (
-            <Panel
-              title="即将上映"
-              subtitle={`${movie?.coming?.total}部`}
-              to={{ path: 'Coming' }}
-            >
-              <Category movie={movie?.coming?.data} />
-            </Panel>
-          )}
-          {Number(movie?.today?.total) > 0 && (
-            <Panel
-              title="那年今日"
-              subtitle={`${movie?.today?.total}部`}
-              to={{ path: 'Today' }}
-            >
-              <Category movie={movie?.today?.data} />
-            </Panel>
-          )}
-        </ScrollView>
+          <Search />
+        </Animated.View>
+      </View>
+      <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
+      <Banner list={banner} onChange={bannerChange} />
+      <Category />
+      {movie.theater && movie.theater.data?.length > 0 && (
+        <Panel
+          title="正在热映"
+          subtitle={`${movie.theater.total}部`}
+          to={{ path: 'Theater' }}
+        >
+          <MovieList list={movie.theater.data} />
+        </Panel>
       )}
-    </>
+      {movie.coming && movie.coming.data?.length > 0 && (
+        <Panel
+          title="即将上映"
+          subtitle={`${movie.coming.total}部`}
+          to={{ path: 'Coming' }}
+        >
+          <MovieList list={movie.coming.data} />
+        </Panel>
+      )}
+      {movie.today && movie.today.data?.length > 0 && (
+        <Panel
+          title="那年今日"
+          subtitle={`${movie.today.total}部`}
+          to={{ path: 'Today' }}
+        >
+          <MovieList list={movie.today.data} />
+        </Panel>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   page: {
+    width: '100%',
+    height: '100%',
     backgroundColor: '#f5f5f5'
   },
   bgcolor: {

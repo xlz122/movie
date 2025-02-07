@@ -1,24 +1,28 @@
 import axios from '@/utils/axios';
+import type { AxiosPromise } from 'axios';
 
 /**
- * @description 我的收藏统计数据
+ * @description 收藏统计
  */
-export const userCount = () => {
+export const userCount = (): AxiosPromise => {
   return axios.request({
     url: '/user/collections/count',
     method: 'get'
   });
 };
 
-export type BaseParams = {
-  page: number;
-  per_page: number;
+type Paging = {
+  page?: number;
+  per_page?: number;
 };
 
 /**
- * @description 用户关注的影人
+ * @description 关注的影人
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
-export const userActors = ({ page, per_page }: BaseParams) => {
+export const userActors = ({ page, per_page }: Paging): AxiosPromise => {
   const params = { page, per_page };
 
   return axios.request({
@@ -29,9 +33,12 @@ export const userActors = ({ page, per_page }: BaseParams) => {
 };
 
 /**
- * @description 用户关注的角色
+ * @description 关注的角色
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
-export const userRoles = ({ page, per_page }: BaseParams) => {
+export const userRoles = ({ page, per_page }: Paging): AxiosPromise => {
   const params = { page, per_page };
 
   return axios.request({
@@ -42,9 +49,12 @@ export const userRoles = ({ page, per_page }: BaseParams) => {
 };
 
 /**
- * @description 用户收藏的视频
+ * @description 收藏的视频
+ * @param { Object } params
+ * @param { number } [params.page] - 页数
+ * @param { number } [params.per_page] - 条数
  */
-export const userVideos = ({ page, per_page }: BaseParams) => {
+export const userVideos = ({ page, per_page }: Paging): AxiosPromise => {
   const params = { page, per_page };
 
   return axios.request({

@@ -1,11 +1,10 @@
 import axios from 'axios';
-import {
+import type {
   AxiosRequestConfig,
+  AxiosInstance,
   InternalAxiosRequestConfig,
   AxiosResponse,
-  AxiosError,
-  AxiosInstance,
-  CancelTokenStatic
+  AxiosError
 } from 'axios';
 import { Platform } from 'react-native';
 import store from '@/store/index';
@@ -13,79 +12,56 @@ import store from '@/store/index';
 // 标识请求
 const getRequestIdentify = (config: AxiosRequestConfig, isReuest = false) => {
   let url = config.url;
-  if (isReuest && config.url) {
+  if (config.url && isReuest) {
     url = config.baseURL + config.url.substring(1, config.url.length);
   }
+
   return config.method === 'get'
     ? encodeURIComponent(url + JSON.stringify(config.params))
     : encodeURIComponent(config.url + JSON.stringify(config.data));
 };
 
 // 取消重复请求
-type Pending = {
-  [key: string]: (message: string) => void;
-};
-const pending: Pending = {};
-const CancelToken: CancelTokenStatic = axios.CancelToken;
-
+const pending: { [key: string]: (message: string) => void } = {};
 const removePending = (key: string, isRequest = false) => {
   if (pending[key] && isRequest) {
     pending[key]('取消重复请求');
   }
+
   delete pending[key];
 };
 
 class HttpRequest {
-  constructor(externalConfig: AxiosRequestConfig) {
-    this.externalConfig = externalConfig;
-  }
-
-  externalConfig: AxiosRequestConfig = {};
-
   getInsideConfig(): AxiosRequestConfig {
-    let config = {
-      // 基础路径
-      baseURL: '',
-      // 允许跨域带token,cookie
-      withCredentials: true,
-      // 请求超时
-      timeout: 60000,
+    const config = {
+      baseURL: Platform.OS === 'web' ? '/api' : 'https://movie.xlz122.cn/api',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
-      }
+      },
+      withCredentials: true,
+      timeout: 60000
     };
-    config = Object.assign(config, this.externalConfig);
+
     return config;
   }
 
-  // 调用方法
-  request(options: AxiosRequestConfig) {
-    const instance = axios.create();
-    options = Object.assign(this.getInsideConfig(), options);
-    this.interceptors(instance);
-    return instance(options);
-  }
-
-  // 拦截器设置
   interceptors(instance: AxiosInstance) {
     // 请求拦截
     instance.interceptors.request.use(
-      async (config: InternalAxiosRequestConfig) => {
-        // 拦截重复请求(即当前正在进行的相同请求)
-        const requestData: string = getRequestIdentify(config, true); // 标识请求
+      (config: InternalAxiosRequestConfig) => {
+        // 标识请求
+        const requestIdentify: string = getRequestIdentify(config, true);
         // 取消重复请求
-        removePending(requestData, true);
-        // 创建当前请求的取消方法
-        config.cancelToken = new CancelToken(cancel => {
-          pending[requestData] = cancel;
+        removePending(requestIdentify, true);
+        config.cancelToken = new axios.CancelToken(cancel => {
+          pending[requestIdentify] = cancel;
         });
 
-        const token = (await store.getState().routine.token) || '';
+        const token = store.getState().routine.token;
         if (token) {
-          config.headers = Object.assign(config.headers!, {
-            Authorization: `Bearer ${token}`
-          });
+          config.headers.Authorization = `Bearer ${token}`;
         }
+
         return Promise.resolve(config);
       },
       (error: AxiosError) => {
@@ -94,27 +70,40 @@ class HttpRequest {
     );
     // 响应拦截
     instance.interceptors.response.use(
-      (res: AxiosResponse) => {
-        const data = res.data;
-        return Promise.resolve(data);
+      (response: AxiosResponse) => {
+        const res = response.headers['content-type'].includes(
+          'application/json'
+        )
+          ? response.data
+          : response;
+
+        // 无权限
+        if (res.code === 401) {
+          store.dispatch({ type: 'routine/setLogout', payload: '' });
+        }
+
+        return Promise.resolve(res);
       },
       (error: AxiosError) => {
         // 无权限
         if (error.response?.status === 401) {
-          store.dispatch({
-            type: 'routine/setLogout',
-            payload: ''
-          });
+          store.dispatch({ type: 'routine/setLogout', payload: '' });
         }
 
         return Promise.reject(error);
       }
     );
   }
+
+  request(options: AxiosRequestConfig) {
+    const instance = axios.create();
+    options = Object.assign(this.getInsideConfig(), options);
+    this.interceptors(instance);
+
+    return instance(options);
+  }
 }
 
-const Axios = new HttpRequest({
-  baseURL: Platform.OS === 'web' ? '/api' : 'https://test-h5-api.ixook.com'
-});
+const axiosInstance = new HttpRequest();
 
-export default Axios;
+export default axiosInstance;

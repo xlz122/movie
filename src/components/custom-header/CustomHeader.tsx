@@ -9,7 +9,7 @@ import styles from './custom-header.css';
 type Props = {
   options?: StackNavigationOptions;
   children?: React.ReactNode;
-  headerTitleAlign?: boolean;
+  titleCenter?: boolean;
   headerStyle?: ViewStyle;
   arrowStyle?: ViewStyle;
 };
@@ -18,22 +18,22 @@ function CustomHeader(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
   return (
-    <View style={[styles.header, props?.headerStyle]}>
+    <View style={[styles.header, props.headerStyle]}>
       <Pressable
         onPress={() => navigation.goBack()}
-        style={[styles.arrow, props?.arrowStyle]}
+        style={[styles.arrow, props.arrowStyle]}
       >
         <Text style={styles.arrowIcon}>{'\ue656'}</Text>
       </Pressable>
       <Text
         style={[
           styles.titleText,
-          props.headerTitleAlign ? styles.titleCenter : styles.titleText
+          props.titleCenter ? styles.titleCenter : null
         ]}
       >
-        {props?.options?.title}
+        {props.options?.title}
       </Text>
-      {props?.children}
+      {props.children}
     </View>
   );
 }

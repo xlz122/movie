@@ -1,53 +1,57 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  search: {
-    flex: 1,
-    backgroundColor: '#fff'
+  page: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
-  searchContainer: {
+  search: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 40,
-    paddingTop: 10,
-    paddingLeft: 10
+    gap: 8,
+    height: 42,
+    marginTop: 6,
+    marginHorizontal: 14
   },
   input: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
+    gap: 8,
     height: 30,
+    paddingHorizontal: 10,
     backgroundColor: '#f5f5f5',
-    borderRadius: 70
+    borderRadius: 50
   },
   inputIcon: {
-    paddingHorizontal: 10,
     fontFamily: 'iconfont',
-    fontSize: 14
+    fontSize: 14,
+    color: '#999999'
   },
   inputText: {
     flex: 1,
     padding: 0,
     fontSize: 13,
-    color: '#666'
+    color: '#666666'
   },
-  inputClearIcon: {
-    marginRight: 12,
+  clearIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
     color: '#c5c5c5'
   },
-  cancelText: {
-    paddingRight: 10,
-    width: 78,
+  cancel: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     height: '100%',
-    lineHeight: 30,
-    fontSize: 12.5,
-    color: '#777',
-    textAlign: 'center'
+    paddingHorizontal: 8
+  },
+  cancelText: {
+    fontSize: 13,
+    color: '#777777'
   }
 });
 

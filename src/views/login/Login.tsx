@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 import LoginForm from './login-form/LoginForm';
@@ -12,18 +12,15 @@ function Login(): React.ReactElement {
     navigation.goBack();
   };
 
-  const [state, setState] = useState({
-    type: 'login',
-    text: '账号注册'
-  });
+  const [formType, setFormType] = useState('login');
 
-  const typeChange = () => {
-    if (state.type === 'login') {
-      setState({ type: 'register', text: '账号登录' });
-      return false;
+  const formTypeChange = (): void => {
+    if (formType === 'login') {
+      setFormType('register');
+      return;
     }
 
-    setState({ type: 'login', text: '账号注册' });
+    setFormType('login');
   };
 
   return (
@@ -31,11 +28,13 @@ function Login(): React.ReactElement {
       <Pressable onPress={close} style={styles.close}>
         <Text style={styles.closeIcon}>{'\ue612'}</Text>
       </Pressable>
-      {state.type === 'login' && <LoginForm />}
-      {state.type === 'register' && <RegisterForm />}
+      {formType === 'login' && <LoginForm />}
+      {formType === 'register' && <RegisterForm />}
       <View style={styles.tool}>
-        <Pressable onPress={typeChange}>
-          <Text style={styles.toolText}>{state.text}</Text>
+        <Pressable onPress={formTypeChange}>
+          <Text style={styles.toolText}>
+            {formType === 'login' ? '账号注册' : '账号登录'}
+          </Text>
         </Pressable>
         <Pressable onPress={() => navigation.push('Forget')}>
           <Text style={styles.toolText}>找回密码</Text>
@@ -47,14 +46,23 @@ function Login(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
-    backgroundColor: '#fff'
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    paddingTop: 84,
+    paddingHorizontal: 38,
+    backgroundColor: '#ffffff'
   },
   close: {
-    width: 52,
-    height: 52,
-    paddingTop: 16,
-    paddingLeft: 16
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 42,
+    height: 42
   },
   closeIcon: {
     fontFamily: 'iconfont',
@@ -65,8 +73,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 45,
-    marginTop: 28
+    marginTop: 22
   },
   toolText: {
     fontSize: 12,

@@ -10,12 +10,10 @@ function StackNavigator(): React.ReactElement {
     <Stack.Navigator
       screenOptions={{
         // 自定义标头
-        header: ({ options }) => {
-          return <CustomHeader options={options} />;
-        }
+        header: ({ options }) => <CustomHeader options={options} />
       }}
     >
-      {router.map((item, index) => {
+      {router.map?.((item, index) => {
         return (
           <Stack.Screen
             key={index}

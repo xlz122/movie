@@ -1,54 +1,59 @@
-import { StyleSheet } from 'react-native';
-import { viewHeight } from '@/utils/screen';
+import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
-  movieSummary: {
-    height: viewHeight - 60,
-    backgroundColor: '#fff'
+  page: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: Dimensions.get('window').height,
+    backgroundColor: '#ffffff'
   },
-  summary: {
-    paddingVertical: 10,
-    paddingHorizontal: 15
+  baseInfo: {
+    flexGrow: 1,
+    paddingHorizontal: 14,
+    marginVertical: 10
   },
-  summaryContent: {
-    paddingBottom: 10
+  group: {
+    marginBottom: 8
   },
-  summaryTitle: {
-    paddingVertical: 12
-  },
-  summaryTitleText: {
+  title: {
+    marginVertical: 12,
     fontWeight: '700',
+    fontSize: 14,
     color: '#303133'
   },
-  summaryItem: {
+  item: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     paddingVertical: 8
   },
   itemLabel: {
-    minWidth: 50,
-    fontSize: 13.5,
-    color: '#666'
+    minWidth: 40,
+    fontSize: 12.5,
+    color: '#666666'
   },
   itemValue: {
     flex: 1,
-    fontSize: 13.8,
-    color: '#333'
+    fontSize: 12.5,
+    color: '#333333'
   },
-  descText: {
-    fontSize: 13,
-    color: '#444'
+  summary: {
+    fontSize: 12.5,
+    color: '#444444'
+  },
+  footer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 56,
+    backgroundColor: '#ffffff'
   },
   close: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 60,
-    backgroundColor: '#fff'
-  },
-  closeView: {
-    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: 32,
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
   closeIcon: {
     fontFamily: 'iconfont',
     fontSize: 17,
-    color: '#fff'
+    color: '#ffffff'
   }
 });
 

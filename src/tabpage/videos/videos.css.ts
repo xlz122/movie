@@ -1,29 +1,28 @@
 import { StyleSheet } from 'react-native';
-import { deviceWidth } from '@/utils/screen';
 
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff'
+    paddingTop: 14,
+    backgroundColor: '#ffffff'
   },
   item: {
-    marginHorizontal: 11
+    marginHorizontal: 10
   },
   itemCover: {
     position: 'relative'
   },
   itemImage: {
-    width: deviceWidth - 22,
+    width: '100%',
     height: 196,
-    borderRadius: 4
+    borderRadius: 3
   },
   itemTitle: {
     position: 'absolute',
-    top: 7,
+    top: 8,
     left: 10,
     fontSize: 14,
-    color: '#fff'
+    color: '#ffffff'
   },
   itemPlay: {
     position: 'absolute',
@@ -37,48 +36,48 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    borderRadius: 100
+    borderRadius: 50
   },
-  itemPlayIcon: {
+  playIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
-    color: '#fff'
+    color: '#ffffff'
   },
-  itemInfoCount: {
+  itemCount: {
     position: 'absolute',
-    top: '88%',
-    left: 11,
-    fontSize: 10,
-    color: '#fff'
+    left: 8,
+    bottom: 10,
+    fontSize: 11,
+    color: '#ffffff'
   },
-  itemInfoTime: {
+  itemDuration: {
     position: 'absolute',
-    top: '88%',
-    right: 11,
-    fontSize: 10,
-    color: '#fff'
+    right: 8,
+    bottom: 10,
+    fontSize: 11,
+    color: '#ffffff'
   },
   userinfo: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: 49,
-    paddingHorizontal: 11
+    height: 46,
+    paddingHorizontal: 10
   },
   author: {
     display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
-    flexDirection: 'row'
+    gap: 6
   },
   authorAvatar: {
-    width: 31,
-    height: 31
+    width: 32,
+    height: 32,
+    borderRadius: 50
   },
   authorName: {
-    marginLeft: 6,
-    fontFamily: 'inherit',
     fontWeight: 'bold',
-    fontSize: 11.5,
+    fontSize: 12,
     color: '#303133'
   },
   tool: {
@@ -87,14 +86,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   toolIcon: {
-    marginLeft: 11,
+    marginLeft: 10,
+    marginRight: 3,
     fontFamily: 'iconfont',
-    fontSize: 12,
+    fontSize: 14,
     color: '#303133'
   },
   toolText: {
-    marginLeft: 3,
-    fontSize: 10,
+    fontSize: 11,
     color: '#303133'
   }
 });

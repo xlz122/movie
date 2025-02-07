@@ -1,10 +1,10 @@
-import 'react-native-gesture-handler';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './src/store/index';
+import { PersistGate } from 'redux-persist/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './src/router/StackNavigator';
+import 'react-native-gesture-handler';
 
 function App(): React.ReactElement {
   return (
