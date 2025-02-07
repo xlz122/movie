@@ -1,61 +1,57 @@
 import React from 'react';
-import { View, Image, StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { FlatList, View, Image, StyleSheet } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
 
 type Props = {
-  photo: PhotoItemType[];
+  list: MoviePhotoItem[];
 };
 
-export type PhotoItemType = {
+export type MoviePhotoItem = {
   url: string;
 };
 
 function MoviePhoto(props: Props): React.ReactElement {
-  const renderItem = ({ item }: ListRenderItemInfo<PhotoItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<MoviePhotoItem>) => (
     <View style={styles.item}>
       <Image
         source={{ uri: item.url }}
-        resizeMode={'stretch'}
-        style={[styles.itemImage]}
+        resizeMode="stretch"
+        style={styles.itemImage}
       />
     </View>
   );
 
   return (
-    <SafeAreaView style={styles.list}>
-      <FlatList
-        horizontal
-        initialNumToRender={6}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={renderItem}
-        data={props.photo}
-      />
-    </SafeAreaView>
+    <FlatList
+      horizontal
+      initialNumToRender={10}
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(_, index) => String(index)}
+      data={props.list}
+      renderItem={renderItem}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      style={styles.list}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   list: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingLeft: 10,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 4
+    marginHorizontal: 10,
+    marginBottom: 10
   },
   item: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    marginRight: 8
+    width: 64,
+    height: 'auto'
   },
   itemImage: {
-    width: 62,
-    height: 85,
+    width: 64,
+    height: 90,
     borderRadius: 3
+  },
+  separator: {
+    width: 8,
+    height: '100%'
   }
 });
 

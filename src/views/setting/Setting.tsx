@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import type { Navigation } from '@/types/index';
@@ -8,39 +8,43 @@ function Setting(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const store = useStore();
 
-  const logout = () => {
+  const handleLogout = (): void => {
     store.dispatch({ type: 'routine/setLogout' });
-
     navigation.goBack();
   };
 
   return (
-    <>
-      <View style={styles.page} />
-      <Pressable onPress={logout} style={styles.logout}>
+    <View style={styles.page}>
+      <Pressable onPress={handleLogout} style={styles.logout}>
         <Text style={styles.logoutText}>退出登录</Text>
       </Pressable>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
-    backgroundColor: '#fff'
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   logout: {
-    marginBottom: 8
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    marginHorizontal: 14,
+    marginBottom: 14,
+    backgroundColor: '#f56c6c',
+    borderRadius: 6
   },
   logoutText: {
-    height: 44,
-    lineHeight: 44,
-    marginHorizontal: 8,
-    backgroundColor: '#f56c6c',
-    fontSize: 12,
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 4
+    fontSize: 14,
+    color: '#ffffff'
   }
 });
 

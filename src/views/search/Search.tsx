@@ -4,14 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useStore, useSelector } from 'react-redux';
 import type { RootState } from '@/store/index';
 import type { Navigation, TextInputEvent } from '@/types/index';
-import SearchDetail from './search-detail/SearchDetail';
 import SearchHistory from './search-history/SearchHistory';
+import SearchDetail from './search-detail/SearchDetail';
 import styles from './search.css';
 
 function Search(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const store = useStore();
-
   const searchHistory = useSelector(
     (state: RootState) => state.routine.searchHistory
   );
@@ -22,18 +21,13 @@ function Search(): React.ReactElement {
     setKeyword(e.nativeEvent.text);
   };
 
-  const handleClearKeyword = () => {
+  const handleKeywordClear = (): void => {
     setKeyword('');
   };
 
-  const handleCancel = () => {
-    navigation.goBack();
-  };
-
-  // 记录历史记录
   const handleInputBlur = async (): Promise<void | boolean> => {
     if (!keyword) {
-      return false;
+      return;
     }
 
     store.dispatch({
@@ -42,14 +36,17 @@ function Search(): React.ReactElement {
     });
   };
 
-  // 历史记录搜索
-  const historySearch = (value: string) => {
+  const handleSearch = (value: string): void => {
     setKeyword(value);
   };
 
+  const handleCancel = (): void => {
+    navigation.goBack();
+  };
+
   return (
-    <View style={styles.search}>
-      <View style={styles.searchContainer}>
+    <View style={styles.page}>
+      <View style={styles.search}>
         <View style={styles.input}>
           <Text style={styles.inputIcon}>{'\ue613'}</Text>
           <TextInput
@@ -60,18 +57,18 @@ function Search(): React.ReactElement {
             placeholder="找影视 / 影人 / 角色"
             style={styles.inputText}
           />
-          {Boolean(keyword) && (
-            <Pressable onPress={handleClearKeyword}>
-              <Text style={styles.inputClearIcon}>{'\ue637'}</Text>
+          {keyword.length > 0 && (
+            <Pressable onPress={handleKeywordClear}>
+              <Text style={styles.clearIcon}>{'\ue637'}</Text>
             </Pressable>
           )}
         </View>
-        <Text onPress={handleCancel} style={styles.cancelText}>
-          取消
-        </Text>
+        <Pressable onPress={handleCancel} style={styles.cancel}>
+          <Text style={styles.cancelText}>取消</Text>
+        </Pressable>
       </View>
-      {Boolean(keyword) && <SearchDetail keyword={keyword} />}
-      {!keyword && <SearchHistory historySearch={historySearch} />}
+      {!keyword && <SearchHistory onSearch={handleSearch} />}
+      {keyword.length > 0 && <SearchDetail keyword={keyword} />}
     </View>
   );
 }

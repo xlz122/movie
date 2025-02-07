@@ -4,52 +4,56 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { followActor, unFollowActor } from '@/api/actor';
 import type { RootState } from '@/store/index';
-import type { ResponseType, Navigation } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types/index';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 
 type Props = {
-  detail: {
-    id?: number;
-    avatar?: string;
-    name?: string;
-    name_en?: string;
-    is_collection?: number;
-    gender?: string;
-    birthday?: string;
-    country?: string;
-  };
-  refreshDetail: () => void;
+  detail: Partial<{
+    id: number;
+    avatar: string;
+    name: string;
+    name_en: string;
+    gender: string;
+    birthday: string;
+    country: string;
+    is_collection: number;
+  }>;
+  onRefresh: () => void;
 };
 
 function ActorInfo(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
 
-  // 关注/取消关注影人
-  const handleCollectionChange = (is_collection: number) => {
+  // 关注/取消关注
+  const handleFollowChange = (): void => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
-    if (is_collection === 0) {
+    if (props.detail?.is_collection === 0) {
       followActor({ id: props.detail.id! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            props.refreshDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+          if (res?.code !== 200) {
+            return;
           }
+
+          props.onRefresh?.();
+          CustomAlert({ title: '提示', message: res.message });
         })
         .catch(() => ({}));
     }
 
-    if (is_collection === 1) {
+    if (props.detail?.is_collection === 1) {
       unFollowActor({ id: props.detail.id! })
         .then((res: ResponseType) => {
-          if (res.code === 200) {
-            props.refreshDetail();
-            CustomAlert({ title: '提示', message: res?.message });
+          if (res?.code !== 200) {
+            return;
           }
+
+          props.onRefresh?.();
+          CustomAlert({ title: '提示', message: res.message });
         })
         .catch(() => ({}));
     }
@@ -57,43 +61,40 @@ function ActorInfo(props: Props): React.ReactElement {
 
   return (
     <View style={styles.actorInfo}>
-      {props.detail?.avatar && (
+      {props.detail.avatar && (
         <Image
-          source={{ uri: props.detail?.avatar }}
-          resizeMode={'cover'}
-          style={[styles.infoImage]}
+          source={{ uri: props.detail.avatar }}
+          resizeMode="cover"
+          style={styles.image}
         />
       )}
       <View style={styles.info}>
-        <View style={styles.infoBrief}>
-          <Text style={styles.briefName}>{props.detail?.name}</Text>
-          <Text style={styles.briefEnName}>{props.detail?.name_en}</Text>
+        <View style={styles.brief}>
+          <Text style={styles.briefName}>{props.detail.name}</Text>
+          <Text style={styles.briefEnName}>{props.detail.name_en}</Text>
           <Text style={styles.briefExtra}>
-            {props.detail?.gender}
-            {Boolean(props.detail?.birthday) && (
+            <Text>{props.detail.gender}</Text>
+            {props.detail.birthday && (
               <>
                 <Text> · </Text>
-                {props.detail?.birthday}
+                <Text>{props.detail.birthday}</Text>
               </>
             )}
-            {Boolean(props.detail?.country) && (
+            {props.detail.country && (
               <>
                 <Text> · </Text>
-                {props.detail?.country}
+                <Text>{props.detail.country}</Text>
               </>
             )}
           </Text>
         </View>
         <Text
-          onPress={() => handleCollectionChange(props.detail.is_collection!)}
-          style={[
-            styles.infoFocus,
-            props.detail?.is_collection === 1
-              ? styles.activeFoucus
-              : styles.infoFocus
-          ]}
+          onPress={handleFollowChange}
+          style={
+            props.detail.is_collection === 1 ? styles.followed : styles.follow
+          }
         >
-          {`${props.detail?.is_collection === 1 ? '已关注' : '关注'}`}
+          {`${props.detail.is_collection === 1 ? '已关注' : '关注'}`}
         </Text>
       </View>
     </View>
@@ -103,55 +104,58 @@ function ActorInfo(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   actorInfo: {
     position: 'relative',
-    height: 222,
-    backgroundColor: 'rgba(229,72,71,.85)',
+    width: '100%',
+    height: 230,
+    backgroundColor: 'rgba(229, 72, 71, 0.85)',
     overflow: 'hidden'
   },
-  infoImage: {
+  image: {
     height: 398
   },
   info: {
     position: 'absolute',
     left: 0,
-    bottom: 15,
+    bottom: 14,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    paddingHorizontal: 10
   },
-  infoBrief: {
+  brief: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    flex: 1,
-    paddingLeft: 10
+    gap: 2
   },
   briefName: {
     fontSize: 18,
-    color: '#fff'
+    color: '#ffffff'
   },
   briefEnName: {
-    marginTop: 1,
     fontSize: 12,
-    color: '#ccc'
+    color: '#cccccc'
   },
   briefExtra: {
-    marginTop: 6,
-    fontSize: 10.5,
-    color: '#ddd'
-  },
-  infoFocus: {
-    paddingHorizontal: 20,
-    paddingVertical: 6.5,
-    marginRight: 12,
-    backgroundColor: 'hsla(0, 0%, 100%, .25)',
     fontSize: 12,
-    color: '#fff',
+    color: '#dddddd'
+  },
+  follow: {
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+    backgroundColor: 'hsla(0, 0%, 100%, 0.25)',
+    fontSize: 12,
+    color: '#ffffff',
     borderRadius: 50
   },
-  activeFoucus: {
-    backgroundColor: 'rgba(229, 72, 71, .3)'
+  followed: {
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+    backgroundColor: 'rgba(229, 72, 71, 0.3)',
+    fontSize: 12,
+    color: '#ffffff',
+    borderRadius: 50
   }
 });
 

@@ -2,101 +2,103 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   videoInfo: {
-    backgroundColor: '#fff'
+    width: '100%',
+    backgroundColor: '#ffffff'
   },
-  authorWarp: {
+  author: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 7,
-    paddingHorizontal: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
     backgroundColor: '#f9f9f9'
   },
-  author: {
+  authorWarp: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    gap: 8
   },
   authorAvatar: {
-    width: 31,
-    height: 31,
-    borderRadius: 18
+    width: 32,
+    height: 32,
+    borderRadius: 50
   },
   authorInfo: {
-    marginLeft: 9
+    display: 'flex',
+    flexDirection: 'column'
   },
-  authorName: {
-    fontSize: 13,
+  infoName: {
     fontWeight: '700',
-    color: '#777'
+    fontSize: 13,
+    color: '#777777'
   },
-  authorCount: {
-    marginTop: 1,
-    fontSize: 9,
-    color: '#999'
+  infoCount: {
+    fontSize: 10,
+    color: '#999999'
   },
   report: {
     fontSize: 11.5,
-    color: '#999'
+    color: '#999999'
   },
   title: {
-    paddingHorizontal: 15,
-    marginVertical: 12,
-    fontSize: 14.5,
+    marginTop: 10,
+    marginHorizontal: 14,
     fontWeight: '700',
+    fontSize: 15,
     color: '#303133'
   },
-  otherWarp: {
+  intro: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 10,
+    marginHorizontal: 14
   },
-  otherText: {
-    paddingHorizontal: 15,
-    fontSize: 10.5,
-    color: '#999'
+  introText: {
+    fontSize: 11,
+    color: '#999999'
   },
   movie: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
-    marginHorizontal: 15,
+    gap: 10,
+    marginTop: 12,
+    marginHorizontal: 14,
     padding: 10,
     backgroundColor: '#f5f5f5'
   },
   movieImage: {
-    width: 37,
-    height: 53,
-    borderRadius: 2
+    width: 36,
+    height: 50,
+    borderRadius: 3
   },
   movieInfo: {
     display: 'flex',
     flexDirection: 'column',
-    paddingLeft: 10
+    gap: 5
   },
   infoTitle: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginBottom: 5
+    alignItems: 'center'
   },
   titleText: {
-    fontSize: 12.5,
     fontWeight: '700',
+    fontSize: 13,
     color: '#444'
   },
   titleRating: {
     marginLeft: 5,
-    fontSize: 9.5,
     fontWeight: '700',
+    fontSize: 10,
     color: '#f16c00'
   },
-  infoDesc: {
-    fontSize: 10.5,
-    color: '#555'
+  infoIntro: {
+    fontSize: 11,
+    color: '#555555'
   }
 });
 

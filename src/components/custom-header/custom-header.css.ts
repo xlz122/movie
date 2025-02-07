@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
   arrowIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
-    color: '#fff'
+    color: '#ffffff'
   },
   titleText: {
     fontWeight: 'bold',
     fontSize: 14,
-    color: '#fff'
+    color: '#ffffff'
   },
   titleCenter: {
     position: 'absolute',
