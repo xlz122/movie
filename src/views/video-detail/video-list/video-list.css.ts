@@ -2,96 +2,104 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   videoList: {
-    backgroundColor: '#fff'
-  },
-  nav: {
-    marginVertical: 7.5,
-    marginHorizontal: 15
+    marginTop: 16,
+    marginHorizontal: 14,
+    backgroundColor: '#ffffff'
   },
   navItem: {
-    paddingVertical: 2.5,
+    paddingVertical: 3,
     paddingHorizontal: 10,
-    marginRight: 10,
     fontSize: 11,
     color: '#303133',
-    borderWidth: 0.5,
+    borderWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: 'hsla(0, 0%, 66.7%, .35)',
-    borderRadius: 18
+    borderColor: 'hsla(0, 0%, 66.7%, 0.35)',
+    borderRadius: 50
   },
   navActiveItem: {
-    backgroundColor: 'rgba(229, 72, 71, .15)',
-    borderColor: 'rgba(229, 72, 71, .35)',
-    color: '#e54847'
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    fontSize: 11,
+    color: '#e54847',
+    backgroundColor: 'rgba(229, 72, 71, 0.15)',
+    borderWidth: 0.5,
+    borderStyle: 'solid',
+    borderColor: 'rgba(229, 72, 71, 0.35)',
+    borderRadius: 50
+  },
+  separator: {
+    width: 10,
+    height: '100%'
   },
   videoItem: {
     display: 'flex',
     flexDirection: 'row',
-    paddingVertical: 15,
-    marginHorizontal: 15
+    gap: 12,
+    paddingVertical: 14
   },
   itemCover: {
     position: 'relative'
   },
-  coverImage: {
-    width: 122,
-    height: 70,
-    borderRadius: 4
+  itemImage: {
+    width: 120,
+    height: 68,
+    borderRadius: 3
   },
-  coverText: {
+  itemDuration: {
     position: 'absolute',
-    top: 47,
     right: 6,
-    zIndex: 2,
+    bottom: 10,
+    zIndex: 9,
     fontSize: 9,
-    color: '#fff'
+    color: '#ffffff'
   },
-  coverMask: {
+  itemMask: {
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex: 1,
-    width: 122,
-    height: 70,
-    backgroundColor: 'rgba(0, 0, 0, .45)'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    borderRadius: 3
   },
-  coverMaskText: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    zIndex: 2,
-    marginTop: -8,
-    marginLeft: -11.5,
+  maskText: {
     fontSize: 10,
-    color: '#fff'
+    color: '#ffffff'
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginLeft: 10
+    justifyContent: 'space-between'
   },
-  infoTitle: {
+  itemTitle: {
     fontWeight: '700',
-    fontSize: 12.5,
+    fontSize: 13,
     color: '#303133'
   },
-  infoDesc: {
+  intro: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  descText: {
-    fontSize: 10,
-    color: '#999'
+  introText: {
+    fontSize: 11,
+    color: '#999999'
   },
-  noDataText: {
-    paddingTop: 45,
-    fontSize: 14,
-    color: '#aaa',
-    textAlign: 'center'
+  empty: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 52
+  },
+  emptyText: {
+    fontSize: 13,
+    color: '#aaaaaa'
   }
 });
 

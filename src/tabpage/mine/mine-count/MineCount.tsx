@@ -1,35 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { userCount } from '@/api/mine';
 import type { RootState } from '@/store/index';
-import type { ResponseType, Navigation } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types/index';
 
 type Count = {
-  actor_count?: number;
-  review_count?: number;
-  role_count?: number;
-  video_count?: number;
+  actor_count: number;
+  review_count: number;
+  role_count: number;
+  video_count: number;
 };
 
 function MineCount(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
 
-  const [count, setCount] = useState<Count>({
-    actor_count: 0,
-    review_count: 0,
-    role_count: 0,
-    video_count: 0
-  });
+  const [count, setCount] = useState<Partial<Count>>({});
 
   function getUserCount(): void {
     userCount()
-      .then((res: ResponseType<Count>) => {
-        if (res.code === 200) {
-          setCount(res.data || {});
+      .then((res: ResponseType) => {
+        if (res?.code !== 200) {
+          return;
         }
+
+        setCount(res.data ?? {});
       })
       .catch(() => ({}));
   }
@@ -47,7 +44,6 @@ function MineCount(): React.ReactElement {
       return;
     }
 
-    // tabbar切换重新请求
     // @ts-ignore
     const unsubscribe = navigation.addListener('tabPress', () => {
       getUserCount();
@@ -56,11 +52,10 @@ function MineCount(): React.ReactElement {
     return unsubscribe;
   }, [navigation]);
 
-  // 跳转关注详情
-  const jumpFlollowDetail = (path: string): boolean | undefined => {
+  const jumpFlollowDetail = (path: string): void => {
     if (!isLogin) {
       navigation.push('Login');
-      return false;
+      return;
     }
 
     navigation.push(path);
@@ -73,7 +68,7 @@ function MineCount(): React.ReactElement {
         style={styles.countItem}
       >
         <Text style={styles.itemCount}>
-          {isLogin ? `${count.actor_count}` : '-'}
+          {isLogin ? count.actor_count : '-'}
         </Text>
         <Text style={styles.itemText}>关注影人</Text>
       </Pressable>
@@ -81,14 +76,12 @@ function MineCount(): React.ReactElement {
         onPress={() => jumpFlollowDetail('UserRole')}
         style={styles.countItem}
       >
-        <Text style={styles.itemCount}>
-          {isLogin ? `${count.role_count}` : '-'}
-        </Text>
+        <Text style={styles.itemCount}>{isLogin ? count.role_count : '-'}</Text>
         <Text style={styles.itemText}>关注角色</Text>
       </Pressable>
       <Pressable style={styles.countItem}>
         <Text style={styles.itemCount}>
-          {isLogin ? `${count.review_count}` : '-'}
+          {isLogin ? count.review_count : '-'}
         </Text>
         <Text style={styles.itemText}>收藏影评</Text>
       </Pressable>
@@ -97,7 +90,7 @@ function MineCount(): React.ReactElement {
         style={styles.countItem}
       >
         <Text style={styles.itemCount}>
-          {isLogin ? `${count.video_count}` : '-'}
+          {isLogin ? count.video_count : '-'}
         </Text>
         <Text style={styles.itemText}>收藏视频</Text>
       </Pressable>
@@ -113,8 +106,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 76,
     marginTop: -38,
-    marginHorizontal: 17,
-    backgroundColor: '#fff',
+    marginHorizontal: 14,
+    backgroundColor: '#ffffff',
     borderRadius: 6
   },
   countItem: {
@@ -122,21 +115,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 10
   },
   itemCount: {
-    width: 9,
-    height: 36,
-    lineHeight: 36,
     fontSize: 18,
     color: '#e54847'
   },
   itemText: {
-    marginTop: 4,
-    fontFamily: 'inherit',
     fontWeight: 'bold',
     fontSize: 11,
-    color: '#666'
+    color: '#666666'
   }
 });
 

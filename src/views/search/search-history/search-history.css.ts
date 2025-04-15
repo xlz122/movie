@@ -2,76 +2,66 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   searchHistory: {
-    flex: 1,
-    marginTop: 15,
-    backgroundColor: '#fff'
+    marginTop: 6,
+    marginHorizontal: 14,
+    backgroundColor: '#ffffff'
   },
-  record: {
-    paddingHorizontal: 15
-  },
-  recordTitle: {
+  header: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  titleText: {
+  title: {
     fontWeight: '700',
+    fontSize: 14,
     color: '#303133'
   },
   clear: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  clearAll: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 6
   },
   clearText: {
-    paddingRight: 4.5,
-    fontSize: 12,
+    fontSize: 12.5,
     color: '#303133'
   },
-  clearLine: {
+  clearIcon: {
+    fontFamily: 'iconfont',
+    fontSize: 14,
+    color: '#303133'
+  },
+  divider: {
     height: 10,
     borderWidth: 0.5,
     borderStyle: 'solid',
-    borderColor: '#ccc'
+    borderColor: '#cccccc'
   },
-  clearIcon: {
-    paddingLeft: 4.5,
-    fontFamily: 'iconfont',
-    color: '#303133'
-  },
-  recordList: {
+  list: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: 12,
     marginTop: 10
   },
   item: {
-    position: 'relative'
+    position: 'relative',
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    backgroundColor: '#f4f4f4',
+    borderRadius: 3
   },
   itemText: {
-    paddingVertical: 2,
-    paddingHorizontal: 7,
-    marginRight: 12,
-    marginBottom: 8,
-    backgroundColor: '#f4f4f4',
-    fontSize: 13,
-    color: '#303133',
-    borderRadius: 2
+    fontSize: 12.5,
+    color: '#303133'
   },
   itemIcon: {
     position: 'absolute',
-    top: -4,
-    right: -6,
-    marginRight: 12,
+    top: -5,
+    right: -5,
     fontFamily: 'iconfont',
-    fontSize: 13,
+    fontSize: 14,
     color: '#c5c5c5'
   }
 });

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StatusBar, Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   header: {
@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 42,
+    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
     backgroundColor: '#e54847'
   },
   arrow: {
@@ -20,19 +20,17 @@ const styles = StyleSheet.create({
   arrowIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
-    color: '#fff'
+    color: '#ffffff'
   },
   titleText: {
+    flex: 1,
     fontWeight: 'bold',
     fontSize: 14,
-    color: '#fff'
+    color: '#ffffff'
   },
   titleCenter: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -10,
-    marginLeft: -10
+    textAlign: 'center',
+    transform: [{ translateX: -23 }]
   }
 });
 
