@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-// redux-persist持久化存储
+// 持久化存储
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   persistStore,

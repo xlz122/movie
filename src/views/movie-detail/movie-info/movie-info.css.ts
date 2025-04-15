@@ -4,79 +4,79 @@ const styles = StyleSheet.create({
   movieInfo: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 12
+    gap: 14,
+    paddingTop: 10,
+    paddingHorizontal: 10
   },
-  infoImage: {
-    width: 94,
-    height: 132,
+  image: {
+    width: 92,
+    height: 130,
     borderRadius: 3
   },
   info: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    marginLeft: 15
+    flexDirection: 'column'
   },
   title: {
-    marginTop: 1,
-    marginBottom: 1,
+    marginVertical: 1,
     fontWeight: '700',
     fontSize: 16,
-    color: '#fff'
+    color: '#ffffff'
   },
   subTitle: {
-    paddingVertical: 1,
+    fontSize: 14,
     color: '#e3e3e3'
   },
   brief: {
-    marginTop: 7
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
+    marginTop: 10
   },
   briefText: {
-    marginTop: 4,
     fontSize: 11,
-    color: '#fff'
+    color: '#ffffff'
   },
   operate: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: 17
+    gap: 18,
+    marginTop: 18
   },
   operateItem: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 104,
+    gap: 4,
+    width: 106,
     height: 26,
-    marginRight: 18,
-    backgroundColor: 'rgba(0, 0, 0, .25)',
-    borderRadius: 5
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    borderRadius: 3
   },
   operateActiveItem: {
     opacity: 0.5
   },
   operateIcon: {
-    marginRight: 3.5,
     fontFamily: 'iconfont',
-    fontSize: 12,
-    color: '#fff'
+    fontSize: 13,
+    color: '#ffffff'
   },
   operateText: {
-    fontSize: 11,
-    color: '#fff'
+    fontSize: 11.5,
+    color: '#ffffff'
   },
   rating: {
-    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    minHeight: 82,
-    paddingVertical: 16,
-    marginTop: 6,
-    marginHorizontal: 12,
-    backgroundColor: 'rgba(0, 0, 0, .25)',
+    minHeight: 92,
+    paddingVertical: 14,
+    marginTop: 16,
+    marginHorizontal: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 6
   },
   ratingItem: {
@@ -92,17 +92,17 @@ const styles = StyleSheet.create({
   },
   ratingWishCount: {
     fontWeight: '700',
-    fontSize: 22.5,
+    fontSize: 22,
     color: '#feb300'
   },
   ratingWishText: {
-    fontSize: 11,
-    color: '#fff'
+    fontSize: 11.5,
+    color: '#ffffff'
   },
-  ratingWishDesc: {
+  ratingWishDate: {
     position: 'absolute',
     right: 8,
-    bottom: 7,
+    bottom: 6,
     zIndex: 10,
     fontSize: 11.5,
     color: '#e5e5e5'
@@ -110,17 +110,9 @@ const styles = StyleSheet.create({
   ratingCover: {
     position: 'relative'
   },
-  ratingLine: {
-    position: 'absolute',
-    top: -5,
-    right: -62,
-    width: 0.5,
-    height: 71,
-    backgroundColor: 'hsla(0,0%,100%,.2)'
-  },
   ratingText: {
-    fontSize: 11,
-    color: '#fff'
+    fontSize: 11.5,
+    color: '#ffffff'
   },
   ratingIcon: {
     position: 'absolute',
@@ -128,48 +120,51 @@ const styles = StyleSheet.create({
     right: -14,
     fontFamily: 'iconfont',
     fontSize: 12,
-    color: '#fff'
+    color: '#ffffff'
   },
   ratingScore: {
     marginVertical: 3,
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 20,
     color: '#feb300'
   },
+  ratingLine: {
+    width: 0.5,
+    height: 71,
+    backgroundColor: 'hsla(0, 0%, 100%, 0.2)'
+  },
   noRating: {
-    fontSize: 12,
-    color: '#fff'
+    fontSize: 11.5,
+    color: '#ffffff'
   },
   tag: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 18,
-    marginHorizontal: 12
+    gap: 8,
+    marginTop: 16,
+    marginHorizontal: 10
   },
   tagItem: {
     paddingVertical: 4,
     paddingHorizontal: 12,
-    marginRight: 8,
-    marginBottom: 9,
-    backgroundColor: 'hsla(0, 0%, 100%, .1)',
+    backgroundColor: 'hsla(0, 0%, 100%, 0.1)',
     fontSize: 12,
-    color: '#fff',
-    borderRadius: 18
+    color: '#ffffff',
+    borderRadius: 50
   },
   egg: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
+    gap: 5,
     marginTop: 10,
     marginHorizontal: 10
   },
   eggIcon: {
-    marginRight: 5,
     fontFamily: 'iconfont',
-    fontSize: 12,
-    color: '#fff'
+    fontSize: 12.5,
+    color: '#ffffff'
   },
   eggText: {
     fontSize: 12,

@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { viewHeight } from '@/utils/screen';
+import { View, StyleSheet, Dimensions } from 'react-native';
 
 function HomeSkeleton(): React.ReactElement {
   return (
@@ -8,16 +7,16 @@ function HomeSkeleton(): React.ReactElement {
       <View style={styles.search} />
       <View style={styles.banner} />
       <View style={styles.nav}>
-        {new Array(4).fill(0).map((item, index) => {
+        {new Array(4).fill(0).map((_, index) => {
           return (
             <View key={index} style={styles.navItem}>
               <View style={styles.navItemIcon} />
-              <View style={styles.navItemName} />
+              <View style={styles.navItemText} />
             </View>
           );
         })}
       </View>
-      {new Array(3).fill(0).map((item, index) => {
+      {new Array(3).fill(0).map((_, index) => {
         return (
           <View key={index} style={styles.panel}>
             <View style={styles.panelTitle} />
@@ -40,29 +39,30 @@ function HomeSkeleton(): React.ReactElement {
 
 const styles = StyleSheet.create({
   home: {
-    height: viewHeight,
-    backgroundColor: '#fff',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    backgroundColor: '#ffffff',
     overflow: 'hidden'
   },
   search: {
     height: 29,
+    marginVertical: 10,
     marginHorizontal: 10,
-    marginVertical: 11,
     backgroundColor: '#f5f5f5',
-    borderRadius: 48
+    borderRadius: 50
   },
   banner: {
-    height: 190,
+    height: 186,
     marginHorizontal: 10,
     backgroundColor: '#f5f5f5',
-    borderRadius: 4
+    borderRadius: 6
   },
   nav: {
     display: 'flex',
     flexDirection: 'row',
     height: 66,
-    paddingTop: 30,
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 12,
     marginHorizontal: 10,
     marginBottom: 40,
     borderRadius: 6
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     borderRadius: 6
   },
-  navItemName: {
+  navItemText: {
     width: 50,
     height: 12,
     marginTop: 6,

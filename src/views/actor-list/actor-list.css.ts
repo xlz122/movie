@@ -2,66 +2,63 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
-    paddingBottom: 10,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   sticky: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
-    height: 45,
+    gap: 4,
+    paddingVertical: 12,
     paddingHorizontal: 10,
     backgroundColor: '#f5f5f5'
   },
   stickySpot: {
     width: 4,
     height: 4,
-    marginRight: 5,
     backgroundColor: '#f8a52d'
   },
   stickyText: {
     fontWeight: '700',
-    fontSize: 12,
+    fontSize: 14,
     color: '#303133'
   },
   stickyCount: {
-    marginLeft: 3,
-    fontSize: 10,
+    fontSize: 12,
     color: '#303133'
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
+    gap: 12,
     paddingVertical: 8,
-    marginHorizontal: 15,
-    borderBottomWidth: 0.38,
-    borderStyle: 'solid',
-    borderColor: '#dedede'
+    marginHorizontal: 14
   },
   itemImage: {
-    width: 68,
+    width: 66,
     height: 90,
     borderRadius: 3
   },
   itemInfo: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: 13
+    gap: 3
   },
   itemName: {
-    marginBottom: 1,
     fontSize: 14,
-    color: '#333'
+    color: '#333333'
   },
   itemText: {
-    marginTop: 4,
-    fontSize: 12,
-    color: '#999'
+    fontSize: 11.5,
+    color: '#999999'
   },
-  lastItem: {
-    borderBottomWidth: 0
+  divider: {
+    marginHorizontal: 14,
+    borderBottomWidth: 0.48,
+    borderStyle: 'solid',
+    borderColor: '#e5e5e5'
   }
 });
 

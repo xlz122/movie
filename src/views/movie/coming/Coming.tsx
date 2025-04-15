@@ -1,57 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, Pressable } from 'react-native';
+import { ScrollView, View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { movieComing } from '@/api/home';
 import type { Navigation, ResponseType } from '@/types/index';
 import styles from './coming.css';
 
-type MovieType = {
-  list: ItemType[];
+type ComingType = {
   stickyIndex: number[];
+  list: ItemType[];
 };
 
 type ItemType = {
   stickyTitle?: string;
-  id?: number;
-  poster?: string;
-  title?: string;
-  release_date?: string;
-  wish_count?: number;
-  genres?: string;
-  countries?: string;
+  id: number;
+  poster: string;
+  title: string;
+  release_date: string;
+  wish_count: number;
+  genres: string;
+  countries: string;
 };
 
 function Coming(): React.ReactElement {
   const navigation: Navigation = useNavigation();
-  const [coming, setComing] = useState<MovieType>({
-    list: [],
-    stickyIndex: []
+
+  const [coming, setComing] = useState<ComingType>({
+    stickyIndex: [],
+    list: []
   });
 
   const getMovieComing = (): void => {
     movieComing({ page: 1, per_page: 100 })
-      .then((res: ResponseType<any[]>) => {
-        if (res.code === 200) {
-          const list: ItemType[] = [];
-          const stickyIndex: number[] = [];
-
-          res.data?.forEach(item => {
-            const isExist = list.find(
-              t => t.release_date === item.release_date
-            );
-
-            // 吸顶标题、索引
-            if (!isExist) {
-              list.push({ stickyTitle: item.release_date });
-              stickyIndex.push(list.length - 1);
-            }
-
-            // 列表项
-            list.push(item);
-          });
-
-          setComing({ list, stickyIndex });
+      .then((res: ResponseType) => {
+        if (res?.code !== 200) {
+          return;
         }
+
+        const stickyIndex: number[] = [];
+        const list: ItemType[] = [];
+
+        res.data?.forEach?.((item: ItemType) => {
+          const isExist = list.find(v => item.release_date === v.release_date);
+
+          if (!isExist) {
+            list.push({ ...item, stickyTitle: item.release_date }, item);
+            return;
+          }
+
+          list.push(item);
+        });
+        list.forEach?.((item, index) =>
+          item.hasOwnProperty('stickyTitle') && stickyIndex.push(index)
+        );
+
+        setComing({ stickyIndex, list });
       })
       .catch(() => ({}));
   };
@@ -60,22 +62,20 @@ function Coming(): React.ReactElement {
     getMovieComing();
   }, []);
 
-  const renderItem = ({ item }: { item: ItemType }) => (
+  const RenderItem = ({ item }: { item: ItemType }) => (
     <>
-      {item.stickyTitle && (
+      {item.hasOwnProperty('stickyTitle') && (
         <View style={styles.sticky}>
           <Text style={styles.stickyText}>{item.stickyTitle}</Text>
         </View>
       )}
-      {!item.stickyTitle && (
-        <Pressable
-          onPress={() => navigation.push('MovieDetail', { id: item.id })}
-        >
+      {!item.hasOwnProperty('stickyTitle') && (
+        <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
           <View style={styles.item}>
             <Image
               source={{ uri: item.poster }}
-              resizeMode={'stretch'}
-              style={[styles.itemImage]}
+              resizeMode="stretch"
+              style={styles.itemImage}
             />
             <View style={styles.itemInfo}>
               <Text
@@ -99,16 +99,11 @@ function Coming(): React.ReactElement {
   );
 
   return (
-    <View style={styles.page}>
-      {coming.list.length > 0 && (
-        <FlatList
-          stickyHeaderIndices={coming.stickyIndex}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={renderItem}
-          data={coming.list}
-        />
-      )}
-    </View>
+    <ScrollView stickyHeaderIndices={coming.stickyIndex} style={styles.page}>
+      {coming.list.map?.((item, index) => {
+        return <RenderItem key={index} item={item} />;
+      })}
+    </ScrollView>
   );
 }
 

@@ -1,34 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 
 function Changelog(): React.ReactElement {
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+    <ScrollView style={styles.page}>
       <View style={styles.cell}>
         <View style={styles.cellItem}>
-          <Text style={styles.itemTitle}>2023-06-20</Text>
+          <Text style={styles.itemTitle}>2025-04-15</Text>
           <View style={styles.itemContent}>
-            <Text style={styles.itemText}>
-              1.react native版本更新至0.72.0-rc.6
-            </Text>
+            <Text style={styles.itemText}>1.更新react native 0.79.0</Text>
             <Text style={styles.itemText}>2.优化各页面代码</Text>
-            <Text style={styles.itemText}>3.重构ScrollRefresh组件</Text>
+            <Text style={styles.itemText}>3.沉浸式状态栏</Text>
+            <Text style={styles.itemText}>4.修复已知bug</Text>
           </View>
         </View>
         <View style={styles.cellItem}>
-          <Text style={styles.itemTitle}>2023-03-01</Text>
+          <Text style={styles.itemTitle}>2023-06-13</Text>
           <View style={styles.itemContent}>
-            <Text style={styles.itemText}>1.react native版本更新至0.71.3</Text>
-            <Text style={styles.itemText}>2.更新关于作者页面</Text>
-            <Text style={styles.itemText}>3.更新关于项目页面</Text>
-            <Text style={styles.itemText}>2.更新项目效果图</Text>
+            <Text style={styles.itemText}>1.更新react native 0.72.0-rc.5</Text>
+            <Text style={styles.itemText}>2.修复已知bug</Text>
           </View>
         </View>
         <View style={styles.cellItem}>
-          <Text style={styles.itemTitle}>2023-02-02</Text>
+          <Text style={styles.itemTitle}>2022-11-28</Text>
           <View style={styles.itemContent}>
-            <Text style={styles.itemText}>1.react native版本更新至0.71.2</Text>
-            <Text style={styles.itemText}>2.更新项目效果图</Text>
+            <Text style={styles.itemText}>1.更新react native 0.71.2</Text>
+            <Text style={styles.itemText}>2.完成页面并联调</Text>
           </View>
         </View>
       </View>
@@ -38,31 +35,34 @@ function Changelog(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   cell: {
-    paddingTop: 10
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+    margin: 14
   },
   cellItem: {
-    padding: 16,
-    marginTop: 8,
-    marginBottom: 16,
-    marginHorizontal: 16,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
+    padding: 14,
     backgroundColor: '#f1f1f1',
-    borderRadius: 4
+    borderRadius: 6
   },
   itemTitle: {
     fontSize: 13,
     color: '#303133'
   },
   itemContent: {
-    paddingTop: 5,
-    paddingLeft: 10.5
+    paddingLeft: 12.5
   },
   itemText: {
     fontSize: 12.5,
-    color: '#666'
+    color: '#666666'
   }
 });
 

@@ -1,46 +1,40 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { WebView } from 'react-native-webview';
+import { View, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
 import type { RouteProp } from '@react-navigation/native';
-
-const { width, height } = Dimensions.get('window');
 
 type Route = RouteProp<{ params: { uri: string } }>;
 
-function MyWebView(): React.ReactElement {
+function WebviewComponent(): React.ReactElement {
   const route: Route = useRoute();
 
-  const RenderLoading = () => {
-    return <Text style={styles.loading}>loading...</Text>;
+  const RenderLoading = (): React.ReactElement => {
+    return (
+      <View style={styles.loading}>
+        <Text style={styles.loadingText}>loading...</Text>
+      </View>
+    );
   };
 
   return (
-    <View style={styles.flex}>
-      <WebView
-        style={styles.web}
-        source={{ uri: route.params.uri }}
-        startInLoadingState={true}
-        renderLoading={() => <RenderLoading />}
-      />
-    </View>
+    <WebView
+      source={{ uri: route.params.uri }}
+      startInLoadingState={true}
+      renderLoading={() => <RenderLoading />}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    position: 'relative',
-    flex: 1
-  },
-  web: {
-    width: width,
-    height: height
-  },
   loading: {
-    position: 'absolute',
-    top: '45%',
-    left: '44%'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
+  },
+  loadingText: {
+    margin: 'auto'
   }
 });
 
-export default MyWebView;
+export default WebviewComponent;

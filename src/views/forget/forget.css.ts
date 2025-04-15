@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: '#f5f5f5'
   },
   fieldItem: {
@@ -10,45 +11,43 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: 51,
-    paddingHorizontal: 15,
-    marginTop: 15,
-    backgroundColor: '#fff'
+    gap: 12,
+    paddingHorizontal: 14,
+    marginTop: 14,
+    height: 50,
+    backgroundColor: '#ffffff'
   },
-  itemText: {
+  itemLabel: {
     fontSize: 14,
     color: '#303133'
   },
   itemInput: {
     flex: 1,
-    height: 41,
     textAlign: 'right'
   },
   inputClearIcon: {
-    marginLeft: 12,
     fontFamily: 'iconfont',
     fontSize: 16,
     color: '#c5c5c5'
   },
   itemCodeInput: {
-    flex: 1,
-    height: 41
+    flex: 1
   },
-  codeText: {
-    width: 106,
-    height: 35,
-    lineHeight: 35,
+  itemCode: {
+    width: 98,
+    height: 32,
+    lineHeight: 32,
     backgroundColor: '#409eff',
-    fontSize: 12.5,
-    color: '#fff',
+    fontSize: 12,
+    color: '#ffffff',
     textAlign: 'center',
-    borderRadius: 4
+    borderRadius: 6
   },
   tipText: {
-    marginVertical: 5,
-    marginHorizontal: 15,
+    marginVertical: 4,
+    marginHorizontal: 14,
     fontSize: 12,
-    color: '#777'
+    color: '#777777'
   },
   submit: {
     display: 'flex',
@@ -56,15 +55,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 8,
-    marginTop: 25,
-    marginHorizontal: 15,
+    marginTop: 22,
+    marginHorizontal: 14,
     backgroundColor: '#409eff',
-    textAlign: 'center',
-    borderRadius: 2
+    borderRadius: 6
   },
   submitText: {
     fontSize: 14,
-    color: '#fff'
+    color: '#ffffff'
   }
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StatusBar, View, Text, Pressable } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { ViewStyle } from 'react-native';
 import type { StackNavigationOptions } from '@react-navigation/stack';
 import type { Navigation } from '@/types/index';
@@ -9,7 +9,7 @@ import styles from './custom-header.css';
 type Props = {
   options?: StackNavigationOptions;
   children?: React.ReactNode;
-  headerTitleAlign?: boolean;
+  titleCenter?: boolean;
   headerStyle?: ViewStyle;
   arrowStyle?: ViewStyle;
 };
@@ -17,23 +17,27 @@ type Props = {
 function CustomHeader(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
+  useFocusEffect(() => {
+    StatusBar.setBarStyle('light-content');
+  });
+
   return (
-    <View style={[styles.header, props?.headerStyle]}>
+    <View style={[styles.header, props.headerStyle]}>
       <Pressable
         onPress={() => navigation.goBack()}
-        style={[styles.arrow, props?.arrowStyle]}
+        style={[styles.arrow, props.arrowStyle]}
       >
         <Text style={styles.arrowIcon}>{'\ue656'}</Text>
       </Pressable>
       <Text
         style={[
           styles.titleText,
-          props.headerTitleAlign ? styles.titleCenter : styles.titleText
+          props.titleCenter ? styles.titleCenter : null
         ]}
       >
-        {props?.options?.title}
+        {props.options?.title}
       </Text>
-      {props?.children}
+      {props.children}
     </View>
   );
 }

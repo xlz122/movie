@@ -1,118 +1,106 @@
-import { StyleSheet, Platform } from 'react-native';
-import { viewHeight } from '@/utils/screen';
+import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
-  page: {
-    paddingBottom: Platform.OS !== 'web' ? 10 : 0,
+  searchDetail: {
     width: '100%',
-    height: Platform.OS === 'web' ? viewHeight - 85 : viewHeight + 42 - 85,
-    backgroundColor: '#fff'
+    height: Dimensions.get('window').height - 44,
+    backgroundColor: '#ffffff'
   },
   tab: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    height: 45,
-    paddingLeft: 8,
-    borderBottomWidth: 0.5,
+    width: '100%',
+    height: 44,
+    paddingHorizontal: 4,
+    borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eee',
-    overflow: 'hidden'
+    borderColor: '#e5e5e5'
   },
   tabItem: {
-    position: 'relative',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 57,
+    width: 54,
     height: '100%'
   },
-  tabItemText: {
-    fontSize: 13,
+  tabText: {
     fontWeight: '700',
-    color: '#666',
-    textAlign: 'center'
+    fontSize: 13,
+    color: '#666666'
   },
   tabActiveLine: {
     position: 'absolute',
-    left: '50%',
-    bottom: 2.6,
-    marginLeft: -11,
-    width: 22,
-    height: 3,
-    backgroundColor: 'rgb(229, 72, 71)',
+    bottom: 2.8,
+    width: 24,
+    height: 4,
+    backgroundColor: '#e54847',
     borderRadius: 6
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
+    gap: 12,
     paddingTop: 16,
-    marginRight: -20,
-    marginLeft: 16
+    marginHorizontal: 14
   },
   itemImage: {
-    width: 70,
-    height: 92,
+    width: 74,
+    height: 98,
     borderRadius: 3
-  },
-  itemCoverText: {
-    position: 'absolute',
-    top: 1.6,
-    left: 5,
-    zIndex: 1,
-    fontSize: 10,
-    color: '#fff'
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: 13
+    gap: 6
   },
   itemTitle: {
-    marginBottom: 1,
-    fontSize: 13,
-    color: '#333'
+    fontSize: 14,
+    color: '#333333'
   },
   itemTag: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 4
   },
   tag: {
-    paddingVertical: 0.5,
-    paddingHorizontal: 1.8,
-    marginTop: 8.5,
-    marginRight: 5,
-    backgroundColor: 'rgba(254, 179, 0, .15)',
+    paddingVertical: 1,
+    paddingHorizontal: 2,
+    backgroundColor: 'rgba(254, 179, 0, 0.15)',
     fontSize: 10,
     color: '#feb300',
-    textAlign: 'center',
-    borderRadius: 2
+    borderRadius: 3
   },
   itemText: {
-    marginTop: 8,
-    fontSize: 11,
-    color: '#999'
+    fontSize: 11.5,
+    color: '#999999'
   },
   itemRating: {
-    width: 68,
-    fontSize: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 2
+  },
+  ratingWeight: {
+    fontWeight: '700',
+    color: '#f16c00',
+    fontSize: 12.5
+  },
+  ratingText: {
+    fontSize: 10,
     color: '#f16c00'
   },
-  itemRatingWeight: {
-    fontSize: 12,
-    fontWeight: '700'
-  },
-  emptyData: {
+  empty: {
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 140
+    paddingTop: 52
   },
-  emptyDataText: {
-    color: '#888'
+  emptyText: {
+    fontSize: 13,
+    color: '#888888'
   }
 });
 

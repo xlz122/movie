@@ -4,32 +4,27 @@ import { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import Dot from './dot/Dot';
 
-// 获取屏幕宽度
-const pageWidth = Dimensions.get('window').width;
-
 type Props = {
-  banner: ItemType[];
+  list: BannerItem[];
   onChange: (index: number) => void;
 };
 
-type ItemType = {
+type BannerItem = {
   banner: string;
 };
 
 function Banner(props: Props): React.ReactElement {
   // 轮播滚动值
-  const progressValue = useSharedValue<number>(0);
+  const progressValue = useSharedValue(0);
 
-  const RenderItem = ({ item }: { item: ItemType }) => {
+  const RenderItem = ({ item }: { item: BannerItem }) => {
     return (
       <View style={styles.item}>
-        <View style={styles.itemCover}>
-          <Image
-            source={{ uri: item.banner }}
-            resizeMode={'stretch'}
-            style={styles.coverImage}
-          />
-        </View>
+        <Image
+          source={{ uri: item.banner }}
+          resizeMode="stretch"
+          style={styles.itemImage}
+        />
       </View>
     );
   };
@@ -37,41 +32,35 @@ function Banner(props: Props): React.ReactElement {
   return (
     <View style={styles.banner}>
       <Carousel
-        width={pageWidth}
+        width={Dimensions.get('window').width}
         height={styles.banner.height}
-        data={props.banner}
-        renderItem={({ item }) => <RenderItem item={item} />}
-        loop={true}
-        autoPlay={true}
+        loop
+        autoPlay
         autoPlayInterval={6000}
         onProgressChange={(_, absoluteProgress) =>
           (progressValue.value = absoluteProgress)
         }
-        onSnapToItem={index => {
-          props.onChange(index);
-        }}
+        onSnapToItem={index => props.onChange(index)}
+        data={props.list}
+        renderItem={({ item }) => <RenderItem item={item} />}
       />
-      <Dot list={props.banner} progressValue={progressValue} />
+      <Dot list={props.list} progressValue={progressValue} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   banner: {
-    position: 'relative',
-    height: 190
+    width: '100%',
+    height: 186
   },
   item: {
-    paddingHorizontal: 10
+    marginHorizontal: 10
   },
-  itemCover: {
-    position: 'relative',
-    borderRadius: 4,
-    overflow: 'hidden'
-  },
-  coverImage: {
+  itemImage: {
     width: '100%',
-    height: 190
+    height: 186,
+    borderRadius: 6
   }
 });
 

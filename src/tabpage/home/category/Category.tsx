@@ -1,74 +1,33 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  FlatList,
-  Pressable
-} from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 
-type Props = {
-  movie?: MovieItemType[];
-};
-
-export type MovieItemType = {
-  id: number;
-  title: string;
-  poster: string;
-  category: string;
-  rating: string;
-  wish_count: number;
-  release_date: number;
-};
-
-function Category(props: Props): React.ReactElement {
+function Category(): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: { item: MovieItemType }) => (
-    <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
-      <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
-        />
-        {item?.category && item?.category !== '电影' && (
-          <Text style={styles.itemTag}>{item?.category}</Text>
-        )}
-        {item?.rating !== null && Number(item?.rating) === 0 && (
-          <Text style={styles.itemRating}>暂无评分</Text>
-        )}
-        {Number(item?.rating) > 0 && (
-          <Text style={styles.itemRating}>{item?.rating}分</Text>
-        )}
-        {Number(item?.wish_count) > 0 && (
-          <Text style={styles.itemWish}>{item?.wish_count} 想看</Text>
-        )}
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
-          {item.title}
-        </Text>
-        {item?.release_date && (
-          <Text style={styles.itemDate}>{item?.release_date}</Text>
-        )}
-      </View>
-    </Pressable>
-  );
-
   return (
-    <SafeAreaView style={styles.category}>
-      <FlatList
-        horizontal
-        initialNumToRender={6}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={renderItem}
-        data={props.movie}
-      />
-    </SafeAreaView>
+    <View style={styles.category}>
+      <Pressable onPress={() => navigation.push('Theater')} style={styles.item}>
+        <Text style={[styles.itemIcon, styles.hotMovie]}>{'\ue617'}</Text>
+        <Text style={styles.itemText}>热映中</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => navigation.push('HighScore')}
+        style={styles.item}
+      >
+        <Text style={[styles.itemIcon, styles.highScore]}>{'\ue67b'}</Text>
+        <Text style={styles.itemText}>高分榜</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.push('Awards')} style={styles.item}>
+        <Text style={[styles.itemIcon, styles.awards]}>{'\ue668'}</Text>
+        <Text style={styles.itemText}>奖项</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.push('Today')} style={styles.item}>
+        <Text style={[styles.itemIcon, styles.today]}>{'\ue6c4'}</Text>
+        <Text style={styles.itemText}>那年今日</Text>
+      </Pressable>
+    </View>
   );
 }
 
@@ -76,67 +35,43 @@ const styles = StyleSheet.create({
   category: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingLeft: 10,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 4
+    paddingTop: 20,
+    paddingBottom: 12,
+    margin: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 6
   },
   item: {
-    position: 'relative',
+    flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    paddingBottom: 7,
-    marginRight: 8
+    alignItems: 'center',
+    gap: 6
   },
-  itemImage: {
-    width: 94,
-    height: 130,
-    borderRadius: 3
-  },
-  itemTag: {
-    position: 'absolute',
-    top: 6,
-    right: 5,
-    paddingVertical: 0.3,
-    paddingHorizontal: 1.8,
-    backgroundColor: 'rgba(255, 165, 0, 0.7)',
-    fontSize: 9,
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 2
-  },
-  itemRating: {
-    position: 'absolute',
-    right: 4,
-    bottom: 34,
-    fontSize: 10.5,
-    color: 'orange'
-  },
-  itemWish: {
-    position: 'absolute',
-    left: 0,
-    bottom: 44,
-    width: 94,
-    height: 29,
-    paddingLeft: 4,
-    paddingTop: 10,
-    fontSize: 11,
-    color: '#fff',
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4
+  itemIcon: {
+    padding: 9,
+    fontFamily: 'iconfont',
+    fontSize: 22,
+    borderRadius: 6
   },
   itemText: {
-    width: 94,
-    marginTop: 5,
-    color: '#333',
-    fontSize: 12
+    fontSize: 12,
+    color: '#303133'
   },
-  itemDate: {
-    marginTop: 2,
-    fontSize: 10.5,
-    color: '#888'
+  hotMovie: {
+    backgroundColor: 'rgba(255, 79, 77, 0.15)',
+    color: '#f8a52d'
+  },
+  highScore: {
+    backgroundColor: 'rgba(255, 79, 77, 0.15)',
+    color: '#ff4f4d'
+  },
+  awards: {
+    backgroundColor: 'rgba(65, 172, 255, 0.15)',
+    color: '#41acff'
+  },
+  today: {
+    backgroundColor: 'rgba(145, 109, 255, 0.15)',
+    color: '#916dff'
   }
 });
 

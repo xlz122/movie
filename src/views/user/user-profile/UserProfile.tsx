@@ -10,28 +10,32 @@ function UserProfile(): React.ReactElement {
     <View style={styles.page}>
       <View style={styles.cell}>
         <View style={styles.cellItem}>
-          <Text style={styles.itemText}>头像</Text>
+          <Text style={styles.itemLabel}>头像</Text>
           <Image
-            source={{ uri: userinfo?.avatar }}
-            resizeMode={'stretch'}
-            style={[styles.itemRightImage]}
+            source={{ uri: userinfo.avatar }}
+            resizeMode="stretch"
+            style={styles.itemImage}
           />
         </View>
+        <View style={styles.divider} />
         <View style={styles.cellItem}>
-          <Text style={styles.itemText}>用户名</Text>
-          <Text style={styles.itemContent}>{userinfo?.username}</Text>
+          <Text style={styles.itemLabel}>用户名</Text>
+          <Text style={styles.itemValue}>{userinfo.username}</Text>
         </View>
+        <View style={styles.divider} />
         <View style={styles.cellItem}>
-          <Text style={styles.itemText}>手机号</Text>
-          <Text style={styles.itemContent}>{userinfo?.phone}</Text>
+          <Text style={styles.itemLabel}>手机号</Text>
+          <Text style={styles.itemValue}>{userinfo.phone}</Text>
         </View>
+        <View style={styles.divider} />
         <View style={styles.cellItem}>
-          <Text style={styles.itemText}>性别</Text>
-          <Text style={styles.itemContent}>{userinfo?.gender}</Text>
+          <Text style={styles.itemLabel}>性别</Text>
+          <Text style={styles.itemValue}>{userinfo.gender}</Text>
         </View>
-        <View style={[styles.cellItem, styles.cellLastItem]}>
-          <Text style={styles.itemText}>生日</Text>
-          <Text style={styles.itemContent}>{userinfo?.birthday}</Text>
+        <View style={styles.divider} />
+        <View style={styles.cellItem}>
+          <Text style={styles.itemLabel}>生日</Text>
+          <Text style={styles.itemValue}>{userinfo.birthday}</Text>
         </View>
       </View>
     </View>
@@ -40,44 +44,43 @@ function UserProfile(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: '#f5f5f5'
   },
   cell: {
-    margin: 16,
-    backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 14,
+    padding: 14,
+    margin: 14,
+    backgroundColor: '#ffffff',
     borderRadius: 6
   },
   cellItem: {
-    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    height: 44,
-    lineHeight: 44,
-    marginHorizontal: 17,
-    borderBottomWidth: 0.4,
-    borderStyle: 'solid',
-    borderColor: '#eee'
+    gap: 10
   },
-  itemText: {
-    flex: 1,
-    fontSize: 12,
+  itemLabel: {
+    fontSize: 12.5,
     color: '#303133'
   },
-  itemContent: {
-    marginLeft: 13,
-    fontSize: 12,
-    color: 'rgb(153, 153, 153)'
+  itemValue: {
+    fontSize: 12.5,
+    color: '#999999'
   },
-  itemRightImage: {
-    width: 31,
-    height: 31,
-    marginLeft: 13,
-    borderRadius: 22
+  itemImage: {
+    width: 32,
+    height: 32,
+    borderRadius: 50
   },
-  cellLastItem: {
-    borderBottomWidth: 0
+  divider: {
+    borderBottomWidth: 0.48,
+    borderStyle: 'solid',
+    borderColor: '#eeeeee'
   }
 });
 

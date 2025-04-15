@@ -2,18 +2,22 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
-    paddingBottom: 10,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   sticky: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
     paddingHorizontal: 14,
-    backgroundColor: '#fff',
-    borderBottomWidth: 0.45,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#dedede'
+    borderColor: '#e5e5e5'
   },
   stickyText: {
-    paddingVertical: 10,
     fontWeight: '700',
     fontSize: 14,
     color: '#303133'
@@ -21,34 +25,31 @@ const styles = StyleSheet.create({
   item: {
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: 18,
-    marginRight: -20,
-    marginLeft: 16
+    gap: 12,
+    paddingVertical: 8,
+    marginHorizontal: 14
   },
   itemImage: {
-    width: 93,
-    height: 124,
+    width: 82,
+    height: 110,
     borderRadius: 3
   },
   itemInfo: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: 13
+    gap: 6
   },
   itemTitle: {
-    marginBottom: 1,
     fontSize: 14,
-    color: '#333'
-  },
-  itemText: {
-    marginTop: 8,
-    fontSize: 11,
-    color: '#999'
+    color: '#333333'
   },
   itemCountText: {
     fontSize: 13,
     color: '#e54847'
+  },
+  itemText: {
+    fontSize: 11.5,
+    color: '#999999'
   }
 });
 

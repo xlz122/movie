@@ -9,11 +9,11 @@ type AlertParams = {
 
 function CustomAlert({ title, message, buttons }: AlertParams): void {
   if (Platform.OS === 'android' || Platform.OS === 'ios') {
-    Alert.alert(title || '提示', message || '', buttons || [{ text: '确认' }]);
+    Alert.alert(title ?? '提示', message ?? '', buttons ?? [{ text: '确认' }]);
   }
 
   if (Platform.OS === 'web') {
-    alert(message || '');
+    alert(message ?? '');
   }
 }
 

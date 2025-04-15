@@ -11,9 +11,8 @@ export type Route = RouteProp<ParamListBase, string>;
 
 export type ResponseType<T = any> = {
   code?: number;
-  data?: T;
+  data: T;
   message?: string;
-  total?: number;
 };
 
 export type TextInputEvent = NativeSyntheticEvent<TextInputChangeEventData>;

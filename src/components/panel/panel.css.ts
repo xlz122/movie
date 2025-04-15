@@ -4,50 +4,48 @@ const styles = StyleSheet.create({
   panel: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    margin: 10,
-    marginTop: 0,
-    backgroundColor: '#fff',
+    marginHorizontal: 10,
+    marginBottom: 10,
+    backgroundColor: '#ffffff',
     borderRadius: 6
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
-    paddingLeft: 10,
-    paddingRight: 10,
+    alignItems: 'center',
+    paddingHorizontal: 10,
     height: 42
   },
   title: {
     flex: 1,
+    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 4
   },
-  titleLine: {
+  line: {
     width: 3,
     height: 14,
-    marginRight: 4,
     backgroundColor: '#e54847',
-    borderRadius: 4
+    borderRadius: 6
   },
   titleText: {
-    fontSize: 13,
-    color: '#666'
+    fontSize: 13.5,
+    color: '#666666'
   },
   more: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 4
+    alignItems: 'center'
   },
   moreText: {
-    fontSize: 11,
-    color: '#666'
+    fontSize: 11.5,
+    color: '#666666'
   },
   moreIcon: {
     fontFamily: 'iconfont',
     fontSize: 11,
-    color: '#666'
+    color: '#666666'
   }
 });
 

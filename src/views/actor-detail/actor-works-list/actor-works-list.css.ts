@@ -1,80 +1,89 @@
-import { StyleSheet, Platform } from 'react-native';
-import { viewHeight } from '@/utils/screen';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: 'rgb(255, 255, 255)'
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
-  title: {
+  count: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 12
+    paddingVertical: 8,
+    marginHorizontal: 10
   },
-  titleText: {
-    flex: 1,
+  countText: {
     fontWeight: '700',
     fontSize: 14,
     color: '#303133'
   },
-  titleTab: {
+  tab: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
+    padding: 4,
     backgroundColor: '#f5f5f5',
-    borderRadius: 18
+    borderRadius: 50
   },
   tabItem: {
-    paddingVertical: 3,
-    paddingHorizontal: 7,
-    margin: 3.5,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
     fontSize: 12,
-    color: '#999'
+    color: '#999999',
+    borderRadius: 50
   },
   tabActiveItem: {
-    backgroundColor: '#fff',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    backgroundColor: '#ffffff',
+    fontSize: 12,
     color: '#303133',
-    borderRadius: 18
+    borderRadius: 50
+  },
+  list: {
+    flexGrow: 1,
+    paddingTop: 6,
+    paddingHorizontal: 10
   },
   item: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    paddingBottom: 14
+    justifyContent: 'center',
+    gap: 6,
+    width: 104,
+    paddingBottom: 10
   },
   itemImage: {
-    width: 105,
-    height: 156,
+    width: 104,
+    height: 152,
     borderRadius: 3
   },
   itemTag: {
     position: 'absolute',
-    top: 6,
-    right: 5,
-    paddingVertical: 0.3,
-    paddingHorizontal: 1.8,
+    top: 4,
+    right: 4,
+    paddingVertical: 1,
+    paddingHorizontal: 2,
     backgroundColor: 'rgba(255, 165, 0, 0.7)',
     fontSize: 9,
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 2
+    color: '#ffffff',
+    borderRadius: 3
   },
   itemRating: {
     position: 'absolute',
-    right: 4,
-    bottom: 40,
-    fontSize: 10.5,
+    top: 132,
+    right: 8,
+    fontSize: 11,
     color: 'orange'
   },
   itemText: {
-    width: 94,
-    marginTop: 5,
-    color: '#333',
-    fontSize: 12
+    color: '#333333',
+    fontSize: 12.5
   }
 });
 

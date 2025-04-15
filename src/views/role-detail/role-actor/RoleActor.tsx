@@ -1,22 +1,21 @@
 import React from 'react';
 import {
+  FlatList,
   View,
   Text,
   Image,
-  StyleSheet,
-  SafeAreaView,
-  FlatList,
-  Pressable
+  Pressable,
+  StyleSheet
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie?: ActorItemType[];
+  list: RoleActorItem[];
 };
 
-export type ActorItemType = {
+export type RoleActorItem = {
   id: number;
   avatar: string;
   name: string;
@@ -25,63 +24,59 @@ export type ActorItemType = {
 function RoleActor(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<ActorItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<RoleActorItem>) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
-          source={{ uri: item?.avatar }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
+          source={{ uri: item.avatar }}
+          resizeMode="stretch"
+          style={styles.itemImage}
         />
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
-          {item?.name}
+          {item.name}
         </Text>
       </View>
     </Pressable>
   );
 
   return (
-    <SafeAreaView style={styles.list}>
-      <FlatList
-        horizontal
-        initialNumToRender={6}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={renderItem}
-        data={props.movie}
-      />
-    </SafeAreaView>
+    <FlatList
+      horizontal
+      initialNumToRender={10}
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(_, index) => String(index)}
+      data={props.list}
+      renderItem={renderItem}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      style={styles.list}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   list: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingLeft: 10,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 4
+    marginHorizontal: 10,
+    marginBottom: 10
   },
   item: {
-    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    paddingBottom: 7,
-    marginRight: 8
+    gap: 6,
+    width: 86,
+    height: 'auto'
   },
   itemImage: {
-    width: 94,
-    height: 130,
+    width: 86,
+    height: 122,
     borderRadius: 3
   },
   itemText: {
-    width: 94,
-    marginTop: 5,
-    color: '#333',
-    fontSize: 12
+    fontSize: 12.5,
+    color: '#333333'
+  },
+  separator: {
+    width: 8,
+    height: '100%'
   }
 });
 

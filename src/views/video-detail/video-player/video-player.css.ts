@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { deviceWidth } from '@/utils/screen';
 
 const styles = StyleSheet.create({
   videoPlayer: {
+    width: '100%',
     height: 216,
-    backgroundColor: '#000'
+    backgroundColor: '#000000',
+    overflow: 'hidden'
   },
-  coverImage: {
-    width: deviceWidth,
-    height: 216,
-    borderRadius: 4
+  image: {
+    width: '100%',
+    height: '100%'
   },
-  play: {
+  paused: {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    borderRadius: 100
+    borderRadius: 50
   },
-  playIcon: {
+  pausedIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
-    color: '#fff'
+    color: '#ffffff'
   },
   control: {
     position: 'absolute',
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: deviceWidth,
+    gap: 4,
+    width: '100%',
     height: 32,
     paddingHorizontal: 4
   },
@@ -48,30 +49,29 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30
   },
-  controlPlayIcon: {
+  playIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
-    color: '#fff'
+    color: '#ffffff'
   },
   controlTime: {
-    paddingHorizontal: 4,
     fontSize: 12,
-    color: '#fff'
+    color: '#ffffff'
   },
   controlProgress: {
     flex: 1,
     height: 3,
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     backgroundColor: 'hsla(0, 0%, 100%, 0.3)',
-    borderRadius: 18
+    borderRadius: 50
   },
   controlClarity: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 8
+    marginHorizontal: 4
   },
-  controlClarityText: {
+  clarityText: {
     fontSize: 12,
     color: '#e5e5e5'
   },
@@ -80,10 +80,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 30,
-    height: 30,
-    marginRight: 5
+    height: 30
   },
-  controlFullIcon: {
+  fullIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
     color: 'hsla(0, 0%, 100%, 0.85)'

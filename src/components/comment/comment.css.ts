@@ -1,32 +1,34 @@
 import { StyleSheet } from 'react-native';
-import { deviceWidth, deviceHeight } from '@/utils/screen';
 
 const styles = StyleSheet.create({
   comment: {
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex: 10,
-    width: deviceWidth,
-    height: deviceHeight
+    zIndex: 9,
+    width: '100%',
+    height: '100%'
   },
   mask: {
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex: 11,
+    zIndex: -1,
     width: '100%',
     height: '100%'
   },
   modal: {
     position: 'absolute',
+    left: 0,
     bottom: 0,
-    zIndex: 12,
-    width: deviceWidth,
-    height: deviceHeight - 202,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4
+    zIndex: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: 560,
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6
   },
   modalHeader: {
     position: 'relative',
@@ -34,168 +36,175 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 0.65,
+    width: '100%',
+    height: 44,
+    borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#f5f5f5'
+    borderColor: '#e5e5e5'
   },
-  headerTitle: {
-    flex: 1,
-    fontWeight: '700',
-    fontSize: 14,
-    color: '#303133',
-    textAlign: 'center'
-  },
-  headerClose: {
-    position: 'absolute',
-    right: 12,
-    backgroundColor: '#e5e5e5',
-    borderRadius: 18
-  },
-  headerCloseIcon: {
-    padding: 5,
-    fontFamily: 'iconfont',
-    fontSize: 12,
-    color: 'rgb(255, 255, 255)'
-  },
-  modalBody: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  bodyTitle: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 12
-  },
-  titleText: {
-    flex: 1,
+  title: {
     fontWeight: '700',
     fontSize: 14,
     color: '#303133'
   },
-  titleTab: {
+  close: {
+    position: 'absolute',
+    right: 10,
+    padding: 4,
+    backgroundColor: '#e5e5e5',
+    borderRadius: 50
+  },
+  closeIcon: {
+    fontFamily: 'iconfont',
+    fontSize: 14,
+    color: '#ffffff'
+  },
+  modalBody: {
+    flexGrow: 1
+  },
+  count: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingVertical: 8,
+    marginHorizontal: 10
+  },
+  countText: {
+    fontWeight: '700',
+    fontSize: 14,
+    color: '#303133'
+  },
+  tab: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 4,
     backgroundColor: '#f5f5f5',
-    borderRadius: 18
+    borderRadius: 50
   },
   tabItem: {
-    paddingVertical: 3,
-    paddingHorizontal: 7,
-    margin: 3.5,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
     fontSize: 12,
-    color: '#999'
+    color: '#999999',
+    borderRadius: 50
   },
   tabActiveItem: {
-    backgroundColor: '#fff',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    backgroundColor: '#ffffff',
+    fontSize: 12,
     color: '#303133',
-    borderRadius: 18
+    borderRadius: 50
   },
   item: {
-    marginTop: 14,
-    marginHorizontal: 9
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 6,
+    paddingVertical: 12,
+    marginHorizontal: 10,
+    borderBottomWidth: 0.48,
+    borderStyle: 'solid',
+    borderColor: '#e5e5e5'
   },
   itemCover: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 10
   },
   itemImage: {
-    width: 29,
-    height: 29,
-    borderRadius: 18
+    width: 30,
+    height: 30,
+    borderRadius: 50
   },
-  itemCoverText: {
+  authorName: {
     flex: 1,
-    paddingLeft: 9,
-    fontSize: 12,
+    fontSize: 13,
     color: '#303133'
   },
-  itemMoreIcon: {
+  moreIcon: {
     fontFamily: 'iconfont',
     fontSize: 20,
     color: '#303133'
   },
   itemContent: {
-    paddingTop: 5,
-    paddingLeft: 34
+    paddingLeft: 40
   },
   itemText: {
-    color: '#333'
+    fontSize: 12.5,
+    color: '#333333'
   },
   itemDeleteText: {
-    maxWidth: 96,
-    paddingVertical: 1,
-    paddingHorizontal: 5,
+    maxWidth: 86,
+    paddingHorizontal: 4,
     backgroundColor: '#f5f5f5',
-    color: '#999',
-    borderRadius: 4
+    fontSize: 12.5,
+    color: '#999999',
+    borderRadius: 3
   },
   itemInfo: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 7,
-    paddingBottom: 14,
-    marginLeft: 34,
-    borderBottomWidth: 0.65,
-    borderStyle: 'solid',
-    borderColor: '#f5f5f5'
+    paddingLeft: 40
   },
-  infoText: {
-    fontSize: 12,
-    color: '#999'
+  itemDuration: {
+    fontSize: 11,
+    color: '#999999'
   },
-  infoDesc: {
+  tool: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 5
+    gap: 5
   },
-  descText: {
-    marginRight: 4,
-    fontSize: 12,
-    color: '#999'
+  toolText: {
+    fontSize: 11,
+    color: '#999999'
   },
-  descIcon: {
+  toolIcon: {
     fontFamily: 'iconfont',
-    fontSize: 12,
-    color: '#999'
+    fontSize: 13,
+    color: '#999999'
   },
   modalFooter: {
     display: 'flex',
     flexDirection: 'row',
-    paddingVertical: 8,
+    alignItems: 'center',
+    height: 46,
     paddingHorizontal: 14,
-    borderTopWidth: 0.65,
+    backgroundColor: '#ffffff',
+    borderTopWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#f5f5f5'
+    borderColor: '#e5e5e5'
   },
-  reviewInput: {
+  review: {
     flex: 1,
-    height: 29,
-    lineHeight: 29,
-    paddingLeft: 10,
-    backgroundColor: '#efefef',
-    fontSize: 12,
-    color: '#7f889b',
-    borderRadius: 18
-  },
-  emptyData: {
     display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 32,
+    paddingHorizontal: 14,
+    backgroundColor: '#efefef',
+    borderRadius: 50
+  },
+  reviewText: {
+    fontSize: 12.5,
+    color: '#7f889b'
+  },
+  empty: {
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 190
+    paddingTop: 52
   },
-  emptyDataText: {
-    fontSize: 13.5,
-    color: '#aaa'
+  emptyText: {
+    fontSize: 13,
+    color: '#aaaaaa'
   }
 });
 

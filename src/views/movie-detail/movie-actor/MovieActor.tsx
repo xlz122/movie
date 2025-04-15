@@ -1,23 +1,21 @@
 import React from 'react';
 import {
+  FlatList,
   View,
   Text,
   Image,
-  StyleSheet,
-  SafeAreaView,
-  FlatList,
-  Pressable
+  Pressable,
+  StyleSheet
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 
 type Props = {
-  movie: ActorItemType[];
+  list: MovieActorItem[];
 };
 
-export type ActorItemType = {
-  union_id: number;
+export type MovieActorItem = {
   id: number;
   avatar: string;
   name: string;
@@ -28,67 +26,68 @@ export type ActorItemType = {
 function MovieActor(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
 
-  const renderItem = ({ item }: ListRenderItemInfo<ActorItemType>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<MovieActorItem>) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
         <Image
           source={{ uri: item.avatar }}
-          resizeMode={'stretch'}
-          style={[styles.itemImage]}
+          resizeMode="stretch"
+          style={styles.itemImage}
         />
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
           {item.name}
         </Text>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.labelText}>
-          {item?.profession === '导演' ? item?.profession : ''}
-          {item?.act ? `饰: ${item?.act}` : ''}
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemIntro}>
+          {item.profession === '导演' ? item.profession : ''}
+          {item.act ? `饰: ${item.act}` : ''}
         </Text>
       </View>
     </Pressable>
   );
 
   return (
-    <SafeAreaView style={styles.list}>
-      <FlatList
-        horizontal
-        initialNumToRender={6}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={renderItem}
-        data={props.movie}
-      />
-    </SafeAreaView>
+    <FlatList
+      horizontal
+      initialNumToRender={10}
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(_, index) => String(index)}
+      data={props.list}
+      renderItem={renderItem}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      style={styles.list}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   list: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    borderRadius: 4
+    marginHorizontal: 0,
+    marginBottom: 0
   },
   item: {
-    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    width: 94,
-    paddingBottom: 7,
-    marginRight: 8
+    gap: 6,
+    width: 86,
+    height: 'auto'
   },
   itemImage: {
-    height: 130,
+    width: 86,
+    height: 122,
     borderRadius: 3
   },
   itemText: {
-    marginTop: 5,
-    color: '#fff',
-    fontSize: 12
+    fontSize: 12.5,
+    color: '#ffffff'
   },
-  labelText: {
-    color: 'hsla(0,0%,96.1%,.75)',
-    fontSize: 10
+  itemIntro: {
+    marginTop: -5,
+    fontSize: 10.5,
+    color: 'hsla(0, 0%, 96.1%, 0.75)'
+  },
+  separator: {
+    width: 8,
+    height: '100%'
   }
 });
 
