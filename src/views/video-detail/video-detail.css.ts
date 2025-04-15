@@ -1,55 +1,50 @@
 import { StyleSheet } from 'react-native';
-import { viewHeight } from '@/utils/screen';
 
 const styles = StyleSheet.create({
   page: {
-    height: viewHeight - 42 - 216 - 44,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   comment: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    height: 44,
-    backgroundColor: '#fff',
-    borderTopWidth: 0.3,
+    gap: 20,
+    height: 46,
+    paddingHorizontal: 14,
+    backgroundColor: '#ffffff',
+    borderTopWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eee'
+    borderColor: '#e5e5e5'
   },
   review: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    height: 32,
     paddingHorizontal: 14,
-    marginLeft: 5
-  },
-  reviewInput: {
-    paddingHorizontal: 15,
-    width: '100%',
-    height: 31,
-    lineHeight: 31,
     backgroundColor: '#efefef',
-    borderRadius: 18
+    borderRadius: 50
   },
-  inputText: {
-    height: 31,
-    lineHeight: 31,
-    fontSize: 12,
+  reviewText: {
+    fontSize: 12.5,
     color: '#7f889b'
   },
   tool: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 12
+    gap: 16
   },
   toolItem: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 41
+    minWidth: 22
   },
   itemIcon: {
     fontFamily: 'iconfont',
@@ -57,10 +52,12 @@ const styles = StyleSheet.create({
     color: '#7f889b'
   },
   activeIcon: {
+    fontFamily: 'iconfont',
+    fontSize: 16,
     color: '#e54847'
   },
   itemText: {
-    fontSize: 9,
+    fontSize: 11,
     color: '#7f889b'
   }
 });

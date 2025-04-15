@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  ScrollView,
-  FlatList
-} from 'react-native';
+import { FlatList, View, Text, Image, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { timeStampToDuration, formatDate } from '@/utils/utils';
+import { timeStampToDuration, formatDistance } from '@/utils/utils';
 import { videosDetailList } from '@/api/videos';
 import type { ListRenderItemInfo } from 'react-native';
 import type { RouteProp } from '@react-navigation/native';
-import type { ResponseType, Navigation } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types/index';
 import styles from './video-list.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
@@ -21,11 +14,10 @@ type Props = {
   movieId?: number;
 };
 
-type ItemType = {
-  type?: string;
-  count?: number;
-  duration?: number;
-  children?: {
+type VideoItem = {
+  type: string;
+  count: number;
+  children: {
     id: number;
     title: string;
     poster: string;
@@ -40,14 +32,17 @@ function VideoList(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
 
-  const [videos, setVideos] = useState<Array<ItemType>>([]);
+  const [navIndex, setNavIndex] = useState(0);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
 
-  const getVideoList = () => {
+  const getVideoList = (): void => {
     videosDetailList({ id: props.movieId! })
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setVideos(res.data.videos);
+        if (res?.code !== 200) {
+          return;
         }
+
+        setVideos(res.data?.videos ?? []);
       })
       .catch(() => ({}));
   };
@@ -60,34 +55,26 @@ function VideoList(props: Props): React.ReactElement {
     getVideoList();
   }, [props.movieId]);
 
-  const [navIndex, setNavIndex] = useState(0);
-
-  const renderItem = ({ item, index }: ListRenderItemInfo<ItemType>) => (
+  const renderItem = ({ item, index }: ListRenderItemInfo<VideoItem>) => (
     <Pressable onPress={() => setNavIndex(index)}>
-      <Text
-        style={[
-          styles.navItem,
-          index === navIndex ? styles.navActiveItem : null
-        ]}
-      >
+      <Text style={index === navIndex ? styles.navActiveItem : styles.navItem}>
         {item.type} {item.count}
       </Text>
     </Pressable>
   );
 
   return (
-    <ScrollView style={styles.videoList}>
-      <View style={styles.nav}>
-        <FlatList
-          horizontal
-          initialNumToRender={5}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={renderItem}
-          data={videos}
-        />
-      </View>
-      {videos[navIndex]?.children?.map((item, index) => {
+    <View style={styles.videoList}>
+      <FlatList
+        horizontal
+        initialNumToRender={10}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(_, index) => String(index)}
+        data={videos}
+        renderItem={renderItem}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+      />
+      {videos[navIndex]?.children?.map?.((item, index) => {
         return (
           <Pressable
             key={index}
@@ -96,31 +83,31 @@ function VideoList(props: Props): React.ReactElement {
           >
             <View style={styles.itemCover}>
               <Image
-                source={{ uri: item?.poster }}
-                resizeMode={'stretch'}
-                style={[styles.coverImage]}
+                source={{ uri: item.poster }}
+                resizeMode="stretch"
+                style={styles.itemImage}
               />
-              <Text style={styles.coverText}>
+              <Text style={styles.itemDuration}>
                 {timeStampToDuration(item.duration)}
               </Text>
               {item.id === route.params.id && (
-                <View style={styles.coverMask}>
-                  <Text style={styles.coverMaskText}>播放中</Text>
+                <View style={styles.itemMask}>
+                  <Text style={styles.maskText}>播放中</Text>
                 </View>
               )}
             </View>
             <View style={styles.itemInfo}>
-              <Text style={styles.infoTitle}>{item.title}</Text>
-              <View style={styles.infoDesc}>
-                <Text style={styles.descText}>
-                  {item.like_count}
+              <Text style={styles.itemTitle}>{item.title}</Text>
+              <View style={styles.intro}>
+                <Text style={styles.introText}>
+                  <Text>{item.like_count}</Text>
                   <Text>赞</Text>
                   <Text> · </Text>
-                  {item.play_count}
+                  <Text>{item.play_count}</Text>
                   <Text>播放</Text>
                 </Text>
-                <Text style={styles.descText}>
-                  {formatDate(item.created_at)}
+                <Text style={styles.introText}>
+                  {formatDistance(item.created_at)}
                 </Text>
               </View>
             </View>
@@ -128,9 +115,11 @@ function VideoList(props: Props): React.ReactElement {
         );
       })}
       {videos[navIndex]?.children?.length === 0 && (
-        <Text style={styles.noDataText}>暂无视频</Text>
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>暂无视频</Text>
+        </View>
       )}
-    </ScrollView>
+    </View>
   );
 }
 

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
-import { viewHeight } from '@/utils/screen';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { movieAwards } from '@/api/home';
 import type { ResponseType } from '@/types/index';
 
 function Awards(): React.ReactElement {
-  const [awards, setAwards] = useState<Array<{ title?: string }>>([]);
+  const [awards, setAwards] = useState<Array<{ title: string }>>([]);
 
-  const getMovieAwards = () => {
+  const getMovieAwards = (): void => {
     movieAwards()
       .then((res: ResponseType) => {
-        if (res.code === 200) {
-          setAwards(res.data);
+        if (res?.code !== 200) {
+          return;
         }
+
+        setAwards(res.data ?? []);
       })
       .catch(() => ({}));
   };
@@ -22,18 +23,15 @@ function Awards(): React.ReactElement {
   }, []);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.page}>
+    <ScrollView style={styles.page}>
       <View style={styles.list}>
-        {awards.map((item, index) => {
+        {awards.map?.((item, index) => {
           return (
             <View
               key={index}
-              style={[
-                styles.item,
-                index % 1 === 0 ? styles.itemLine : styles.item
-              ]}
+              style={[styles.item, index % 1 === 0 ? styles.itemLine : null]}
             >
-              <Text style={styles.itemTitle}>{item?.title}</Text>
+              <Text style={styles.itemText}>{item.title}</Text>
             </View>
           );
         })}
@@ -44,34 +42,33 @@ function Awards(): React.ReactElement {
 
 const styles = StyleSheet.create({
   page: {
-    // web端需要减去标题高度
-    height: Platform.OS === 'web' ? viewHeight - 42 : viewHeight,
-    backgroundColor: '#fff'
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff'
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    alignItems: 'center'
+    flexWrap: 'wrap'
   },
   item: {
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '50%',
-    height: 40,
-    borderBottomWidth: 0.5,
+    height: 38,
+    borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eee'
+    borderColor: '#eeeeee'
   },
   itemLine: {
-    borderRightWidth: 0.5,
+    borderRightWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eee'
+    borderColor: '#eeeeee'
   },
-  itemTitle: {
-    fontSize: 12.3,
+  itemText: {
+    fontSize: 12.5,
     color: '#303133'
   }
 });
