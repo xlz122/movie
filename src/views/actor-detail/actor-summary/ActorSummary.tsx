@@ -5,6 +5,7 @@ import { actorsDetail } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
 import styles from './actor-summary.css';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
@@ -26,6 +27,7 @@ type DetailType = {
 function ActorSummary(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
+  const inset = useSafeAreaInsets();
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
@@ -50,7 +52,7 @@ function ActorSummary(): React.ReactElement {
   });
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, { paddingTop: inset.top }]}>
       <ScrollView style={styles.baseInfo}>
         <View style={styles.group}>
           <Text style={styles.title}>基本信息</Text>

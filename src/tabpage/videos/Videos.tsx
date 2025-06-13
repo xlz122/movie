@@ -7,6 +7,7 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './videos.css';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemType = {
   id: number;
@@ -24,6 +25,7 @@ type ItemType = {
 
 function Videos(): React.ReactElement {
   const navigation: Navigation = useNavigation();
+  const inset = useSafeAreaInsets();
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('dark-content');
@@ -68,7 +70,7 @@ function Videos(): React.ReactElement {
   );
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, { paddingTop: inset.top }]}>
       <ScrollRefresh
         initialNumToRender={5}
         params={{ page: 1, pageSize: 5 }}

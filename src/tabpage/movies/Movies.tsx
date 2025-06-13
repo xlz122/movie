@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   StatusBar,
-  Platform,
   View,
   Text,
   Image,
@@ -15,6 +14,7 @@ import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemType = {
   id: number;
@@ -26,6 +26,7 @@ type ItemType = {
 
 function Movies(): React.ReactElement {
   const navigation: Navigation = useNavigation();
+  const inset = useSafeAreaInsets();
 
   const [params, setParams] = useState({
     category: '全部',
@@ -74,7 +75,7 @@ function Movies(): React.ReactElement {
   );
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, { paddingTop: inset.top }]}>
       <Nav onChange={handleNavChange} />
       <ScrollRefresh
         initialNumToRender={15}
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     height: '100%',
-    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+    // paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
     backgroundColor: '#ffffff'
   },
   list: {
