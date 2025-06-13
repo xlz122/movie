@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   image: {
-    height: 398
+    height: 398,
+    objectFit: 'cover'
   },
   info: {
     position: 'absolute',
