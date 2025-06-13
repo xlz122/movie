@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import router from '.';
 import { Platform } from 'react-native';
-import { StackCardInterpolationProps, StackCardInterpolatedStyle } from '@react-navigation/stack';
+import { StackCardInterpolationProps, StackCardInterpolatedStyle, CardStyleInterpolators } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 

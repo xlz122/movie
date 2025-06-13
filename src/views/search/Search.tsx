@@ -7,8 +7,10 @@ import type { Navigation, TextInputEvent } from '@/types/index';
 import SearchHistory from './search-history/SearchHistory';
 import SearchDetail from './search-detail/SearchDetail';
 import styles from './search.css';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Search(): React.ReactElement {
+  const inset = useSafeAreaInsets();
   const navigation: Navigation = useNavigation();
   const store = useStore();
   const searchHistory = useSelector(
@@ -49,7 +51,7 @@ function Search(): React.ReactElement {
   });
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, { paddingTop: inset.top }]}>
       <View style={styles.search}>
         <View style={styles.input}>
           <Text style={styles.inputIcon}>{'\ue613'}</Text>

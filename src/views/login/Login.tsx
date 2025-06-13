@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   StatusBar,
-  Platform,
   View, Text,
   Pressable,
   StyleSheet
@@ -10,9 +9,11 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
 import LoginForm from './login-form/LoginForm';
 import RegisterForm from './register-form/RegisterForm';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Login(): React.ReactElement {
   const navigation: Navigation = useNavigation();
+  const inset = useSafeAreaInsets();
 
   const close = (): void => {
     navigation.goBack();
@@ -34,7 +35,7 @@ function Login(): React.ReactElement {
   });
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, { paddingTop: inset.top }]}>
       <Pressable onPress={close} style={styles.close}>
         <Text style={styles.closeIcon}>{'\ue612'}</Text>
       </Pressable>
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+    // paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
     backgroundColor: '#ffffff'
   },
   close: {
