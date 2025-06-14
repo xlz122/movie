@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     height: Dimensions.get('window').height,
-    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+    // paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
     backgroundColor: '#ffffff'
   },
   baseInfo: {

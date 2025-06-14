@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 64,
     height: 90,
-    borderRadius: 3
+    borderRadius: 3,
+    objectFit: 'cover'
   },
   separator: {
     width: 8,

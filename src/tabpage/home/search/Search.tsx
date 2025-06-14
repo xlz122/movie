@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   StatusBar,
-  Platform,
   View,
   Text,
   Pressable,
@@ -9,16 +8,18 @@ import {
 } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { Navigation } from '@/types/index';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Search(): React.ReactElement {
   const navigation: Navigation = useNavigation();
+  const inset = useSafeAreaInsets();
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('light-content');
   });
 
   return (
-    <View style={styles.search}>
+    <View style={[styles.search, { marginTop: inset.top }]}>
       <Pressable onPress={() => navigation.push('Search')} style={styles.input}>
         <Text style={styles.inputIcon}>{'\ue613'}</Text>
         <Text style={styles.inputText}>请输入你要搜索的内容</Text>
@@ -30,9 +31,9 @@ function Search(): React.ReactElement {
 const styles = StyleSheet.create({
   search: {
     width: '100%',
-    height: 48 ,
-    padding: 10,
-    marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
+    height: 48,
+    padding: 10
+    // marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
   },
   input: {
     display: 'flex',
