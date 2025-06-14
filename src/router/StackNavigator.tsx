@@ -1,9 +1,9 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Platform } from 'react-native';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import type { StackCardInterpolationProps, StackCardInterpolatedStyle } from '@react-navigation/stack';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import router from '.';
-import { Platform } from 'react-native';
-import { StackCardInterpolationProps, StackCardInterpolatedStyle, CardStyleInterpolators } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +26,6 @@ function StackNavigator(): React.ReactElement {
       screenOptions={{
         // 自定义标头
         header: ({ options }) => <CustomHeader options={options} />,
-        gestureEnabled: true,
         cardStyleInterpolator: Platform.OS === 'ios' ? CardStyleInterpolators.forHorizontalIOS : forSlideFromBottom
       }}
     >
