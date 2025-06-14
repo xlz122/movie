@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 48,
     padding: 10
-    // marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
   },
   input: {
     display: 'flex',

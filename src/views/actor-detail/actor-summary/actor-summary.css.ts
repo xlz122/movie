@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     height: Dimensions.get('window').height,
-    // paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
     backgroundColor: '#ffffff'
   },
   baseInfo: {
