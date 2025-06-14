@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 66,
     height: 90,
-    borderRadius: 3
+    borderRadius: 3,
+    objectFit: 'cover'
   },
   itemInfo: {
     display: 'flex',

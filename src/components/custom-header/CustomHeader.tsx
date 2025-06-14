@@ -5,6 +5,7 @@ import type { ViewStyle } from 'react-native';
 import type { StackNavigationOptions } from '@react-navigation/stack';
 import type { Navigation } from '@/types/index';
 import styles from './custom-header.css';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
   options?: StackNavigationOptions;
@@ -16,13 +17,14 @@ type Props = {
 
 function CustomHeader(props: Props): React.ReactElement {
   const navigation: Navigation = useNavigation();
+  const inset = useSafeAreaInsets();
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('light-content');
   });
 
   return (
-    <View style={[styles.header, props.headerStyle]}>
+    <View style={[styles.header, props.headerStyle, { paddingTop: inset.top }]}>
       <Pressable
         onPress={() => navigation.goBack()}
         style={[styles.arrow, props.arrowStyle]}

@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 86,
     height: 122,
-    borderRadius: 3
+    borderRadius: 3,
+    objectFit: 'cover'
   },
   itemText: {
     fontSize: 12.5,
