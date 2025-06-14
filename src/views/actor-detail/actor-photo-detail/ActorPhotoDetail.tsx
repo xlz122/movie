@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 92,
     height: 124,
-    borderRadius: 3
+    borderRadius: 3,
+    objectFit: 'cover'
   }
 });
 

@@ -6,6 +6,13 @@ function Changelog(): React.ReactElement {
     <ScrollView style={styles.page}>
       <View style={styles.cell}>
         <View style={styles.cellItem}>
+          <Text style={styles.itemTitle}>2025-06-14</Text>
+          <View style={styles.itemContent}>
+            <Text style={styles.itemText}>1.适配ios</Text>
+            <Text style={styles.itemText}>2.添加路由过渡动画</Text>
+          </View>
+        </View>
+        <View style={styles.cellItem}>
           <Text style={styles.itemTitle}>2025-04-15</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.更新react native 0.79.0</Text>
