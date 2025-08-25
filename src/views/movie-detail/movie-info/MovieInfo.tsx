@@ -30,14 +30,18 @@ type Props = {
     release_status: number;
     release_date: string;
     wish_count: number;
+    rating: string;
+    vote_count: number;
     thrid_rating: {
+      imdb: {
+        count: string;
+        rating: string;
+      };
       douban: {
         count: string;
         rating: string;
       };
     };
-    rating: string;
-    awards_nominate_count: number;
   }>;
   onRefresh: () => void;
 };
@@ -71,10 +75,61 @@ function MovieInfo(props: Props): React.ReactElement {
   const movieWatchChange = (): void => {
     if (!isLogin) {
       navigation.push('Login');
+      return;
     }
   };
 
   const RenderRating = (): React.ReactElement => {
+    // 已上映
+    if (detail.release_status === 0) {
+      return (
+        <>
+          {Boolean(detail.thrid_rating?.imdb?.rating) && (
+            <>
+              <View style={styles.ratingItem}>
+                <View style={styles.ratingCover}>
+                  <Text style={styles.ratingText}>IMDB评分</Text>
+                </View>
+                <Text style={styles.ratingScore}>
+                  {detail.thrid_rating?.imdb?.rating}
+                </Text>
+                <Text style={styles.ratingText}>
+                  {detail.thrid_rating?.imdb?.count}人评
+                </Text>
+              </View>
+              <View style={styles.ratingLine} />
+            </>
+          )}
+          {Boolean(detail.rating) && (
+            <>
+              <View style={styles.ratingItem}>
+                <View style={styles.ratingCover}>
+                  <Text style={styles.ratingText}>慕影评分</Text>
+                </View>
+                <Text style={styles.ratingScore}>{detail.rating}</Text>
+                <Text style={styles.ratingText}>{detail.vote_count}人评</Text>
+              </View>
+              <View style={styles.ratingLine} />
+            </>
+          )}
+          {Boolean(detail.thrid_rating?.douban?.rating) && (
+            <View style={styles.ratingItem}>
+              <View style={styles.ratingCover}>
+                <Text style={styles.ratingText}>豆瓣评分</Text>
+                <Text style={styles.ratingIcon}>{'\ue602'}</Text>
+              </View>
+              <Text style={styles.ratingScore}>
+                {detail.thrid_rating?.douban?.rating}
+              </Text>
+              <Text style={styles.ratingText}>
+                {detail.thrid_rating?.douban?.count}人评
+              </Text>
+            </View>
+          )}
+        </>
+      );
+    }
+
     // 即将上映
     if (detail.release_status === 1) {
       return (
@@ -90,44 +145,7 @@ function MovieInfo(props: Props): React.ReactElement {
       );
     }
 
-    // 已上映
-    return (
-      <>
-        {Boolean(detail.rating) && (
-          <>
-            <View style={styles.ratingItem}>
-              <View style={styles.ratingCover}>
-                <Text style={styles.ratingText}>慕影评分</Text>
-              </View>
-              <Text style={styles.ratingScore}>{detail.rating}</Text>
-              <Text style={styles.ratingText}>
-                {detail.awards_nominate_count}
-                <Text>人评</Text>
-              </Text>
-            </View>
-            <View style={styles.ratingLine} />
-          </>
-        )}
-        {Boolean(detail.thrid_rating?.douban?.rating) && (
-          <View style={styles.ratingItem}>
-            <View style={styles.ratingCover}>
-              <Text style={styles.ratingText}>豆瓣评分</Text>
-              <Text style={styles.ratingIcon}>{'\ue602'}</Text>
-            </View>
-            <Text style={styles.ratingScore}>
-              {detail.thrid_rating?.douban?.rating}
-            </Text>
-            <Text style={styles.ratingText}>
-              {detail.thrid_rating?.douban?.count}
-              <Text>人评</Text>
-            </Text>
-          </View>
-        )}
-        {!detail.rating && !detail.thrid_rating?.douban?.rating && (
-          <Text style={styles.noRating}>暂无评分</Text>
-        )}
-      </>
-    );
+    return <Text style={styles.noRating}>暂无评分</Text>;
   };
 
   return (
@@ -151,18 +169,20 @@ function MovieInfo(props: Props): React.ReactElement {
             >
               {detail.genres?.join?.(' / ')}
             </Text>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.briefText}
-            >
-              <Text>{detail.countries?.join?.(' / ')}</Text>
-              <Text>·</Text>
-              <Text>{detail.year}</Text>
-              {detail.episode_count === 0 && detail.durations!.length > 0 && (
-                <Text>{`·${detail.durations?.join?.(' / ')}`}</Text>
-              )}
-            </Text>
+            {detail.countries?.length !== 0 && (
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.briefText}
+              >
+                <Text>{detail.countries?.join?.(' / ')}</Text>
+                <Text>·</Text>
+                <Text>{detail.year}</Text>
+                {detail.episode_count === 0 && detail.durations!.length > 0 && (
+                  <Text>{`·${detail.durations?.join?.(' / ')}`}</Text>
+                )}
+              </Text>
+            )}
             {Number(detail.episode_count) > 0 && (
               <Text
                 numberOfLines={1}
@@ -206,9 +226,7 @@ function MovieInfo(props: Props): React.ReactElement {
       <View style={styles.tag}>
         {detail.tags?.map?.((item, index) => {
           return (
-            <Text key={index} style={styles.tagItem}>
-              {item}
-            </Text>
+            <Text key={index} style={styles.tagItem}>{item}</Text>
           );
         })}
       </View>
