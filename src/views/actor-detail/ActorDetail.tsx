@@ -14,6 +14,7 @@ import ActorPhoto from './actor-photo/ActorPhoto';
 import ActorWorks from './actor-wroks/ActorWorks';
 import ActorRole from './actor-role/ActorRole';
 import styles from './actor-detail.css';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
@@ -37,6 +38,7 @@ type DetailType = {
 function ActorDetail(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const route: Route = useRoute();
+  const { top } = useSafeAreaInsets();
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
@@ -72,7 +74,7 @@ function ActorDetail(): React.ReactElement {
               paddingTop: 0,
               backgroundColor: 'transparent'
             }}
-            arrowStyle={{ position: 'absolute', top: 25 }}
+            arrowStyle={{ position: 'absolute', top }}
           />
         );
       }
