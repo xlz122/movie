@@ -11,11 +11,7 @@ function UserProfile(): React.ReactElement {
       <View style={styles.cell}>
         <View style={styles.cellItem}>
           <Text style={styles.itemLabel}>头像</Text>
-          <Image
-            source={{ uri: userinfo.avatar }}
-            resizeMode="stretch"
-            style={styles.itemImage}
-          />
+          <Image resizeMode="stretch" source={{ uri: userinfo.avatar }} style={styles.itemImage} />
         </View>
         <View style={styles.divider} />
         <View style={styles.cellItem}>

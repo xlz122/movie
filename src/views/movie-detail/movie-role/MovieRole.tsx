@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { FlatList, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
@@ -27,12 +20,8 @@ function MovieRole(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<MovieRoleItem>) => (
     <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.avatar }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+        <Image resizeMode="stretch" source={{ uri: item.avatar }} style={styles.itemImage} />
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
           {item.name}
         </Text>
       </View>
@@ -44,7 +33,7 @@ function MovieRole(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.separator} />}

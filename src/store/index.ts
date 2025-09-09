@@ -25,7 +25,7 @@ const store = configureStore({
   reducer: {
     routine: persistedReducer
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     // 忽略redux-persist调度的所有动作类型
     getDefaultMiddleware({
       serializableCheck: {

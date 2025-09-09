@@ -82,11 +82,7 @@ export const movieAwards = (): AxiosPromise => {
  * @param { number } [params.per_page] - 条数
  * @param { string } [params.sortby] - 排序方式(hot热度, year时间, rating评分)
  */
-export const movieToday = ({
-  page,
-  per_page,
-  sortby
-}: Paging): AxiosPromise => {
+export const movieToday = ({ page, per_page, sortby }: Paging): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({

@@ -24,28 +24,18 @@ function UserVideo(): React.ReactElement {
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
-          <Image
-            source={{ uri: item.poster }}
-            resizeMode="stretch"
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemDuration}>
-            {timeStampToDuration(item.duration)}
-          </Text>
+          <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
+          <Text style={styles.itemDuration}>{timeStampToDuration(item.duration)}</Text>
         </View>
         <View style={styles.itemInfo}>
           <Text style={styles.itemTitle}>{item.title}</Text>
           <View style={styles.intro}>
             <Text style={styles.introText}>
-              <Text>{item.like_count}</Text>
-              <Text>赞</Text>
+              <Text>{item.like_count}赞</Text>
               <Text> · </Text>
-              <Text>{item.play_count}</Text>
-              <Text>播放</Text>
+              <Text>{item.play_count}播放</Text>
             </Text>
-            <Text style={styles.introText}>
-              {formatDistance(item.created_at)}
-            </Text>
+            <Text style={styles.introText}>{formatDistance(item.created_at)}</Text>
           </View>
         </View>
       </View>
@@ -95,7 +85,7 @@ const styles = StyleSheet.create({
   itemDuration: {
     position: 'absolute',
     right: 6,
-    bottom: 10,
+    bottom: 6,
     zIndex: 9,
     fontSize: 9,
     color: '#ffffff'

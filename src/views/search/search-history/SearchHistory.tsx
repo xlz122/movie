@@ -10,16 +10,15 @@ type Props = {
 
 function SearchHistory(props: Props): React.ReactElement {
   const store = useStore();
-  const searchHistory = useSelector(
-    (state: RootState) => state.routine.searchHistory
-  );
+  const searchHistory = useSelector((state: RootState) => state.routine.searchHistory);
 
   const [clearVisible, setClearVisible] = useState(false);
-  const handleClearToggle = (): void => {
+
+  const handleClearToggle = () => {
     setClearVisible(!clearVisible);
   };
 
-  const handleHistoryChange = (item: string, index: number): void => {
+  const handleHistoryChange = (item: string, index: number) => {
     if (!clearVisible) {
       props.onSearch?.(item);
       return;
@@ -30,7 +29,7 @@ function SearchHistory(props: Props): React.ReactElement {
     store.dispatch({ type: 'routine/setSearchHistory', payload: history });
   };
 
-  const handleClearAll = (): void => {
+  const handleClearAll = () => {
     store.dispatch({ type: 'routine/setSearchHistory', payload: [] });
   };
 
@@ -41,15 +40,15 @@ function SearchHistory(props: Props): React.ReactElement {
         <View style={styles.clear}>
           {clearVisible && (
             <>
-              <Text onPress={handleClearAll} style={styles.clearText}>
-                全部删除
-              </Text>
+              <Pressable onPress={handleClearAll}>
+                <Text style={styles.clearText}>全部删除</Text>
+              </Pressable>
               <View style={styles.divider} />
             </>
           )}
-          <Text onPress={handleClearToggle} style={styles.clearIcon}>
-            {'\ue614'}
-          </Text>
+          <Pressable onPress={handleClearToggle}>
+            <Text style={styles.clearIcon}>{'\ue614'}</Text>
+          </Pressable>
         </View>
       </View>
       <View style={styles.list}>

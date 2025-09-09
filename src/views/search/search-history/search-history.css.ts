@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 6
+    gap: 6,
+    marginRight: 8
   },
   clearText: {
     fontSize: 12.5,

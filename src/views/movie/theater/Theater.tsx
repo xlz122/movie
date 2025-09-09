@@ -23,35 +23,27 @@ function Theater(): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
+        <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemTitle}>
             {item.title}
           </Text>
           <View style={styles.itemTag}>
             {item.category && item.category !== '电影' && (
               <Text style={styles.tag}>{item.category}</Text>
             )}
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.itemText}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
               {item.year}
             </Text>
           </View>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.genres}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.countries}
           </Text>
         </View>
-        {Number(item.rating) > 0 && (
+        {Boolean(item.rating) && (
           <View style={styles.itemRating}>
             <Text style={styles.ratingWeight}>{item.rating}</Text>
             <Text style={styles.ratingText}>分</Text>

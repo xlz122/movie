@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#303133'
   },
-  tab: {
+  tabs: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

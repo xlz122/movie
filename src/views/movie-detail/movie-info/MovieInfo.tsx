@@ -14,9 +14,7 @@ type Route = RouteProp<{ params: { id: number } }>;
 type Props = {
   detail: Partial<{
     id: number;
-    poster: {
-      small: string;
-    };
+    poster: { small: string };
     title: string;
     title_original: string;
     genres: string[];
@@ -33,14 +31,8 @@ type Props = {
     rating: string;
     vote_count: number;
     thrid_rating: {
-      imdb: {
-        count: string;
-        rating: string;
-      };
-      douban: {
-        count: string;
-        rating: string;
-      };
+      imdb: { count: string; rating: string };
+      douban: { count: string; rating: string };
     };
   }>;
   onRefresh: () => void;
@@ -54,25 +46,22 @@ function MovieInfo(props: Props): React.ReactElement {
   const { detail } = props;
 
   // 想看/取消想看
-  const movieWishChange = (): void => {
+  const movieWishChange = async () => {
     if (!isLogin) {
       navigation.push('Login');
       return;
     }
 
-    movieWish({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+    const res: ResponseType = await movieWish({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        props.onRefresh?.();
-        CustomAlert({ title: '提示', message: res.message });
-      })
-      .catch(() => ({}));
+    props.onRefresh?.();
+    CustomAlert({ title: '提示', message: res.message });
   };
 
-  const movieWatchChange = (): void => {
+  const movieWatchChange = () => {
     if (!isLogin) {
       navigation.push('Login');
       return;
@@ -90,12 +79,8 @@ function MovieInfo(props: Props): React.ReactElement {
                 <View style={styles.ratingCover}>
                   <Text style={styles.ratingText}>IMDB评分</Text>
                 </View>
-                <Text style={styles.ratingScore}>
-                  {detail.thrid_rating?.imdb?.rating}
-                </Text>
-                <Text style={styles.ratingText}>
-                  {detail.thrid_rating?.imdb?.count}人评
-                </Text>
+                <Text style={styles.ratingScore}>{detail.thrid_rating?.imdb?.rating}</Text>
+                <Text style={styles.ratingText}>{detail.thrid_rating?.imdb?.count}人评</Text>
               </View>
               <View style={styles.ratingLine} />
             </>
@@ -118,12 +103,8 @@ function MovieInfo(props: Props): React.ReactElement {
                 <Text style={styles.ratingText}>豆瓣评分</Text>
                 <Text style={styles.ratingIcon}>{'\ue602'}</Text>
               </View>
-              <Text style={styles.ratingScore}>
-                {detail.thrid_rating?.douban?.rating}
-              </Text>
-              <Text style={styles.ratingText}>
-                {detail.thrid_rating?.douban?.count}人评
-              </Text>
+              <Text style={styles.ratingScore}>{detail.thrid_rating?.douban?.rating}</Text>
+              <Text style={styles.ratingText}>{detail.thrid_rating?.douban?.count}人评</Text>
             </View>
           )}
         </>
@@ -151,44 +132,29 @@ function MovieInfo(props: Props): React.ReactElement {
   return (
     <>
       <View style={styles.movieInfo}>
-        {detail.poster?.small && (
-          <Image
-            source={{ uri: detail.poster.small }}
-            resizeMode="stretch"
-            style={styles.image}
-          />
-        )}
+        <Image resizeMode="stretch" source={{ uri: detail.poster?.small }} style={styles.image} />
         <View style={styles.info}>
           <Text style={styles.title}>{detail.title}</Text>
           <Text style={styles.subTitle}>{detail.title_original}</Text>
           <View style={styles.brief}>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.briefText}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={1} style={styles.briefText}>
               {detail.genres?.join?.(' / ')}
             </Text>
-            {detail.countries?.length !== 0 && (
-              <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={styles.briefText}
-              >
+            {detail.countries && detail.countries.length !== 0 && (
+              <Text ellipsizeMode="tail" numberOfLines={1} style={styles.briefText}>
                 <Text>{detail.countries?.join?.(' / ')}</Text>
                 <Text>·</Text>
                 <Text>{detail.year}</Text>
-                {detail.episode_count === 0 && detail.durations!.length > 0 && (
-                  <Text>{`·${detail.durations?.join?.(' / ')}`}</Text>
+                {detail.episode_count === 0 && (
+                  <>
+                    <Text>·</Text>
+                    <Text>{`${detail.durations?.join?.(' / ')}`}</Text>
+                  </>
                 )}
               </Text>
             )}
-            {Number(detail.episode_count) > 0 && (
-              <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={styles.briefText}
-              >
+            {Boolean(detail.episode_count) && (
+              <Text ellipsizeMode="tail" numberOfLines={1} style={styles.briefText}>
                 <Text>{`共${detail.episode_count}集`}</Text>
                 <Text>·</Text>
                 <Text>{`每集${detail.durations?.[0]}分钟`}</Text>
@@ -204,9 +170,7 @@ function MovieInfo(props: Props): React.ReactElement {
                 ]}
               >
                 <Text style={styles.operateIcon}>{'\ue60a'}</Text>
-                <Text style={styles.operateText}>
-                  {detail.is_wish ? '已想看' : '想看'}
-                </Text>
+                <Text style={styles.operateText}>{detail.is_wish ? '已想看' : '想看'}</Text>
               </View>
             </Pressable>
             {detail.release_status !== 1 && (
@@ -223,19 +187,17 @@ function MovieInfo(props: Props): React.ReactElement {
       <View style={styles.rating}>
         <RenderRating />
       </View>
-      <View style={styles.tag}>
+      <View style={styles.tags}>
         {detail.tags?.map?.((item, index) => {
           return (
             <Text key={index} style={styles.tagItem}>{item}</Text>
           );
         })}
       </View>
-      {Number(detail.egg_hunt) > 0 && (
+      {Boolean(detail.egg_hunt) && (
         <View style={styles.egg}>
           <Text style={styles.eggIcon}>{'\ue61e'}</Text>
-          <Text style={styles.eggText}>
-            {`有${detail.egg_hunt}个彩蛋, 不要错过哦~ `}
-          </Text>
+          <Text style={styles.eggText}>{`有${detail.egg_hunt}个彩蛋, 不要错过哦~ `}</Text>
         </View>
       )}
     </>

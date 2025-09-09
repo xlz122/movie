@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { followActor, unFollowActor } from '@/api/actor';
@@ -26,61 +26,49 @@ function ActorInfo(props: Props): React.ReactElement {
   const isLogin = useSelector((state: RootState) => state.routine.isLogin);
 
   // 关注/取消关注
-  const handleFollowChange = (): void => {
+  const handleFollowChange = async () => {
     if (!isLogin) {
       navigation.push('Login');
       return;
     }
 
     if (props.detail?.is_collection === 0) {
-      followActor({ id: props.detail.id! })
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+      const res: ResponseType = await followActor({ id: props.detail.id! });
+      if (res?.code !== 200) {
+        return;
+      }
 
-          props.onRefresh?.();
-          CustomAlert({ title: '提示', message: res.message });
-        })
-        .catch(() => ({}));
+      props.onRefresh?.();
+      CustomAlert({ title: '提示', message: res.message });
     }
 
     if (props.detail?.is_collection === 1) {
-      unFollowActor({ id: props.detail.id! })
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+      const res: ResponseType = await unFollowActor({ id: props.detail.id! });
+      if (res?.code !== 200) {
+        return;
+      }
 
-          props.onRefresh?.();
-          CustomAlert({ title: '提示', message: res.message });
-        })
-        .catch(() => ({}));
+      props.onRefresh?.();
+      CustomAlert({ title: '提示', message: res.message });
     }
   };
 
   return (
     <View style={styles.actorInfo}>
-      {props.detail.avatar && (
-        <Image
-          source={{ uri: props.detail.avatar }}
-          resizeMode="cover"
-          style={styles.image}
-        />
-      )}
+      <Image resizeMode="cover" source={{ uri: props.detail.avatar }} style={styles.image} />
       <View style={styles.info}>
         <View style={styles.brief}>
           <Text style={styles.briefName}>{props.detail.name}</Text>
           <Text style={styles.briefEnName}>{props.detail.name_en}</Text>
           <Text style={styles.briefExtra}>
             <Text>{props.detail.gender}</Text>
-            {props.detail.birthday && (
+            {Boolean(props.detail.birthday) && (
               <>
                 <Text> · </Text>
                 <Text>{props.detail.birthday}</Text>
               </>
             )}
-            {props.detail.country && (
+            {Boolean(props.detail.country) && (
               <>
                 <Text> · </Text>
                 <Text>{props.detail.country}</Text>
@@ -88,14 +76,11 @@ function ActorInfo(props: Props): React.ReactElement {
             )}
           </Text>
         </View>
-        <Text
-          onPress={handleFollowChange}
-          style={
-            props.detail.is_collection === 1 ? styles.followed : styles.follow
-          }
-        >
-          {`${props.detail.is_collection === 1 ? '已关注' : '关注'}`}
-        </Text>
+        <Pressable onPress={handleFollowChange}>
+          <Text style={props.detail.is_collection === 1 ? styles.followed : styles.follow}>
+            {`${props.detail.is_collection === 1 ? '已关注' : '关注'}`}
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -139,6 +124,8 @@ const styles = StyleSheet.create({
     color: '#cccccc'
   },
   briefExtra: {
+    display: 'flex',
+    gap: 4,
     fontSize: 12,
     color: '#dddddd'
   },

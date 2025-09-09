@@ -12,34 +12,24 @@ type Props = {
 };
 
 function VideoPlayer(props: Props): React.ReactElement {
-  const [video, setVideo] = useState({
-    paused: true
-  });
+  const [video, setVideo] = useState({ played: false });
 
-  const handlePlayChange = (): void => {
-    setVideo({ paused: !video.paused });
+  const handlePlayChange = () => {
+    setVideo({ played: !video.played });
   };
 
   return (
     <View style={styles.videoPlayer}>
-      {props.detail?.poster && (
-        <Image
-          source={{ uri: props.detail.poster }}
-          resizeMode="stretch"
-          style={styles.image}
-        />
-      )}
-      {video.paused && (
+      <Image resizeMode="stretch" source={{ uri: props.detail.poster }} style={styles.image} />
+      {!video.played && (
         <Pressable onPress={handlePlayChange} style={styles.paused}>
           <Text style={styles.pausedIcon}>{'\ue616'}</Text>
         </Pressable>
       )}
-      {!video.paused && (
+      {video.played && (
         <View style={styles.control}>
           <Pressable onPress={handlePlayChange} style={styles.controlPlay}>
-            <Text style={styles.playIcon}>
-              {video.paused ? '\ue616' : '\ue61b'}
-            </Text>
+            <Text style={styles.playIcon}>{video.played ? '\ue616' : '\ue61b'}</Text>
           </Pressable>
           <Text style={styles.controlTime}>00:00</Text>
           <View style={styles.controlProgress} />

@@ -23,7 +23,7 @@ const getRequestIdentify = (config: AxiosRequestConfig, isReuest = false) => {
 const pending: { [key: string]: (message: string) => void } = {};
 const removePending = (key: string, isRequest = false) => {
   if (pending[key] && isRequest) {
-    pending[key]('取消重复请求');
+    pending[key]('');
   }
 
   delete pending[key];
@@ -49,7 +49,7 @@ class HttpRequest {
         const requestIdentify: string = getRequestIdentify(config, true);
         // 取消重复请求
         removePending(requestIdentify, true);
-        config.cancelToken = new axios.CancelToken(cancel => {
+        config.cancelToken = new axios.CancelToken((cancel) => {
           pending[requestIdentify] = cancel;
         });
 
@@ -67,13 +67,10 @@ class HttpRequest {
     // 响应拦截
     instance.interceptors.response.use(
       (response: AxiosResponse) => {
-        const res = response.headers['content-type'].includes(
-          'application/json'
-        )
+        const res = response.headers['content-type'].includes('application/json')
           ? response.data
           : response;
 
-        // 无权限
         if (res.code === 401) {
           store.dispatch({ type: 'routine/setLogout', payload: '' });
         }
@@ -81,7 +78,6 @@ class HttpRequest {
         return Promise.resolve(res);
       },
       (error: AxiosError) => {
-        // 无权限
         if (error.response?.status === 401) {
           store.dispatch({ type: 'routine/setLogout', payload: '' });
         }

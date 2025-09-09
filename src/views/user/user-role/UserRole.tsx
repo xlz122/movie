@@ -19,16 +19,12 @@ function UserRole(): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('RoleDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.avatar }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
+        <Image resizeMode="stretch" source={{ uri: item.avatar }} style={styles.itemImage} />
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemTitle}>
             {item.name}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.name_en}
           </Text>
         </View>

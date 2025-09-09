@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     color: '#ffffff'
   },
-  tag: {
+  tags: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',

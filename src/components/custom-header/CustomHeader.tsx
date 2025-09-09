@@ -25,18 +25,10 @@ function CustomHeader(props: Props): React.ReactElement {
 
   return (
     <View style={[styles.header, props.headerStyle, { paddingTop: inset.top }]}>
-      <Pressable
-        onPress={() => navigation.goBack()}
-        style={[styles.arrow, props.arrowStyle]}
-      >
+      <Pressable onPress={() => navigation.goBack()} style={[styles.arrow, props.arrowStyle]}>
         <Text style={styles.arrowIcon}>{'\ue656'}</Text>
       </Pressable>
-      <Text
-        style={[
-          styles.titleText,
-          props.titleCenter ? styles.titleCenter : null
-        ]}
-      >
+      <Text style={[styles.titleText, props.titleCenter ? styles.titleCenter : null]}>
         {props.options?.title}
       </Text>
       {props.children}

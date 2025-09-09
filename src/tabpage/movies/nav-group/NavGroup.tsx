@@ -9,14 +9,12 @@ type Props = {
   onChange: (group: string, name: string) => void;
 };
 
-type ItemType = {
-  name: string;
-};
+type ItemType = { name: string };
 
 function NavGroup(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
-    <Pressable onPress={() => { props.onChange(props.group, item.name); }}>
-      <Text style={item.name === props.active ? styles.activeItem : styles.item}>
+    <Pressable onPress={() => props.onChange(props.group, item.name)}>
+      <Text style={props.active === item.name ? styles.activeItem : styles.item}>
         {item.name}
       </Text>
     </Pressable>
@@ -27,7 +25,7 @@ function NavGroup(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       style={styles.list}

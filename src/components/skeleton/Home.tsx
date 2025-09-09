@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function HomeSkeleton(): React.ReactElement {
+  const inset = useSafeAreaInsets();
+
   return (
-    <View style={styles.home}>
+    <View style={[styles.home, { marginTop: inset.top }]}>
       <View style={styles.search} />
       <View style={styles.banner} />
       <View style={styles.nav}>

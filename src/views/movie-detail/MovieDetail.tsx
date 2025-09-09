@@ -47,34 +47,31 @@ function MovieDeail(): React.ReactElement {
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
-  const getMovieDetail = (): void => {
-    moviesDetail({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieDetail = async () => {
+    const res: ResponseType = await moviesDetail({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setDetail(res.data ?? {});
-      })
-      .catch(() => ({}));
+    setDetail(res.data ?? {});
   };
 
   useEffect(() => {
     getMovieDetail();
   }, []);
 
-  const handleRefresh = (): void => {
+  const handleRefresh = () => {
     getMovieDetail();
   };
 
   // 渐变背景色
   const [gradientColor, setGradientColor] = useState(['#f5f5f5', '#f5f5f5']);
 
-  const handlerGradualChange = (color: string): void => {
+  const handlerGradualChange = (color: string) => {
     const result: string[] = [];
 
     const gradient = [0.9, 0.82, 0.7, 0.68];
-    gradient.forEach(item => {
+    gradient.forEach((item) => {
       result.push(colorToRgba(color, item));
     });
 
@@ -90,7 +87,7 @@ function MovieDeail(): React.ReactElement {
   }, [detail]);
 
   // 收藏
-  const handleCollectionChange = (): void => {
+  const handleCollectionChange = () => {
     if (!isLogin) {
       navigation.push('Login');
       return;
@@ -98,45 +95,37 @@ function MovieDeail(): React.ReactElement {
   };
 
   // 评论
-  const [comment, setComment] = useState({
-    open: false
-  });
+  const [comment, setComment] = useState({ open: false });
 
-  const handleCommentOpen = (): void => {
+  const handleCommentOpen = () => {
     setComment({ open: true });
   };
 
-  const handleCommentClose = (): void => {
+  const handleCommentClose = () => {
     setComment({ open: false });
   };
 
   useLayoutEffect(() => {
-    // 页面加载时自定义标头
     navigation.setOptions({
-      header: ({ options }) => {
-        return (
-          <CustomHeader
-            options={options}
-            titleCenter={true}
-            headerStyle={{ backgroundColor: 'transparent' }}
-          />
-        );
-      }
+      header: ({ options }) => (
+        <CustomHeader
+          options={options}
+          titleCenter={true}
+          headerStyle={{ backgroundColor: 'transparent' }}
+        />
+      )
     });
   }, []);
 
   useEffect(() => {
-    // 自定义标头
     navigation.setOptions({
-      header: ({ options }) => {
-        return (
-          <CustomHeader
-            options={options}
-            titleCenter={true}
-            headerStyle={{ backgroundColor: gradientColor[0] }}
-          />
-        );
-      }
+      header: ({ options }) => (
+        <CustomHeader
+          options={options}
+          titleCenter={true}
+          headerStyle={{ backgroundColor: gradientColor[0] }}
+        />
+      )
     });
   }, [gradientColor]);
 
@@ -145,35 +134,31 @@ function MovieDeail(): React.ReactElement {
       <ScrollView style={styles.page}>
         <LinearGradinet colors={gradientColor}>
           <MovieInfo detail={detail} onRefresh={handleRefresh} />
-          {detail.summary && detail.summary?.length !== 0 && (
+          {detail.summary && detail.summary.length !== 0 && (
             <Panel
               title="剧情"
               subtitle="查看全部"
               to={{ path: 'MovieSummary', params: { id: route.params.id } }}
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingHorizontal: 0 }}
-              lineStyle={{ width: 0 }}
+              lineStyle={{ display: 'none' }}
               titleTextStyle={{ color: '#ffffff' }}
               moreTextStyle={{ color: '#ffffff' }}
               moreIconStyle={{ color: '#ffffff' }}
             >
-              <Text
-                numberOfLines={4}
-                ellipsizeMode="tail"
-                style={styles.summary}
-              >
+              <Text ellipsizeMode="tail" numberOfLines={4} style={styles.summary}>
                 {detail.summary}
               </Text>
             </Panel>
           )}
-          {detail.cast && detail.cast?.length !== 0 && (
+          {detail.cast && detail.cast.length !== 0 && (
             <Panel
               title="演员"
               subtitle={`${detail.cast_count}人`}
               to={{ path: 'ActorList', params: { id: route.params.id } }}
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingHorizontal: 0 }}
-              lineStyle={{ width: 0 }}
+              lineStyle={{ display: 'none' }}
               titleTextStyle={{ color: '#ffffff' }}
               moreTextStyle={{ color: '#ffffff' }}
               moreIconStyle={{ color: '#ffffff' }}
@@ -181,13 +166,13 @@ function MovieDeail(): React.ReactElement {
               <MovieActor list={detail.cast ?? []} />
             </Panel>
           )}
-          {detail.roles && detail.roles?.length !== 0 && (
+          {detail.roles && detail.roles.length !== 0 && (
             <Panel
               title="角色"
               subtitle={`${detail.role_count}人`}
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingHorizontal: 0 }}
-              lineStyle={{ width: 0 }}
+              lineStyle={{ display: 'none' }}
               titleTextStyle={{ color: '#ffffff' }}
               moreTextStyle={{ color: '#ffffff' }}
               moreIconStyle={{ color: '#ffffff' }}
@@ -196,7 +181,7 @@ function MovieDeail(): React.ReactElement {
             </Panel>
           )}
         </LinearGradinet>
-        {detail.photos && detail.photos?.length !== 0 && (
+        {detail.photos && detail.photos.length !== 0 && (
           <Panel
             title="相册"
             subtitle={`${detail.photo_count}张`}
@@ -206,7 +191,7 @@ function MovieDeail(): React.ReactElement {
             <MoviePhoto list={detail.photos} />
           </Panel>
         )}
-        {detail.like_movies && detail.like_movies?.length !== 0 && (
+        {detail.like_movies && detail.like_movies.length !== 0 && (
           <Panel title="相似影视" moreIconStyle={{ display: 'none' }}>
             <MovieSimilar list={detail.like_movies} />
           </Panel>
@@ -215,35 +200,26 @@ function MovieDeail(): React.ReactElement {
       <View style={styles.comment}>
         <View style={styles.review}>
           <Text style={styles.reviewIcon}>{'\ue650'}</Text>
-          {!detail.review_count && (
-            <Text style={styles.reviewText}>还没有人发布过影评</Text>
-          )}
-          {Number(detail.review_count) > 0 && (
-            <Text style={styles.reviewText}>
-              {`共有${detail.review_count}条影评`}
-            </Text>
-          )}
+          <Text style={styles.reviewText}>
+            {detail.review_count ? `共有${detail.review_count}条影评` : '还没有人发布过影评'}
+          </Text>
         </View>
         <View style={styles.tool}>
           <Pressable onPress={handleCollectionChange} style={styles.toolItem}>
             <Text style={styles.itemIcon}>{'\ue911'}</Text>
-            {!detail.collection_count && (
-              <Text style={styles.itemText}>收藏</Text>
-            )}
-            {Number(detail.collection_count) > 0 && (
-              <Text style={styles.itemText}>{detail.collection_count}</Text>
-            )}
+            <Text style={styles.itemText}>
+              {detail.collection_count ? detail.collection_count : '收藏'}
+            </Text>
           </Pressable>
           <Pressable onPress={handleCommentOpen} style={styles.toolItem}>
             <Text style={styles.itemIcon}>{'\ue620'}</Text>
-            {!detail.comment_count && <Text style={styles.itemText}>评论</Text>}
-            {Number(detail.comment_count) > 0 && (
-              <Text style={styles.itemText}>{detail.comment_count}</Text>
-            )}
+            <Text style={styles.itemText}>
+              {detail.comment_count ? detail.comment_count : '评论'}
+            </Text>
           </Pressable>
         </View>
       </View>
-      {comment.open && <Comment method={movieComment} onClose={handleCommentClose} />}
+      {comment.open && <Comment request={movieComment} onClose={handleCommentClose} />}
     </>
   );
 }

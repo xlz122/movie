@@ -29,19 +29,13 @@ function Panel(props: Props): React.ReactElement {
       <View style={[styles.header, props.headerStyle]}>
         <View style={styles.title}>
           <View style={[styles.line, props.lineStyle]} />
-          <Text style={[styles.titleText, props.titleTextStyle]}>
-            {props.title}
-          </Text>
+          <Text style={[styles.titleText, props.titleTextStyle]}>{props.title}</Text>
         </View>
         <Pressable
-          onPress={() =>
-            props.to && navigation.push(props.to.path, props.to.params)
-          }
+          onPress={() => props.to && navigation.push(props.to.path, props.to.params)}
           style={styles.more}
         >
-          <Text style={[styles.moreText, props.moreTextStyle]}>
-            {props.subtitle}
-          </Text>
+          <Text style={[styles.moreText, props.moreTextStyle]}>{props.subtitle}</Text>
           <Text style={[styles.moreIcon, props.moreIconStyle]}>{'\ue906'}</Text>
         </Pressable>
       </View>

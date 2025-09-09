@@ -1,9 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Animated, {
-  interpolate,
-  useAnimatedStyle
-} from 'react-native-reanimated';
+import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import type { SharedValue } from 'react-native-reanimated';
 
 type Props = {
@@ -31,9 +28,7 @@ function Dot(props: Props): React.ReactElement {
       }
 
       return {
-        transform: [
-          { translateX: interpolate(animValue.value, inputRange, outputRange) }
-        ],
+        transform: [{ translateX: interpolate(animValue.value, inputRange, outputRange) }],
         backgroundColor: '#e54847'
       };
     }, [animValue, index, length]);

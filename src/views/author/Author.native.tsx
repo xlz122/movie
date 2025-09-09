@@ -25,9 +25,7 @@ function Author(): React.ReactElement {
         </View>
         <View style={styles.divider} />
         <Pressable
-          onPress={() =>
-            navigation.push('WebView', { uri: 'https://github.com/xlz122' })
-          }
+          onPress={() => navigation.push('WebView', { uri: 'https://github.com/xlz122' })}
           style={styles.cellItem}
         >
           <Text style={styles.itemLabel}>github主页</Text>

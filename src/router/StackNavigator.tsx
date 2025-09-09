@@ -26,6 +26,7 @@ function StackNavigator(): React.ReactElement {
       screenOptions={{
         // 自定义标头
         header: ({ options }) => <CustomHeader options={options} />,
+        // 路由过渡动画
         cardStyleInterpolator: Platform.OS === 'ios' ? CardStyleInterpolators.forHorizontalIOS : forSlideFromBottom
       }}
     >

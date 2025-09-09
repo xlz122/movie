@@ -7,12 +7,9 @@ import type { AxiosPromise } from 'axios';
  * @param { number } params.id - 影人id
  */
 export const actorsDetail = ({ id }: { id: number }): AxiosPromise => {
-  const params = { id };
-
   return axios.request({
     url: `/actors/${id}`,
-    method: 'get',
-    params
+    method: 'get'
   });
 };
 
@@ -55,12 +52,7 @@ type ActorPhotos = {
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
  */
-export const actorPhotos = ({
-  id,
-  type,
-  page,
-  per_page
-}: ActorPhotos): AxiosPromise => {
+export const actorPhotos = ({ id, type, page, per_page }: ActorPhotos): AxiosPromise => {
   const params = { id, type, page, per_page };
 
   return axios.request({
@@ -85,12 +77,7 @@ type ActorWorks = {
  * @param { number } [params.per_page] - 条数
  * @param { string } [params.sortby] - 排序方式(hot热度, year时间, rating评分)
  */
-export const actorWorks = ({
-  id,
-  page,
-  per_page,
-  sortby
-}: ActorWorks): AxiosPromise => {
+export const actorWorks = ({ id, page, per_page, sortby }: ActorWorks): AxiosPromise => {
   const params = { id, page, per_page, sortby };
 
   return axios.request({

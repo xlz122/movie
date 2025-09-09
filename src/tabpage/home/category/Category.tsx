@@ -12,10 +12,7 @@ function Category(): React.ReactElement {
         <Text style={[styles.itemIcon, styles.hotMovie]}>{'\ue617'}</Text>
         <Text style={styles.itemText}>热映中</Text>
       </Pressable>
-      <Pressable
-        onPress={() => navigation.push('HighScore')}
-        style={styles.item}
-      >
+      <Pressable onPress={() => navigation.push('HighScore')} style={styles.item}>
         <Text style={[styles.itemIcon, styles.highScore]}>{'\ue67b'}</Text>
         <Text style={styles.itemText}>高分榜</Text>
       </Pressable>

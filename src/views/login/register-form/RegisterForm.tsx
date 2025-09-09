@@ -15,32 +15,32 @@ function RegisterForm(): React.ReactElement {
     code: ''
   });
 
-  const handleAccountChange = (e: TextInputEvent): void => {
+  const handleAccountChange = (e: TextInputEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent): void => {
+  const handlePasswordChange = (e: TextInputEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 
-  const handleCodeChange = (e: TextInputEvent): void => {
+  const handleCodeChange = (e: TextInputEvent) => {
     setParams({ ...params, code: e.nativeEvent.text });
   };
 
-  // 验证码倒计时
+  // 验证码计时
   const [codeTime, setCodeTime] = useState({
     visible: false,
     time: 120
   });
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const handleTimeText = (): void => {
+  const handleTimeText = () => {
     timer.current && clearInterval(timer.current);
 
     setCodeTime({ ...codeTime, visible: true });
 
     timer.current = setInterval(() => {
-      setCodeTime(state => {
+      setCodeTime((state) => {
         if (state.time <= 1) {
           clearInterval(timer.current);
           return { visible: false, time: 120 };
@@ -55,64 +55,58 @@ function RegisterForm(): React.ReactElement {
     return () => timer.current && clearInterval(timer.current);
   }, []);
 
-  // 获取图形验证码
+  // 图形验证码
   const [captcha, setCaptcha] = useState({
     open: false,
-    image: ''
+    source: ''
   });
 
-  const handleGetCaptcha = (): void => {
+  const handleGetCaptcha = async () => {
     if (!params.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
       return;
     }
-    if (params.account.length !== 11) {
+    if (!/^1[3-9]\d{9}$/.test(params.account)) {
       CustomAlert({ title: '提示', message: '请输入正确的手机号' });
       return;
     }
 
-    getCaptcha()
-      .then((res: ResponseType<string>) => {
-        if (res?.code !== 200) {
-          CustomAlert({ title: '提示', message: res?.message });
-          return;
-        }
+    const res: ResponseType<string> = await getCaptcha();
+    if (res?.code !== 200) {
+      CustomAlert({ title: '提示', message: res?.message });
+      return;
+    }
 
-        setCaptcha({ ...captcha, open: true, image: res.data ?? '' });
-      })
-      .catch(() => ({}));
+    setCaptcha({ ...captcha, open: true, source: res.data ?? '' });
   };
 
   // 校验图形验证码并发送短信验证码
-  const handleCaptchaComplete = (code: string): void => {
-    filedCaptcha({ type: 'register', phone: params.account, code })
-      .then((res: ResponseType) => {
-        // 手机号已注册
-        if (res?.code === 403) {
-          setCaptcha({ ...captcha, open: false });
-          CustomAlert({ title: '提示', message: res.message });
-          return;
-        }
-        // 短信验证上限
-        if (res?.code === 450) {
-          setCaptcha({ ...captcha, open: false });
-          CustomAlert({ title: '提示', message: res.message });
-          return;
-        }
-        if (res?.code !== 200) {
-          handleGetCaptcha();
-          CustomAlert({ title: '提示', message: res?.message });
-          return;
-        }
+  const handleCaptchaComplete = async (code: string) => {
+    const res: ResponseType = await filedCaptcha({ type: 'register', phone: params.account, code });
+    // 手机号已注册
+    if (res?.code === 403) {
+      setCaptcha({ ...captcha, open: false });
+      CustomAlert({ title: '提示', message: res.message });
+      return;
+    }
+    // 短信验证上限
+    if (res?.code === 450) {
+      setCaptcha({ ...captcha, open: false });
+      CustomAlert({ title: '提示', message: res.message });
+      return;
+    }
+    if (res?.code !== 200) {
+      handleGetCaptcha();
+      CustomAlert({ title: '提示', message: res?.message });
+      return;
+    }
 
-        handleTimeText();
-        setCaptcha({ ...captcha, open: false });
-        CustomAlert({ title: '提示', message: res.message });
-      })
-      .catch(() => ({}));
+    handleTimeText();
+    setCaptcha({ ...captcha, open: false });
+    CustomAlert({ title: '提示', message: res.message });
   };
 
-  const handleCaptchaCancel = (): void => {
+  const handleCaptchaCancel = () => {
     setCaptcha({ ...captcha, open: false });
   };
 
@@ -130,17 +124,14 @@ function RegisterForm(): React.ReactElement {
       return;
     }
 
-    register({ ...params })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          CustomAlert({ title: '提示', message: res?.message ?? '注册失败' });
-          return;
-        }
+    const res: ResponseType = await register({ ...params });
+    if (res?.code !== 200) {
+      CustomAlert({ title: '提示', message: res?.message ?? '注册失败' });
+      return;
+    }
 
-        navigation.replace('Login');
-        CustomAlert({ title: '提示', message: res.message });
-      })
-      .catch(() => ({}));
+    navigation.replace('Login');
+    CustomAlert({ title: '提示', message: res.message });
   };
 
   return (
@@ -185,9 +176,10 @@ function RegisterForm(): React.ReactElement {
       </View>
       <PicutreCode
         open={captcha.open}
-        image={captcha.image}
+        source={captcha.source}
         onComplete={handleCaptchaComplete}
         onCancel={handleCaptchaCancel}
+        style={{ position: 'absolute', top: -86, left: -38 }}
       />
     </View>
   );

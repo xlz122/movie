@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { FlatList, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
@@ -29,21 +22,12 @@ function MovieSimilar(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<MovieSimilarItem>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
+        <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
         {item.category && item.category !== '电影' && (
           <Text style={styles.itemTag}>{item.category}</Text>
         )}
-        {item.rating !== null && Number(item.rating) === 0 && (
-          <Text style={styles.itemRating}>暂无评分</Text>
-        )}
-        {Number(item.rating) > 0 && (
-          <Text style={styles.itemRating}>{item.rating}分</Text>
-        )}
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+        <Text style={styles.itemRating}>{item.rating ? `${item.rating}分` : '暂无评分'}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
           {item.title}
         </Text>
       </View>
@@ -55,7 +39,7 @@ function MovieSimilar(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.separator} />}

@@ -35,11 +35,7 @@ type Register = {
  * @param { string } params.password - 密码
  * @param { string } params.code - 验证码
  */
-export const register = ({
-  account,
-  password,
-  code
-}: Register): AxiosPromise => {
+export const register = ({ account, password, code }: Register): AxiosPromise => {
   const data = { account, password, code };
 
   return axios.request({
@@ -49,16 +45,12 @@ export const register = ({
   });
 };
 
-type FieldAccount = {
-  account: string;
-};
-
 /**
  * @description 校验账号是否存在
  * @param { Object } params
  * @param { string } params.account - 账号
  */
-export const fieldAccount = ({ account }: FieldAccount): AxiosPromise => {
+export const fieldAccount = ({ account }: { account: string }): AxiosPromise => {
   const data = { account };
 
   return axios.request({
@@ -91,11 +83,7 @@ type FiledCaptcha = {
  * @param { string } params.code - 图片验证码
  * @param { string } params.type - 类型(注册: register, 找回密码: forget)
  */
-export const filedCaptcha = ({
-  phone,
-  code,
-  type
-}: FiledCaptcha): AxiosPromise => {
+export const filedCaptcha = ({ phone, code, type }: FiledCaptcha): AxiosPromise => {
   const params = { phone, code, type };
 
   return axios.request({
@@ -116,10 +104,7 @@ type FiledPhoneCode = {
  * @param { string } params.phone - 手机号
  * @param { string } params.code - 手机验证码
  */
-export const filedPhoneCode = ({
-  phone,
-  code
-}: FiledPhoneCode): AxiosPromise => {
+export const filedPhoneCode = ({ phone, code }: FiledPhoneCode): AxiosPromise => {
   const data = { phone, code };
 
   return axios.request({
@@ -139,16 +124,12 @@ export const userinfo = (): AxiosPromise => {
   });
 };
 
-type ModifyPassword = {
-  password: string;
-};
-
 /**
  * @description 修改密码
  * @param { Object } params
  * @param { string } params.password - 新密码
  */
-export const modifyPassword = ({ password }: ModifyPassword): AxiosPromise => {
+export const modifyPassword = ({ password }: { password: string }): AxiosPromise => {
   const data = { password };
 
   return axios.request({

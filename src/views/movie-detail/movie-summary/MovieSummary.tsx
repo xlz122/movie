@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, ScrollView, View, Text, Pressable } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moviesDetail } from '@/api/movies';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
 import styles from './movie-summary.css';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
 type DetailType = {
   title: string;
+  title_original: string;
   akas: string[];
   category: string;
   genres: string[];
@@ -31,16 +32,13 @@ function MovieSummary(): React.ReactElement {
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
-  const getMovieDetail = (): void => {
-    moviesDetail({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieDetail = async () => {
+    const res: ResponseType = await moviesDetail({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setDetail(res.data ?? {});
-      })
-      .catch(() => ({}));
+    setDetail(res.data ?? {});
   };
 
   useEffect(() => {
@@ -61,6 +59,10 @@ function MovieSummary(): React.ReactElement {
             <Text style={styles.itemValue}>{detail.title}</Text>
           </View>
           <View style={styles.item}>
+            <Text style={styles.itemLabel}>原名:</Text>
+            <Text style={styles.itemValue}>{detail.title_original}</Text>
+          </View>
+          <View style={styles.item}>
             <Text style={styles.itemLabel}>别名:</Text>
             <Text style={styles.itemValue}>{detail.akas?.join?.(' / ')}</Text>
           </View>
@@ -74,49 +76,37 @@ function MovieSummary(): React.ReactElement {
           </View>
           <View style={styles.item}>
             <Text style={styles.itemLabel}>上映:</Text>
-            <Text style={styles.itemValue}>
-              {detail.pubdates?.join?.(' / ')}
-            </Text>
+            <Text style={styles.itemValue}>{detail.pubdates?.join?.(' / ')}</Text>
           </View>
-          {Number(detail.season_count) > 0 && (
+          {Boolean(detail.season_count) && (
             <View style={styles.item}>
               <Text style={styles.itemLabel}>季数:</Text>
-              <Text style={styles.itemValue}>
-                {`第 ${detail.season_count} 季`}
-              </Text>
+              <Text style={styles.itemValue}>{`第 ${detail.season_count} 季`}</Text>
             </View>
           )}
-          {Number(detail.episode_count) > 0 && (
+          {Boolean(detail.episode_count) && (
             <View style={styles.item}>
               <Text style={styles.itemLabel}>集数:</Text>
-              <Text style={styles.itemValue}>
-                {`共 ${detail.episode_count} 集`}
-              </Text>
-            </View>
-          )}
-          {detail.durations && detail.durations?.length > 0 && (
-            <View style={styles.item}>
-              <Text style={styles.itemLabel}>片长:</Text>
-              <Text style={styles.itemValue}>{`共 ${detail.durations}`}</Text>
+              <Text style={styles.itemValue}>{`共 ${detail.episode_count} 集`}</Text>
             </View>
           )}
           <View style={styles.item}>
-            <Text style={styles.itemLabel}>地区:</Text>
+            <Text style={styles.itemLabel}>片长:</Text>
             <Text style={styles.itemValue}>
-              {detail.countries?.join?.(' / ')}
+              {detail.episode_count ? `每集 ${detail.durations} 分钟` : detail.durations}
             </Text>
+          </View>
+          <View style={styles.item}>
+            <Text style={styles.itemLabel}>地区:</Text>
+            <Text style={styles.itemValue}>{detail.countries?.join?.(' / ')}</Text>
           </View>
           <View style={styles.item}>
             <Text style={styles.itemLabel}>色彩:</Text>
-            <Text style={styles.itemValue}>
-              {detail.color === 0 ? '黑白' : '彩色'}
-            </Text>
+            <Text style={styles.itemValue}>{detail.color === 0 ? '黑白' : '彩色'}</Text>
           </View>
           <View style={styles.item}>
             <Text style={styles.itemLabel}>语言:</Text>
-            <Text style={styles.itemValue}>
-              {detail.languages?.join?.(' / ')}
-            </Text>
+            <Text style={styles.itemValue}>{detail.languages?.join?.(' / ')}</Text>
           </View>
         </View>
         <View style={styles.group}>

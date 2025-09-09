@@ -36,7 +36,7 @@ const routineSlice = createSlice({
     setSearchHistory: (state, action: PayloadAction<string[]>) => {
       state.searchHistory = action.payload;
     },
-    setLogout: state => {
+    setLogout: (state) => {
       state.token = '';
       state.isLogin = false;
       state.userinfo = {};

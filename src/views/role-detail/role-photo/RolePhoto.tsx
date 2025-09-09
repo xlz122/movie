@@ -6,18 +6,12 @@ type Props = {
   list: RolePhotoItem[];
 };
 
-export type RolePhotoItem = {
-  url: string;
-};
+export type RolePhotoItem = { url: string };
 
 function RolePhoto(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<RolePhotoItem>) => (
     <View style={styles.item}>
-      <Image
-        source={{ uri: item.url }}
-        resizeMode="stretch"
-        style={styles.itemImage}
-      />
+      <Image resizeMode="stretch" source={{ uri: item.url }} style={styles.itemImage} />
     </View>
   );
 
@@ -26,7 +20,7 @@ function RolePhoto(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.separator} />}

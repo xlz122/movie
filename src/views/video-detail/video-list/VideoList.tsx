@@ -35,29 +35,24 @@ function VideoList(props: Props): React.ReactElement {
   const [navIndex, setNavIndex] = useState(0);
   const [videos, setVideos] = useState<VideoItem[]>([]);
 
-  const getVideoList = (): void => {
-    videosDetailList({ id: props.movieId! })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getVideoList = async () => {
+    const res: ResponseType = await videosDetailList({ id: props.movieId! });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setVideos(res.data?.videos ?? []);
-      })
-      .catch(() => ({}));
+    setVideos(res.data?.videos ?? []);
   };
 
   useEffect(() => {
-    if (!props.movieId) {
-      return;
-    }
+    if (!props.movieId) return;
 
     getVideoList();
   }, [props.movieId]);
 
   const renderItem = ({ item, index }: ListRenderItemInfo<VideoItem>) => (
     <Pressable onPress={() => setNavIndex(index)}>
-      <Text style={index === navIndex ? styles.navActiveItem : styles.navItem}>
+      <Text style={navIndex === index ? styles.navActiveItem : styles.navItem}>
         {item.type} {item.count}
       </Text>
     </Pressable>
@@ -69,7 +64,7 @@ function VideoList(props: Props): React.ReactElement {
         horizontal
         initialNumToRender={10}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, index) => String(index)}
+        keyExtractor={(_, index) => index.toString()}
         data={videos}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -82,15 +77,9 @@ function VideoList(props: Props): React.ReactElement {
             style={styles.videoItem}
           >
             <View style={styles.itemCover}>
-              <Image
-                source={{ uri: item.poster }}
-                resizeMode="stretch"
-                style={styles.itemImage}
-              />
-              <Text style={styles.itemDuration}>
-                {timeStampToDuration(item.duration)}
-              </Text>
-              {item.id === route.params.id && (
+              <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
+              <Text style={styles.itemDuration}>{timeStampToDuration(item.duration)}</Text>
+              {route.params.id === item.id && (
                 <View style={styles.itemMask}>
                   <Text style={styles.maskText}>播放中</Text>
                 </View>
@@ -100,15 +89,11 @@ function VideoList(props: Props): React.ReactElement {
               <Text style={styles.itemTitle}>{item.title}</Text>
               <View style={styles.intro}>
                 <Text style={styles.introText}>
-                  <Text>{item.like_count}</Text>
-                  <Text>赞</Text>
+                  <Text>{item.like_count}赞</Text>
                   <Text> · </Text>
-                  <Text>{item.play_count}</Text>
-                  <Text>播放</Text>
+                  <Text>{item.play_count}播放</Text>
                 </Text>
-                <Text style={styles.introText}>
-                  {formatDistance(item.created_at)}
-                </Text>
+                <Text style={styles.introText}>{formatDistance(item.created_at)}</Text>
               </View>
             </View>
           </Pressable>

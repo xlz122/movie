@@ -13,7 +13,7 @@ function LoginForm(): React.ReactElement {
   // 安全文本显隐
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const toggleSecureTextEntry = (): void => {
+  const toggleSecureTextEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
 
@@ -22,30 +22,26 @@ function LoginForm(): React.ReactElement {
     password: ''
   });
 
-  const handleAccountChange = (e: TextInputEvent): void => {
+  const handleAccountChange = (e: TextInputEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent): void => {
+  const handlePasswordChange = (e: TextInputEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 
-  // 获取用户信息
   const getUserInfo = (): Promise<unknown> => {
-    return new Promise(resolve => {
-      userinfo()
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+    return new Promise(async (resolve) => {
+      const res: ResponseType = await userinfo();
+      if (res?.code !== 200) {
+        return;
+      }
 
-          resolve(res.data ?? {});
-        })
-        .catch(() => ({}));
+      resolve(res.data ?? {});
     });
   };
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     if (!params.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
       return;
@@ -58,7 +54,7 @@ function LoginForm(): React.ReactElement {
     login({ ...params })
       .then(async (res: ResponseType) => {
         if (res?.code !== 200) {
-          CustomAlert({ title: '提示', message: res?.message ?? '登录失败' });
+          CustomAlert({ title: '提示', message: res.message ?? '登录失败' });
           return;
         }
 
@@ -69,7 +65,7 @@ function LoginForm(): React.ReactElement {
         store.dispatch({ type: 'routine/setUserInfo', payload: userInfo });
         navigation.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         CustomAlert({ title: '提示', message: error.response?.data?.message });
       });
   };
@@ -98,12 +94,9 @@ function LoginForm(): React.ReactElement {
             placeholderTextColor="#c9c9c9"
             style={styles.itemInput}
           />
-          <Text
-            onPress={toggleSecureTextEntry}
-            style={secureTextEntry ? styles.itemIcon : styles.activeIcon}
-          >
-            {'\ue639'}
-          </Text>
+          <Pressable onPress={toggleSecureTextEntry}>
+            <Text style={secureTextEntry ? styles.itemIcon : styles.activeIcon}>{'\ue639'}</Text>
+          </Pressable>
         </View>
         <Pressable onPress={handleSubmit} style={styles.submit}>
           <Text style={styles.submitText}>登 录</Text>

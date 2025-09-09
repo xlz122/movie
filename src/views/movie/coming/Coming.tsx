@@ -29,33 +29,29 @@ function Coming(): React.ReactElement {
     list: []
   });
 
-  const getMovieComing = (): void => {
-    movieComing({ page: 1, per_page: 100 })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieComing = async () => {
+    const res: ResponseType = await movieComing({ page: 1, per_page: 100 });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        const stickyIndex: number[] = [];
-        const list: ItemType[] = [];
+    const stickyIndex: number[] = [];
+    const list: ItemType[] = [];
 
-        res.data?.forEach?.((item: ItemType) => {
-          const isExist = list.find(v => item.release_date === v.release_date);
+    res.data?.forEach?.((item: ItemType) => {
+      const isExist = list.find((value) => item.release_date === value.release_date);
+      if (!isExist) {
+        list.push({ ...item, stickyTitle: item.release_date }, item);
+        return;
+      }
 
-          if (!isExist) {
-            list.push({ ...item, stickyTitle: item.release_date }, item);
-            return;
-          }
+      list.push(item);
+    });
+    list.forEach?.((item, index) => {
+      item.hasOwnProperty('stickyTitle') && stickyIndex.push(index);
+    });
 
-          list.push(item);
-        });
-        list.forEach?.((item, index) =>
-          item.hasOwnProperty('stickyTitle') && stickyIndex.push(index)
-        );
-
-        setComing({ stickyIndex, list });
-      })
-      .catch(() => ({}));
+    setComing({ stickyIndex, list });
   };
 
   useEffect(() => {
@@ -72,17 +68,9 @@ function Coming(): React.ReactElement {
       {!item.hasOwnProperty('stickyTitle') && (
         <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
           <View style={styles.item}>
-            <Image
-              source={{ uri: item.poster }}
-              resizeMode="stretch"
-              style={styles.itemImage}
-            />
+            <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
             <View style={styles.itemInfo}>
-              <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={styles.itemTitle}
-              >
+              <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemTitle}>
                 {item.title}
               </Text>
               <Text style={styles.itemText}>

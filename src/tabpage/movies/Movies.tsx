@@ -1,20 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  StatusBar,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet,
-  Dimensions
-} from 'react-native';
+import { StatusBar, View, Text, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moviesList } from '@/api/movies';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemType = {
   id: number;
@@ -37,7 +29,7 @@ function Movies(): React.ReactElement {
 
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const handleNavChange = (categoryParams: typeof params): void => {
+  const handleNavChange = (categoryParams: typeof params) => {
     timer.current && clearTimeout(timer.current);
 
     timer.current = setTimeout(() => {
@@ -56,18 +48,12 @@ function Movies(): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
-        {Number(item.episode_count) > 0 && (
+        <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
+        {Boolean(item.episode_count) && (
           <Text style={styles.itemEpisode}>全{item.episode_count}集</Text>
         )}
-        {Number(item.rating) > 0 && (
-          <Text style={styles.itemRating}>{item.rating}</Text>
-        )}
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+        <Text style={styles.itemRating}>{item.rating}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
           {item.title}
         </Text>
       </View>

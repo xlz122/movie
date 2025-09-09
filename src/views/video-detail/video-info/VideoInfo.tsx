@@ -22,6 +22,7 @@ type Props = {
       year: number;
       countries: string;
       genres: string;
+      duration: string;
     }>;
   }>;
 };
@@ -33,18 +34,14 @@ function VideoInfo(props: Props): React.ReactElement {
     <View style={styles.videoInfo}>
       <View style={styles.author}>
         <View style={styles.authorWarp}>
-          {props.detail.author?.avatar && (
-            <Image
-              source={{ uri: props.detail.author?.avatar }}
-              resizeMode="stretch"
-              style={styles.authorAvatar}
-            />
-          )}
+          <Image
+            resizeMode="stretch"
+            source={{ uri: props.detail.author?.avatar }}
+            style={styles.authorAvatar}
+          />
           <View style={styles.authorInfo}>
             <Text style={styles.infoName}>{props.detail.author?.username}</Text>
-            <Text style={styles.infoCount}>
-              上传视频 {props.detail.author?.video_count} 个
-            </Text>
+            <Text style={styles.infoCount}>上传视频 {props.detail.author?.video_count} 个</Text>
           </View>
         </View>
         <Text style={styles.report}>举报</Text>
@@ -55,37 +52,29 @@ function VideoInfo(props: Props): React.ReactElement {
         <Text style={styles.introText}>{props.detail.play_count} 次播放</Text>
       </View>
       <Pressable
-        onPress={
-          () => navigation.push('MovieDetail', { id: props.detail.movie?.id })
-        }
+        onPress={() => navigation.push('MovieDetail', { id: props.detail.movie?.id })}
         style={styles.movie}
       >
-        {props.detail.movie?.poster && (
-          <Image
-            source={{ uri: props.detail.movie?.poster }}
-            resizeMode="stretch"
-            style={styles.movieImage}
-          />
-        )}
+        <Image
+          resizeMode="stretch"
+          source={{ uri: props.detail.movie?.poster }}
+          style={styles.movieImage}
+        />
         <View style={styles.movieInfo}>
           <View style={styles.infoTitle}>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.titleText}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={1} style={styles.titleText}>
               {props.detail.movie?.title}
             </Text>
-            <Text style={styles.titleRating}>
-              {props.detail.movie?.rating}分
-            </Text>
+            <Text style={styles.titleRating}>{props.detail.movie?.rating}分</Text>
           </View>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.infoIntro}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.infoIntro}>
             <Text>{props.detail.movie?.year}</Text>
-            <Text>·</Text>
+            <Text> · </Text>
             <Text>{props.detail.movie?.countries}</Text>
-            <Text>·</Text>
+            <Text> · </Text>
             <Text>{props.detail.movie?.genres}</Text>
+            <Text> · </Text>
+            <Text>{props.detail.movie?.duration}</Text>
           </Text>
         </View>
       </Pressable>

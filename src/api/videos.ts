@@ -113,14 +113,9 @@ type VideoComment = {
  * @param { number } params.id - 视频id
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
- * @param { string } [params.sortby] - 排序
+ * @param { string } [params.sortby] - 排序方式(hot热度, created_at最新)
  */
-export const videoComment = ({
-  id,
-  page,
-  per_page,
-  sortby
-}: VideoComment): AxiosPromise => {
+export const videoComment = ({ id, page, per_page, sortby }: VideoComment): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({

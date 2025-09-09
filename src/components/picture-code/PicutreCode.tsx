@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Image, Pressable } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import type { TextInputEvent } from '@/types/index';
 import styles from './picture-code.css';
 
 type Props = {
   open: boolean;
-  image: string;
+  source: string;
   onComplete?: (code: string) => void;
   onCancel?: () => void;
+  style?: ViewStyle;
 };
 
 function PicutreCode(props: Props): React.ReactElement {
   const [code, setCode] = useState('');
 
-  const handleCodeChange = (e: TextInputEvent): void => {
+  const handleCodeChange = (e: TextInputEvent) => {
     setCode(e.nativeEvent.text);
   };
 
@@ -29,22 +31,22 @@ function PicutreCode(props: Props): React.ReactElement {
     props.onComplete?.(code);
   }, [code]);
 
-  const onCancel = (): void => {
+  const onCancel = () => {
     props.onCancel?.();
   };
 
+  if (!props.open) {
+    return <></>;
+  }
+
   return (
-    <View style={[styles.picutre, { display: props.open ? 'flex' : 'none' }]}>
+    <View style={[styles.picutre, props.style]}>
       <Pressable onPress={onCancel} style={styles.mask} />
       <View style={styles.modal}>
         <View style={styles.modalBody}>
           <Text style={styles.title}>请输入以下验证码数字</Text>
-          {props.image && (
-            <Image
-              source={{ uri: props.image }}
-              resizeMode="stretch"
-              style={styles.image}
-            />
+          {Boolean(props.source) && (
+            <Image resizeMode="stretch" source={{ uri: props.source }} style={styles.image} />
           )}
           <View style={styles.inputMain}>
             <TextInput

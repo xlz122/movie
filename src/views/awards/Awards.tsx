@@ -6,16 +6,13 @@ import type { ResponseType } from '@/types/index';
 function Awards(): React.ReactElement {
   const [awards, setAwards] = useState<Array<{ title: string }>>([]);
 
-  const getMovieAwards = (): void => {
-    movieAwards()
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieAwards = async () => {
+    const res: ResponseType = await movieAwards();
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setAwards(res.data ?? []);
-      })
-      .catch(() => ({}));
+    setAwards(res.data ?? []);
   };
 
   useEffect(() => {
@@ -27,10 +24,7 @@ function Awards(): React.ReactElement {
       <View style={styles.list}>
         {awards.map?.((item, index) => {
           return (
-            <View
-              key={index}
-              style={[styles.item, index % 1 === 0 ? styles.itemLine : null]}
-            >
+            <View key={index} style={[styles.item, index % 1 === 0 ? styles.itemLine : null]}>
               <Text style={styles.itemText}>{item.title}</Text>
             </View>
           );

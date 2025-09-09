@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { FlatList, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
@@ -29,15 +22,11 @@ function MovieActor(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<MovieActorItem>) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.avatar }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+        <Image resizeMode="stretch" source={{ uri: item.avatar }} style={styles.itemImage} />
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
           {item.name}
         </Text>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemIntro}>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemIntro}>
           {item.profession === '导演' ? item.profession : ''}
           {item.act ? `饰: ${item.act}` : ''}
         </Text>
@@ -50,7 +39,7 @@ function MovieActor(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.separator} />}

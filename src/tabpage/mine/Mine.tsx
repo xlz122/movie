@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  StatusBar,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { StatusBar, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { RootState } from '@/store/index';
 import type { Navigation } from '@/types/index';
 import MineCount from './mine-count/MineCount';
@@ -19,6 +13,7 @@ type Props = {
 
 function Mine(props: Props): React.ReactElement {
   const userinfo = useSelector((state: RootState) => state.routine.userinfo);
+  const inset = useSafeAreaInsets();
 
   useFocusEffect(() => {
     StatusBar.setBarStyle('light-content');
@@ -30,29 +25,22 @@ function Mine(props: Props): React.ReactElement {
         {!userinfo.username && (
           <>
             <Image
-              source={require('../../assets/image/default-avatar.jpg')}
               resizeMode="stretch"
+              source={require('../../assets/image/default-avatar.jpg')}
               style={styles.avatar}
             />
-            <Text
-              onPress={() => props.navigation.push('Login')}
-              style={styles.loginText}
-            >
-              立即登录
-            </Text>
+            <Pressable onPress={() => props.navigation.push('Login')}>
+              <Text style={styles.loginText}>立即登录</Text>
+            </Pressable>
           </>
         )}
         {userinfo.username && (
           <>
-            <Image
-              source={{ uri: userinfo.avatar }}
-              resizeMode="stretch"
-              style={styles.avatar}
-            />
+            <Image resizeMode="stretch" source={{ uri: userinfo.avatar }} style={styles.avatar} />
             <Text style={styles.userName}>{userinfo.username}</Text>
             <Pressable
               onPress={() => props.navigation.push('Setting')}
-              style={styles.setting}
+              style={[styles.setting, { top: inset.top + 6 }]}
             >
               <Text style={styles.settingIcon}>{'\ue65e'}</Text>
             </Pressable>
@@ -62,10 +50,7 @@ function Mine(props: Props): React.ReactElement {
       <MineCount />
       {userinfo.username && (
         <View style={styles.cell}>
-          <Pressable
-            onPress={() => props.navigation.push('UserProfile')}
-            style={styles.cellItem}
-          >
+          <Pressable onPress={() => props.navigation.push('UserProfile')} style={styles.cellItem}>
             <Text style={styles.itemIcon}>{'\ue6c8'}</Text>
             <Text style={styles.itemText}>我的资料</Text>
             <Text style={styles.itemArrow}>{'\ue906'}</Text>
@@ -80,33 +65,24 @@ function Mine(props: Props): React.ReactElement {
       )}
       <View style={styles.cell}>
         <Pressable style={styles.cellItem}>
-          <Text style={styles.itemIcon}>{'\ue701'}</Text>
-          <Text style={styles.itemText}>兴趣爱好</Text>
+          <Text style={styles.itemIcon}>{'\ue601'}</Text>
+          <Text style={styles.itemText}>意见反馈</Text>
           <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
         <View style={styles.divider} />
-        <Pressable
-          onPress={() => props.navigation.push('Project')}
-          style={styles.cellItem}
-        >
-          <Text style={styles.itemIcon}>{'\ue655'}</Text>
-          <Text style={styles.itemText}>关于项目</Text>
-          <Text style={styles.itemArrow}>{'\ue906'}</Text>
-        </Pressable>
-        <View style={styles.divider} />
-        <Pressable
-          onPress={() => props.navigation.push('Author')}
-          style={styles.cellItem}
-        >
+        <Pressable onPress={() => props.navigation.push('Author')} style={styles.cellItem}>
           <Text style={styles.itemIcon}>{'\ue634'}</Text>
           <Text style={styles.itemText}>关于作者</Text>
           <Text style={styles.itemArrow}>{'\ue906'}</Text>
         </Pressable>
         <View style={styles.divider} />
-        <Pressable
-          onPress={() => props.navigation.push('Changelog')}
-          style={styles.cellItem}
-        >
+        <Pressable onPress={() => props.navigation.push('Project')} style={styles.cellItem}>
+          <Text style={styles.itemIcon}>{'\ue655'}</Text>
+          <Text style={styles.itemText}>关于项目</Text>
+          <Text style={styles.itemArrow}>{'\ue906'}</Text>
+        </Pressable>
+        <View style={styles.divider} />
+        <Pressable onPress={() => props.navigation.push('Changelog')} style={styles.cellItem}>
           <Text style={styles.itemIcon}>{'\ue60b'}</Text>
           <Text style={styles.itemText}>更新日志</Text>
           <Text style={styles.itemArrow}>{'\ue906'}</Text>
@@ -149,7 +125,7 @@ const styles = StyleSheet.create({
   },
   setting: {
     position: 'absolute',
-    top: 6,
+    top: 14,
     right: 14,
     display: 'flex',
     justifyContent: 'center',

@@ -104,12 +104,7 @@ type MoviePhotos = {
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
  */
-export const moviePhotos = ({
-  id,
-  type,
-  page,
-  per_page
-}: MoviePhotos): AxiosPromise => {
+export const moviePhotos = ({ id, type, page, per_page }: MoviePhotos): AxiosPromise => {
   const params = { id, type, page, per_page };
 
   return axios.request({
@@ -132,14 +127,9 @@ type MovieComment = {
  * @param { number } params.id - 影视id
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
- * @param { string } [params.sortby] - 排序
+ * @param { string } [params.sortby] - 排序方式(hot热度, created_at最新)
  */
-export const movieComment = ({
-  id,
-  page,
-  per_page,
-  sortby
-}: MovieComment): AxiosPromise => {
+export const movieComment = ({ id, page, per_page, sortby }: MovieComment): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({

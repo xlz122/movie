@@ -9,22 +9,15 @@ type Props = {
   onChange: (index: number) => void;
 };
 
-type BannerItem = {
-  banner: string;
-};
+type BannerItem = { banner: string };
 
 function Banner(props: Props): React.ReactElement {
-  // 轮播滚动值
   const progressValue = useSharedValue(0);
 
   const RenderItem = ({ item }: { item: BannerItem }) => {
     return (
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.banner }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
+        <Image resizeMode="stretch" source={{ uri: item.banner }} style={styles.itemImage} />
       </View>
     );
   };
@@ -37,10 +30,8 @@ function Banner(props: Props): React.ReactElement {
         loop
         autoPlay
         autoPlayInterval={6000}
-        onProgressChange={(_, absoluteProgress) =>
-          (progressValue.value = absoluteProgress)
-        }
-        onSnapToItem={index => props.onChange(index)}
+        onProgressChange={(_, absoluteProgress) => (progressValue.value = absoluteProgress)}
+        onSnapToItem={(index) => props.onChange(index)}
         data={props.list}
         renderItem={({ item }) => <RenderItem item={item} />}
       />

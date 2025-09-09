@@ -2,11 +2,9 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet, Linking } from 'react-native';
 
 function Author(): React.ReactElement {
-  const handleLinkJump = (url: string): void => {
+  const handleLinkJump = (url: string) => {
     Linking.canOpenURL(url)
-      .then(() => {
-        return Linking.openURL(url);
-      })
+      .then(() => Linking.openURL(url))
       .catch(() => ({}));
   };
 

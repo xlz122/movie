@@ -1,27 +1,22 @@
 import React, { useState } from 'react';
-import {
-  StatusBar,
-  View, Text,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { StatusBar, View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Navigation } from '@/types/index';
 import LoginForm from './login-form/LoginForm';
 import RegisterForm from './register-form/RegisterForm';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function Login(): React.ReactElement {
   const navigation: Navigation = useNavigation();
   const inset = useSafeAreaInsets();
 
-  const close = (): void => {
+  const handleClose = () => {
     navigation.goBack();
   };
 
   const [formType, setFormType] = useState('login');
 
-  const formTypeChange = (): void => {
+  const formTypeChange = () => {
     if (formType === 'login') {
       setFormType('register');
       return;
@@ -36,16 +31,14 @@ function Login(): React.ReactElement {
 
   return (
     <View style={[styles.page, { paddingTop: inset.top }]}>
-      <Pressable onPress={close} style={styles.close}>
+      <Pressable onPress={handleClose} style={styles.close}>
         <Text style={styles.closeIcon}>{'\ue612'}</Text>
       </Pressable>
       {formType === 'login' && <LoginForm />}
       {formType === 'register' && <RegisterForm />}
       <View style={styles.tool}>
         <Pressable onPress={formTypeChange}>
-          <Text style={styles.toolText}>
-            {formType === 'login' ? '账号注册' : '账号登录'}
-          </Text>
+          <Text style={styles.toolText}>{formType === 'login' ? '账号注册' : '账号登录'}</Text>
         </Pressable>
         <Pressable onPress={() => navigation.push('Forget')}>
           <Text style={styles.toolText}>找回密码</Text>

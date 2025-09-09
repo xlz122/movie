@@ -3,10 +3,10 @@ import { StyleSheet, Dimensions } from 'react-native';
 const styles = StyleSheet.create({
   searchDetail: {
     width: '100%',
-    height: Dimensions.get('window').height - 44,
+    height: Dimensions.get('window').height - 42 - 44,
     backgroundColor: '#ffffff'
   },
-  tab: {
+  tabs: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',

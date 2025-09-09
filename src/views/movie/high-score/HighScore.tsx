@@ -22,38 +22,28 @@ function HighScore(): React.ReactElement {
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
-          <Image
-            source={{ uri: item.poster }}
-            resizeMode="stretch"
-            style={styles.itemImage}
-          />
-          {index === 0 && (
-            <View style={[styles.itemCoverBg, styles.coverBg1]} />
-          )}
-          {index === 1 && (
-            <View style={[styles.itemCoverBg, styles.coverBg2]} />
-          )}
-          {index === 2 && (
-            <View style={[styles.itemCoverBg, styles.coverBg3]} />
-          )}
+          <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
+          {index === 0 && <View style={[styles.itemCoverBg, styles.coverBg1]} />}
+          {index === 1 && <View style={[styles.itemCoverBg, styles.coverBg2]} />}
+          {index === 2 && <View style={[styles.itemCoverBg, styles.coverBg3]} />}
           {index > 2 && <View style={styles.itemCoverBg} />}
           <Text style={styles.coverText}>{index + 1}</Text>
         </View>
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemTitle}>
             {item.title}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.year}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.genres}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.countries}
           </Text>
         </View>
-        {Number(item.rating) > 0 && (
+        {Boolean(item.rating) && (
           <View style={styles.itemRating}>
             <Text style={styles.ratingWeight}>{item.rating}</Text>
             <Text style={styles.ratingText}>分</Text>

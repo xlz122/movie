@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
 import type { ViewStyle, ListRenderItem } from 'react-native';
 import type { ResponseType } from '@/types/index';
 
@@ -16,9 +16,9 @@ type Props = {
   };
   // 请求方法
   request: Function;
-  // 响应成功回调函数
+  // 响应成功回调
   responseSuccess?: (response: ResponseType) => void;
-  // 响应失败回调函数
+  // 响应失败回调
   responseError?: () => void;
   style?: ViewStyle;
 } & FlatListProps;
@@ -57,24 +57,18 @@ function ScrollRefresh(props: Props): React.ReactElement {
     isRefresh: false,
     // 上拉加载
     isLoadMore: false,
-    // 加载文字
+    // 加载文本
     loadText: '',
     // 当前请求是否请求完成
     currentComplete: false,
     // 数据是否全部请求完成
     complete: false,
-    // 空数据
     empty: false
   });
 
   const getListData = (): Promise<unknown[]> => {
     return new Promise((resolve, reject) => {
-      props
-        .request({
-          ...props.params,
-          page: refreshState.page,
-          per_page: refreshState.pageSize
-        })
+      props.request({ ...props.params, page: refreshState.page, per_page: refreshState.pageSize })
         .then((res: ResponseType) => {
           if (res?.code !== 200) {
             return;
@@ -159,7 +153,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
     });
   };
 
-  const onRefresh = (): void => {
+  const onRefresh = () => {
     setRefreshState({
       ...refreshState,
       page: 1,
@@ -172,7 +166,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
     });
   };
 
-  const onEndReached = (): void => {
+  const onEndReached = () => {
     // 当前请求未完成 / 加载完成
     if (!refreshState.currentComplete || refreshState.complete) {
       return;
@@ -215,9 +209,9 @@ function ScrollRefresh(props: Props): React.ReactElement {
   };
 
   return (
-    <SafeAreaView style={[styles.list, props.style]}>
+    <View style={[styles.list, props.style]}>
       <FlatList
-        keyExtractor={(_, index) => String(index)}
+        keyExtractor={(_, index) => index.toString()}
         initialNumToRender={props.initialNumToRender}
         showsVerticalScrollIndicator={props.showsVerticalScrollIndicator}
         data={refreshState.data}
@@ -230,9 +224,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         ListHeaderComponent={props.ListHeaderComponent}
         ListFooterComponent={props.ListFooterComponent ?? ListFooterComponent}
         // 空布局
-        ListEmptyComponent={
-          refreshState.empty ? props.ListEmptyComponent : null
-        }
+        ListEmptyComponent={refreshState.empty ? props.ListEmptyComponent : null}
         // 下拉刷新
         refreshing={refreshState.isRefresh}
         onRefresh={onRefresh}
@@ -240,7 +232,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         onEndReachedThreshold={props.onEndReachedThreshold}
         onEndReached={onEndReached}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

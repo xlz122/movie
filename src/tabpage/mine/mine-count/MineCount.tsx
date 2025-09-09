@@ -19,40 +19,32 @@ function MineCount(): React.ReactElement {
 
   const [count, setCount] = useState<Partial<Count>>({});
 
-  function getUserCount(): void {
-    userCount()
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
-
-        setCount(res.data ?? {});
-      })
-      .catch(() => ({}));
-  }
-
-  useEffect(() => {
-    if (!isLogin) {
+  const getUserCount = async () => {
+    const res: ResponseType = await userCount();
+    if (res?.code !== 200) {
       return;
     }
+
+    setCount(res.data ?? {});
+  };
+
+  useEffect(() => {
+    if (!isLogin) return;
 
     getUserCount();
   }, [isLogin]);
 
   useEffect(() => {
-    if (!isLogin) {
-      return;
-    }
+    if (!isLogin) return;
 
     // @ts-ignore
     const unsubscribe = navigation.addListener('tabPress', () => {
       getUserCount();
     });
-
     return unsubscribe;
   }, [navigation]);
 
-  const jumpFlollowDetail = (path: string): void => {
+  const jumpCountDetail = (path: string) => {
     if (!isLogin) {
       navigation.push('Login');
       return;
@@ -63,35 +55,20 @@ function MineCount(): React.ReactElement {
 
   return (
     <View style={styles.count}>
-      <Pressable
-        onPress={() => jumpFlollowDetail('UserActor')}
-        style={styles.countItem}
-      >
-        <Text style={styles.itemCount}>
-          {isLogin ? count.actor_count : '-'}
-        </Text>
+      <Pressable onPress={() => jumpCountDetail('UserActor')} style={styles.countItem}>
+        <Text style={styles.itemCount}>{isLogin ? count.actor_count : '-'}</Text>
         <Text style={styles.itemText}>关注影人</Text>
       </Pressable>
-      <Pressable
-        onPress={() => jumpFlollowDetail('UserRole')}
-        style={styles.countItem}
-      >
+      <Pressable onPress={() => jumpCountDetail('UserRole')} style={styles.countItem}>
         <Text style={styles.itemCount}>{isLogin ? count.role_count : '-'}</Text>
         <Text style={styles.itemText}>关注角色</Text>
       </Pressable>
       <Pressable style={styles.countItem}>
-        <Text style={styles.itemCount}>
-          {isLogin ? count.review_count : '-'}
-        </Text>
+        <Text style={styles.itemCount}>{isLogin ? count.review_count : '-'}</Text>
         <Text style={styles.itemText}>收藏影评</Text>
       </Pressable>
-      <Pressable
-        onPress={() => jumpFlollowDetail('UserVideo')}
-        style={styles.countItem}
-      >
-        <Text style={styles.itemCount}>
-          {isLogin ? count.video_count : '-'}
-        </Text>
+      <Pressable onPress={() => jumpCountDetail('UserVideo')} style={styles.countItem}>
+        <Text style={styles.itemCount}>{isLogin ? count.video_count : '-'}</Text>
         <Text style={styles.itemText}>收藏视频</Text>
       </Pressable>
     </View>

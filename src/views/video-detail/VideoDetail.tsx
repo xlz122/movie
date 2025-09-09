@@ -25,9 +25,7 @@ type Route = RouteProp<{ params: { id: number } }>;
 
 type DetailType = {
   id: number;
-  movie: {
-    id: number;
-  };
+  movie: { id: number };
   is_like: boolean;
   like_count: number;
   is_collection: boolean;
@@ -42,16 +40,13 @@ function VideoDetail(): React.ReactElement {
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
-  const getVideoDetail = (): void => {
-    videosDetail({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getVideoDetail = async () => {
+    const res: ResponseType = await videosDetail({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setDetail(res.data ?? {});
-      })
-      .catch(() => ({}));
+    setDetail(res.data ?? {});
   };
 
   useEffect(() => {
@@ -59,98 +54,81 @@ function VideoDetail(): React.ReactElement {
   }, []);
 
   // 点赞/取消点赞
-  const handleLikeChange = (): void => {
+  const handleLikeChange = async () => {
     if (!isLogin) {
       navigation.push('Login');
       return;
     }
 
     if (!detail.is_like) {
-      videoLike({ id: route.params.id })
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+      const res: ResponseType = await videoLike({ id: route.params.id });
+      if (res?.code !== 200) {
+        return;
+      }
 
-          getVideoDetail();
-          CustomAlert({ title: '提示', message: res.message });
-        })
-        .catch(() => ({}));
+      getVideoDetail();
+      CustomAlert({ title: '提示', message: res.message });
     }
 
     if (detail.is_like) {
-      unVideoLike({ id: route.params.id })
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+      const res: ResponseType = await unVideoLike({ id: route.params.id });
+      if (res?.code !== 200) {
+        return;
+      }
 
-          getVideoDetail();
-          CustomAlert({ title: '提示', message: res.message });
-        })
-        .catch(() => ({}));
+      getVideoDetail();
+      CustomAlert({ title: '提示', message: res.message });
     }
   };
 
   // 收藏/取消收藏
-  const handleCollectionChange = (): void => {
+  const handleCollectionChange = async () => {
     if (!isLogin) {
       navigation.push('Login');
       return;
     }
 
     if (!detail.is_collection) {
-      followVideo({ id: route.params.id })
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+      const res: ResponseType = await followVideo({ id: route.params.id });
+      if (res?.code !== 200) {
+        return;
+      }
 
-          getVideoDetail();
-          CustomAlert({ title: '提示', message: res.message });
-        })
-        .catch(() => ({}));
+      getVideoDetail();
+      CustomAlert({ title: '提示', message: res.message });
     }
 
     if (detail.is_collection) {
-      unFollowVideo({ id: route.params.id })
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+      const res: ResponseType = await unFollowVideo({ id: route.params.id });
+      if (res?.code !== 200) {
+        return;
+      }
 
-          getVideoDetail();
-          CustomAlert({ title: '提示', message: res.message });
-        })
-        .catch(() => ({}));
+      getVideoDetail();
+      CustomAlert({ title: '提示', message: res.message });
     }
   };
 
   // 评论
-  const [comment, setComment] = useState({
-    open: false
-  });
+  const [comment, setComment] = useState({ open: false });
 
-  const handleCommentOpen = (): void => {
+  const handleCommentOpen = () => {
     setComment({ open: true });
   };
 
-  const handleCommentClose = (): void => {
+  const handleCommentClose = () => {
     setComment({ open: false });
   };
 
   useLayoutEffect(() => {
-    // 自定义标头
     navigation.setOptions({
-      header: ({ options }) => {
-        return (
-          <CustomHeader
-            options={options}
-            headerStyle={{ height: 0, backgroundColor: 'black' }}
-            arrowStyle={{ position: 'absolute', top: 25 }}
-          />
-        );
-      }
+      header: ({ options }) => (
+        <CustomHeader
+          options={options}
+          headerStyle={{ height: 0, backgroundColor: 'black' }}
+          arrowStyle={{ position: 'absolute', top: 25 }}
+        />
+      )
     });
   }, []);
 
@@ -167,39 +145,28 @@ function VideoDetail(): React.ReactElement {
         </Pressable>
         <View style={styles.tool}>
           <Pressable onPress={handleLikeChange} style={styles.toolItem}>
-            <Text
-              style={detail.is_collection ? styles.activeIcon : styles.itemIcon}
-            >
+            <Text style={detail.is_collection ? styles.activeIcon : styles.itemIcon}>
               {'\ue669'}
             </Text>
-            {!detail.like_count && <Text style={styles.itemText}>点赞</Text>}
-            {Number(detail.like_count) > 0 && (
-              <Text style={styles.itemText}>{detail.like_count}</Text>
-            )}
+            <Text style={styles.itemText}>{detail.like_count ? detail.like_count : '点赞'}</Text>
           </Pressable>
           <Pressable onPress={handleCollectionChange} style={styles.toolItem}>
-            <Text
-              style={detail.is_collection ? styles.activeIcon : styles.itemIcon}
-            >
+            <Text style={detail.is_collection ? styles.activeIcon : styles.itemIcon}>
               {'\ue911'}
             </Text>
-            {!detail.collection_count && (
-              <Text style={styles.itemText}>收藏</Text>
-            )}
-            {Number(detail.collection_count) > 0 && (
-              <Text style={styles.itemText}>{detail.collection_count}</Text>
-            )}
+            <Text style={styles.itemText}>
+              {detail.collection_count ? detail.collection_count : '收藏'}
+            </Text>
           </Pressable>
           <Pressable onPress={handleCommentOpen} style={styles.toolItem}>
             <Text style={styles.itemIcon}>{'\ue620'}</Text>
-            {!detail.comment_count && <Text style={styles.itemText}>评论</Text>}
-            {Number(detail.comment_count) > 0 && (
-              <Text style={styles.itemText}>{detail.comment_count}</Text>
-            )}
+            <Text style={styles.itemText}>
+              {detail.comment_count ? detail.comment_count : '评论'}
+            </Text>
           </Pressable>
         </View>
       </View>
-      {comment.open && <Comment method={videoComment} onClose={handleCommentClose} />}
+      {comment.open && <Comment request={videoComment} onClose={handleCommentClose} />}
     </>
   );
 }

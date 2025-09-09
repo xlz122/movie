@@ -11,7 +11,6 @@ const tabbar = [
     title: '首页',
     icon: '\ue908',
     selectIcon: '\ue908',
-    // 标题栏
     headerShown: false,
     component: require('../tabpage/home/Home').default
   },

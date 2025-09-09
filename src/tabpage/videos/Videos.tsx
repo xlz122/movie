@@ -1,13 +1,13 @@
 import React from 'react';
 import { StatusBar, View, Text, Image, Pressable } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { timeStampToDuration } from '@/utils/utils';
 import { videosList } from '@/api/videos';
 import type { ListRenderItemInfo } from 'react-native';
 import type { Navigation } from '@/types/index';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './videos.css';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemType = {
   id: number;
@@ -15,10 +15,7 @@ type ItemType = {
   title: string;
   play_count: number;
   duration: number;
-  author: {
-    avatar: string;
-    username: string;
-  };
+  author: { avatar: string; username: string };
   like_count: number;
   comment_count: number;
 };
@@ -35,25 +32,19 @@ function Videos(): React.ReactElement {
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
-          <Image
-            source={{ uri: item.poster }}
-            resizeMode="stretch"
-            style={styles.itemImage}
-          />
+          <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
           <Text style={styles.itemTitle}>{item.title}</Text>
           <View style={styles.itemPlay}>
             <Text style={styles.playIcon}>{'\ue616'}</Text>
           </View>
           <Text style={styles.itemCount}>{item.play_count}次播放</Text>
-          <Text style={styles.itemDuration}>
-            {timeStampToDuration(item.duration)}
-          </Text>
+          <Text style={styles.itemDuration}>{timeStampToDuration(item.duration)}</Text>
         </View>
         <View style={styles.userinfo}>
           <View style={styles.author}>
             <Image
-              source={{ uri: item.author?.avatar }}
               resizeMode="stretch"
+              source={{ uri: item.author?.avatar }}
               style={styles.authorAvatar}
             />
             <Text style={styles.authorName}>{item.author?.username}</Text>

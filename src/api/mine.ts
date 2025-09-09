@@ -2,7 +2,7 @@ import axios from '@/utils/axios';
 import type { AxiosPromise } from 'axios';
 
 /**
- * @description 收藏统计
+ * @description 用户统计
  */
 export const userCount = (): AxiosPromise => {
   return axios.request({

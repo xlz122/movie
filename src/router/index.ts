@@ -79,16 +79,13 @@ const router: Router[] = [
     name: 'MovieSummary',
     title: '剧情',
     headerShown: false,
-    component: require('../views/movie-detail/movie-summary/MovieSummary')
-      .default
+    component: require('../views/movie-detail/movie-summary/MovieSummary').default
   },
   {
     name: 'MoviePhotoDetail',
     title: '相册',
     headerShown: true,
-    component:
-      require('../views/movie-detail/movie-photo-detail/MoviePhotoDetail')
-        .default
+    component: require('../views/movie-detail/movie-photo-detail/MoviePhotoDetail').default
   },
   {
     name: 'VideoDetail',
@@ -118,23 +115,19 @@ const router: Router[] = [
     name: 'ActorSummary',
     title: '剧情',
     headerShown: false,
-    component: require('../views/actor-detail/actor-summary/ActorSummary')
-      .default
+    component: require('../views/actor-detail/actor-summary/ActorSummary').default
   },
   {
     name: 'ActorPhotoDetail',
     title: '相册',
     headerShown: true,
-    component:
-      require('../views/actor-detail/actor-photo-detail/ActorPhotoDetail')
-        .default
+    component: require('../views/actor-detail/actor-photo-detail/ActorPhotoDetail').default
   },
   {
     name: 'ActorWorksList',
     title: '影人作品',
     headerShown: true,
-    component: require('../views/actor-detail/actor-works-list/ActorWorksList')
-      .default
+    component: require('../views/actor-detail/actor-works-list/ActorWorksList').default
   },
   {
     name: 'UserActor',

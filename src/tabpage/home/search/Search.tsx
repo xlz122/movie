@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  StatusBar,
-  View,
-  Text,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { StatusBar, View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import type { Navigation } from '@/types/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { Navigation } from '@/types/index';
 
 function Search(): React.ReactElement {
   const navigation: Navigation = useNavigation();

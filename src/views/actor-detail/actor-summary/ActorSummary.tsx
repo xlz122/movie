@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, ScrollView, View, Text, Pressable } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { actorsDetail } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
 import styles from './actor-summary.css';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
@@ -17,10 +17,11 @@ type DetailType = {
   age: string;
   country: string;
   born_place: string;
-  professions: Array<string>;
+  professions: string[];
   constellation: string;
   height: string;
   blood_type: string;
+  education: string;
   summary: string;
 };
 
@@ -31,16 +32,13 @@ function ActorSummary(): React.ReactElement {
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
-  const getActorDetail = (): void => {
-    actorsDetail({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getActorDetail = async () => {
+    const res: ResponseType = await actorsDetail({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setDetail(res.data ?? {});
-      })
-      .catch(() => ({}));
+    setDetail(res.data ?? {});
   };
 
   useEffect(() => {
@@ -86,9 +84,7 @@ function ActorSummary(): React.ReactElement {
           </View>
           <View style={styles.item}>
             <Text style={styles.itemLabel}>职业: </Text>
-            <Text style={styles.itemValue}>
-              {detail.professions?.join?.(',')}
-            </Text>
+            <Text style={styles.itemValue}>{detail.professions?.join?.(',')}</Text>
           </View>
           <View style={styles.item}>
             <Text style={styles.itemLabel}>星座: </Text>
@@ -101,6 +97,10 @@ function ActorSummary(): React.ReactElement {
           <View style={styles.item}>
             <Text style={styles.itemLabel}>血型: </Text>
             <Text style={styles.itemValue}>{detail.blood_type}</Text>
+          </View>
+          <View style={styles.item}>
+            <Text style={styles.itemLabel}>教育: </Text>
+            <Text style={styles.itemValue}>{detail.education}</Text>
           </View>
         </View>
         <View style={styles.group}>

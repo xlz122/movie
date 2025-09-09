@@ -35,42 +35,36 @@ function RoleDetail(): React.ReactElement {
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
-  const getRoleDetail = (): void => {
-    roleDetail({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getRoleDetail = async () => {
+    const res: ResponseType = await roleDetail({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setDetail(res.data ?? {});
-      })
-      .catch(() => ({}));
+    setDetail(res.data ?? {});
   };
 
   useEffect(() => {
     getRoleDetail();
   }, []);
 
-  const handleRefresh = (): void => {
+  const handleRefresh = () => {
     getRoleDetail();
   };
 
   useLayoutEffect(() => {
-    // 自定义标头
     navigation.setOptions({
-      header: ({ options }) => {
-        return (
-          <CustomHeader
-            options={options}
-            headerStyle={{
-              height: 0,
-              paddingTop: 0,
-              backgroundColor: 'transparent'
-            }}
-            arrowStyle={{ position: 'absolute', top: 25 }}
-          />
-        );
-      }
+      header: ({ options }) => (
+        <CustomHeader
+          options={options}
+          headerStyle={{
+            height: 0,
+            paddingTop: 0,
+            backgroundColor: 'transparent'
+          }}
+          arrowStyle={{ position: 'absolute', top: 25 }}
+        />
+      )
     });
   }, []);
 
@@ -94,23 +88,23 @@ function RoleDetail(): React.ReactElement {
         </View>
       </View>
       <Panel title="个人简介" subtitle="更多信息">
-        {!detail.brief && (
+        {detail.brief?.length !== 0 && (
+          <Text ellipsizeMode="tail" numberOfLines={4} style={styles.brief}>
+            {detail.brief}
+          </Text>
+        )}
+        {detail.brief?.length === 0 && (
           <View style={styles.noBrief}>
             <Text style={styles.noBriefText}>暂无简介</Text>
           </View>
         )}
-        {detail.brief && (
-          <Text numberOfLines={4} ellipsizeMode="tail" style={styles.brief}>
-            {detail.brief}
-          </Text>
-        )}
       </Panel>
-      {detail.photos && detail.photos?.length !== 0 && (
+      {detail.photos && detail.photos.length !== 0 && (
         <Panel title="相册" subtitle={`${detail.photo_count}张`}>
           <RolePhoto list={detail.photos} />
         </Panel>
       )}
-      {detail.movies && detail.movies?.length !== 0 && (
+      {detail.movies && detail.movies.length !== 0 && (
         <Panel title="角色影视" subtitle={`${detail.movie_count}部`}>
           <RoleMovie list={detail.movies} />
         </Panel>

@@ -10,15 +10,15 @@ function Changelog(): React.ReactElement {
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.适配ios</Text>
             <Text style={styles.itemText}>2.添加路由过渡动画</Text>
+            <Text style={styles.itemText}>3.修复已知bug</Text>
           </View>
         </View>
         <View style={styles.cellItem}>
           <Text style={styles.itemTitle}>2025-04-15</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.更新react native 0.79.0</Text>
-            <Text style={styles.itemText}>2.优化各页面代码</Text>
-            <Text style={styles.itemText}>3.沉浸式状态栏</Text>
-            <Text style={styles.itemText}>4.修复已知bug</Text>
+            <Text style={styles.itemText}>2.沉浸式状态栏</Text>
+            <Text style={styles.itemText}>3.修复已知bug</Text>
           </View>
         </View>
         <View style={styles.cellItem}>

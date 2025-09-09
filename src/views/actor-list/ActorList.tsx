@@ -32,26 +32,23 @@ function ActorList(): React.ReactElement {
     list: []
   });
 
-  const getMovieActor = (): void => {
-    movieActor({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieActor = async () => {
+    const res: ResponseType = await movieActor({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        const stickyIndex: number[] = [];
-        const list: ItemType[] = [];
+    const stickyIndex: number[] = [];
+    const list: ItemType[] = [];
 
-        res.data?.forEach?.((item: ItemType & { children: ItemType[] }) => {
-          list.push(...[item, ...item.children]);
-        });
-        list.forEach?.((item, index) =>
-          item.hasOwnProperty('children') && stickyIndex.push(index)
-        );
+    res.data?.forEach?.((item: ItemType & { children: ItemType[] }) => {
+      list.push(...[item, ...item.children]);
+    });
+    list.forEach?.((item, index) => {
+      item.hasOwnProperty('children') && stickyIndex.push(index);
+    });
 
-        setActor({ stickyIndex, list });
-      })
-      .catch(() => ({}));
+    setActor({ stickyIndex, list });
   };
 
   useEffect(() => {
@@ -70,17 +67,13 @@ function ActorList(): React.ReactElement {
       {!item.hasOwnProperty('children') && (
         <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
           <View style={styles.item}>
-            <Image
-              source={{ uri: item.avatar }}
-              resizeMode="stretch"
-              style={styles.itemImage}
-            />
+            <Image resizeMode="stretch" source={{ uri: item.avatar }} style={styles.itemImage} />
             <View style={styles.itemInfo}>
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemText}>{item.name_en}</Text>
               <Text style={styles.itemText}>
-                {item.gender}
-                {item.country && (
+                <Text>{item.gender}</Text>
+                {Boolean(item.country) && (
                   <>
                     <Text> · </Text>
                     <Text>{item.country}</Text>

@@ -21,24 +21,20 @@ function UserActor(): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('ActorDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.avatar }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
+        <Image resizeMode="stretch" source={{ uri: item.avatar }} style={styles.itemImage} />
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemTitle}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemTitle}>
             {item.name}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             {item.name_en}
           </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
             <Text>{item.gender}</Text>
-            {item.country && (
+            {Boolean(item.country) && (
               <>
                 <Text> · </Text>
-                {item.country}
+                <Text>{item.country}</Text>
               </>
             )}
           </Text>

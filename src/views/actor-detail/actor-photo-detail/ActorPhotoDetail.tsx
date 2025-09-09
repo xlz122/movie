@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+import { ScrollView, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { actorPhotos } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
@@ -24,41 +17,38 @@ function ActorPhotoDetail(): React.ReactElement {
   });
   const [photos, setPhotos] = useState<Array<{ url: string }>>([]);
 
-  const getPhotos = (): void => {
-    actorPhotos({ ...params, id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getPhotos = async () => {
+    const res: ResponseType = await actorPhotos({ ...params, id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setPhotos(res.data ?? []);
-      })
-      .catch(() => ({}));
+    setPhotos(res.data ?? []);
   };
 
   useEffect(() => {
     getPhotos();
   }, [params]);
 
-  const [tab] = useState([
+  const [tabs] = useState([
     { title: '全部', type: 'all' },
     { title: '写真', type: 'portrait' },
     { title: '截图', type: 'cut' },
     { title: '其他', type: 'other' }
   ]);
 
-  const tabChange = (value: string): void => {
+  const handleTabChange = (value: string) => {
     setParams({ ...params, type: value });
   };
 
   return (
     <ScrollView style={styles.page}>
-      <View style={styles.tab}>
-        {tab.map?.((item, index) => {
+      <View style={styles.tabs}>
+        {tabs.map?.((item, index) => {
           return (
             <Pressable
               key={index}
-              onPress={() => tabChange(item.type)}
+              onPress={() => handleTabChange(item.type)}
               style={styles.tabItem}
             >
               <Text style={params.type === item.type ? styles.activeText : styles.itemText}>
@@ -73,11 +63,7 @@ function ActorPhotoDetail(): React.ReactElement {
         {photos.map?.((item, index) => {
           return (
             <View key={index} style={styles.item}>
-              <Image
-                source={{ uri: item.url }}
-                resizeMode="stretch"
-                style={styles.itemImage}
-              />
+              <Image resizeMode="stretch" source={{ uri: item.url }} style={styles.itemImage} />
             </View>
           );
         })}
@@ -92,7 +78,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#ffffff'
   },
-  tab: {
+  tabs: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',

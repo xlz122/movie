@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { ScrollView, View, Text, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { actorsDetail } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
 import type { Navigation, ResponseType } from '@/types/index';
@@ -14,7 +15,6 @@ import ActorPhoto from './actor-photo/ActorPhoto';
 import ActorWorks from './actor-wroks/ActorWorks';
 import ActorRole from './actor-role/ActorRole';
 import styles from './actor-detail.css';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
@@ -23,10 +23,7 @@ type DetailType = {
   collection_count: number;
   works_count: number;
   role_count: number;
-  award: {
-    poster: string;
-    title: string;
-  };
+  award: { poster: string; title: string };
   award_count: number;
   summary: string;
   photo_count: number;
@@ -42,42 +39,36 @@ function ActorDetail(): React.ReactElement {
 
   const [detail, setDetail] = useState<Partial<DetailType>>({});
 
-  const getActorDetail = (): void => {
-    actorsDetail({ id: route.params.id })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getActorDetail = async () => {
+    const res: ResponseType = await actorsDetail({ id: route.params.id });
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setDetail(res.data ?? {});
-      })
-      .catch(() => ({}));
+    setDetail(res.data ?? {});
   };
 
   useEffect(() => {
     getActorDetail();
   }, []);
 
-  const handleRefresh = (): void => {
+  const handleRefresh = () => {
     getActorDetail();
   };
 
   useLayoutEffect(() => {
-    // 自定义标头
     navigation.setOptions({
-      header: ({ options }) => {
-        return (
-          <CustomHeader
-            options={options}
-            headerStyle={{
-              height: 0,
-              paddingTop: 0,
-              backgroundColor: 'transparent'
-            }}
-            arrowStyle={{ position: 'absolute', top }}
-          />
-        );
-      }
+      header: ({ options }) => (
+        <CustomHeader
+          options={options}
+          headerStyle={{
+            height: 0,
+            paddingTop: 0,
+            backgroundColor: 'transparent'
+          }}
+          arrowStyle={{ position: 'absolute', top }}
+        />
+      )
     });
   }, []);
 
@@ -100,18 +91,16 @@ function ActorDetail(): React.ReactElement {
           <Text style={styles.itemLabel}>饰演角色</Text>
         </View>
       </View>
-      {Number(detail.award_count) > 0 && (
+      {Boolean(detail.award_count) && (
         <View style={styles.award}>
           <Image
-            source={{ uri: detail.award?.poster }}
             resizeMode="cover"
+            source={{ uri: detail.award?.poster }}
             style={styles.awardImage}
           />
           <Text style={styles.awardTitle}>{detail.award?.title}</Text>
           <View style={styles.awardCount}>
-            <Text style={styles.countText}>
-              {`获奖${detail.award_count}次`}
-            </Text>
+            <Text style={styles.countText}>{`获奖${detail.award_count}次`}</Text>
             <Text style={styles.countIcon}>{'\ue906'}</Text>
           </View>
         </View>
@@ -121,18 +110,18 @@ function ActorDetail(): React.ReactElement {
         subtitle="更多信息"
         to={{ path: 'ActorSummary', params: { id: route.params.id } }}
       >
-        {!detail.summary && (
+        {detail.summary?.length !== 0 && (
+          <Text ellipsizeMode="tail" numberOfLines={4} style={styles.summary}>
+            {detail.summary}
+          </Text>
+        )}
+        {detail.summary?.length === 0 && (
           <View style={styles.noSummary}>
             <Text style={styles.noSummaryText}>暂无简介</Text>
           </View>
         )}
-        {detail.summary && (
-          <Text numberOfLines={4} ellipsizeMode="tail" style={styles.summary}>
-            {detail.summary}
-          </Text>
-        )}
       </Panel>
-      {detail.photos && detail.photos?.length > 0 && (
+      {detail.photos && detail.photos.length > 0 && (
         <Panel
           title="相册"
           subtitle={`${detail.photo_count}张`}
@@ -141,7 +130,7 @@ function ActorDetail(): React.ReactElement {
           <ActorPhoto list={detail.photos} />
         </Panel>
       )}
-      {detail.works && detail.works?.length > 0 && (
+      {detail.works && detail.works.length > 0 && (
         <Panel
           title="影视作品"
           subtitle={`${detail.works_count}部`}
@@ -150,7 +139,7 @@ function ActorDetail(): React.ReactElement {
           <ActorWorks list={detail.works} />
         </Panel>
       )}
-      {detail.roles && detail.roles?.length > 0 && (
+      {detail.roles && detail.roles.length > 0 && (
         <Panel title="饰演角色" subtitle={`${detail.role_count}部`}>
           <ActorRole list={detail.roles} />
         </Panel>
