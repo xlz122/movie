@@ -10,8 +10,8 @@ AppRegistry.runApplication('App', {
 // 阿里字体图标
 import iconFont from './src/assets/fonts/iconfont.ttf';
 const iconFontStyles = `@font-face {
-  src: url(${iconFont});
   font-family: 'iconfont';
+  src: url(${iconFont});
 }`;
 
 const style = document.createElement('style');

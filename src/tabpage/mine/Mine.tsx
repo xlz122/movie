@@ -26,7 +26,7 @@ function Mine(props: Props): React.ReactElement {
           <>
             <Image
               resizeMode="stretch"
-              source={require('../../assets/image/default-avatar.jpg')}
+              source={require('../../assets/images/default-avatar.jpg')}
               style={styles.avatar}
             />
             <Pressable onPress={() => props.navigation.push('Login')}>

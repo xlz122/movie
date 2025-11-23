@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
   itemCode: {
     width: 98,
     height: 32,
-    lineHeight: 32,
     backgroundColor: '#409eff',
     fontSize: 12,
     color: '#ffffff',
+    lineHeight: 32,
     textAlign: 'center',
     borderRadius: 6
   },

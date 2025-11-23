@@ -1,4 +1,6 @@
 module.exports = {
+  // 期望换行长度
+  printWidth: 100,
   // 语句末尾分号
   semi: true,
   // 字符串单引号
@@ -8,7 +10,7 @@ module.exports = {
   // 对象括号空格
   bracketSpacing: true,
   // 箭头函数括号
-  arrowParens: 'avoid',
-  // 行尾符号
+  arrowParens: 'always',
+  // 行尾序列符号
   endOfLine: 'auto'
 };
