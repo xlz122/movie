@@ -9,26 +9,6 @@ import type {
 import { Platform } from 'react-native';
 import store from '@/store/index';
 
-const getRequestIdentify = (config: AxiosRequestConfig, isReuest = false) => {
-  let url = config.url;
-  if (config.url && isReuest) {
-    url = config.baseURL + config.url.substring(1, config.url.length);
-  }
-
-  return config.method === 'get'
-    ? encodeURIComponent(url + JSON.stringify(config.params))
-    : encodeURIComponent(config.url + JSON.stringify(config.data));
-};
-
-const pending: { [key: string]: (message: string) => void } = {};
-const removePending = (key: string, isRequest = false) => {
-  if (pending[key] && isRequest) {
-    pending[key]('');
-  }
-
-  delete pending[key];
-};
-
 class HttpRequest {
   getInsideConfig(): AxiosRequestConfig {
     const config = {
@@ -45,14 +25,6 @@ class HttpRequest {
     // 请求拦截
     instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        // 标识请求
-        const requestIdentify: string = getRequestIdentify(config, true);
-        // 取消重复请求
-        removePending(requestIdentify, true);
-        config.cancelToken = new axios.CancelToken((cancel) => {
-          pending[requestIdentify] = cancel;
-        });
-
         const token = store.getState().routine.token;
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;

@@ -8,9 +8,11 @@ const appDirectory = path.resolve(__dirname, '../');
 
 // 需要编译的插件
 const compileNodeModules = [
-  'react-native-reanimated',
+  'react-native-gesture-handler',
   'react-native-linear-gradient',
-  'react-native-webview'
+  'react-native-reanimated',
+  'react-native-webview',
+  'react-native-worklets'
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 // This is needed for webpack to compile JavaScript.
