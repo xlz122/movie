@@ -7,12 +7,12 @@ function Project(): React.ReactElement {
       <View style={styles.cell}>
         <View style={styles.cellItem}>
           <Text style={styles.itemLabel}>react</Text>
-          <Text style={styles.itemValue}>19.0.0</Text>
+          <Text style={styles.itemValue}>19.1.1</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.cellItem}>
           <Text style={styles.itemLabel}>react native</Text>
-          <Text style={styles.itemValue}>0.79.0</Text>
+          <Text style={styles.itemValue}>0.82.0</Text>
         </View>
       </View>
     </View>
