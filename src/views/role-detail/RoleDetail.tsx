@@ -1,9 +1,9 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { roleDetail } from '@/api/role';
 import type { RouteProp } from '@react-navigation/native';
-import type { Navigation, ResponseType } from '@/types/index';
+import { roleDetail } from '@/api/role';
+import type { Navigation, ResponseType } from '@/types';
 import type { RolePhotoItem } from './role-photo/RolePhoto';
 import type { RoleMovieItem } from './role-movie/RoleMovie';
 import type { RoleActorItem } from './role-actor/RoleActor';

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import { login, userinfo } from '@/api/user';
-import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 
 function LoginForm(): React.ReactElement {
@@ -22,11 +23,11 @@ function LoginForm(): React.ReactElement {
     password: ''
   });
 
-  const handleAccountChange = (e: TextInputEvent) => {
+  const handleAccountChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent) => {
+  const handlePasswordChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 

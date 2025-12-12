@@ -1,10 +1,10 @@
 import React from 'react';
 import { StatusBar, View, Text, Image, Pressable, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type { RootState } from '@/store/index';
-import type { Navigation } from '@/types/index';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
+import type { Navigation } from '@/types';
 import MineCount from './mine-count/MineCount';
 
 type Props = {
@@ -26,7 +26,7 @@ function Mine(props: Props): React.ReactElement {
           <>
             <Image
               resizeMode="stretch"
-              source={require('../../assets/image/default-avatar.jpg')}
+              source={require('../../assets/images/default-avatar.jpg')}
               style={styles.avatar}
             />
             <Pressable onPress={() => props.navigation.push('Login')}>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { searchDetail } from '@/api/search';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './search-detail.css';
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { movieCategories } from '@/api/movies';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 import NavGroup from '../nav-group/NavGroup';
 
 type Props = {

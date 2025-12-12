@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import type { ViewStyle, ListRenderItem } from 'react-native';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 
 type Props = {
   // 请求参数

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { actorPhotos } from '@/api/actor';
 import type { RouteProp } from '@react-navigation/native';
-import type { ResponseType } from '@/types/index';
+import { actorPhotos } from '@/api/actor';
+import type { ResponseType } from '@/types';
 
 type Route = RouteProp<{ params: { id: number } }>;
 

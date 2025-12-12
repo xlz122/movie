@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Animated } from 'react-native';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
 import { indexData } from '@/api/home';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 import type { MovieItem } from './movie-list/MovieList';
 import Skeleton from '@/components/skeleton/Home';
 import Panel from '@/components/panel/Panel';

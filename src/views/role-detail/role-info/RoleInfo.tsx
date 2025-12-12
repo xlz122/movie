@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
 import { followRole, unFollowRole } from '@/api/role';
-import type { RootState } from '@/store/index';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 
 type Props = {

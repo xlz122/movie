@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { movieWish } from '@/api/movies';
 import type { RouteProp } from '@react-navigation/native';
-import type { RootState } from '@/store/index';
-import type { Navigation, ResponseType } from '@/types/index';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
+import { movieWish } from '@/api/movies';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import styles from './movie-info.css';
 

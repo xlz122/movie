@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { WebView } from 'react-native-webview';
 import type { RouteProp } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
 
 type Route = RouteProp<{ params: { uri: string } }>;
 

@@ -1,5 +1,5 @@
-import { Platform } from 'react-native';
 import type { FunctionComponent } from 'react';
+import { Platform } from 'react-native';
 
 export type Router = {
   name: string;

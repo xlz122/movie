@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { useStore, useSelector } from 'react-redux';
-import type { RootState } from '@/store/index';
+import type { RootState } from '@/store';
 import styles from './search-history.css';
 
 type Props = {

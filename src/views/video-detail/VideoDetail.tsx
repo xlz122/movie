@@ -1,7 +1,9 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { ScrollView, View, Text, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
 import {
   videosDetail,
   videoLike,
@@ -10,9 +12,7 @@ import {
   unFollowVideo,
   videoComment
 } from '@/api/videos';
-import type { RouteProp } from '@react-navigation/native';
-import type { RootState } from '@/store/index';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import Comment from '@/components/comment/Comment';

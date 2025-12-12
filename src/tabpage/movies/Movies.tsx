@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar, View, Text, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
+import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moviesList } from '@/api/movies';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getCaptcha, filedCaptcha, register } from '@/api/user';
-import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import PicutreCode from '@/components/picture-code/PicutreCode';
 
@@ -15,15 +16,15 @@ function RegisterForm(): React.ReactElement {
     code: ''
   });
 
-  const handleAccountChange = (e: TextInputEvent) => {
+  const handleAccountChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent) => {
+  const handlePasswordChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 
-  const handleCodeChange = (e: TextInputEvent) => {
+  const handleCodeChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, code: e.nativeEvent.text });
   };
 

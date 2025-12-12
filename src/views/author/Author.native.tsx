@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 
 function Author(): React.ReactElement {
   const navigation: Navigation = useNavigation();

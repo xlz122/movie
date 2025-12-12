@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Image, Pressable } from 'react-native';
-import type { ViewStyle } from 'react-native';
-import type { TextInputEvent } from '@/types/index';
+import type { ViewStyle, TextInputChangeEvent } from 'react-native';
 import styles from './picture-code.css';
 
 type Props = {
@@ -15,7 +14,7 @@ type Props = {
 function PicutreCode(props: Props): React.ReactElement {
   const [code, setCode] = useState('');
 
-  const handleCodeChange = (e: TextInputEvent) => {
+  const handleCodeChange = (e: TextInputChangeEvent) => {
     setCode(e.nativeEvent.text);
   };
 

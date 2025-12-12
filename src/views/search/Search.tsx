@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StatusBar, View, Text, TextInput, Pressable } from 'react-native';
+import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore, useSelector } from 'react-redux';
-import type { RootState } from '@/store/index';
-import type { Navigation, TextInputEvent } from '@/types/index';
+import type { RootState } from '@/store';
+import type { Navigation } from '@/types';
 import SearchHistory from './search-history/SearchHistory';
 import SearchDetail from './search-detail/SearchDetail';
 import styles from './search.css';
@@ -17,7 +18,7 @@ function Search(): React.ReactElement {
 
   const [keyword, setKeyword] = useState('');
 
-  const handleInputChange = (e: TextInputEvent) => {
+  const handleInputChange = (e: TextInputChangeEvent) => {
     setKeyword(e.nativeEvent.text);
   };
 

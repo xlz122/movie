@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
 import { userCount } from '@/api/mine';
-import type { RootState } from '@/store/index';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 
 type Count = {
   actor_count: number;

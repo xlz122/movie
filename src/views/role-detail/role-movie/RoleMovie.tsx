@@ -1,8 +1,8 @@
 import React from 'react';
 import { FlatList, View, Text, Image, Pressable, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import { useNavigation } from '@react-navigation/native';
+import type { Navigation } from '@/types';
 
 type Props = {
   list: RoleMovieItem[];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import styles from './video-info.css';
 
 type Props = {

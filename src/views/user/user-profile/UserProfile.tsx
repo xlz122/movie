@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import type { RootState } from '@/store/index';
+import type { RootState } from '@/store';
 
 function UserProfile(): React.ReactElement {
   const userinfo = useSelector((state: RootState) => state.routine.userinfo);

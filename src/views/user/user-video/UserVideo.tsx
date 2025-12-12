@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
+import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { timeStampToDuration, formatDistance } from '@/utils/utils';
 import { userVideos } from '@/api/mine';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { movieAwards } from '@/api/home';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 
 function Awards(): React.ReactElement {
   const [awards, setAwards] = useState<Array<{ title: string }>>([]);

@@ -1,10 +1,10 @@
 import React from 'react';
 import { StatusBar, View, Text, Pressable } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { ViewStyle } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { StackNavigationOptions } from '@react-navigation/stack';
-import type { Navigation } from '@/types/index';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { Navigation } from '@/types';
 import styles from './custom-header.css';
 
 type Props = {

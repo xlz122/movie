@@ -1,13 +1,13 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { ScrollView, View, Text, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
 import { moviesDetail, movieComment } from '@/api/movies';
-import type { RouteProp } from '@react-navigation/native';
-import type { RootState } from '@/store/index';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import type { MovieActorItem } from './movie-actor/MovieActor';
 import type { MovieRoleItem } from './movie-role/MovieRole';
 import type { MoviePhotoItem } from './movie-photo/MoviePhoto';

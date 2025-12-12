@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, Text, Image, Pressable } from 'react-native';
+import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { timeStampToDuration, formatDistance } from '@/utils/utils';
 import { videosDetailList } from '@/api/videos';
-import type { ListRenderItemInfo } from 'react-native';
-import type { RouteProp } from '@react-navigation/native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import styles from './video-list.css';
 
 type Route = RouteProp<{ params: { id: number } }>;

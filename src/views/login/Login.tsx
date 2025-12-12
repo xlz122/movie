@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar, View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import LoginForm from './login-form/LoginForm';
 import RegisterForm from './register-form/RegisterForm';
 

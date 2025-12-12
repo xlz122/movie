@@ -1,10 +1,10 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { ScrollView, View, Text, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { actorsDetail } from '@/api/actor';
-import type { RouteProp } from '@react-navigation/native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import type { ActorPhotoItem } from './actor-photo/ActorPhoto';
 import type { ActorWorkItem } from './actor-wroks/ActorWorks';
 import type { ActorRoleItem } from './actor-role/ActorRole';

@@ -6,11 +6,17 @@ function Changelog(): React.ReactElement {
     <ScrollView style={styles.page}>
       <View style={styles.cell}>
         <View style={styles.cellItem}>
+          <Text style={styles.itemTitle}>2025-12-12</Text>
+          <View style={styles.itemContent}>
+            <Text style={styles.itemText}>1.更新react native 0.83.0</Text>
+            <Text style={styles.itemText}>2.修复影视详情评分判断不完全导致app闪退</Text>
+          </View>
+        </View>
+        <View style={styles.cellItem}>
           <Text style={styles.itemTitle}>2025-06-14</Text>
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.适配ios</Text>
             <Text style={styles.itemText}>2.添加路由过渡动画</Text>
-            <Text style={styles.itemText}>3.修复已知bug</Text>
           </View>
         </View>
         <View style={styles.cellItem}>
@@ -18,7 +24,6 @@ function Changelog(): React.ReactElement {
           <View style={styles.itemContent}>
             <Text style={styles.itemText}>1.更新react native 0.79.0</Text>
             <Text style={styles.itemText}>2.沉浸式状态栏</Text>
-            <Text style={styles.itemText}>3.修复已知bug</Text>
           </View>
         </View>
         <View style={styles.cellItem}>

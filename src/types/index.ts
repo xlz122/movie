@@ -10,5 +10,3 @@ export type ResponseType<T = any> = {
   data: T;
   message?: string;
 };
-
-export type TextInputEvent = NativeSyntheticEvent<TextInputChangeEventData>;

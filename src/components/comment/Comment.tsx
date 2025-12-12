@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import { formatDistance } from '@/utils/utils';
 import type { ListRenderItemInfo } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
-import type { ResponseType } from '@/types/index';
+import { formatDistance } from '@/utils/utils';
+import type { ResponseType } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './comment.css';
 

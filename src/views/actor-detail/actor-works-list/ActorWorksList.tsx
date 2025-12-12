@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, Image, Pressable, Dimensions } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { actorWorks } from '@/api/actor';
 import type { ListRenderItemInfo } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
-import type { Navigation, ResponseType } from '@/types/index';
+import { actorWorks } from '@/api/actor';
+import type { Navigation, ResponseType } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './actor-works-list.css';
 

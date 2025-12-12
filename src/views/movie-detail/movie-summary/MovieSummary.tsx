@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, ScrollView, View, Text, Pressable } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moviesDetail } from '@/api/movies';
-import type { RouteProp } from '@react-navigation/native';
-import type { Navigation, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import styles from './movie-summary.css';
 
 type Route = RouteProp<{ params: { id: number } }>;

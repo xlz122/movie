@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Pressable } from 'react-native';
+import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import { fieldAccount, getCaptcha, filedCaptcha, filedPhoneCode, modifyPassword } from '@/api/user';
-import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import PicutreCode from '@/components/picture-code/PicutreCode';
 import styles from './forget.css';
@@ -18,15 +19,15 @@ function Forget(): React.ReactElement {
     code: ''
   });
 
-  const handleAccountChange = (e: TextInputEvent) => {
+  const handleAccountChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent) => {
+  const handlePasswordChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 
-  const handleCodeChange = (e: TextInputEvent) => {
+  const handleCodeChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, code: e.nativeEvent.text });
   };
 

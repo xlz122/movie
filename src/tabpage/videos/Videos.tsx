@@ -1,11 +1,11 @@
 import React from 'react';
 import { StatusBar, View, Text, Image, Pressable } from 'react-native';
+import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { timeStampToDuration } from '@/utils/utils';
 import { videosList } from '@/api/videos';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './videos.css';
 
