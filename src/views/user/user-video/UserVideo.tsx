@@ -65,22 +65,22 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
     gap: 12,
     paddingTop: 16,
-    marginHorizontal: 14
+    marginHorizontal: 14,
   },
   itemCover: {
-    position: 'relative'
+    position: 'relative',
   },
   itemImage: {
     width: 120,
     height: 68,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemDuration: {
     position: 'absolute',
@@ -88,40 +88,40 @@ const styles = StyleSheet.create({
     bottom: 6,
     zIndex: 9,
     fontSize: 9,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   itemTitle: {
     fontWeight: '700',
     fontSize: 13,
-    color: '#303133'
+    color: '#303133',
   },
   intro: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   introText: {
     fontSize: 11,
-    color: '#999999'
+    color: '#999999',
   },
   empty: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 250
+    paddingTop: 250,
   },
   emptyText: {
     fontSize: 13,
-    color: '#aaaaaa'
-  }
+    color: '#AAAAAA',
+  },
 });
 
 export default UserVideo;

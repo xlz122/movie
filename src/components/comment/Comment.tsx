@@ -30,12 +30,12 @@ function Comment(props: Props): React.ReactElement {
   const [params, setParams] = useState({
     type: 'hot',
     page: 1,
-    per_page: 10
+    per_page: 10,
   });
 
   const [tabs] = useState([
     { title: '热度', type: 'hot' },
-    { title: '最新', type: 'created_at' }
+    { title: '最新', type: 'created_at' },
   ]);
 
   const handleTabChange = (value: string) => {
@@ -115,7 +115,7 @@ function Comment(props: Props): React.ReactElement {
               id: route.params.id,
               sortby: params.type,
               page: params.page,
-              pageSize: params.per_page
+              pageSize: params.per_page,
             }}
             sortParams={{ sortby: params.type }}
             request={props.request}

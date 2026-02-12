@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { StatusBar, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   userInfo: {
     position: 'relative',
@@ -107,21 +107,21 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 228,
     paddingHorizontal: 14,
-    backgroundColor: '#e54847'
+    backgroundColor: '#E54847',
   },
   avatar: {
     width: 66,
     height: 66,
-    borderRadius: 50
+    borderRadius: 50,
   },
   loginText: {
     fontSize: 14,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   userName: {
     fontWeight: '700',
     fontSize: 16,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   setting: {
     position: 'absolute',
@@ -131,12 +131,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 42,
-    height: 42
+    height: 42,
   },
   settingIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   cell: {
     display: 'flex',
@@ -145,35 +145,35 @@ const styles = StyleSheet.create({
     padding: 14,
     marginTop: 14,
     marginHorizontal: 14,
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   cellItem: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemIcon: {
     marginRight: 6,
     fontFamily: 'iconfont',
     fontSize: 17,
-    color: '#ffbe10'
+    color: '#FFBE10',
   },
   itemText: {
     flex: 1,
     fontSize: 12.5,
-    color: '#303133'
+    color: '#303133',
   },
   itemArrow: {
     fontFamily: 'iconfont',
     fontSize: 12,
-    color: '#999999'
+    color: '#999999',
   },
   divider: {
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
-  }
+    borderColor: '#EEEEEE',
+  },
 });
 
 export default Mine;

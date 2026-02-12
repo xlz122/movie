@@ -1,4 +1,3 @@
-import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RouteProp, ParamListBase } from '@react-navigation/native';
 

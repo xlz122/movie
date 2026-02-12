@@ -31,7 +31,7 @@ function Search(): React.ReactElement {
 
     store.dispatch({
       type: 'routine/setSearchHistory',
-      payload: Array.from(new Set([keyword, ...searchHistory]))
+      payload: Array.from(new Set([keyword, ...searchHistory])),
     });
   };
 

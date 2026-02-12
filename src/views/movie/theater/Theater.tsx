@@ -69,63 +69,63 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
     gap: 12,
     paddingTop: 16,
-    marginHorizontal: 14
+    marginHorizontal: 14,
   },
   itemImage: {
     width: 82,
     height: 110,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: 6
+    gap: 6,
   },
   itemTitle: {
     fontSize: 14,
-    color: '#333333'
+    color: '#333333',
   },
   itemTag: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4
+    gap: 4,
   },
   tag: {
     paddingVertical: 1,
     paddingHorizontal: 2,
     backgroundColor: 'rgba(254, 179, 0, 0.15)',
     fontSize: 10,
-    color: '#feb300',
-    borderRadius: 3
+    color: '#FEB300',
+    borderRadius: 3,
   },
   itemText: {
     fontSize: 11.5,
-    color: '#999999'
+    color: '#999999',
   },
   itemRating: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'baseline',
-    gap: 2
+    gap: 2,
   },
   ratingWeight: {
     fontWeight: '700',
-    color: '#f16c00',
-    fontSize: 12.5
+    color: '#F16C00',
+    fontSize: 12.5,
   },
   ratingText: {
     fontSize: 10,
-    color: '#f16c00'
-  }
+    color: '#F16C00',
+  },
 });
 
 export default Theater;

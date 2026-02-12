@@ -16,9 +16,8 @@ Readme | [阿里字体图标](docs/iconfont.md) | [插件介绍](docs/plugin.md)
 
 ## 项目使用技术栈
 
+* React Native
 * React
-* React Native 0.83.0
-* Redux
 * Typescript
 
 ## 加入项目

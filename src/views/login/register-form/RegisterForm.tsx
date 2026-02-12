@@ -13,7 +13,7 @@ function RegisterForm(): React.ReactElement {
   const [params, setParams] = useState({
     account: '',
     password: '',
-    code: ''
+    code: '',
   });
 
   const handleAccountChange = (e: TextInputChangeEvent) => {
@@ -31,7 +31,7 @@ function RegisterForm(): React.ReactElement {
   // 验证码计时
   const [codeTime, setCodeTime] = useState({
     visible: false,
-    time: 120
+    time: 120,
   });
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -59,7 +59,7 @@ function RegisterForm(): React.ReactElement {
   // 图形验证码
   const [captcha, setCaptcha] = useState({
     open: false,
-    source: ''
+    source: '',
   });
 
   const handleGetCaptcha = async () => {
@@ -145,7 +145,7 @@ function RegisterForm(): React.ReactElement {
             onChange={handleAccountChange}
             inputMode="tel"
             placeholder="请输入手机号"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
         </View>
@@ -155,7 +155,7 @@ function RegisterForm(): React.ReactElement {
             onChange={handlePasswordChange}
             autoComplete="off"
             placeholder="请设置初始密码(6-12位)"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
         </View>
@@ -164,7 +164,7 @@ function RegisterForm(): React.ReactElement {
             value={params.code}
             onChange={handleCodeChange}
             placeholder="请输入验证码"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
           <Text onPress={handleGetCaptcha} style={styles.itemCode}>
@@ -189,18 +189,18 @@ function RegisterForm(): React.ReactElement {
 const styles = StyleSheet.create({
   registerForm: {
     marginTop: 42,
-    marginHorizontal: 38
+    marginHorizontal: 38,
   },
   title: {
     fontWeight: '700',
     fontSize: 22,
-    color: '#303133'
+    color: '#303133',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
     gap: 18,
-    marginTop: 46
+    marginTop: 46,
   },
   formItem: {
     display: 'flex',
@@ -208,15 +208,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemInput: {
     flex: 1,
-    height: 40
+    height: 40,
   },
   itemCode: {
     fontSize: 12,
-    color: '#e54847'
+    color: '#E54847',
   },
   submit: {
     display: 'flex',
@@ -225,13 +225,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     marginTop: 10,
-    backgroundColor: '#409eff',
-    borderRadius: 6
+    backgroundColor: '#409EFF',
+    borderRadius: 6,
   },
   submitText: {
     fontSize: 14,
-    color: '#ffffff'
-  }
+    color: '#FFFFFF',
+  },
 });
 
 export default RegisterForm;

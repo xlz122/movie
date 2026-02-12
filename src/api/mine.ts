@@ -7,7 +7,7 @@ import type { AxiosPromise } from 'axios';
 export const userCount = (): AxiosPromise => {
   return axios.request({
     url: '/user/collections/count',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -28,7 +28,7 @@ export const userActors = ({ page, per_page }: Paging): AxiosPromise => {
   return axios.request({
     url: '/user/collections/actors',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -44,7 +44,7 @@ export const userRoles = ({ page, per_page }: Paging): AxiosPromise => {
   return axios.request({
     url: '/user/collections/roles',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -60,6 +60,6 @@ export const userVideos = ({ page, per_page }: Paging): AxiosPromise => {
   return axios.request({
     url: '/user/collections/videos',
     method: 'get',
-    params
+    params,
   });
 };

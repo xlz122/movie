@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { movieCategories } from '@/api/movies';
 import type { ResponseType } from '@/types';
@@ -41,7 +41,7 @@ function Nav(props: Props): React.ReactElement {
       categories: res.data?.categories ?? [],
       genres: [],
       countries: res.data?.countries ?? [],
-      years: res.data?.years ?? []
+      years: res.data?.years ?? [],
     });
   };
 
@@ -85,7 +85,7 @@ function Nav(props: Props): React.ReactElement {
     category: '全部',
     genre: '全部',
     country: '全部',
-    year: '全部'
+    year: '全部',
   });
 
   const navChange = (group: string, name: string) => {
@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
   nav: {
     paddingTop: 10,
     paddingLeft: 10,
-    backgroundColor: '#ffffff'
-  }
+    backgroundColor: '#FFFFFF',
+  },
 });
 
 export default Nav;

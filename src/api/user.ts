@@ -18,7 +18,7 @@ export const login = ({ account, password }: Login): AxiosPromise => {
   return axios.request({
     url: '/login',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -41,7 +41,7 @@ export const register = ({ account, password, code }: Register): AxiosPromise =>
   return axios.request({
     url: '/register',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -56,7 +56,7 @@ export const fieldAccount = ({ account }: { account: string }): AxiosPromise => 
   return axios.request({
     url: '/account',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -66,7 +66,7 @@ export const fieldAccount = ({ account }: { account: string }): AxiosPromise => 
 export const getCaptcha = (): AxiosPromise => {
   return axios.request({
     url: '/captcha',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -89,7 +89,7 @@ export const filedCaptcha = ({ phone, code, type }: FiledCaptcha): AxiosPromise 
   return axios.request({
     url: '/code',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -110,7 +110,7 @@ export const filedPhoneCode = ({ phone, code }: FiledPhoneCode): AxiosPromise =>
   return axios.request({
     url: '/code',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -120,7 +120,7 @@ export const filedPhoneCode = ({ phone, code }: FiledPhoneCode): AxiosPromise =>
 export const userinfo = (): AxiosPromise => {
   return axios.request({
     url: '/user',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -135,6 +135,6 @@ export const modifyPassword = ({ password }: { password: string }): AxiosPromise
   return axios.request({
     url: '/user/password',
     method: 'put',
-    data
+    data,
   });
 };

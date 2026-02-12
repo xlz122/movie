@@ -69,26 +69,26 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
     gap: 12,
     paddingTop: 16,
-    marginHorizontal: 14
+    marginHorizontal: 14,
   },
   itemCover: {
     position: 'relative',
     width: 82,
     height: 110,
     borderRadius: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   itemImage: {
     width: 82,
     height: 110,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemCoverBg: {
     position: 'absolute',
@@ -96,17 +96,17 @@ const styles = StyleSheet.create({
     left: -14,
     width: 30,
     height: 48,
-    backgroundColor: '#adadad',
-    transform: [{ rotate: '-135deg' }]
+    backgroundColor: '#ADADAD',
+    transform: [{ rotate: '-135deg' }],
   },
   coverBg1: {
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
   coverBg2: {
-    backgroundColor: '#ff4500'
+    backgroundColor: '#FF4500',
   },
   coverBg3: {
-    backgroundColor: '#f4a460'
+    backgroundColor: '#F4A460',
   },
   coverText: {
     position: 'absolute',
@@ -114,37 +114,37 @@ const styles = StyleSheet.create({
     left: 4,
     zIndex: 1,
     fontSize: 10,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: 6
+    gap: 6,
   },
   itemTitle: {
     fontSize: 14,
-    color: '#333333'
+    color: '#333333',
   },
   itemText: {
     fontSize: 11.5,
-    color: '#999999'
+    color: '#999999',
   },
   itemRating: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'baseline',
-    gap: 2
+    gap: 2,
   },
   ratingWeight: {
     fontWeight: '700',
-    color: '#f16c00',
-    fontSize: 12.5
+    color: '#F16C00',
+    fontSize: 12.5,
   },
   ratingText: {
     fontSize: 10,
-    color: '#f16c00'
-  }
+    color: '#F16C00',
+  },
 });
 
 export default HighScore;

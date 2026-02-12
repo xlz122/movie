@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { FlatList, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -51,34 +51,34 @@ function MovieActor(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   list: {
     marginHorizontal: 0,
-    marginBottom: 0
+    marginBottom: 0,
   },
   item: {
     display: 'flex',
     flexDirection: 'column',
     gap: 6,
     width: 86,
-    height: 'auto'
+    height: 'auto',
   },
   itemImage: {
     width: 86,
     height: 122,
     borderRadius: 3,
-    objectFit: 'cover'
+    objectFit: 'cover',
   },
   itemText: {
     fontSize: 12.5,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   itemIntro: {
     marginTop: -5,
     fontSize: 10.5,
-    color: 'hsla(0, 0%, 96.1%, 0.75)'
+    color: 'hsla(0, 0%, 96.1%, 0.75)',
   },
   separator: {
     width: 8,
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 export default MovieActor;

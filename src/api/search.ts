@@ -22,6 +22,6 @@ export const searchDetail = ({ keyword, type, page, per_page }: SearchDetail): A
   return axios.request({
     url: '/search',
     method: 'get',
-    params
+    params,
   });
 };

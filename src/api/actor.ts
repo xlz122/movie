@@ -9,7 +9,7 @@ import type { AxiosPromise } from 'axios';
 export const actorsDetail = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/actors/${id}`,
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -21,7 +21,7 @@ export const actorsDetail = ({ id }: { id: number }): AxiosPromise => {
 export const followActor = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/actors/${id}/collections`,
-    method: 'post'
+    method: 'post',
   });
 };
 
@@ -33,7 +33,7 @@ export const followActor = ({ id }: { id: number }): AxiosPromise => {
 export const unFollowActor = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/actors/${id}/collections`,
-    method: 'delete'
+    method: 'delete',
   });
 };
 
@@ -58,7 +58,7 @@ export const actorPhotos = ({ id, type, page, per_page }: ActorPhotos): AxiosPro
   return axios.request({
     url: `/actors/${id}/photos`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -83,6 +83,6 @@ export const actorWorks = ({ id, page, per_page, sortby }: ActorWorks): AxiosPro
   return axios.request({
     url: `/actors/${id}/works`,
     method: 'get',
-    params
+    params,
   });
 };

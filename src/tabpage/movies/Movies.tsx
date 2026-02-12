@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar, View, Text, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -24,7 +24,7 @@ function Movies(): React.ReactElement {
     category: '全部',
     genre: '全部',
     country: '全部',
-    year: '全部'
+    year: '全部',
   });
 
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
@@ -71,13 +71,13 @@ function Movies(): React.ReactElement {
           country: params.country,
           year: params.year,
           page: 1,
-          pageSize: Math.floor(Dimensions.get('window').width / 104) * 5
+          pageSize: Math.floor(Dimensions.get('window').width / 104) * 5,
         }}
         sortParams={{
           category: params.category,
           genre: params.genre,
           country: params.country,
-          year: params.year
+          year: params.year,
         }}
         request={moviesList}
         renderItem={renderItem}
@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   list: {
     flexGrow: 1,
     paddingTop: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   item: {
     position: 'relative',
@@ -110,31 +110,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
     width: 104,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   itemImage: {
     width: 104,
     height: 152,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemEpisode: {
     position: 'absolute',
     top: 132,
     left: 8,
     fontSize: 11,
-    color: '#cccccc'
+    color: '#CCCCCC',
   },
   itemRating: {
     position: 'absolute',
     top: 132,
     right: 8,
     fontSize: 11,
-    color: 'orange'
+    color: 'orange',
   },
   itemText: {
     color: '#333333',
-    fontSize: 12.5
-  }
+    fontSize: 12.5,
+  },
 });
 
 export default Movies;

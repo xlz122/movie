@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+﻿import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { ScrollView, View, Text, Pressable } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
@@ -65,7 +65,7 @@ function MovieDeail(): React.ReactElement {
   };
 
   // 渐变背景色
-  const [gradientColor, setGradientColor] = useState(['#f5f5f5', '#f5f5f5']);
+  const [gradientColor, setGradientColor] = useState(['#F5F5F5', '#F5F5F5']);
 
   const handlerGradualChange = (color: string) => {
     const result: string[] = [];
@@ -113,7 +113,7 @@ function MovieDeail(): React.ReactElement {
           titleCenter={true}
           headerStyle={{ backgroundColor: 'transparent' }}
         />
-      )
+      ),
     });
   }, []);
 
@@ -125,7 +125,7 @@ function MovieDeail(): React.ReactElement {
           titleCenter={true}
           headerStyle={{ backgroundColor: gradientColor[0] }}
         />
-      )
+      ),
     });
   }, [gradientColor]);
 
@@ -142,9 +142,9 @@ function MovieDeail(): React.ReactElement {
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingHorizontal: 0 }}
               lineStyle={{ display: 'none' }}
-              titleTextStyle={{ color: '#ffffff' }}
-              moreTextStyle={{ color: '#ffffff' }}
-              moreIconStyle={{ color: '#ffffff' }}
+              titleTextStyle={{ color: '#FFFFFF' }}
+              moreTextStyle={{ color: '#FFFFFF' }}
+              moreIconStyle={{ color: '#FFFFFF' }}
             >
               <Text ellipsizeMode="tail" numberOfLines={4} style={styles.summary}>
                 {detail.summary}
@@ -159,9 +159,9 @@ function MovieDeail(): React.ReactElement {
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingHorizontal: 0 }}
               lineStyle={{ display: 'none' }}
-              titleTextStyle={{ color: '#ffffff' }}
-              moreTextStyle={{ color: '#ffffff' }}
-              moreIconStyle={{ color: '#ffffff' }}
+              titleTextStyle={{ color: '#FFFFFF' }}
+              moreTextStyle={{ color: '#FFFFFF' }}
+              moreIconStyle={{ color: '#FFFFFF' }}
             >
               <MovieActor list={detail.cast ?? []} />
             </Panel>
@@ -173,9 +173,9 @@ function MovieDeail(): React.ReactElement {
               panelStyle={{ backgroundColor: 'transparent' }}
               headerStyle={{ paddingHorizontal: 0 }}
               lineStyle={{ display: 'none' }}
-              titleTextStyle={{ color: '#ffffff' }}
-              moreTextStyle={{ color: '#ffffff' }}
-              moreIconStyle={{ color: '#ffffff' }}
+              titleTextStyle={{ color: '#FFFFFF' }}
+              moreTextStyle={{ color: '#FFFFFF' }}
+              moreIconStyle={{ color: '#FFFFFF' }}
             >
               <MovieRole list={detail.roles} />
             </Panel>

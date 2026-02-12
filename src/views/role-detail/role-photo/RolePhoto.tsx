@@ -32,21 +32,21 @@ function RolePhoto(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   list: {
     marginHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   item: {
     width: 64,
-    height: 'auto'
+    height: 'auto',
   },
   itemImage: {
     width: 64,
     height: 90,
-    borderRadius: 3
+    borderRadius: 3,
   },
   separator: {
     width: 8,
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 export default RolePhoto;

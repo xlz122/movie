@@ -45,7 +45,7 @@ function ActorRole(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   list: {
     marginHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   item: {
     position: 'relative',
@@ -53,21 +53,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 6,
     width: 86,
-    height: 'auto'
+    height: 'auto',
   },
   itemImage: {
     width: 86,
     height: 122,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemText: {
     fontSize: 12.5,
-    color: '#333333'
+    color: '#333333',
   },
   separator: {
     width: 8,
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 export default ActorRole;

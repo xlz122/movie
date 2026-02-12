@@ -63,12 +63,13 @@ function ScrollRefresh(props: Props): React.ReactElement {
     currentComplete: false,
     // 数据是否全部请求完成
     complete: false,
-    empty: false
+    empty: false,
   });
 
   const getListData = (): Promise<unknown[]> => {
     return new Promise((resolve, reject) => {
-      props.request({ ...props.params, page: refreshState.page, per_page: refreshState.pageSize })
+      props
+        .request({ ...props.params, page: refreshState.page, per_page: refreshState.pageSize })
         .then((res: ResponseType) => {
           if (res?.code !== 200) {
             return;
@@ -95,7 +96,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         isRefresh: false,
         isLoadMore: false,
         currentComplete: true,
-        loadText: '接口请求失败, 请重试...'
+        loadText: '接口请求失败, 请重试...',
       });
       return;
     }
@@ -110,7 +111,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         currentComplete: true,
         complete: true,
         empty: true,
-        loadText: ''
+        loadText: '',
       });
       return;
     }
@@ -124,7 +125,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         isLoadMore: false,
         currentComplete: true,
         complete: true,
-        loadText: '没有更多数据了'
+        loadText: '没有更多数据了',
       });
       return;
     }
@@ -138,7 +139,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         isLoadMore: false,
         currentComplete: true,
         complete: true,
-        loadText: '没有更多数据了'
+        loadText: '没有更多数据了',
       });
       return;
     }
@@ -149,7 +150,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       isRefresh: false,
       isLoadMore: false,
       currentComplete: true,
-      loadText: '加载更多...'
+      loadText: '加载更多...',
     });
   };
 
@@ -162,7 +163,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       currentComplete: false,
       complete: false,
       empty: false,
-      loadText: ''
+      loadText: '',
     });
   };
 
@@ -177,7 +178,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       page: refreshState.page + 1,
       isLoadMore: true,
       currentComplete: false,
-      loadText: '加载中...'
+      loadText: '加载中...',
     });
   };
 
@@ -238,18 +239,18 @@ function ScrollRefresh(props: Props): React.ReactElement {
 
 const styles = StyleSheet.create({
   list: {
-    flex: 1
+    flex: 1,
   },
   loadMore: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 36
+    height: 36,
   },
   loadMoreText: {
     fontSize: 13,
-    color: '#909399'
-  }
+    color: '#909399',
+  },
 });
 
 export default ScrollRefresh;

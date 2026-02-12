@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   close: {
     display: 'flex',
@@ -60,24 +60,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 42,
-    height: 42
+    height: 42,
   },
   closeIcon: {
     fontFamily: 'iconfont',
     fontSize: 17,
-    color: '#e54847'
+    color: '#E54847',
   },
   tool: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 22,
-    marginHorizontal: 38
+    marginHorizontal: 38,
   },
   toolText: {
     fontSize: 12,
-    color: '#303133'
-  }
+    color: '#303133',
+  },
 });
 
 export default Login;

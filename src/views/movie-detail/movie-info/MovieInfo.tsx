@@ -166,7 +166,7 @@ function MovieInfo(props: Props): React.ReactElement {
               <View
                 style={[
                   styles.operateItem,
-                  detail.is_wish ? styles.operateActiveItem : styles.operateItem
+                  detail.is_wish ? styles.operateActiveItem : styles.operateItem,
                 ]}
               >
                 <Text style={styles.operateIcon}>{'\ue60a'}</Text>
@@ -190,7 +190,9 @@ function MovieInfo(props: Props): React.ReactElement {
       <View style={styles.tags}>
         {detail.tags?.map?.((item, index) => {
           return (
-            <Text key={index} style={styles.tagItem}>{item}</Text>
+            <Text key={index} style={styles.tagItem}>
+              {item}
+            </Text>
           );
         })}
       </View>

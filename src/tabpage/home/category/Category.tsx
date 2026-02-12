@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { Navigation } from '@/types';
@@ -35,41 +35,41 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 12,
     margin: 10,
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   item: {
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    gap: 6
+    gap: 6,
   },
   itemIcon: {
     padding: 9,
     fontFamily: 'iconfont',
     fontSize: 22,
-    borderRadius: 6
+    borderRadius: 6,
   },
   itemText: {
     fontSize: 12,
-    color: '#303133'
+    color: '#303133',
   },
   hotMovie: {
     backgroundColor: 'rgba(255, 79, 77, 0.15)',
-    color: '#f8a52d'
+    color: '#F8A52D',
   },
   highScore: {
     backgroundColor: 'rgba(255, 79, 77, 0.15)',
-    color: '#ff4f4d'
+    color: '#FF4F4D',
   },
   awards: {
     backgroundColor: 'rgba(65, 172, 255, 0.15)',
-    color: '#41acff'
+    color: '#41ACFF',
   },
   today: {
     backgroundColor: 'rgba(145, 109, 255, 0.15)',
-    color: '#916dff'
-  }
+    color: '#916DFF',
+  },
 });
 
 export default Category;

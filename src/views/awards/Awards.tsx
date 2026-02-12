@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { movieAwards } from '@/api/home';
 import type { ResponseType } from '@/types';
@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   item: {
     display: 'flex',
@@ -54,17 +54,17 @@ const styles = StyleSheet.create({
     height: 38,
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemLine: {
     borderRightWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemText: {
     fontSize: 12.5,
-    color: '#303133'
-  }
+    color: '#303133',
+  },
 });
 
 export default Awards;

@@ -26,7 +26,7 @@ function Coming(): React.ReactElement {
 
   const [coming, setComing] = useState<ComingType>({
     stickyIndex: [],
-    list: []
+    list: [],
   });
 
   const getMovieComing = async () => {

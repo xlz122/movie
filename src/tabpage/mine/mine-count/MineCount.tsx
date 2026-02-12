@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     height: 76,
     marginTop: -38,
     marginHorizontal: 14,
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   countItem: {
     flex: 1,
@@ -93,17 +93,17 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10
+    gap: 10,
   },
   itemCount: {
     fontSize: 18,
-    color: '#e54847'
+    color: '#E54847',
   },
   itemText: {
     fontWeight: 'bold',
     fontSize: 11,
-    color: '#666666'
-  }
+    color: '#666666',
+  },
 });
 
 export default MineCount;

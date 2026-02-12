@@ -64,11 +64,11 @@ function ActorDetail(): React.ReactElement {
           headerStyle={{
             height: 0,
             paddingTop: 0,
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
           }}
           arrowStyle={{ position: 'absolute', top }}
         />
-      )
+      ),
     });
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
@@ -13,7 +13,7 @@ function ActorPhotoDetail(): React.ReactElement {
   const [params, setParams] = useState({
     type: 'all',
     page: 1,
-    per_page: 10
+    per_page: 10,
   });
   const [photos, setPhotos] = useState<Array<{ url: string }>>([]);
 
@@ -34,7 +34,7 @@ function ActorPhotoDetail(): React.ReactElement {
     { title: '全部', type: 'all' },
     { title: '写真', type: 'portrait' },
     { title: '截图', type: 'cut' },
-    { title: '其他', type: 'other' }
+    { title: '其他', type: 'other' },
   ]);
 
   const handleTabChange = (value: string) => {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   tabs: {
     display: 'flex',
@@ -85,48 +85,48 @@ const styles = StyleSheet.create({
     height: 44,
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#e5e5e5'
+    borderColor: '#E5E5E5',
   },
   tabItem: {
     position: 'relative',
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemText: {
     fontSize: 12,
-    color: '#7d7e80'
+    color: '#7D7E80',
   },
   activeText: {
     fontSize: 12,
-    color: '#e54847'
+    color: '#E54847',
   },
   activeLine: {
     position: 'absolute',
     bottom: 2.8,
     width: 24,
     height: 4,
-    backgroundColor: '#e54847',
-    borderRadius: 6
+    backgroundColor: '#E54847',
+    borderRadius: 6,
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
-    margin: 10
+    margin: 10,
   },
   item: {
     width: 92,
-    height: 'auto'
+    height: 'auto',
   },
   itemImage: {
     width: 92,
     height: 124,
     borderRadius: 3,
-    objectFit: 'cover'
-  }
+    objectFit: 'cover',
+  },
 });
 
 export default ActorPhotoDetail;

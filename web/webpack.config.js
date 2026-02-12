@@ -124,10 +124,10 @@ module.exports = {
   devServer: {
     proxy: [
       {
-        context: ['/api'],
-        target: 'https://movie.xlz122.cn/api',
+        context: ['/prod-api'],
+        target: 'https://movie.xlz122.cn/prod-api',
         changeOrigin: true,
-        pathRewrite: { '^/api': '' }
+        pathRewrite: { '^/prod-api': '' }
       }
     ]
   },

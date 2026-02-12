@@ -76,10 +76,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 230,
     backgroundColor: 'rgba(229, 72, 71, 0.85)',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
-    height: 398
+    height: 398,
   },
   info: {
     position: 'absolute',
@@ -90,38 +90,38 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   brief: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: 2
+    gap: 2,
   },
   briefName: {
     fontSize: 18,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   briefEnName: {
     fontSize: 12,
-    color: '#cccccc'
+    color: '#CCCCCC',
   },
   collect: {
     paddingVertical: 6,
     paddingHorizontal: 18,
     backgroundColor: 'hsla(0, 0%, 100%, 0.25)',
     fontSize: 12,
-    color: '#ffffff',
-    borderRadius: 50
+    color: '#FFFFFF',
+    borderRadius: 50,
   },
   collected: {
     paddingVertical: 6,
     paddingHorizontal: 18,
     backgroundColor: 'rgba(229, 72, 71, 0.3)',
     fontSize: 12,
-    color: '#ffffff',
-    borderRadius: 50
-  }
+    color: '#FFFFFF',
+    borderRadius: 50,
+  },
 });
 
 export default RoleInfo;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Animated } from 'react-native';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
@@ -45,7 +45,7 @@ function Home(): React.ReactElement {
     setMovie({
       theater: res.data?.theater ?? {},
       coming: res.data?.coming ?? {},
-      today: res.data?.today ?? {}
+      today: res.data?.today ?? {},
     });
   };
 
@@ -54,7 +54,7 @@ function Home(): React.ReactElement {
   }, []);
 
   // 渐变背景色
-  const [gradientColor, setGradientColor] = useState(['#f5f5f5', '#f5f5f5']);
+  const [gradientColor, setGradientColor] = useState(['#F5F5F5', '#F5F5F5']);
 
   const handlerGradualChange = (color: string) => {
     const result: string[] = [];
@@ -76,7 +76,7 @@ function Home(): React.ReactElement {
   }, [banner]);
 
   const bannerChange = (index: number) => {
-    const color = banner[index]?.bgcolor ?? '#f5f5f5';
+    const color = banner[index]?.bgcolor ?? '#F5F5F5';
 
     handlerGradualChange(color);
   };
@@ -85,19 +85,19 @@ function Home(): React.ReactElement {
   const spinValue = new Animated.Value(0);
   const spinBackgroundColor = spinValue.interpolate({
     inputRange: [0, 150],
-    outputRange: ['transparent', '#e54847'],
-    extrapolate: 'clamp'
+    outputRange: ['transparent', '#E54847'],
+    extrapolate: 'clamp',
   });
 
   const animatedEvent = Animated.event(
     [
       {
         nativeEvent: {
-          contentOffset: { y: spinValue }
-        }
-      }
+          contentOffset: { y: spinValue },
+        },
+      },
     ],
-    { useNativeDriver: false }
+    { useNativeDriver: false },
   );
 
   if (loading) {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   bgcolor: {
     position: 'absolute',
@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: -1,
     width: '100%',
-    height: 300
-  }
+    height: 300,
+  },
 });
 
 export default Home;

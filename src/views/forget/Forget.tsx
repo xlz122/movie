@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Pressable } from 'react-native';
 import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -16,7 +16,7 @@ function Forget(): React.ReactElement {
   const [params, setParams] = useState({
     account: '',
     password: '',
-    code: ''
+    code: '',
   });
 
   const handleAccountChange = (e: TextInputChangeEvent) => {
@@ -38,7 +38,7 @@ function Forget(): React.ReactElement {
   // 验证码计时
   const [codeTime, setCodeTime] = useState({
     visible: false,
-    time: 120
+    time: 120,
   });
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -89,7 +89,7 @@ function Forget(): React.ReactElement {
   // 图形验证码
   const [captcha, setCaptcha] = useState({
     open: false,
-    source: ''
+    source: '',
   });
 
   const handleGetCaptcha = async () => {
@@ -187,7 +187,7 @@ function Forget(): React.ReactElement {
             onChange={handleAccountChange}
             inputMode="tel"
             placeholder="请输入注册手机号"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
           {params.account.length !== 0 && (
@@ -204,7 +204,7 @@ function Forget(): React.ReactElement {
               value={params.code}
               onChange={handleCodeChange}
               placeholder="请输入验证码"
-              placeholderTextColor="#c9c9c9"
+              placeholderTextColor="#C9C9C9"
               style={styles.itemCodeInput}
             />
             <Text onPress={handleGetCaptcha} style={styles.itemCode}>
@@ -221,7 +221,7 @@ function Forget(): React.ReactElement {
             value={params.password}
             onChange={handlePasswordChange}
             placeholder="请输入新密码"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
           {params.password.length !== 0 && (

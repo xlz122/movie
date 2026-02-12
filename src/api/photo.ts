@@ -12,6 +12,6 @@ export const photosDetail = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/photos/${id}`,
     method: 'get',
-    params
+    params,
   });
 };

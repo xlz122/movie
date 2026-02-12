@@ -40,13 +40,13 @@ function SearchDetail(props: Props): React.ReactElement {
   const [params, setParams] = useState({
     type: 'movie',
     page: 1,
-    per_page: 10
+    per_page: 10,
   });
 
   const [tabs] = useState([
     { title: '影视', type: 'movie' },
     { title: '影人', type: 'actor' },
-    { title: '角色', type: 'role' }
+    { title: '角色', type: 'role' },
   ]);
 
   const handleTabChange = (value: string) => {
@@ -149,7 +149,7 @@ function SearchDetail(props: Props): React.ReactElement {
           keyword: props.keyword,
           type: params.type,
           page: params.page,
-          pageSize: params.per_page
+          pageSize: params.per_page,
         }}
         sortParams={{ type: params.type }}
         request={searchDetail}

@@ -33,9 +33,7 @@ function VideoPlayer(props: Props): React.ReactElement {
           </Pressable>
           <Text style={styles.controlTime}>00:00</Text>
           <View style={styles.controlProgress} />
-          <Text style={styles.controlTime}>
-            {timeStampToDuration(props.detail?.duration ?? 0)}
-          </Text>
+          <Text style={styles.controlTime}>{timeStampToDuration(props.detail?.duration ?? 0)}</Text>
           <View style={styles.controlClarity}>
             <Text style={styles.clarityText}>高清</Text>
           </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, Text, Pressable, StyleSheet, Linking } from 'react-native';
 
 function Author(): React.ReactElement {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   cell: {
     display: 'flex',
@@ -50,33 +50,33 @@ const styles = StyleSheet.create({
     gap: 14,
     padding: 14,
     margin: 14,
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   cellItem: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 10
+    gap: 10,
   },
   itemLabel: {
     fontSize: 12.5,
-    color: '#303133'
+    color: '#303133',
   },
   itemValue: {
     fontSize: 12.5,
-    color: '#999999'
+    color: '#999999',
   },
   itemLink: {
     fontSize: 12.5,
-    color: '#e54847'
+    color: '#E54847',
   },
   divider: {
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
-  }
+    borderColor: '#EEEEEE',
+  },
 });
 
 export default Author;

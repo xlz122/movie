@@ -26,13 +26,13 @@ function ActorWorksDetail(): React.ReactElement {
   const [params, setParams] = useState({
     type: 'hot',
     page: 1,
-    per_page: 10
+    per_page: 10,
   });
 
   const [tabs] = useState([
     { title: '热度', type: 'hot' },
     { title: '时间', type: 'year' },
-    { title: '评分', type: 'rating' }
+    { title: '评分', type: 'rating' },
   ]);
 
   const handleTabChange = (value: string) => {
@@ -83,7 +83,7 @@ function ActorWorksDetail(): React.ReactElement {
             id: route.params.id,
             sortby: params.type,
             page: params.page,
-            pageSize: Math.floor(Dimensions.get('window').width / 104) * 5
+            pageSize: Math.floor(Dimensions.get('window').width / 104) * 5,
           }}
           sortParams={{ sortby: params.type }}
           request={actorWorks}

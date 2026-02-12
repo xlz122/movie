@@ -4,7 +4,7 @@ import type {
   AxiosInstance,
   InternalAxiosRequestConfig,
   AxiosResponse,
-  AxiosError
+  AxiosError,
 } from 'axios';
 import { Platform } from 'react-native';
 import store from '@/store';
@@ -12,10 +12,10 @@ import store from '@/store';
 class HttpRequest {
   getInsideConfig(): AxiosRequestConfig {
     const config = {
-      baseURL: Platform.OS === 'web' ? '/api' : 'https://movie.xlz122.cn/api',
+      baseURL: Platform.OS === 'web' ? '/prod-api' : 'https://movie.xlz122.cn/prod-api',
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       withCredentials: true,
-      timeout: 60000
+      timeout: 60000,
     };
 
     return config;
@@ -34,7 +34,7 @@ class HttpRequest {
       },
       (error: AxiosError) => {
         return Promise.reject(error);
-      }
+      },
     );
     // 响应拦截
     instance.interceptors.response.use(
@@ -55,7 +55,7 @@ class HttpRequest {
         }
 
         return Promise.reject(error);
-      }
+      },
     );
   }
 

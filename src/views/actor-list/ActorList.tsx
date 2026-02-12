@@ -29,7 +29,7 @@ function ActorList(): React.ReactElement {
 
   const [actor, setActor] = useState<ActorType>({
     stickyIndex: [],
-    list: []
+    list: [],
   });
 
   const getMovieActor = async () => {

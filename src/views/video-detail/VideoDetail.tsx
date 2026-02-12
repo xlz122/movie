@@ -10,7 +10,7 @@ import {
   unVideoLike,
   followVideo,
   unFollowVideo,
-  videoComment
+  videoComment,
 } from '@/api/videos';
 import type { Navigation, ResponseType } from '@/types';
 import CustomHeader from '@/components/custom-header/CustomHeader';
@@ -128,7 +128,7 @@ function VideoDetail(): React.ReactElement {
           headerStyle={{ height: 0, backgroundColor: 'black' }}
           arrowStyle={{ position: 'absolute', top: 25 }}
         />
-      )
+      ),
     });
   }, []);
 

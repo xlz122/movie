@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 230,
     backgroundColor: 'rgba(229, 72, 71, 0.85)',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
     height: 398,
-    objectFit: 'cover'
+    objectFit: 'cover',
   },
   info: {
     position: 'absolute',
@@ -107,44 +107,44 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   brief: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: 2
+    gap: 2,
   },
   briefName: {
     fontSize: 18,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   briefEnName: {
     fontSize: 12,
-    color: '#cccccc'
+    color: '#CCCCCC',
   },
   briefExtra: {
     display: 'flex',
     gap: 4,
     fontSize: 12,
-    color: '#dddddd'
+    color: '#DDDDDD',
   },
   follow: {
     paddingVertical: 6,
     paddingHorizontal: 18,
     backgroundColor: 'hsla(0, 0%, 100%, 0.25)',
     fontSize: 12,
-    color: '#ffffff',
-    borderRadius: 50
+    color: '#FFFFFF',
+    borderRadius: 50,
   },
   followed: {
     paddingVertical: 6,
     paddingHorizontal: 18,
     backgroundColor: 'rgba(229, 72, 71, 0.3)',
     fontSize: 12,
-    color: '#ffffff',
-    borderRadius: 50
-  }
+    color: '#FFFFFF',
+    borderRadius: 50,
+  },
 });
 
 export default ActorInfo;

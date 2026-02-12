@@ -43,16 +43,16 @@ function Banner(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   banner: {
     width: '100%',
-    height: 186
+    height: 186,
   },
   item: {
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   itemImage: {
     width: '100%',
     height: 186,
-    borderRadius: 6
-  }
+    borderRadius: 6,
+  },
 });
 
 export default Banner;
