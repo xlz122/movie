@@ -1,7 +1,7 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 
 function Author(): React.ReactElement {
   const navigation: Navigation = useNavigation();
@@ -25,9 +25,7 @@ function Author(): React.ReactElement {
         </View>
         <View style={styles.divider} />
         <Pressable
-          onPress={() =>
-            navigation.push('WebView', { uri: 'https://github.com/xlz122' })
-          }
+          onPress={() => navigation.push('WebView', { uri: 'https://github.com/xlz122' })}
           style={styles.cellItem}
         >
           <Text style={styles.itemLabel}>github主页</Text>
@@ -42,7 +40,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   cell: {
     display: 'flex',
@@ -50,33 +48,33 @@ const styles = StyleSheet.create({
     gap: 14,
     padding: 14,
     margin: 14,
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   cellItem: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 10
+    gap: 10,
   },
   itemLabel: {
     fontSize: 12.5,
-    color: '#303133'
+    color: '#303133',
   },
   itemValue: {
     fontSize: 12.5,
-    color: '#999999'
+    color: '#999999',
   },
   itemLink: {
     fontSize: 12,
-    color: '#e54847'
+    color: '#E54847',
   },
   divider: {
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
-  }
+    borderColor: '#EEEEEE',
+  },
 });
 
 export default Author;

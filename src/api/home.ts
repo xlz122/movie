@@ -7,7 +7,7 @@ import type { AxiosPromise } from 'axios';
 export const indexData = (): AxiosPromise => {
   return axios.request({
     url: '/index',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -29,7 +29,7 @@ export const movieTheater = ({ page, per_page }: Paging): AxiosPromise => {
   return axios.request({
     url: '/movie/theater',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -45,7 +45,7 @@ export const movieComing = ({ page, per_page }: Paging): AxiosPromise => {
   return axios.request({
     url: 'movie/coming',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -61,7 +61,7 @@ export const movieTop = ({ page, per_page }: Paging): AxiosPromise => {
   return axios.request({
     url: '/movie/top',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -71,7 +71,7 @@ export const movieTop = ({ page, per_page }: Paging): AxiosPromise => {
 export const movieAwards = (): AxiosPromise => {
   return axios.request({
     url: '/awards',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -82,16 +82,12 @@ export const movieAwards = (): AxiosPromise => {
  * @param { number } [params.per_page] - 条数
  * @param { string } [params.sortby] - 排序方式(hot热度, year时间, rating评分)
  */
-export const movieToday = ({
-  page,
-  per_page,
-  sortby
-}: Paging): AxiosPromise => {
+export const movieToday = ({ page, per_page, sortby }: Paging): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({
     url: '/movie/today',
     method: 'get',
-    params
+    params,
   });
 };

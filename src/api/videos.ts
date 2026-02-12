@@ -18,7 +18,7 @@ export const videosList = ({ page, per_page }: VideoList): AxiosPromise => {
   return axios.request({
     url: '/videos',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -33,7 +33,7 @@ export const videosDetail = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/videos/${id}`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -48,7 +48,7 @@ export const videosDetailList = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/movies/${id}/videos`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -60,7 +60,7 @@ export const videosDetailList = ({ id }: { id: number }): AxiosPromise => {
 export const videoLike = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/videos/${id}/like`,
-    method: 'post'
+    method: 'post',
   });
 };
 
@@ -72,7 +72,7 @@ export const videoLike = ({ id }: { id: number }): AxiosPromise => {
 export const unVideoLike = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/videos/${id}/like`,
-    method: 'delete'
+    method: 'delete',
   });
 };
 
@@ -84,7 +84,7 @@ export const unVideoLike = ({ id }: { id: number }): AxiosPromise => {
 export const followVideo = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/videos/${id}/collections`,
-    method: 'post'
+    method: 'post',
   });
 };
 
@@ -96,7 +96,7 @@ export const followVideo = ({ id }: { id: number }): AxiosPromise => {
 export const unFollowVideo = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/videos/${id}/collections`,
-    method: 'delete'
+    method: 'delete',
   });
 };
 
@@ -113,19 +113,14 @@ type VideoComment = {
  * @param { number } params.id - 视频id
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
- * @param { string } [params.sortby] - 排序
+ * @param { string } [params.sortby] - 排序方式(hot热度, created_at最新)
  */
-export const videoComment = ({
-  id,
-  page,
-  per_page,
-  sortby
-}: VideoComment): AxiosPromise => {
+export const videoComment = ({ id, page, per_page, sortby }: VideoComment): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({
     url: `/videos/${id}/comments`,
     method: 'get',
-    params
+    params,
   });
 };

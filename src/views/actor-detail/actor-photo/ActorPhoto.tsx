@@ -6,18 +6,12 @@ type Props = {
   list: ActorPhotoItem[];
 };
 
-export type ActorPhotoItem = {
-  url: string;
-};
+export type ActorPhotoItem = { url: string };
 
 function ActorPhoto(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ActorPhotoItem>) => (
     <View style={styles.item}>
-      <Image
-        source={{ uri: item.url }}
-        resizeMode="stretch"
-        style={styles.itemImage}
-      />
+      <Image resizeMode="stretch" source={{ uri: item.url }} style={styles.itemImage} />
     </View>
   );
 
@@ -26,7 +20,7 @@ function ActorPhoto(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -38,22 +32,22 @@ function ActorPhoto(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   list: {
     marginHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   item: {
     width: 64,
-    height: 'auto'
+    height: 'auto',
   },
   itemImage: {
     width: 64,
     height: 90,
     borderRadius: 3,
-    objectFit: 'cover'
+    objectFit: 'cover',
   },
   separator: {
     width: 8,
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 export default ActorPhoto;

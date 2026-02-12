@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 216,
     backgroundColor: '#000000',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   paused: {
     position: 'absolute',
@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
-    borderRadius: 50
+    borderRadius: 50,
   },
   pausedIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   control: {
     position: 'absolute',
@@ -40,53 +40,53 @@ const styles = StyleSheet.create({
     gap: 4,
     width: '100%',
     height: 32,
-    paddingHorizontal: 4
+    paddingHorizontal: 4,
   },
   controlPlay: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: 30,
-    height: 30
+    height: 30,
   },
   playIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   controlTime: {
     fontSize: 12,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   controlProgress: {
     flex: 1,
     height: 3,
     marginHorizontal: 4,
     backgroundColor: 'hsla(0, 0%, 100%, 0.3)',
-    borderRadius: 50
+    borderRadius: 50,
   },
   controlClarity: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 4
+    marginHorizontal: 4,
   },
   clarityText: {
     fontSize: 12,
-    color: '#e5e5e5'
+    color: '#E5E5E5',
   },
   controlFull: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: 30,
-    height: 30
+    height: 30,
   },
   fullIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
-    color: 'hsla(0, 0%, 100%, 0.85)'
-  }
+    color: 'hsla(0, 0%, 100%, 0.85)',
+  },
 });
 
 export default styles;

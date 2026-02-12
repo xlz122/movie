@@ -1,15 +1,8 @@
-import React from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+﻿import React from 'react';
+import { FlatList, View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import { useNavigation } from '@react-navigation/native';
+import type { Navigation } from '@/types';
 
 type Props = {
   list: MovieItem[];
@@ -31,29 +24,16 @@ function MovieList(props: Props): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<MovieItem>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
+        <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
         {item.category && item.category !== '电影' && (
           <Text style={styles.itemTag}>{item.category}</Text>
         )}
-        {item.rating !== null && Number(item.rating) === 0 && (
-          <Text style={styles.itemRating}>暂无评分</Text>
-        )}
-        {Number(item.rating) > 0 && (
-          <Text style={styles.itemRating}>{item.rating}分</Text>
-        )}
-        {Number(item.wish_count) > 0 && (
-          <Text style={styles.itemWish}>{item.wish_count} 想看</Text>
-        )}
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+        <Text style={styles.itemRating}>{item.rating ? `${item.rating}分` : '暂无评分'}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
           {item.title}
         </Text>
-        {item.release_date && (
-          <Text style={styles.itemDate}>{item.release_date}</Text>
-        )}
+        {Boolean(item.wish_count) && <Text style={styles.itemWish}>{item.wish_count} 想看</Text>}
+        {Boolean(item.release_date) && <Text style={styles.itemDate}>{item.release_date}</Text>}
       </View>
     </Pressable>
   );
@@ -63,7 +43,7 @@ function MovieList(props: Props): React.ReactElement {
       horizontal
       initialNumToRender={10}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => String(index)}
+      keyExtractor={(_, index) => index.toString()}
       data={props.list}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -75,7 +55,7 @@ function MovieList(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   list: {
     marginHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   item: {
     position: 'relative',
@@ -83,12 +63,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 6,
     width: 88,
-    height: 'auto'
+    height: 'auto',
   },
   itemImage: {
     width: 88,
     height: 124,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemTag: {
     position: 'absolute',
@@ -98,36 +78,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     backgroundColor: 'rgba(255, 165, 0, 0.7)',
     fontSize: 9,
-    color: '#ffffff',
-    borderRadius: 3
+    color: '#FFFFFF',
+    borderRadius: 3,
   },
   itemRating: {
     position: 'absolute',
     top: 106,
     right: 4,
     fontSize: 11,
-    color: 'orange'
+    color: 'orange',
   },
   itemWish: {
     position: 'absolute',
     top: 106,
     left: 4,
     fontSize: 11,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   itemText: {
     fontSize: 12.5,
-    color: '#333333'
+    color: '#333333',
   },
   itemDate: {
     marginTop: -5,
     fontSize: 10.5,
-    color: '#888888'
+    color: '#888888',
   },
   separator: {
     width: 8,
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
 export default MovieList;

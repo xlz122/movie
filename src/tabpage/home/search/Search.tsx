@@ -1,14 +1,8 @@
-import React from 'react';
-import {
-  StatusBar,
-  View,
-  Text,
-  Pressable,
-  StyleSheet
-} from 'react-native';
+﻿import React from 'react';
+import { StatusBar, View, Text, Pressable, StyleSheet } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import type { Navigation } from '@/types/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { Navigation } from '@/types';
 
 function Search(): React.ReactElement {
   const navigation: Navigation = useNavigation();
@@ -32,7 +26,7 @@ const styles = StyleSheet.create({
   search: {
     width: '100%',
     height: 48,
-    padding: 10
+    padding: 10,
   },
   input: {
     display: 'flex',
@@ -41,18 +35,18 @@ const styles = StyleSheet.create({
     gap: 8,
     height: '100%',
     paddingHorizontal: 10,
-    backgroundColor: '#e5e5e5',
-    borderRadius: 50
+    backgroundColor: '#E5E5E5',
+    borderRadius: 50,
   },
   inputIcon: {
     fontFamily: 'iconfont',
     fontSize: 14,
-    color: '#999999'
+    color: '#999999',
   },
   inputText: {
     fontSize: 13,
-    color: '#666666'
-  }
+    color: '#666666',
+  },
 });
 
 export default Search;

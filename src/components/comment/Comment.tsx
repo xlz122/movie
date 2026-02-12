@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import { formatDistance } from '@/utils/utils';
 import type { ListRenderItemInfo } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
-import type { ResponseType } from '@/types/index';
+import { formatDistance } from '@/utils/utils';
+import type { ResponseType } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 import styles from './comment.css';
 
 type Route = RouteProp<{ params: { id: number } }>;
 
 type Props = {
-  method: Function;
+  request: Function;
   onClose?: () => void;
 };
 
 type ItemType = {
   id: number;
-  author: {
-    avatar: string;
-    username: string;
-  };
+  author: { avatar: string; username: string };
   content: string;
   created_at: string;
   like_count: number;
@@ -33,15 +30,15 @@ function Comment(props: Props): React.ReactElement {
   const [params, setParams] = useState({
     type: 'hot',
     page: 1,
-    per_page: 10
+    per_page: 10,
   });
 
-  const [tab] = useState([
+  const [tabs] = useState([
     { title: '热度', type: 'hot' },
-    { title: '最新', type: 'created_at' }
+    { title: '最新', type: 'created_at' },
   ]);
 
-  const tabChange = (value: string): void => {
+  const handleTabChange = (value: string) => {
     setParams({ ...params, type: value });
   };
 
@@ -56,29 +53,21 @@ function Comment(props: Props): React.ReactElement {
     <View style={styles.item}>
       <View style={styles.itemCover}>
         <Image
-          source={{ uri: item.author?.avatar }}
           resizeMode="stretch"
+          source={{ uri: item.author?.avatar }}
           style={styles.itemImage}
         />
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.authorName}>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.authorName}>
           {item.author?.username}
         </Text>
-        {item.is_delete !== 1 && (
-          <Text style={styles.moreIcon}>{'\ue85c'}</Text>
-        )}
+        {item.is_delete !== 1 && <Text style={styles.moreIcon}>{'\ue85c'}</Text>}
       </View>
       <View style={styles.itemContent}>
-        {item.is_delete === 0 && (
-          <Text style={styles.itemText}>{item.content}</Text>
-        )}
-        {item.is_delete === 1 && (
-          <Text style={styles.itemDeleteText}>{item.content}</Text>
-        )}
+        {item.is_delete === 0 && <Text style={styles.itemText}>{item.content}</Text>}
+        {item.is_delete === 1 && <Text style={styles.itemDeleteText}>{item.content}</Text>}
       </View>
       <View style={styles.itemInfo}>
-        <Text style={styles.itemDuration}>
-          {formatDistance(item.created_at)}
-        </Text>
+        <Text style={styles.itemDuration}>{formatDistance(item.created_at)}</Text>
         {item.is_delete !== 1 && (
           <View style={styles.tool}>
             <Text style={styles.toolText}>{item.like_count}</Text>
@@ -108,16 +97,14 @@ function Comment(props: Props): React.ReactElement {
         <View style={styles.modalBody}>
           <View style={styles.count}>
             <Text style={styles.countText}>评论 {count}</Text>
-            <View style={styles.tab}>
-              {tab.map?.((item, index) => {
+            <View style={styles.tabs}>
+              {tabs.map?.((item, index) => {
                 return (
-                  <Text
-                    key={index}
-                    onPress={() => tabChange(item.type)}
-                    style={params.type === item.type ? styles.tabActiveItem : styles.tabItem}
-                  >
-                    {item.title}
-                  </Text>
+                  <Pressable key={index} onPress={() => handleTabChange(item.type)}>
+                    <Text style={params.type === item.type ? styles.tabActiveItem : styles.tabItem}>
+                      {item.title}
+                    </Text>
+                  </Pressable>
                 );
               })}
             </View>
@@ -128,10 +115,10 @@ function Comment(props: Props): React.ReactElement {
               id: route.params.id,
               sortby: params.type,
               page: params.page,
-              pageSize: params.per_page
+              pageSize: params.per_page,
             }}
             sortParams={{ sortby: params.type }}
-            request={props.method}
+            request={props.request}
             responseSuccess={handleResponseSuccess}
             renderItem={renderItem}
             ListEmptyComponent={<ListEmptyComponent />}

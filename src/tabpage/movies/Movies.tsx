@@ -1,20 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  StatusBar,
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet,
-  Dimensions
-} from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { moviesList } from '@/api/movies';
+﻿import React, { useState, useEffect, useRef } from 'react';
+import { StatusBar, View, Text, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { moviesList } from '@/api/movies';
+import type { Navigation } from '@/types';
 import Nav from './nav/Nav';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ItemType = {
   id: number;
@@ -32,12 +24,12 @@ function Movies(): React.ReactElement {
     category: '全部',
     genre: '全部',
     country: '全部',
-    year: '全部'
+    year: '全部',
   });
 
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const handleNavChange = (categoryParams: typeof params): void => {
+  const handleNavChange = (categoryParams: typeof params) => {
     timer.current && clearTimeout(timer.current);
 
     timer.current = setTimeout(() => {
@@ -56,18 +48,12 @@ function Movies(): React.ReactElement {
   const renderItem = ({ item }: ListRenderItemInfo<ItemType>) => (
     <Pressable onPress={() => navigation.push('MovieDetail', { id: item.id })}>
       <View style={styles.item}>
-        <Image
-          source={{ uri: item.poster }}
-          resizeMode="stretch"
-          style={styles.itemImage}
-        />
-        {Number(item.episode_count) > 0 && (
+        <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
+        {Boolean(item.episode_count) && (
           <Text style={styles.itemEpisode}>全{item.episode_count}集</Text>
         )}
-        {Number(item.rating) > 0 && (
-          <Text style={styles.itemRating}>{item.rating}</Text>
-        )}
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.itemText}>
+        <Text style={styles.itemRating}>{item.rating}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.itemText}>
           {item.title}
         </Text>
       </View>
@@ -85,13 +71,13 @@ function Movies(): React.ReactElement {
           country: params.country,
           year: params.year,
           page: 1,
-          pageSize: Math.floor(Dimensions.get('window').width / 104) * 5
+          pageSize: Math.floor(Dimensions.get('window').width / 104) * 5,
         }}
         sortParams={{
           category: params.category,
           genre: params.genre,
           country: params.country,
-          year: params.year
+          year: params.year,
         }}
         request={moviesList}
         renderItem={renderItem}
@@ -109,12 +95,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   list: {
     flexGrow: 1,
     paddingTop: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   item: {
     position: 'relative',
@@ -124,31 +110,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
     width: 104,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   itemImage: {
     width: 104,
     height: 152,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemEpisode: {
     position: 'absolute',
     top: 132,
     left: 8,
     fontSize: 11,
-    color: '#cccccc'
+    color: '#CCCCCC',
   },
   itemRating: {
     position: 'absolute',
     top: 132,
     right: 8,
     fontSize: 11,
-    color: 'orange'
+    color: 'orange',
   },
   itemText: {
     color: '#333333',
-    fontSize: 12.5
-  }
+    fontSize: 12.5,
+  },
 });
 
 export default Movies;

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+﻿import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   movieInfo: {
@@ -6,43 +6,43 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 14,
     paddingTop: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   image: {
     width: 92,
     height: 130,
-    borderRadius: 3
+    borderRadius: 3,
   },
   info: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   title: {
     marginVertical: 1,
     fontWeight: '700',
     fontSize: 16,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   subTitle: {
     fontSize: 14,
-    color: '#e3e3e3'
+    color: '#E3E3E3',
   },
   brief: {
     display: 'flex',
     flexDirection: 'column',
     gap: 4,
-    marginTop: 10
+    marginTop: 10,
   },
   briefText: {
     fontSize: 11,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   operate: {
     display: 'flex',
     flexDirection: 'row',
     gap: 18,
-    marginTop: 18
+    marginTop: 18,
   },
   operateItem: {
     display: 'flex',
@@ -53,19 +53,19 @@ const styles = StyleSheet.create({
     width: 106,
     height: 26,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 3
+    borderRadius: 3,
   },
   operateActiveItem: {
-    opacity: 0.5
+    opacity: 0.5,
   },
   operateIcon: {
     fontFamily: 'iconfont',
     fontSize: 13,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   operateText: {
     fontSize: 11.5,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   rating: {
     display: 'flex',
@@ -77,27 +77,27 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginHorizontal: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 6
+    borderRadius: 6,
   },
   ratingItem: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   ratingWish: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'baseline'
+    alignItems: 'baseline',
   },
   ratingWishCount: {
     fontWeight: '700',
     fontSize: 22,
-    color: '#feb300'
+    color: '#FEB300',
   },
   ratingWishText: {
     fontSize: 11.5,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   ratingWishDate: {
     position: 'absolute',
@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
     bottom: 6,
     zIndex: 10,
     fontSize: 11.5,
-    color: '#e5e5e5'
+    color: '#E5E5E5',
   },
   ratingCover: {
-    position: 'relative'
+    position: 'relative',
   },
   ratingText: {
     fontSize: 11.5,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   ratingIcon: {
     position: 'absolute',
@@ -120,38 +120,38 @@ const styles = StyleSheet.create({
     right: -14,
     fontFamily: 'iconfont',
     fontSize: 12,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   ratingScore: {
     marginVertical: 3,
     fontWeight: '700',
     fontSize: 20,
-    color: '#feb300'
+    color: '#FEB300',
   },
   ratingLine: {
     width: 0.5,
     height: 71,
-    backgroundColor: 'hsla(0, 0%, 100%, 0.2)'
+    backgroundColor: 'hsla(0, 0%, 100%, 0.2)',
   },
   noRating: {
     fontSize: 11.5,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
-  tag: {
+  tags: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
     marginTop: 16,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   tagItem: {
     paddingVertical: 4,
     paddingHorizontal: 12,
     backgroundColor: 'hsla(0, 0%, 100%, 0.1)',
     fontSize: 12,
-    color: '#ffffff',
-    borderRadius: 50
+    color: '#FFFFFF',
+    borderRadius: 50,
   },
   egg: {
     display: 'flex',
@@ -159,17 +159,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
     marginTop: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   eggIcon: {
     fontFamily: 'iconfont',
     fontSize: 12.5,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   eggText: {
     fontSize: 12,
-    color: '#b0b3bb'
-  }
+    color: '#B0B3BB',
+  },
 });
 
 export default styles;

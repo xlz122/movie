@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { movieCategories } from '@/api/movies';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 import NavGroup from '../nav-group/NavGroup';
 
 type Props = {
@@ -18,9 +18,7 @@ type CategoryParams = {
 type Category = {
   categories: {
     name: string;
-    children?: {
-      name: never;
-    }[];
+    children?: { name: never }[];
   }[];
   genres: { name: string }[];
   countries: { name: string }[];
@@ -30,24 +28,21 @@ type Category = {
 function Nav(props: Props): React.ReactElement {
   const [category, setCategory] = useState<Partial<Category>>({});
 
-  const getMovieCategories = (): void => {
-    movieCategories()
-      .then((res: ResponseType<Category>) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieCategories = async () => {
+    const res: ResponseType<Category> = await movieCategories();
+    if (res?.code !== 200) {
+      return;
+    }
 
-        res.data?.countries?.unshift?.({ name: '全部' });
-        res.data?.years?.unshift?.({ name: '全部' });
+    res.data?.countries?.unshift?.({ name: '全部' });
+    res.data?.years?.unshift?.({ name: '全部' });
 
-        setCategory({
-          categories: res.data?.categories ?? [],
-          genres: [],
-          countries: res.data?.countries ?? [],
-          years: res.data?.years ?? []
-        });
-      })
-      .catch(() => ({}));
+    setCategory({
+      categories: res.data?.categories ?? [],
+      genres: [],
+      countries: res.data?.countries ?? [],
+      years: res.data?.years ?? [],
+    });
   };
 
   useEffect(() => {
@@ -57,9 +52,9 @@ function Nav(props: Props): React.ReactElement {
   const handlerGroup = (name: string): Category['genres'] => {
     const genres: Category['genres'] = [{ name: '全部' }];
 
-    category.categories?.forEach?.(item => {
+    category.categories?.forEach?.((item) => {
       if (name === '全部') {
-        item.children?.forEach?.(i => {
+        item.children?.forEach?.((i) => {
           if (!genres.includes(i.name)) {
             genres.push({ name: i.name });
           }
@@ -68,7 +63,7 @@ function Nav(props: Props): React.ReactElement {
       }
 
       if (name === item.name) {
-        item.children?.forEach?.(i => genres.push({ name: i.name }));
+        item.children?.forEach?.((i) => genres.push({ name: i.name }));
       }
     });
 
@@ -90,10 +85,10 @@ function Nav(props: Props): React.ReactElement {
     category: '全部',
     genre: '全部',
     country: '全部',
-    year: '全部'
+    year: '全部',
   });
 
-  const navChange = (group: string, name: string): void => {
+  const navChange = (group: string, name: string) => {
     if (group === 'category') {
       const genres: Category['genres'] = handlerGroup(name);
 
@@ -149,8 +144,8 @@ const styles = StyleSheet.create({
   nav: {
     paddingTop: 10,
     paddingLeft: 10,
-    backgroundColor: '#ffffff'
-  }
+    backgroundColor: '#FFFFFF',
+  },
 });
 
 export default Nav;

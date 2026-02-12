@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { movieAwards } from '@/api/home';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 
 function Awards(): React.ReactElement {
   const [awards, setAwards] = useState<Array<{ title: string }>>([]);
 
-  const getMovieAwards = (): void => {
-    movieAwards()
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getMovieAwards = async () => {
+    const res: ResponseType = await movieAwards();
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setAwards(res.data ?? []);
-      })
-      .catch(() => ({}));
+    setAwards(res.data ?? []);
   };
 
   useEffect(() => {
@@ -27,10 +24,7 @@ function Awards(): React.ReactElement {
       <View style={styles.list}>
         {awards.map?.((item, index) => {
           return (
-            <View
-              key={index}
-              style={[styles.item, index % 1 === 0 ? styles.itemLine : null]}
-            >
+            <View key={index} style={[styles.item, index % 1 === 0 ? styles.itemLine : null]}>
               <Text style={styles.itemText}>{item.title}</Text>
             </View>
           );
@@ -44,12 +38,12 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   list: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   item: {
     display: 'flex',
@@ -60,17 +54,17 @@ const styles = StyleSheet.create({
     height: 38,
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemLine: {
     borderRightWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemText: {
     fontSize: 12.5,
-    color: '#303133'
-  }
+    color: '#303133',
+  },
 });
 
 export default Awards;

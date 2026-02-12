@@ -18,7 +18,7 @@ export const login = ({ account, password }: Login): AxiosPromise => {
   return axios.request({
     url: '/login',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -35,22 +35,14 @@ type Register = {
  * @param { string } params.password - 密码
  * @param { string } params.code - 验证码
  */
-export const register = ({
-  account,
-  password,
-  code
-}: Register): AxiosPromise => {
+export const register = ({ account, password, code }: Register): AxiosPromise => {
   const data = { account, password, code };
 
   return axios.request({
     url: '/register',
     method: 'post',
-    data
+    data,
   });
-};
-
-type FieldAccount = {
-  account: string;
 };
 
 /**
@@ -58,13 +50,13 @@ type FieldAccount = {
  * @param { Object } params
  * @param { string } params.account - 账号
  */
-export const fieldAccount = ({ account }: FieldAccount): AxiosPromise => {
+export const fieldAccount = ({ account }: { account: string }): AxiosPromise => {
   const data = { account };
 
   return axios.request({
     url: '/account',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -74,7 +66,7 @@ export const fieldAccount = ({ account }: FieldAccount): AxiosPromise => {
 export const getCaptcha = (): AxiosPromise => {
   return axios.request({
     url: '/captcha',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -91,17 +83,13 @@ type FiledCaptcha = {
  * @param { string } params.code - 图片验证码
  * @param { string } params.type - 类型(注册: register, 找回密码: forget)
  */
-export const filedCaptcha = ({
-  phone,
-  code,
-  type
-}: FiledCaptcha): AxiosPromise => {
+export const filedCaptcha = ({ phone, code, type }: FiledCaptcha): AxiosPromise => {
   const params = { phone, code, type };
 
   return axios.request({
     url: '/code',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -116,16 +104,13 @@ type FiledPhoneCode = {
  * @param { string } params.phone - 手机号
  * @param { string } params.code - 手机验证码
  */
-export const filedPhoneCode = ({
-  phone,
-  code
-}: FiledPhoneCode): AxiosPromise => {
+export const filedPhoneCode = ({ phone, code }: FiledPhoneCode): AxiosPromise => {
   const data = { phone, code };
 
   return axios.request({
     url: '/code',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -135,12 +120,8 @@ export const filedPhoneCode = ({
 export const userinfo = (): AxiosPromise => {
   return axios.request({
     url: '/user',
-    method: 'get'
+    method: 'get',
   });
-};
-
-type ModifyPassword = {
-  password: string;
 };
 
 /**
@@ -148,12 +129,12 @@ type ModifyPassword = {
  * @param { Object } params
  * @param { string } params.password - 新密码
  */
-export const modifyPassword = ({ password }: ModifyPassword): AxiosPromise => {
+export const modifyPassword = ({ password }: { password: string }): AxiosPromise => {
   const data = { password };
 
   return axios.request({
     url: '/user/password',
     method: 'put',
-    data
+    data,
   });
 };

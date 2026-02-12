@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Animated } from 'react-native';
 import LinearGradinet from 'react-native-linear-gradient';
 import { colorToRgba } from '@/utils/utils';
 import { indexData } from '@/api/home';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 import type { MovieItem } from './movie-list/MovieList';
 import Skeleton from '@/components/skeleton/Home';
 import Panel from '@/components/panel/Panel';
@@ -12,10 +12,7 @@ import Banner from './banner/Banner';
 import Category from './category/Category';
 import MovieList from './movie-list/MovieList';
 
-type BannerItem = {
-  bgcolor: string;
-  banner: string;
-}[];
+type BannerItem = { bgcolor: string; banner: string }[];
 
 type MovieType = {
   theater: {
@@ -37,22 +34,19 @@ function Home(): React.ReactElement {
   const [banner, setBanner] = useState<BannerItem>([]);
   const [movie, setMovie] = useState<Partial<MovieType>>({});
 
-  const getIndexData = (): void => {
-    indexData()
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          return;
-        }
+  const getIndexData = async () => {
+    const res: ResponseType = await indexData();
+    if (res?.code !== 200) {
+      return;
+    }
 
-        setLoading(false);
-        setBanner(res.data?.swiper ?? []);
-        setMovie({
-          theater: res.data?.theater ?? {},
-          coming: res.data?.coming ?? {},
-          today: res.data?.today ?? {}
-        });
-      })
-      .catch(() => ({}));
+    setLoading(false);
+    setBanner(res.data?.swiper ?? []);
+    setMovie({
+      theater: res.data?.theater ?? {},
+      coming: res.data?.coming ?? {},
+      today: res.data?.today ?? {},
+    });
   };
 
   useEffect(() => {
@@ -60,13 +54,13 @@ function Home(): React.ReactElement {
   }, []);
 
   // 渐变背景色
-  const [gradientColor, setGradientColor] = useState(['#f5f5f5', '#f5f5f5']);
+  const [gradientColor, setGradientColor] = useState(['#F5F5F5', '#F5F5F5']);
 
-  const handlerGradualChange = (color: string): void => {
+  const handlerGradualChange = (color: string) => {
     const result: string[] = [];
 
     const gradient = [1, 0.88, 0.65, 0.45, 0];
-    gradient.forEach(item => {
+    gradient.forEach((item) => {
       result.push(colorToRgba(color, item));
     });
 
@@ -81,8 +75,8 @@ function Home(): React.ReactElement {
     handlerGradualChange(banner[0].bgcolor);
   }, [banner]);
 
-  const bannerChange = (index: number): void => {
-    const color = banner[index]?.bgcolor ?? '#f5f5f5';
+  const bannerChange = (index: number) => {
+    const color = banner[index]?.bgcolor ?? '#F5F5F5';
 
     handlerGradualChange(color);
   };
@@ -91,19 +85,19 @@ function Home(): React.ReactElement {
   const spinValue = new Animated.Value(0);
   const spinBackgroundColor = spinValue.interpolate({
     inputRange: [0, 150],
-    outputRange: ['transparent', '#e54847'],
-    extrapolate: 'clamp'
+    outputRange: ['transparent', '#E54847'],
+    extrapolate: 'clamp',
   });
 
   const animatedEvent = Animated.event(
     [
       {
         nativeEvent: {
-          contentOffset: { y: spinValue }
-        }
-      }
+          contentOffset: { y: spinValue },
+        },
+      },
     ],
-    { useNativeDriver: false }
+    { useNativeDriver: false },
   );
 
   if (loading) {
@@ -124,30 +118,18 @@ function Home(): React.ReactElement {
       <LinearGradinet colors={gradientColor} style={styles.bgcolor} />
       <Banner list={banner} onChange={bannerChange} />
       <Category />
-      {movie.theater && movie.theater.data?.length > 0 && (
-        <Panel
-          title="正在热映"
-          subtitle={`${movie.theater.total}部`}
-          to={{ path: 'Theater' }}
-        >
+      {movie.theater && movie.theater.data.length > 0 && (
+        <Panel title="正在热映" subtitle={`${movie.theater.total}部`} to={{ path: 'Theater' }}>
           <MovieList list={movie.theater.data} />
         </Panel>
       )}
-      {movie.coming && movie.coming.data?.length > 0 && (
-        <Panel
-          title="即将上映"
-          subtitle={`${movie.coming.total}部`}
-          to={{ path: 'Coming' }}
-        >
+      {movie.coming && movie.coming.data.length > 0 && (
+        <Panel title="即将上映" subtitle={`${movie.coming.total}部`} to={{ path: 'Coming' }}>
           <MovieList list={movie.coming.data} />
         </Panel>
       )}
-      {movie.today && movie.today.data?.length > 0 && (
-        <Panel
-          title="那年今日"
-          subtitle={`${movie.today.total}部`}
-          to={{ path: 'Today' }}
-        >
+      {movie.today && movie.today.data.length > 0 && (
+        <Panel title="那年今日" subtitle={`${movie.today.total}部`} to={{ path: 'Today' }}>
           <MovieList list={movie.today.data} />
         </Panel>
       )}
@@ -159,7 +141,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   bgcolor: {
     position: 'absolute',
@@ -167,8 +149,8 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: -1,
     width: '100%',
-    height: 300
-  }
+    height: 300,
+  },
 });
 
 export default Home;

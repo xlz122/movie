@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getCaptcha, filedCaptcha, register } from '@/api/user';
-import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 import PicutreCode from '@/components/picture-code/PicutreCode';
 
@@ -12,35 +13,35 @@ function RegisterForm(): React.ReactElement {
   const [params, setParams] = useState({
     account: '',
     password: '',
-    code: ''
+    code: '',
   });
 
-  const handleAccountChange = (e: TextInputEvent): void => {
+  const handleAccountChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent): void => {
+  const handlePasswordChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 
-  const handleCodeChange = (e: TextInputEvent): void => {
+  const handleCodeChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, code: e.nativeEvent.text });
   };
 
-  // 验证码倒计时
+  // 验证码计时
   const [codeTime, setCodeTime] = useState({
     visible: false,
-    time: 120
+    time: 120,
   });
   const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  const handleTimeText = (): void => {
+  const handleTimeText = () => {
     timer.current && clearInterval(timer.current);
 
     setCodeTime({ ...codeTime, visible: true });
 
     timer.current = setInterval(() => {
-      setCodeTime(state => {
+      setCodeTime((state) => {
         if (state.time <= 1) {
           clearInterval(timer.current);
           return { visible: false, time: 120 };
@@ -55,64 +56,58 @@ function RegisterForm(): React.ReactElement {
     return () => timer.current && clearInterval(timer.current);
   }, []);
 
-  // 获取图形验证码
+  // 图形验证码
   const [captcha, setCaptcha] = useState({
     open: false,
-    image: ''
+    source: '',
   });
 
-  const handleGetCaptcha = (): void => {
+  const handleGetCaptcha = async () => {
     if (!params.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
       return;
     }
-    if (params.account.length !== 11) {
+    if (!/^1[3-9]\d{9}$/.test(params.account)) {
       CustomAlert({ title: '提示', message: '请输入正确的手机号' });
       return;
     }
 
-    getCaptcha()
-      .then((res: ResponseType<string>) => {
-        if (res?.code !== 200) {
-          CustomAlert({ title: '提示', message: res?.message });
-          return;
-        }
+    const res: ResponseType<string> = await getCaptcha();
+    if (res?.code !== 200) {
+      CustomAlert({ title: '提示', message: res?.message });
+      return;
+    }
 
-        setCaptcha({ ...captcha, open: true, image: res.data ?? '' });
-      })
-      .catch(() => ({}));
+    setCaptcha({ ...captcha, open: true, source: res.data ?? '' });
   };
 
   // 校验图形验证码并发送短信验证码
-  const handleCaptchaComplete = (code: string): void => {
-    filedCaptcha({ type: 'register', phone: params.account, code })
-      .then((res: ResponseType) => {
-        // 手机号已注册
-        if (res?.code === 403) {
-          setCaptcha({ ...captcha, open: false });
-          CustomAlert({ title: '提示', message: res.message });
-          return;
-        }
-        // 短信验证上限
-        if (res?.code === 450) {
-          setCaptcha({ ...captcha, open: false });
-          CustomAlert({ title: '提示', message: res.message });
-          return;
-        }
-        if (res?.code !== 200) {
-          handleGetCaptcha();
-          CustomAlert({ title: '提示', message: res?.message });
-          return;
-        }
+  const handleCaptchaComplete = async (code: string) => {
+    const res: ResponseType = await filedCaptcha({ type: 'register', phone: params.account, code });
+    // 手机号已注册
+    if (res?.code === 403) {
+      setCaptcha({ ...captcha, open: false });
+      CustomAlert({ title: '提示', message: res.message });
+      return;
+    }
+    // 短信验证上限
+    if (res?.code === 450) {
+      setCaptcha({ ...captcha, open: false });
+      CustomAlert({ title: '提示', message: res.message });
+      return;
+    }
+    if (res?.code !== 200) {
+      handleGetCaptcha();
+      CustomAlert({ title: '提示', message: res?.message });
+      return;
+    }
 
-        handleTimeText();
-        setCaptcha({ ...captcha, open: false });
-        CustomAlert({ title: '提示', message: res.message });
-      })
-      .catch(() => ({}));
+    handleTimeText();
+    setCaptcha({ ...captcha, open: false });
+    CustomAlert({ title: '提示', message: res.message });
   };
 
-  const handleCaptchaCancel = (): void => {
+  const handleCaptchaCancel = () => {
     setCaptcha({ ...captcha, open: false });
   };
 
@@ -130,17 +125,14 @@ function RegisterForm(): React.ReactElement {
       return;
     }
 
-    register({ ...params })
-      .then((res: ResponseType) => {
-        if (res?.code !== 200) {
-          CustomAlert({ title: '提示', message: res?.message ?? '注册失败' });
-          return;
-        }
+    const res: ResponseType = await register({ ...params });
+    if (res?.code !== 200) {
+      CustomAlert({ title: '提示', message: res?.message ?? '注册失败' });
+      return;
+    }
 
-        navigation.replace('Login');
-        CustomAlert({ title: '提示', message: res.message });
-      })
-      .catch(() => ({}));
+    navigation.replace('Login');
+    CustomAlert({ title: '提示', message: res.message });
   };
 
   return (
@@ -153,7 +145,7 @@ function RegisterForm(): React.ReactElement {
             onChange={handleAccountChange}
             inputMode="tel"
             placeholder="请输入手机号"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
         </View>
@@ -163,7 +155,7 @@ function RegisterForm(): React.ReactElement {
             onChange={handlePasswordChange}
             autoComplete="off"
             placeholder="请设置初始密码(6-12位)"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
         </View>
@@ -172,7 +164,7 @@ function RegisterForm(): React.ReactElement {
             value={params.code}
             onChange={handleCodeChange}
             placeholder="请输入验证码"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
           <Text onPress={handleGetCaptcha} style={styles.itemCode}>
@@ -185,9 +177,10 @@ function RegisterForm(): React.ReactElement {
       </View>
       <PicutreCode
         open={captcha.open}
-        image={captcha.image}
+        source={captcha.source}
         onComplete={handleCaptchaComplete}
         onCancel={handleCaptchaCancel}
+        style={{ position: 'absolute', top: -86, left: -38 }}
       />
     </View>
   );
@@ -196,18 +189,18 @@ function RegisterForm(): React.ReactElement {
 const styles = StyleSheet.create({
   registerForm: {
     marginTop: 42,
-    marginHorizontal: 38
+    marginHorizontal: 38,
   },
   title: {
     fontWeight: '700',
     fontSize: 22,
-    color: '#303133'
+    color: '#303133',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
     gap: 18,
-    marginTop: 46
+    marginTop: 46,
   },
   formItem: {
     display: 'flex',
@@ -215,15 +208,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemInput: {
     flex: 1,
-    height: 40
+    height: 40,
   },
   itemCode: {
     fontSize: 12,
-    color: '#e54847'
+    color: '#E54847',
   },
   submit: {
     display: 'flex',
@@ -232,13 +225,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     marginTop: 10,
-    backgroundColor: '#409eff',
-    borderRadius: 6
+    backgroundColor: '#409EFF',
+    borderRadius: 6,
   },
   submitText: {
     fontSize: 14,
-    color: '#ffffff'
-  }
+    color: '#FFFFFF',
+  },
 });
 
 export default RegisterForm;

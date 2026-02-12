@@ -7,7 +7,7 @@ import type { AxiosPromise } from 'axios';
 export const movieCategories = (): AxiosPromise => {
   return axios.request({
     url: '/categories',
-    method: 'get'
+    method: 'get',
   });
 };
 
@@ -36,14 +36,14 @@ export const moviesList = ({
   country,
   year,
   page,
-  per_page
+  per_page,
 }: MovieList): AxiosPromise => {
   const params = { category, genre, country, year, page, per_page };
 
   return axios.request({
     url: '/movies',
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -58,7 +58,7 @@ export const moviesDetail = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/movies/${id}`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -70,7 +70,7 @@ export const moviesDetail = ({ id }: { id: number }): AxiosPromise => {
 export const movieWish = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/movies/${id}/wish`,
-    method: 'post'
+    method: 'post',
   });
 };
 
@@ -85,7 +85,7 @@ export const movieActor = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/movies/${id}/cast`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -104,18 +104,13 @@ type MoviePhotos = {
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
  */
-export const moviePhotos = ({
-  id,
-  type,
-  page,
-  per_page
-}: MoviePhotos): AxiosPromise => {
+export const moviePhotos = ({ id, type, page, per_page }: MoviePhotos): AxiosPromise => {
   const params = { id, type, page, per_page };
 
   return axios.request({
     url: `/movies/${id}/photos`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -132,19 +127,14 @@ type MovieComment = {
  * @param { number } params.id - 影视id
  * @param { number } [params.page] - 页数
  * @param { number } [params.per_page] - 条数
- * @param { string } [params.sortby] - 排序
+ * @param { string } [params.sortby] - 排序方式(hot热度, created_at最新)
  */
-export const movieComment = ({
-  id,
-  page,
-  per_page,
-  sortby
-}: MovieComment): AxiosPromise => {
+export const movieComment = ({ id, page, per_page, sortby }: MovieComment): AxiosPromise => {
   const params = { page, per_page, sortby };
 
   return axios.request({
     url: `/movies/${id}/comments`,
     method: 'get',
-    params
+    params,
   });
 };
