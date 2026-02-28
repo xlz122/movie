@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import store, { persistor } from './src/store/index';
+import store, { persistor } from './src/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './src/router/StackNavigator';

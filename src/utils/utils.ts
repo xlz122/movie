@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @description 16进制颜色值转换为rgba
  */
 export const colorToRgba = function (color: string, alpha: number): string {
@@ -8,7 +8,7 @@ export const colorToRgba = function (color: string, alpha: number): string {
   color = color.toLowerCase();
 
   if (reg.test(color)) {
-    // 处理三位的颜色值(#fff => #ffffff)
+    // 处理三位的颜色值(#FFF => #FFFFFF)
     if (color.length === 4) {
       let newColor = '#';
       for (let i = 1; i < 4; i += 1) {

@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+﻿import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
@@ -6,41 +6,41 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     height: Dimensions.get('window').height,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   baseInfo: {
     flexGrow: 1,
     paddingHorizontal: 14,
-    marginVertical: 10
+    marginVertical: 10,
   },
   group: {
-    marginBottom: 8
+    marginBottom: 8,
   },
   title: {
     marginVertical: 12,
     fontWeight: '700',
     fontSize: 14,
-    color: '#303133'
+    color: '#303133',
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   itemLabel: {
     minWidth: 40,
     fontSize: 12.5,
-    color: '#666666'
+    color: '#666666',
   },
   itemValue: {
     flex: 1,
     fontSize: 12.5,
-    color: '#333333'
+    color: '#333333',
   },
   summary: {
     fontSize: 12.5,
-    color: '#444444'
+    color: '#444444',
   },
   footer: {
     display: 'flex',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 56,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   close: {
     display: 'flex',
@@ -58,14 +58,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 32,
     height: 32,
-    backgroundColor: '#e5e5e5',
-    borderRadius: 50
+    backgroundColor: '#E5E5E5',
+    borderRadius: 50,
   },
   closeIcon: {
     fontFamily: 'iconfont',
     fontSize: 17,
-    color: '#ffffff'
-  }
+    color: '#FFFFFF',
+  },
 });
 
 export default styles;

@@ -1,9 +1,6 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Animated, {
-  interpolate,
-  useAnimatedStyle
-} from 'react-native-reanimated';
+import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import type { SharedValue } from 'react-native-reanimated';
 
 type Props = {
@@ -31,10 +28,8 @@ function Dot(props: Props): React.ReactElement {
       }
 
       return {
-        transform: [
-          { translateX: interpolate(animValue.value, inputRange, outputRange) }
-        ],
-        backgroundColor: '#e54847'
+        transform: [{ translateX: interpolate(animValue.value, inputRange, outputRange) }],
+        backgroundColor: '#E54847',
       };
     }, [animValue, index, length]);
 
@@ -43,9 +38,9 @@ function Dot(props: Props): React.ReactElement {
         style={[
           {
             overflow: 'hidden',
-            transform: [{ rotateZ: '0deg' }]
+            transform: [{ rotateZ: '0deg' }],
           },
-          styles.dotItem
+          styles.dotItem,
         ]}
       >
         <Animated.View style={[{ flex: 1 }, animStyle]} />
@@ -77,15 +72,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     justifyContent: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   dotItem: {
     width: 15,
     height: 3,
     marginHorizontal: 2,
-    backgroundColor: '#ffffff',
-    borderRadius: 10
-  }
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+  },
 });
 
 export default Dot;

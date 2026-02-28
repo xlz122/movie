@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+﻿import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   fieldItem: {
     display: 'flex',
@@ -15,39 +15,39 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     marginTop: 14,
     height: 50,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   itemLabel: {
     fontSize: 14,
-    color: '#303133'
+    color: '#303133',
   },
   itemInput: {
     flex: 1,
-    textAlign: 'right'
+    textAlign: 'right',
   },
   inputClearIcon: {
     fontFamily: 'iconfont',
     fontSize: 16,
-    color: '#c5c5c5'
+    color: '#C5C5C5',
   },
   itemCodeInput: {
-    flex: 1
+    flex: 1,
   },
   itemCode: {
     width: 98,
     height: 32,
-    lineHeight: 32,
-    backgroundColor: '#409eff',
+    backgroundColor: '#409EFF',
     fontSize: 12,
-    color: '#ffffff',
+    color: '#FFFFFF',
+    lineHeight: 32,
     textAlign: 'center',
-    borderRadius: 6
+    borderRadius: 6,
   },
   tipText: {
     marginVertical: 4,
     marginHorizontal: 14,
     fontSize: 12,
-    color: '#777777'
+    color: '#777777',
   },
   submit: {
     display: 'flex',
@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 22,
     marginHorizontal: 14,
-    backgroundColor: '#409eff',
-    borderRadius: 6
+    backgroundColor: '#409EFF',
+    borderRadius: 6,
   },
   submitText: {
     fontSize: 14,
-    color: '#ffffff'
-  }
+    color: '#FFFFFF',
+  },
 });
 
 export default styles;

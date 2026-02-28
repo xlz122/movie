@@ -9,29 +9,29 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
+  REGISTER,
 } from 'redux-persist';
 import routineSlice from './routineSlice';
 
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage: AsyncStorage
+  storage: AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, routineSlice);
 
 const store = configureStore({
   reducer: {
-    routine: persistedReducer
+    routine: persistedReducer,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     // 忽略redux-persist调度的所有动作类型
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    })
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

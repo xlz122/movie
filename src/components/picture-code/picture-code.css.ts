@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+﻿import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
   picutre: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
+    height: Dimensions.get('window').height,
   },
   mask: {
     position: 'absolute',
@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
     zIndex: -1,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.55)'
+    backgroundColor: 'rgba(0, 0, 0, 0.55)',
   },
   modal: {
     width: 260,
     height: 'auto',
     marginTop: '-50%',
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   modalBody: {
     display: 'flex',
@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     paddingHorizontal: 20,
-    marginVertical: 22
+    marginVertical: 22,
   },
   title: {
     fontSize: 13,
-    color: '#80848f'
+    color: '#80848F',
   },
   image: {
     width: 150,
-    height: 40
+    height: 40,
   },
   inputMain: {
     position: 'relative',
@@ -54,23 +54,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 22,
-    marginTop: 18
+    marginTop: 18,
   },
   input: {
     width: '100%',
     height: '100%',
-    color: 'transparent'
+    color: 'transparent',
   },
   code: {
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex: -1,
+    zIndex: 9,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   codeItem: {
     width: 18,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderStyle: 'solid',
     borderColor: '#323232',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cancel: {
     display: 'flex',
@@ -92,12 +92,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderTopWidth: 0.5,
     borderStyle: 'solid',
-    borderColor: '#e5e5e5'
+    borderColor: '#E5E5E5',
   },
   cancelText: {
     fontSize: 12,
-    color: '#303133'
-  }
+    color: '#303133',
+  },
 });
 
 export default styles;

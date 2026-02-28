@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -11,9 +11,8 @@ const tabbar = [
     title: '首页',
     icon: '\ue908',
     selectIcon: '\ue908',
-    // 标题栏
     headerShown: false,
-    component: require('../tabpage/home/Home').default
+    component: require('../tabpage/home/Home').default,
   },
   {
     name: 'Movies',
@@ -22,7 +21,7 @@ const tabbar = [
     icon: '\ue636',
     selectIcon: '\ue636',
     headerShown: false,
-    component: require('../tabpage/movies/Movies').default
+    component: require('../tabpage/movies/Movies').default,
   },
   {
     name: 'Videos',
@@ -31,7 +30,7 @@ const tabbar = [
     icon: '\ue617',
     selectIcon: '\ue617',
     headerShown: false,
-    component: require('../tabpage/videos/Videos').default
+    component: require('../tabpage/videos/Videos').default,
   },
   {
     name: 'Mine',
@@ -40,8 +39,8 @@ const tabbar = [
     icon: '\ue909',
     selectIcon: '\ue909',
     headerShown: false,
-    component: require('../tabpage/mine/Mine').default
-  }
+    component: require('../tabpage/mine/Mine').default,
+  },
 ];
 
 function TabNavigator(): React.ReactElement {
@@ -51,8 +50,8 @@ function TabNavigator(): React.ReactElement {
         tabBarStyle: { height: 50 },
         tabBarItemStyle: { height: 44 },
         tabBarLabelStyle: { fontSize: 11 },
-        tabBarInactiveTintColor: '#b7bac3',
-        tabBarActiveTintColor: '#e54847'
+        tabBarInactiveTintColor: '#B7BAC3',
+        tabBarActiveTintColor: '#E54847',
       }}
     >
       {tabbar.map?.((item, index) => {
@@ -71,7 +70,7 @@ function TabNavigator(): React.ReactElement {
                   </Text>
                 );
               },
-              headerShown: item.headerShown
+              headerShown: item.headerShown,
             }}
           />
         );
@@ -84,13 +83,13 @@ const styles = StyleSheet.create({
   icon: {
     fontFamily: 'iconfont',
     fontSize: 22,
-    color: '#b7bac3'
+    color: '#B7BAC3',
   },
   selectIcon: {
     fontFamily: 'iconfont',
     fontSize: 22,
-    color: '#e54847'
-  }
+    color: '#E54847',
+  },
 });
 
 export default TabNavigator;

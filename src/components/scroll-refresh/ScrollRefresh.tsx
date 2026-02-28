@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
 import type { ViewStyle, ListRenderItem } from 'react-native';
-import type { ResponseType } from '@/types/index';
+import type { ResponseType } from '@/types';
 
 type Props = {
   // 请求参数
@@ -16,9 +16,9 @@ type Props = {
   };
   // 请求方法
   request: Function;
-  // 响应成功回调函数
+  // 响应成功回调
   responseSuccess?: (response: ResponseType) => void;
-  // 响应失败回调函数
+  // 响应失败回调
   responseError?: () => void;
   style?: ViewStyle;
 } & FlatListProps;
@@ -57,24 +57,19 @@ function ScrollRefresh(props: Props): React.ReactElement {
     isRefresh: false,
     // 上拉加载
     isLoadMore: false,
-    // 加载文字
+    // 加载文本
     loadText: '',
     // 当前请求是否请求完成
     currentComplete: false,
     // 数据是否全部请求完成
     complete: false,
-    // 空数据
-    empty: false
+    empty: false,
   });
 
   const getListData = (): Promise<unknown[]> => {
     return new Promise((resolve, reject) => {
       props
-        .request({
-          ...props.params,
-          page: refreshState.page,
-          per_page: refreshState.pageSize
-        })
+        .request({ ...props.params, page: refreshState.page, per_page: refreshState.pageSize })
         .then((res: ResponseType) => {
           if (res?.code !== 200) {
             return;
@@ -101,7 +96,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         isRefresh: false,
         isLoadMore: false,
         currentComplete: true,
-        loadText: '接口请求失败, 请重试...'
+        loadText: '接口请求失败, 请重试...',
       });
       return;
     }
@@ -116,7 +111,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         currentComplete: true,
         complete: true,
         empty: true,
-        loadText: ''
+        loadText: '',
       });
       return;
     }
@@ -130,7 +125,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         isLoadMore: false,
         currentComplete: true,
         complete: true,
-        loadText: '没有更多数据了'
+        loadText: '没有更多数据了',
       });
       return;
     }
@@ -144,7 +139,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         isLoadMore: false,
         currentComplete: true,
         complete: true,
-        loadText: '没有更多数据了'
+        loadText: '没有更多数据了',
       });
       return;
     }
@@ -155,11 +150,11 @@ function ScrollRefresh(props: Props): React.ReactElement {
       isRefresh: false,
       isLoadMore: false,
       currentComplete: true,
-      loadText: '加载更多...'
+      loadText: '加载更多...',
     });
   };
 
-  const onRefresh = (): void => {
+  const onRefresh = () => {
     setRefreshState({
       ...refreshState,
       page: 1,
@@ -168,11 +163,11 @@ function ScrollRefresh(props: Props): React.ReactElement {
       currentComplete: false,
       complete: false,
       empty: false,
-      loadText: ''
+      loadText: '',
     });
   };
 
-  const onEndReached = (): void => {
+  const onEndReached = () => {
     // 当前请求未完成 / 加载完成
     if (!refreshState.currentComplete || refreshState.complete) {
       return;
@@ -183,7 +178,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
       page: refreshState.page + 1,
       isLoadMore: true,
       currentComplete: false,
-      loadText: '加载中...'
+      loadText: '加载中...',
     });
   };
 
@@ -215,9 +210,9 @@ function ScrollRefresh(props: Props): React.ReactElement {
   };
 
   return (
-    <SafeAreaView style={[styles.list, props.style]}>
+    <View style={[styles.list, props.style]}>
       <FlatList
-        keyExtractor={(_, index) => String(index)}
+        keyExtractor={(_, index) => index.toString()}
         initialNumToRender={props.initialNumToRender}
         showsVerticalScrollIndicator={props.showsVerticalScrollIndicator}
         data={refreshState.data}
@@ -230,9 +225,7 @@ function ScrollRefresh(props: Props): React.ReactElement {
         ListHeaderComponent={props.ListHeaderComponent}
         ListFooterComponent={props.ListFooterComponent ?? ListFooterComponent}
         // 空布局
-        ListEmptyComponent={
-          refreshState.empty ? props.ListEmptyComponent : null
-        }
+        ListEmptyComponent={refreshState.empty ? props.ListEmptyComponent : null}
         // 下拉刷新
         refreshing={refreshState.isRefresh}
         onRefresh={onRefresh}
@@ -240,24 +233,24 @@ function ScrollRefresh(props: Props): React.ReactElement {
         onEndReachedThreshold={props.onEndReachedThreshold}
         onEndReached={onEndReached}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   list: {
-    flex: 1
+    flex: 1,
   },
   loadMore: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 36
+    height: 36,
   },
   loadMoreText: {
     fontSize: 13,
-    color: '#909399'
-  }
+    color: '#909399',
+  },
 });
 
 export default ScrollRefresh;

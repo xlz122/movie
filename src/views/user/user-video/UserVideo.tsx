@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
+import type { ListRenderItemInfo } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { timeStampToDuration, formatDistance } from '@/utils/utils';
 import { userVideos } from '@/api/mine';
-import type { ListRenderItemInfo } from 'react-native';
-import type { Navigation } from '@/types/index';
+import type { Navigation } from '@/types';
 import ScrollRefresh from '@/components/scroll-refresh/ScrollRefresh';
 
 type ItemType = {
@@ -24,28 +24,18 @@ function UserVideo(): React.ReactElement {
     <Pressable onPress={() => navigation.push('VideoDetail', { id: item.id })}>
       <View style={styles.item}>
         <View style={styles.itemCover}>
-          <Image
-            source={{ uri: item.poster }}
-            resizeMode="stretch"
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemDuration}>
-            {timeStampToDuration(item.duration)}
-          </Text>
+          <Image resizeMode="stretch" source={{ uri: item.poster }} style={styles.itemImage} />
+          <Text style={styles.itemDuration}>{timeStampToDuration(item.duration)}</Text>
         </View>
         <View style={styles.itemInfo}>
           <Text style={styles.itemTitle}>{item.title}</Text>
           <View style={styles.intro}>
             <Text style={styles.introText}>
-              <Text>{item.like_count}</Text>
-              <Text>赞</Text>
+              <Text>{item.like_count}赞</Text>
               <Text> · </Text>
-              <Text>{item.play_count}</Text>
-              <Text>播放</Text>
+              <Text>{item.play_count}播放</Text>
             </Text>
-            <Text style={styles.introText}>
-              {formatDistance(item.created_at)}
-            </Text>
+            <Text style={styles.introText}>{formatDistance(item.created_at)}</Text>
           </View>
         </View>
       </View>
@@ -75,63 +65,63 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#FFFFFF',
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
     gap: 12,
     paddingTop: 16,
-    marginHorizontal: 14
+    marginHorizontal: 14,
   },
   itemCover: {
-    position: 'relative'
+    position: 'relative',
   },
   itemImage: {
     width: 120,
     height: 68,
-    borderRadius: 3
+    borderRadius: 3,
   },
   itemDuration: {
     position: 'absolute',
     right: 6,
-    bottom: 10,
+    bottom: 6,
     zIndex: 9,
     fontSize: 9,
-    color: '#ffffff'
+    color: '#FFFFFF',
   },
   itemInfo: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   itemTitle: {
     fontWeight: '700',
     fontSize: 13,
-    color: '#303133'
+    color: '#303133',
   },
   intro: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   introText: {
     fontSize: 11,
-    color: '#999999'
+    color: '#999999',
   },
   empty: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 250
+    paddingTop: 250,
   },
   emptyText: {
     fontSize: 13,
-    color: '#aaaaaa'
-  }
+    color: '#AAAAAA',
+  },
 });
 
 export default UserVideo;

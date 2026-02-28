@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import type { TextInputChangeEvent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from 'react-redux';
 import { login, userinfo } from '@/api/user';
-import type { Navigation, TextInputEvent, ResponseType } from '@/types/index';
+import type { Navigation, ResponseType } from '@/types';
 import CustomAlert from '@/components/custom-alert/CustomAlert';
 
 function LoginForm(): React.ReactElement {
@@ -13,39 +14,35 @@ function LoginForm(): React.ReactElement {
   // 安全文本显隐
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const toggleSecureTextEntry = (): void => {
+  const toggleSecureTextEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
 
   const [params, setParams] = useState({
     account: '',
-    password: ''
+    password: '',
   });
 
-  const handleAccountChange = (e: TextInputEvent): void => {
+  const handleAccountChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, account: e.nativeEvent.text });
   };
 
-  const handlePasswordChange = (e: TextInputEvent): void => {
+  const handlePasswordChange = (e: TextInputChangeEvent) => {
     setParams({ ...params, password: e.nativeEvent.text });
   };
 
-  // 获取用户信息
   const getUserInfo = (): Promise<unknown> => {
-    return new Promise(resolve => {
-      userinfo()
-        .then((res: ResponseType) => {
-          if (res?.code !== 200) {
-            return;
-          }
+    return new Promise(async (resolve) => {
+      const res: ResponseType = await userinfo();
+      if (res?.code !== 200) {
+        return;
+      }
 
-          resolve(res.data ?? {});
-        })
-        .catch(() => ({}));
+      resolve(res.data ?? {});
     });
   };
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     if (!params.account) {
       CustomAlert({ title: '提示', message: '请先输入手机号' });
       return;
@@ -58,7 +55,7 @@ function LoginForm(): React.ReactElement {
     login({ ...params })
       .then(async (res: ResponseType) => {
         if (res?.code !== 200) {
-          CustomAlert({ title: '提示', message: res?.message ?? '登录失败' });
+          CustomAlert({ title: '提示', message: res.message ?? '登录失败' });
           return;
         }
 
@@ -69,7 +66,7 @@ function LoginForm(): React.ReactElement {
         store.dispatch({ type: 'routine/setUserInfo', payload: userInfo });
         navigation.goBack();
       })
-      .catch(error => {
+      .catch((error) => {
         CustomAlert({ title: '提示', message: error.response?.data?.message });
       });
   };
@@ -84,7 +81,7 @@ function LoginForm(): React.ReactElement {
             onChange={handleAccountChange}
             inputMode="tel"
             placeholder="请输入手机号"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
         </View>
@@ -95,15 +92,12 @@ function LoginForm(): React.ReactElement {
             onChange={handlePasswordChange}
             autoComplete="off"
             placeholder="请输入密码"
-            placeholderTextColor="#c9c9c9"
+            placeholderTextColor="#C9C9C9"
             style={styles.itemInput}
           />
-          <Text
-            onPress={toggleSecureTextEntry}
-            style={secureTextEntry ? styles.itemIcon : styles.activeIcon}
-          >
-            {'\ue639'}
-          </Text>
+          <Pressable onPress={toggleSecureTextEntry}>
+            <Text style={secureTextEntry ? styles.itemIcon : styles.activeIcon}>{'\ue639'}</Text>
+          </Pressable>
         </View>
         <Pressable onPress={handleSubmit} style={styles.submit}>
           <Text style={styles.submitText}>登 录</Text>
@@ -116,18 +110,18 @@ function LoginForm(): React.ReactElement {
 const styles = StyleSheet.create({
   loginForm: {
     marginTop: 42,
-    marginHorizontal: 38
+    marginHorizontal: 38,
   },
   title: {
     fontWeight: '700',
     fontSize: 22,
-    color: '#303133'
+    color: '#303133',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
     gap: 18,
-    marginTop: 46
+    marginTop: 46,
   },
   formItem: {
     display: 'flex',
@@ -135,21 +129,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
+    borderColor: '#EEEEEE',
   },
   itemInput: {
     flex: 1,
-    height: 40
+    height: 40,
   },
   itemIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
-    color: '#cccccc'
+    color: '#CCCCCC',
   },
   activeIcon: {
     fontFamily: 'iconfont',
     fontSize: 18,
-    color: '#e54847'
+    color: '#E54847',
   },
   submit: {
     display: 'flex',
@@ -158,13 +152,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     marginTop: 10,
-    backgroundColor: '#409eff',
-    borderRadius: 6
+    backgroundColor: '#409EFF',
+    borderRadius: 6,
   },
   submitText: {
     fontSize: 14,
-    color: '#ffffff'
-  }
+    color: '#FFFFFF',
+  },
 });
 
 export default LoginForm;

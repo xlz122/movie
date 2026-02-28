@@ -1,23 +1,29 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import type { StackCardInterpolationProps, StackCardInterpolatedStyle } from '@react-navigation/stack';
+import type {
+  StackCardInterpolationProps,
+  StackCardInterpolatedStyle,
+} from '@react-navigation/stack';
 import CustomHeader from '@/components/custom-header/CustomHeader';
 import router from '.';
 
 const Stack = createStackNavigator();
 
-const forSlideFromBottom = ({ current, layouts }: StackCardInterpolationProps): StackCardInterpolatedStyle => ({
+const forSlideFromBottom = ({
+  current,
+  layouts,
+}: StackCardInterpolationProps): StackCardInterpolatedStyle => ({
   cardStyle: {
     transform: [
       {
         translateY: current.progress.interpolate({
           inputRange: [0, 1],
-          outputRange: [layouts.screen.height, 0]
-        })
-      }
-    ]
-  }
+          outputRange: [layouts.screen.height, 0],
+        }),
+      },
+    ],
+  },
 });
 
 function StackNavigator(): React.ReactElement {
@@ -26,7 +32,9 @@ function StackNavigator(): React.ReactElement {
       screenOptions={{
         // 自定义标头
         header: ({ options }) => <CustomHeader options={options} />,
-        cardStyleInterpolator: Platform.OS === 'ios' ? CardStyleInterpolators.forHorizontalIOS : forSlideFromBottom
+        // 路由过渡动画
+        cardStyleInterpolator:
+          Platform.OS === 'ios' ? CardStyleInterpolators.forHorizontalIOS : forSlideFromBottom,
       }}
     >
       {router.map?.((item, index) => {
@@ -37,7 +45,7 @@ function StackNavigator(): React.ReactElement {
             component={item.component}
             options={() => ({
               headerShown: item.headerShown,
-              title: item.title
+              title: item.title,
             })}
           />
         );

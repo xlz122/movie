@@ -12,7 +12,7 @@ export const roleDetail = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/roles/${id}`,
     method: 'get',
-    params
+    params,
   });
 };
 
@@ -24,7 +24,7 @@ export const roleDetail = ({ id }: { id: number }): AxiosPromise => {
 export const followRole = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/roles/${id}/collections`,
-    method: 'post'
+    method: 'post',
   });
 };
 
@@ -36,6 +36,6 @@ export const followRole = ({ id }: { id: number }): AxiosPromise => {
 export const unFollowRole = ({ id }: { id: number }): AxiosPromise => {
   return axios.request({
     url: `/user/roles/${id}/collections`,
-    method: 'delete'
+    method: 'delete',
   });
 };

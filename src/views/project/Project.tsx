@@ -7,12 +7,12 @@ function Project(): React.ReactElement {
       <View style={styles.cell}>
         <View style={styles.cellItem}>
           <Text style={styles.itemLabel}>react</Text>
-          <Text style={styles.itemValue}>19.0.0</Text>
+          <Text style={styles.itemValue}>19.2.3</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.cellItem}>
           <Text style={styles.itemLabel}>react native</Text>
-          <Text style={styles.itemValue}>0.79.0</Text>
+          <Text style={styles.itemValue}>0.84.0</Text>
         </View>
       </View>
     </View>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   page: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#F5F5F5',
   },
   cell: {
     display: 'flex',
@@ -31,29 +31,29 @@ const styles = StyleSheet.create({
     gap: 14,
     padding: 14,
     margin: 14,
-    backgroundColor: '#ffffff',
-    borderRadius: 6
+    backgroundColor: '#FFFFFF',
+    borderRadius: 6,
   },
   cellItem: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 10
+    gap: 10,
   },
   itemLabel: {
     fontSize: 12.5,
-    color: '#303133'
+    color: '#303133',
   },
   itemValue: {
     fontSize: 12.5,
-    color: '#999999'
+    color: '#999999',
   },
   divider: {
     borderBottomWidth: 0.48,
     borderStyle: 'solid',
-    borderColor: '#eeeeee'
-  }
+    borderColor: '#EEEEEE',
+  },
 });
 
 export default Project;
